@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* styles/globals.css */
+:root {
+  /* === Tokens primitivos (marca, fixos) === */
+  --rede-white: #FFFFFF;
+  --rede-black: #1D1D1B;
+  --rede-yellow: #FCCB1C;
+  --rede-red: #E6332A;
+
+  /* === Tokens semânticos — tema LIGHT (base) === */
+  --background: var(--rede-white);
+  --foreground: var(--rede-black);
+  --accent: var(--rede-yellow);
+  --danger: var(--rede-red);
+  --border: #E5E5E3;
+
+  --gradient-split: linear-gradient(90deg,
+      var(--rede-black) 0%,
+      var(--rede-black) 50%,
+      var(--rede-white) 50%,
+      var(--rede-white) 100%);
+}
+
+.dark {
+  /* === Tokens semânticos — tema DARK (default da app) === */
+  --background: var(--rede-black);
+  --foreground: var(--rede-white);
+  --accent: var(--rede-yellow);
+  --danger: var(--rede-red);
+  --border: #3A3A38;
+}
