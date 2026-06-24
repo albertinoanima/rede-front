@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import { TopBar } from "@/components/TopBar";
 import Link from "next/link";
 
 
@@ -20,8 +22,6 @@ const ChevronLeft = () => (
   </svg>
 );
 
-// ─── Data ────────────────────────────────────────────────────────────────────
-const navLinks = ["Sobre Nós", "Rede", "Agência", "Notícias", "Oportunidades", "Workshops", "Newsletter", "Fale Connosco"];
 
 const newsItems = [
   { tag: "Festival", date: "12 Mai 2025", title: "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna." },
@@ -64,41 +64,6 @@ const footerMenuLinks = ["Início", "Rede", "Agência", "Notícias", "Oportunida
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
 
-function Navbar() {
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/5">
-      <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <span className="text-[#F5C518] font-black text-xl tracking-tight leading-none">REDE</span>
-          <span className="hidden sm:block w-px h-5 bg-white/20" />
-          <span className="hidden sm:block text-white/50 text-[10px] uppercase tracking-widest leading-tight">
-            Cinema &<br />Audiovisual
-          </span>
-        </Link>
-
-        {/* Nav links */}
-        <ul className="hidden xl:flex items-center gap-6">
-          {navLinks.map((l) => (
-            <li key={l}>
-              <Link href="#" className="text-white/60 hover:text-white text-xs font-medium tracking-wide transition-colors">
-                {l}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* CTA */}
-        <Link
-          href="#"
-          className="shrink-0 bg-[#F5C518] text-black text-xs font-bold px-4 py-2 hover:bg-yellow-300 transition-colors"
-        >
-          Entrar
-        </Link>
-      </div>
-    </nav>
-  );
-}
 
 function HeroSection() {
   return (
@@ -417,85 +382,12 @@ function PartnersSection() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="bg-zinc-950 text-white">
-      {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
-        {/* Social */}
-        <div>
-          <div className="flex gap-4 mb-6">
-            {["f", "in", "ig"].map((s) => (
-              <a
-                key={s}
-                href="#"
-                className="w-9 h-9 border border-white/20 flex items-center justify-center text-white/50 hover:border-[#F5C518] hover:text-[#F5C518] transition-colors text-xs font-bold"
-              >
-                {s}
-              </a>
-            ))}
-          </div>
-          <p className="text-white/30 text-xs leading-relaxed max-w-xs">
-            A maior rede de cinema e audiovisual dos países de língua portuguesa em África.
-          </p>
-        </div>
-
-        {/* Menu */}
-        <div>
-          <h4 className="text-[#F5C518] font-bold text-xs uppercase tracking-widest mb-5">Menu</h4>
-          <ul className="space-y-2.5">
-            {footerMenuLinks.map((l) => (
-              <li key={l}>
-                <Link href="#" className="text-white/50 text-sm hover:text-white transition-colors">
-                  {l}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Contacts */}
-        <div>
-          <h4 className="text-[#F5C518] font-bold text-xs uppercase tracking-widest mb-5">Contactos</h4>
-          <address className="not-italic space-y-2 text-white/50 text-sm">
-            <p>info@redeaudiovisual.org</p>
-            <p>+258 21 000 000</p>
-            <p className="leading-relaxed">
-              Maputo, Moçambique<br />
-              Lisboa, Portugal
-            </p>
-          </address>
-        </div>
-      </div>
-
-      {/* Bottom bar – wordmark */}
-      <div className="border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <div className="flex items-baseline gap-3">
-              <span className="text-[#F5C518] font-black text-4xl tracking-tight">REDE</span>
-              <div className="text-white/40 text-xs uppercase tracking-wider leading-tight">
-                <div>Cinema e</div>
-                <div>Audiovisual</div>
-                <div className="text-[#F5C518]/70">PALOP+TL</div>
-              </div>
-            </div>
-          </div>
-          <p className="text-white/20 text-xs">
-            © {new Date().getFullYear()} REDE Cinema e Audiovisual PALOP+TL. Todos os direitos reservados.
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function HomePage() {
   return (
     <main className="bg-black">
-      <Navbar />
+      <TopBar/>
       <HeroSection />
       <NewsSection />
       <OpportunitiesSection />
