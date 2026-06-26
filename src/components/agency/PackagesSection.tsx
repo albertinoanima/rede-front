@@ -1,3 +1,9 @@
+"use client"
+
+import { Button } from "../ui/button"
+import { Heading } from "../ui/heading"
+import { Text } from "../ui/text"
+
 const packages = [
   {
     title: "Curadoria 1",
@@ -32,26 +38,23 @@ export const PackagesSection = () => {
 
         {/* Heading */}
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-6xl font-bold text-[#FF4338]">
+          <Heading level={"h2"} className="text-6xl font-bold text-[#FF4338]">
             Pacotes de Curtas
-          </h2>
+          </Heading>
 
-          <p className="mt-6 text-sm text-white/80 leading-7">
+          <Text className="mt-6 text-sm text-white/80 leading-7">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
             Sed do eiusmod tempor incididunt ut labore et dolore magna
             aliqua, oferecendo pacotes curados de curtas-metragens
             para distribuição e licenciamento.
-          </p>
+          </Text>
         </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-20">
 
           {packages.map((item, index) => (
-            <div
-              key={index}
-              className="border border-white/40 p-7 flex flex-col"
-            >
+            <div key={index} className="border border-white/40 p-7 flex flex-col">
 
               {/* Header */}
               <div className="flex justify-between items-start">
@@ -66,10 +69,10 @@ export const PackagesSection = () => {
 
               </div>
 
-              <p className="mt-3 text-xs text-white/60 leading-5 max-w-xs">
+              <Text className="mt-3 text-xs text-white/60 leading-5 max-w-xs">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
+              </Text>
 
               {/* Features */}
               <div className="grid grid-cols-2 gap-y-3 gap-x-6 mt-8">
@@ -92,9 +95,9 @@ export const PackagesSection = () => {
               </div>
 
               {/* Button */}
-              <button className="mt-8 w-fit rounded-full bg-[#FFD328] px-5 py-2 text-xs font-semibold text-black hover:scale-105 transition">
+              <Button variant={"primary"} size={"md"} className="text-rede-black mt-8">
                 Solicitar Proposta
-              </button>
+              </Button>
 
             </div>
           ))}

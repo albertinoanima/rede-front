@@ -1,59 +1,84 @@
-// components/ui/Input.tsx
-'use client'
-import { useState } from 'react'
-import { Search } from 'lucide-react'
+// components/ui/input.tsx
+import * as React from 'react'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-interface InputProps {
-  placeholder?: string
-  value?: string
-  onChange?: (value: string) => void
-  onSearch?: (value: string) => void
+const inputVariants = cva(
+  'w-full font-medium transition-all rounded-full bg-rede-black text-white border border-foreground/20 focus:border-rede-yellow focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 px-6 h-11 text-btn1',
+  {
+    variants: {
+      variant: {
+        primary: 'bg-transparent text-white border border-foreground/20 focus:border-rede-yellow',
+        solid: 'bg-rede-black text-white border-transparent focus:border-rede-yellow',
+      }
+    },
+    defaultVariants: { variant: 'primary' }
+  }
+)
+
+const iconSateliiteVariants = cva(
+  'inline-flex items-center justify-center rounded-full transition-all shrink-0 aspect-square h-11 w-11 border',
+  {
+    variants: {
+      variant: {
+        primary: 'bg-transparent text-foreground border-foreground/20',
+        solid: 'bg-rede-black text-white border-transparent',
+      }
+    },
+    defaultVariants: { variant: 'primary' }
+  }
+)
+
+export interface InputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
+    VariantProps<typeof inputVariants> {
   icon?: React.ReactNode
-  showButton?: boolean
-  className?: string
+  iconPosition?: 'left' | 'right'
+  containerClassName?: string
+  iconContainerClassName?: string
 }
 
-export function Input({
-  placeholder = 'Pesquisar...',
-  value,
-  onChange,
-  onSearch,
-  icon = <Search size={18} />,
-  showButton = true,
-  className,
-}: InputProps) {
-  const [internal, setInternal] = useState('')
-  const current = value ?? internal
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ variant, icon, iconPosition = 'left', containerClassName, iconContainerClassName, className, disabled, ...props }, ref) => {
+    
+    const inputRef = React.useRef<HTMLInputElement>(null);
+    React.useImperativeHandle(ref, () => inputRef.current!);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setInternal(e.target.value)
-    onChange?.(e.target.value)
+    // Focar o input real se o utilizador clicar no ícone satélite
+    const handleIconClick = () => {
+      if (!disabled && inputRef.current) {
+        inputRef.current.focus()
+      }
+    }
+
+    const renderIconSatelliet = icon ? (
+      <div
+        onClick={handleIconClick}
+        className={cn(
+          iconSateliiteVariants({ variant }), 
+          !disabled && 'cursor-text [div:focus-within>&]:border-rede-yellow', // Sincroniza o hover/focus visual se quiseres customizar
+          iconContainerClassName
+        )}
+      >
+        {icon}
+      </div>
+    ) : null
+
+    return (
+      <div className={cn('inline-flex items-center w-full', containerClassName)}>
+        {iconPosition === 'left' && renderIconSatelliet}
+
+        <input
+          ref={inputRef}
+          disabled={disabled}
+          className={cn(inputVariants({ variant }), className)}
+          {...props}
+        />
+
+        {iconPosition === 'right' && renderIconSatelliet}
+      </div>
+    )
   }
+)
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter') onSearch?.(current)
-  }
-
-  return (
-    <div className={cn('flex items-center w-full border border-foreground rounded-full overflow-hidden', className)}>
-      <input
-        type="text"
-        value={current}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        placeholder={placeholder}
-        className="flex-1 bg-transparent px-6 py-3 text-b1 text-foreground placeholder:text-foreground/50 outline-none"
-      />
-
-      {showButton && (
-        <button
-          onClick={() => onSearch?.(current)}
-          className="w-12 h-12 rounded-full border border-foreground flex items-center justify-center shrink-0 mr-1 text-foreground hover:bg-foreground/10 transition-colors"
-        >
-          {icon}
-        </button>
-      )}
-    </div>
-  )
-}
+Input.displayName = 'Input'

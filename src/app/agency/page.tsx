@@ -3,14 +3,14 @@ import { FilmsSection } from "@/components/agency/FilmsSection";
 // import { BrandFooter } from "@/components/agency/BrandFooter";
 import { LicensingSection } from "@/components/agency/LicensingSection";
 
-import { Footer } from "@/components/agency/Footer";
+import { Footer } from "@/components/Footer";
 import { PackagesSection } from "@/components/agency/PackagesSection";
 import { TopBar } from "@/components/TopBar";
 
 
 export default function Agency() {
   return (
-    <main className="min-h-screen bg-black">
+    <main className="min-h-screen ">
       <TopBar />
       <div style={{ marginBottom: 100 }}>
         <AgencyHero />

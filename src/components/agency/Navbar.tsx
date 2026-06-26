@@ -17,7 +17,7 @@ const links = [
 export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-rede-black border-b border-border">
-      <div className="max-w-[1440px] mx-auto px-6 h-14 flex items-center justify-between gap-6">
+      <div className="max-w-360 mx-auto px-6 h-14 flex items-center justify-between gap-6">
         {/* Logo */}
         <Link href="/" className="shrink-0">
           <span className="text-rede-white font-bold text-lg tracking-widest">REDE</span>

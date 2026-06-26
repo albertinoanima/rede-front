@@ -1,10 +1,11 @@
 'use client'
+
 import { useState } from 'react'
 import { ChevronDown, Search, SearchIcon, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Text } from '@/components/ui/text'
-import { SearchInput } from '../ui/SearchInput'
 import { Heading } from '../ui/heading'
+import { Input } from '../ui/Input'
+import { Select } from '../ui/select'
 
 const temaOptions = [
   'Direitos humanos',
@@ -30,14 +31,7 @@ export const FilterSidebar: React.FC = () => {
       {/* Search */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center">
-          <input
-            placeholder="Pesquisar..."
-            className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-white outline-none placeholder:text-white "
-          />
-
-          <Button className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white p-2.5">
-            <SearchIcon size={18} className="text-white" />
-          </Button>
+          <Input placeholder='Pesquisar...' className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-white outline-none placeholder:text-white" icon={<SearchIcon size={18} className="text-white" />} iconPosition={"right"} iconContainerClassName='h-10 w-10 rounded-full border-2 border-white p-2.5"' />
         </div>
 
         <div className="flex gap-2">
@@ -54,42 +48,33 @@ export const FilterSidebar: React.FC = () => {
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-white'>País</Heading>
           <div className="flex items-center">
-            <input
-              placeholder='Selecionar país'
-              className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-white outline-none placeholder:text-white "
+            <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
+              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
+              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-white outline-none"
+              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
             />
-
-            <Button className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white p-2.5">
-              <ChevronDown size={18} className="text-white" />
-            </Button>
           </div>
         </div>
 
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-white'>Tema</Heading>
           <div className="flex items-center">
-            <input
-              placeholder='Selecionar país'
-              className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-white outline-none placeholder:text-white "
+            <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
+              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
+              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-white outline-none"
+              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
             />
-
-            <Button className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white p-2.5">
-              <ChevronDown size={18} className="text-white" />
-            </Button>
           </div>
         </div>
 
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-white'>Género</Heading>
           <div className="flex items-center">
-            <input
-              placeholder='Selecionar país'
-              className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-white outline-none placeholder:text-white "
+            <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
+              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
+              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-white outline-none"
+              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
             />
-
-            <Button className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white p-2.5">
-              <ChevronDown size={18} className="text-white" />
-            </Button>
           </div>
         </div>
       </div>

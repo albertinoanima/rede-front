@@ -1,5 +1,8 @@
-// import { FilmCard } from '@/components/ui/FilmCard'
+"use client"
+
 import { FilterSidebar } from '@/components/agency/FilterSidebar'
+import { ChevronRight } from 'lucide-react'
+import { Button } from '../ui/button'
 
 const films = [
   {
@@ -54,7 +57,7 @@ const films = [
 
 export const FilmsSection: React.FC = () => {
   return (
-    <section className="w-full bg-black">
+    <section className="w-full h-auto">
       <div className="w-full max-w-360 h-auto ml-auto mr-auto flex">
 
         <div>
@@ -122,22 +125,9 @@ export const FilmsSection: React.FC = () => {
 
                   {/* Botão */}
                   <div className="flex items-end">
-                    <button className="w-14 h-14 rounded-full bg-yellow-400 flex items-center justify-center hover:scale-105 transition">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="black"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </button>
+                    <Button className="text-rede-black rounded-full w-10 h-10 p-0">
+                      <ChevronRight/>
+                    </Button>
                   </div>
                 </div>
               </div>

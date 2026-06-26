@@ -1,44 +1,71 @@
-import Image from "next/image"
-import { Button } from "./ui/button"
+"use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "./ui/button";
+
+const menuItems = [
+  { label: "Sobre nós", href: "/about" },
+  { label: "Rede", href: "/network" },
+  { label: "Agência", href: "/agency" },
+  { label: "Notícias", href: "/news" },
+  { label: "Oportunidades", href: "/opportunities" },
+  { label: "Workshops", href: "/workshops" },
+  { label: "Newsletter", href: "/newsletter" },
+  { label: "Film Commission", href: "/film-commission" },
+];
 
 export const TopBar: React.FC = () => {
-    return (
-        <div className="w-full border-b-2 border-white fixed z-10">
-            <div className="w-full max-w-360 h-16 ml-auto mr-auto flex justify-between items-center">
-                <div className="w-36 h-16">
-                    <img src="/assets/logo-small.png" alt="REDE Logo" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                    <nav>
-                        <ul className="list-none text-[#ffffff]">
-                            <li className="inline-table font-medium leading-4 pr-2.5">Sobre nós</li>
-                            <li className="inline-table font-medium leading-4 pr-2.5">Rede</li>
-                            <li className="inline-table font-medium leading-4 pr-2.5">
-                                <Button className="bg-[#ffffff] rounded-4xl py-4.5 h-1.5 text-[#1D1D1B] cursor-pointer">
-                                    Agência
-                                </Button>
-                            </li>
-                            <li className="inline-table font-medium leading-4 pr-2.5">Notícias</li>
-                            <li className="inline-table font-medium leading-4 pr-2.5">Oportunidades</li>
-                            <li className="inline-table font-medium leading-4 pr-2.5">Workshops</li>
-                            <li className="inline-table font-medium leading-4 pr-2.5">Newsletter</li>
-                            <li className="inline-table font-medium leading-4">Film Commission</li>
-                        </ul>
-                    </nav>
-                </div>
-                <div className="flex gap-3">
-                    <Button className="h-7 bg-black py-3.5 px-1.5 border-2 border-white text-[#ffffff]">
-                        PT
-                    </Button>
-                    <Button className="w-30 h-7 bg-black py-3.5 px-1.5 border-2 border-white text-[#ffffff]">
-                        Login
-                    </Button>
-                    <Button className="w-30 h-7 bg-[#FCCB1C] py-4 px-1.5 rounded-4xl text-[#1D1D1B]">
-                        Sign Up
-                    </Button>
-                </div>
-            </div>
+  const pathname = usePathname();
+
+  return (
+    <div className="fixed z-12 w-full border-b-2 border-white bg-black/70 backdrop-blur-sm">
+      <div className="mx-auto flex h-16 w-full max-w-360 items-center justify-between">
+        <Link className="h-16 w-36" href="/">
+          <img
+            src="/assets/logo-small.png"
+            alt="REDE Logo"
+            className="h-full w-full object-cover"
+          />
+        </Link>
+
+        <nav>
+          <ul className="flex items-center gap-1 text-white">
+            {menuItems.map((item) => {
+              const active = pathname === item.href;
+
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={`rounded-full px-4 py-2 text-sm font-medium leading-4 transition-all duration-200 ${
+                      active
+                        ? "bg-white text-black"
+                        : "text-white hover:bg-white hover:text-black"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <div className="flex gap-3">
+          <Button className="h-7 border-2 border-white bg-black px-1.5 py-3.5 text-white">
+            PT
+          </Button>
+
+          <Button className="h-7 w-30 border-2 border-white bg-black px-1.5 py-3.5 text-white">
+            Login
+          </Button>
+
+          <Button className="h-7 w-30 rounded-4xl bg-[#FCCB1C] px-1.5 py-4 text-[#1D1D1B]">
+            Sign Up
+          </Button>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
