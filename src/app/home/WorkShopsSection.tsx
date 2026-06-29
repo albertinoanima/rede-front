@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 export const ArticleCard: React.FC<{ imageURL: string }> = ({ imageURL }) => {
     return (
-        <div className="max-w-110 bg-[#1a1a1a] text-white rounded-xl overflow-hidden shadow-xl font-sans">
+        <div className="max-w-110 bg-[#1a1a1a] text-white overflow-hidden shadow-xl font-sans">
 
             {/* Imagem do Card */}
             <div className="w-full h-auto aspect-4/3 overflow-hidden">

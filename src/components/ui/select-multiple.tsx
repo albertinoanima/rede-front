@@ -1,4 +1,4 @@
-// components/ui/select.tsx
+// components/ui/select-multiple.tsx
 import * as React from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
@@ -40,21 +40,18 @@ const variantStyles = {
     popover: 'border-rede-yellow',
     checkFill: 'border-rede-yellow bg-rede-yellow text-rede-black',
     checkEmpty: 'border-rede-yellow/40',
-    selected: 'bg-rede-yellow text-rede-black hover:bg-rede-yellow/90 hover:text-rede-black',
   },
   secondary: {
     open: 'border-white text-white',
     popover: 'border-white',
     checkFill: 'border-white bg-white text-rede-black',
     checkEmpty: 'border-white/40',
-    selected: 'bg-white text-rede-black hover:bg-white/90 hover:text-rede-black',
   },
   danger: {
     open: 'border-rede-red text-rede-red',
     popover: 'border-rede-red',
     checkFill: 'border-rede-red bg-rede-red text-white',
     checkEmpty: 'border-rede-red/40',
-    selected: 'bg-rede-red text-white hover:bg-rede-red/90 hover:text-white',
   },
 }
 
@@ -63,10 +60,10 @@ export interface SelectOption {
   label: string
 }
 
-export interface SelectProps {
+export interface SelectMultipleProps {
   options: SelectOption[]
-  value?: string
-  onChange?: (value: string) => void
+  value?: string[]
+  onChange?: (value: string[]) => void
   placeholder?: string
   disabled?: boolean
   size?: 'sm' | 'md' | 'lg' | 'xl'
@@ -77,9 +74,9 @@ export interface SelectProps {
   popoverClassName?: string
 }
 
-export const Select = ({
+export const SelectMultiple = ({
   options,
-  value,
+  value = [],
   onChange,
   placeholder = 'Selecione uma opção...',
   disabled,
@@ -89,12 +86,27 @@ export const Select = ({
   triggerClassName,
   satelliteClassName,
   popoverClassName,
-}: SelectProps) => {
+}: SelectMultipleProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const containerRef = React.useRef<HTMLDivElement>(null)
 
-  const selectedOption = options.find((opt) => opt.value === value)
+  const selectedOptions = options.filter((opt) => value.includes(opt.value))
   const v = variantStyles[variant]
+
+  const triggerLabel = selectedOptions.length === 0
+    ? placeholder
+    : selectedOptions.length === 1
+      ? selectedOptions[0].label
+      : `${selectedOptions[0].label} +${selectedOptions.length - 1}`
+
+  const handleToggle = (optionValue: string) => {
+    if (!onChange) return
+    if (value.includes(optionValue)) {
+      onChange(value.filter((val) => val !== optionValue))
+    } else {
+      onChange([...value, optionValue])
+    }
+  }
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -105,6 +117,13 @@ export const Select = ({
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  // Dentro do componente, antes do return
+const scrollbarColor = {
+  primary: '#F5C518', // rede-yellow — substitui pelo teu valor real
+  secondary: '#FFFFFF',
+  danger: '#E53E3E',  // rede-red — substitui pelo teu valor real
+}[variant]
 
   return (
     <div ref={containerRef} className={cn('relative inline-flex flex-col w-full gap-2', className)}>
@@ -121,8 +140,8 @@ export const Select = ({
             isOpen && v.open,
           )}
         >
-          <span className={cn(!selectedOption && 'opacity-40')}>
-            {selectedOption ? selectedOption.label : placeholder}
+          <span className={cn(!selectedOptions.length && 'opacity-40')}>
+            {triggerLabel}
           </span>
         </button>
 
@@ -146,32 +165,54 @@ export const Select = ({
       {/* MENU DROPDOWN */}
       {isOpen && (
         <div
-          className={cn(
-            'absolute top-[105%] left-0 w-full z-50 overflow-hidden rounded-2xl border bg-rede-black p-1.5 shadow-xl',
-            popoverClassName,
-            v.popover,
-          )}
-        >
-          <ul className="max-h-60 overflow-y-auto space-y-1">
+    className={cn(
+      'absolute top-[105%] left-0 w-full z-50 overflow-hidden rounded-2xl border bg-rede-black p-1.5 shadow-xl',
+      popoverClassName,
+      v.popover,
+    )}
+  >
+
+    <style>{`
+      .rede-select-scroll-${variant}::-webkit-scrollbar {
+        width: 2px;
+      }
+      .rede-select-scroll-${variant}::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .rede-select-scroll-${variant}::-webkit-scrollbar-thumb {
+        background-color: ${scrollbarColor};
+        border-radius: 999px;
+      }
+    `}</style>
+
+          <ul
+  className="max-h-60 overflow-y-auto space-y-1 scrollbar-thin"
+  style={{
+    //scrollbarWidth: '2px', // Firefox (thin é o mínimo, mas o color acompanha)
+    scrollbarColor: `${scrollbarColor} transparent`,
+  }}
+>
             {options.map((option) => {
-              const isSelected = option.value === value
+              const isSelected = value.includes(option.value)
               return (
                 <li key={option.value}>
                   <button
                     type="button"
-                    onClick={() => {
-                      if (onChange) onChange(option.value)
-                      setIsOpen(false)
-                    }}
+                    onClick={() => handleToggle(option.value)}
                     className={cn(
                       'w-full text-left px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-150',
                       'text-white/70 hover:bg-white/5 hover:text-white',
-                      isSelected && v.selected,
                     )}
                   >
-                    <div className="flex items-center justify-between w-full">
-                      <span>{option.label}</span>
-                      {isSelected && <Check width={16} height={16} />}
+                    <div className="flex items-center gap-3 w-full">
+                      {/* CHECKBOX CIRCULAR */}
+                      <span className={cn(
+                        'flex items-center justify-center w-5 h-5 rounded-full border-2 shrink-0 transition-all duration-150',
+                        isSelected ? v.checkFill : v.checkEmpty,
+                      )}>
+                        {isSelected && <Check width={11} height={11} strokeWidth={3} />}
+                      </span>
+                      <span className={cn(isSelected && 'text-white')}>{option.label}</span>
                     </div>
                   </button>
                 </li>
@@ -184,4 +225,4 @@ export const Select = ({
   )
 }
 
-Select.displayName = 'Select'
+SelectMultiple.displayName = 'SelectMultiple'

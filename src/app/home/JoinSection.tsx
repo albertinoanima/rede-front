@@ -17,7 +17,7 @@ export const JoinSection: React.FC = () => {
                     <Button className="border-2 border-rede-black bg-rede-white text-rede-black">
                         Log in
                     </Button>
-                    <Button>
+                    <Button className="text-rede-black">
                         Sign up
                     </Button>
                 </div>

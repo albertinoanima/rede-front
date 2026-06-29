@@ -48,7 +48,7 @@ const iconVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof mainButtonVariants> {
+  VariantProps<typeof mainButtonVariants> {
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'
   containerClassName?: string  // Para customizar o alinhamento ou gap do bloco todo
@@ -56,20 +56,20 @@ export interface ButtonProps
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ 
-    variant, 
-    size, 
-    icon, 
-    iconPosition = 'left', 
-    containerClassName, 
-    iconButtonClassName, 
-    className, 
-    children, 
-    onClick, 
-    disabled, 
-    ...props 
+  ({
+    variant,
+    size,
+    icon,
+    iconPosition = 'left',
+    containerClassName,
+    iconButtonClassName,
+    className,
+    children,
+    onClick,
+    disabled,
+    ...props
   }, ref) => {
-    
+
     // Função para fazer o clique no ícone ativar a mesma ação do botão principal
     const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disabled) return

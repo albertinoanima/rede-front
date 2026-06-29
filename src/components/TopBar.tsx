@@ -10,7 +10,7 @@ const menuItems = [
   { label: "Agência", href: "/agency" },
   { label: "Notícias", href: "/news" },
   { label: "Oportunidades", href: "/opportunities" },
-  { label: "Workshops", href: "/workshops" },
+  //{ label: "Workshops", href: "/workshops" },
   { label: "Newsletter", href: "/newsletter" },
   { label: "Film Commission", href: "/film-commission" },
 ];

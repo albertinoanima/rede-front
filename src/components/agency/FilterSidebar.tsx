@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Heading } from '../ui/heading'
 import { Input } from '../ui/Input'
 import { Select } from '../ui/select'
+import { SelectMultiple } from '../ui/select-multiple'
 
 const temaOptions = [
   'Direitos humanos',
@@ -19,6 +20,9 @@ export const FilterSidebar: React.FC = () => {
   const [search, setSearch] = useState('');
   const [genero, setGenero] = useState('');
   const [selectedTemas, setSelectedTemas] = useState<string[]>([]);
+
+
+  const [selectedProfissionais, setSelectedProfissionais] = useState<string[]>([])
 
   function toggleTema(tema: string) {
     setSelectedTemas((prev) =>
@@ -48,10 +52,10 @@ export const FilterSidebar: React.FC = () => {
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-white'>País</Heading>
           <div className="flex items-center">
-            <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
-              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
-              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-white outline-none"
-              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
+            <Select variant='primary' value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
+              triggerClassName="rounded-full border-2 border-white px-3 text-white outline-none"
+              popoverClassName="rounded-[12px] border-2 border-white px-3 text-white outline-none mt-[10px]"
+              satelliteClassName="border-2 border-white"
             />
           </div>
         </div>
@@ -59,10 +63,23 @@ export const FilterSidebar: React.FC = () => {
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-white'>Tema</Heading>
           <div className="flex items-center">
-            <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
-              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
-              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-white outline-none"
-              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
+            <SelectMultiple
+              placeholder="Selecionar profissional"
+              options={[
+                { label: 'Aderecistas', value: 'aderecistas' },
+                { label: 'Animadorxs', value: 'animadorxs' },
+                { label: 'Anotadorxs', value: 'anotadorxs' },
+                { label: 'Argumentistas', value: 'argumentistas' },
+                { label: 'Aderecistas1', value: 'aderecistassx' },
+                { label: 'Animadorxs2', value: 'animadorxssx' },
+                { label: 'Anotadorxs3', value: 'anotadorxssx' },
+                { label: 'Argumentistas4', value: 'argumentistassx' },
+              ]}
+              value={selectedProfissionais}
+              onChange={(vals) => setSelectedProfissionais(vals)}
+              triggerClassName="rounded-full border-2 border-white px-3 text-white outline-none"
+              popoverClassName="rounded-[12px] border-2 border-white px-3 text-white outline-none mt-[10px]"
+              satelliteClassName="border-2 border-white"
             />
           </div>
         </div>

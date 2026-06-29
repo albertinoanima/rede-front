@@ -58,7 +58,7 @@ const films = [
 export const FilmsSection: React.FC = () => {
   return (
     <section className="w-full h-auto">
-      <div className="w-full max-w-360 h-auto ml-auto mr-auto flex">
+      <div className="w-full max-w-360 h-auto ml-auto mr-auto flex mt-10">
 
         <div>
           <FilterSidebar />

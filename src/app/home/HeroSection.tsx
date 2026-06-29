@@ -5,7 +5,7 @@ import { Heading } from "@/components/ui/heading";
 export const HeroSection: React.FC = () => {
     return (
         <section className="w-full h-auto">
-            <div className="relative w-full max-w-360 h-124.25 mx-auto flex">
+            <div className="relative w-full max-w-[1920px] h-124.25 mx-auto flex">
 
                 {/* Bloco Esquerdo */}
                 <div className="w-[50%] h-full relative">

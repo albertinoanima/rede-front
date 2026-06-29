@@ -6,7 +6,7 @@ import { Text } from '@/components/ui/text'
 export const AgencyHero: React.FC = () => {
   return (
     <section className="w-full h-auto">
-      <div className="relative w-full max-w-360 h-124.25 mx-auto">
+      <div className="relative w-full max-w-[1920px] h-124.25 mx-auto">
 
         <img
           src="/assets/agency/hero.png"

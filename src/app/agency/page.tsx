@@ -10,19 +10,13 @@ import { TopBar } from "@/components/TopBar";
 
 export default function Agency() {
   return (
-    <main className="min-h-screen ">
+    <main>
       <TopBar />
-      <div style={{ marginBottom: 100 }}>
-        <AgencyHero />
-      </div>
-      <div style={{ marginBottom: 200 }}>
-        <FilmsSection />
-      </div>
-      <div style={{ marginBottom: 200 }}>
-        <PackagesSection />
-      </div>
-      <LicensingSection/>
-      <Footer/>
+      <AgencyHero />
+      <FilmsSection />
+      <PackagesSection />
+      <LicensingSection />
+      <Footer />
     </main>
   )
 }
