@@ -3,50 +3,60 @@ import { Heading } from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
+import { customBlur } from "../fonts";
 
-export const ArticleCard: React.FC<{ imageURL: string }> = ({ imageURL }) => {
+export const ArticleCard: React.FC<{ imageURL: string, level?: "primary" | "secondary" | "third" }> = ({ imageURL, level }) => {
     return (
         <div className="max-w-110 bg-rede-black text-white overflow-hidden shadow-xl font-sans">
 
-            {/* Imagem do Card */}
-            <div className="w-full h-auto aspect-4/3 overflow-hidden">
-                <img
-                    src={imageURL}
-                    alt="Diretora no set de filmagem"
-                    className="w-full h-full object-cover grayscale brightness-90"
-                />
-            </div>
-
-            {/* Conteúdo */}
             <div className="p-6 flex flex-col gap-4">
-
-                {/* Badges / Tags */}
                 <div className="flex gap-2 text-xs font-medium">
-                    <span className="px-4 py-1.5 border border-zinc-700 rounded-full bg-[#262626]">
-                        Festival
+                    {
+                        (level === "primary") &&
+                        <span className="border-2 border-transparent bg-rede-yellow px-4.5 py-1.5 rounded-4xl text-[12px] text-rede-black font-medium leading-4">
+                            Aberta
+                        </span>
+                    }
+
+                    {
+                        (level === "secondary") &&
+                        <span className="border-2 border-transparent bg-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] text-rede-black font-medium leading-4">
+                            Aberta
+                        </span>
+                    }
+
+
+                    {
+                        (level === "third") &&
+                        <span className="border-2 border-transparent bg-rede-red px-4.5 py-1.5 rounded-4xl text-[12px] text-rede-black font-medium leading-4">
+                            Aberta
+                        </span>
+                    }
+
+                    <span className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4">
+                        Financiamento
                     </span>
-                    <span className="px-4 py-1.5 border border-zinc-700 rounded-full bg-[#262626] text-zinc-300">
-                        15 Fev 2026
+                    <span className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4">
+                        Angola
+                    </span>
+                    <span className="border-2 border-transparent px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4">
+                        12 - 15 Fev 
                     </span>
                 </div>
 
-                {/* Título */}
-                <Heading level={"h3"} className="text-2xl font-bold leading-tight tracking-tight mt-1">
+                <Heading level={"h3"} className="text-[20px] font-semibold leading-5 mt-1">
                     Lorem ipsum dolor sit amet consectetur
                 </Heading>
 
-                {/* Descrição e Botão de Ação */}
                 <div className="flex items-end justify-between gap-4 mt-2">
-                    <Text className="text-sm text-zinc-400 leading-relaxed max-w-[80%]">
+                    <Text className="rounded-4xl text-[12px] font-medium leading-4">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
                     </Text>
 
-                    {/* Botão Circular Amarelo */}
-                    <Button className="w-10 h-10  p-0 rounded-full">
+                    <Button className="w-16 h-16 p-0 rounded-full">
                         <ArrowRight color="black" width={20} height={20} />
                     </Button>
                 </div>
-
             </div>
         </div>
     );
@@ -64,10 +74,10 @@ export const OpportunitiesSection: React.FC = () => {
 
     return (
         <section className="w-full h-auto bg-rede-white pb-14">
-            <div className="relative w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-2.5">
+            <div className="relative w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-28 pb-10">
 
                 <div className="w-full h-36">
-                    <Heading className="text-rede-yellow text-[96px] font-medium leading-24">Oportunidades</Heading>
+                    <Heading className={`${customBlur.className} text-rede-black text-[96px] font-medium leading-24`}>Oportunidades</Heading>
                 </div>
 
                 <div className="w-full h-auto flex items-center justify-end mb-5">
@@ -75,11 +85,9 @@ export const OpportunitiesSection: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {
-                        images.map((imageURL: string, pos: number) => (
-                            <ArticleCard imageURL={imageURL} key={"dxhdrhrdhdxr" + (pos * 2)} />
-                        ))
-                    }
+                    <ArticleCard imageURL={images[0]} level="primary" key={"dxhdrhrdhd55xr"} />
+                    <ArticleCard imageURL={images[1]} level="secondary" key={"dxhdrhrdcfhdxr"} />
+                    <ArticleCard imageURL={images[2]} level="third" key={"dxhdrhrfcndhdxr"} />
                 </div>
             </div>
         </section>

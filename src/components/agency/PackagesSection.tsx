@@ -1,5 +1,7 @@
 "use client"
 
+
+import { customBlur } from '@/app/fonts';
 import { Button } from "../ui/button"
 import { Heading } from "../ui/heading"
 import { Text } from "../ui/text"
@@ -38,7 +40,7 @@ export const PackagesSection = () => {
 
         {/* Heading */}
         <div className="max-w-2xl mx-auto text-center">
-          <Heading level={"h2"} className="text-6xl font-bold text-[#FF4338]">
+          <Heading level={"h2"} className={`${customBlur.className} text-6xl font-bold text-[#FF4338]`}>
             Pacotes de Curtas
           </Heading>
 

@@ -10,7 +10,7 @@ import { CustomYouTube } from "@/icons/CustomYouTube";
 export const Footer: React.FC = () => {
   return (
     <footer className="w-full h-auto">
-      <div className="w-full max-w-360 h-auto mx-auto pt-3.5">
+      <div className="w-full max-w-360 h-auto mx-auto pt-28 pb-10">
 
         <div className="w-full flex">
           <div className="w-full h-full flex flex-col justify-center gap-4">

@@ -1,7 +1,8 @@
 "use client"
 
-import { Heading } from '@/components/ui/heading'
-import { Text } from '@/components/ui/text'
+import { customBlur } from '@/app/fonts';
+import { Heading } from '@/components/ui/heading';
+import { Text } from '@/components/ui/text';
 
 export const AgencyHero: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ export const AgencyHero: React.FC = () => {
         {/* overlay de textos */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-4">
           
-          <Heading className="text-red-500 blur-[2px] text-[128px] font-medium">
+          <Heading className={`${customBlur.className} text-rede-red text-[128px] font-medium`}>
             Agência
           </Heading>
 
