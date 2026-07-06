@@ -4,7 +4,6 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { forwardRef } from 'react'
 
-// 1. Variantes para o botão de Texto (Corpo Principal)
 const mainButtonVariants = cva(
   'inline-flex items-center justify-center font-medium transition-all rounded-full disabled:cursor-not-allowed',
   {
@@ -25,7 +24,6 @@ const mainButtonVariants = cva(
   }
 )
 
-// 2. Variantes para o botão do Ícone (Círculo Satélite)
 const iconVariants = cva(
   'inline-flex items-center justify-center rounded-full transition-all shrink-0 disabled:cursor-not-allowed aspect-square',
   {
@@ -51,8 +49,8 @@ export interface ButtonProps
   VariantProps<typeof mainButtonVariants> {
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'
-  containerClassName?: string  // Para customizar o alinhamento ou gap do bloco todo
-  iconButtonClassName?: string // Para customizar o botão circular de forma independente
+  containerClassName?: string
+  iconButtonClassName?: string
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -70,7 +68,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ...props
   }, ref) => {
 
-    // Função para fazer o clique no ícone ativar a mesma ação do botão principal
     const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disabled) return
       if (onClick) onClick(e as unknown as React.MouseEvent<HTMLButtonElement>)
@@ -82,7 +79,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         onClick={handleIconClick}
         className={cn(iconVariants({ variant, size }), iconButtonClassName)}
-        tabIndex={-1} // Evita que o utilizador precise de dar dois "Tabs" no teclado para passar o mesmo botão
+        tabIndex={-1}
       >
         {icon}
       </button>
@@ -90,21 +87,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <div className={cn('inline-flex items-center', containerClassName)}>
-        {/* Ícone ao lado esquerdo (FORA do botão principal) */}
         {iconPosition === 'left' && renderIconButton}
 
-        {/* Botão de Texto Real */}
         <button
           ref={ref}
           disabled={disabled}
           onClick={onClick}
-          className={cn(mainButtonVariants({ variant, size }), className)}
+          className={cn(mainButtonVariants({ variant, size }), 'flex-1', className)}
           {...props}
         >
           {children}
         </button>
 
-        {/* Ícone ao lado direito (FORA do botão principal) */}
         {iconPosition === 'right' && renderIconButton}
       </div>
     )

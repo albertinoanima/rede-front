@@ -38,11 +38,10 @@ export const TopBar: React.FC = () => {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className={`rounded-full px-4 py-2 text-sm font-medium leading-4 transition-all duration-200 ${
-                      active
+                    className={`rounded-full px-4 py-2 text-sm font-medium leading-4 transition-all duration-200 ${active
                         ? "bg-white text-black"
                         : "text-white hover:bg-white hover:text-black"
-                    }`}
+                      }`}
                   >
                     {item.label}
                   </Link>
@@ -57,13 +56,17 @@ export const TopBar: React.FC = () => {
             PT
           </Button>
 
-          <Button className="h-7 w-30 border-2 border-white bg-black px-1.5 py-3.5 text-white">
-            Login
-          </Button>
+          <Link href="/login">
+            <Button className="h-7 w-30 border-2 border-white bg-black px-1.5 py-3.5 text-white">
+              Login
+            </Button>
+          </Link>
 
-          <Button className="h-7 w-30 rounded-4xl bg-[#FCCB1C] px-1.5 py-4 text-[#1D1D1B]">
-            Sign Up
-          </Button>
+          <Link href="/signup">
+            <Button className="h-7 w-30 rounded-4xl bg-[#FCCB1C] px-1.5 py-4 text-[#1D1D1B]">
+              Sign Up
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
