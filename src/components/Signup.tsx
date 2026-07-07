@@ -17,7 +17,20 @@ export const Signup: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <div className="w-full h-screen bg-[url('/assets/signup/signup.png')] bg-cover bg-center flex items-center justify-center">
+        <div className=" w-full
+    min-h-screen
+    bg-[url('/assets/signup/signup.png')]
+    bg-cover
+    bg-center
+    flex
+    justify-center
+    items-start
+    md:items-center
+    overflow-y-auto
+    py-10
+    pt-28
+    pb-10
+    ">
             <div className="w-md hh-173.25 bg-rede-black p-6">
                 <div className="w-full h-auto flex flex-col items-center gap-6">
                     <Heading className={`text-rede-white ${customBlur.className} text-[48px] leading-14`}>Sign Up</Heading>
@@ -38,12 +51,18 @@ export const Signup: React.FC = () => {
 
                         <div className='flex flex-col gap-2'>
                             <label className='text-[20px] leading-7' htmlFor='countryField'>País</label>
-                            <Select  variant={"primary"} options={[{ label: "Moçambique", value: "1234566"}, { label: "Angola", value: "654321"}]}/>
+                            <Select variant={"secondary"} options={[{ label: "Moçambique", value: "1234566" }, { label: "Angola", value: "654321" }]}
+                                triggerClassName="rounded-full border-2 border-white px-3 text-white outline-none"
+                                popoverClassName="rounded-[12px] border-2 border-white px-3 text-white outline-none mt-[10px]"
+                                satelliteClassName="border-2 border-white" />
                         </div>
 
                         <div className='flex flex-col gap-2'>
                             <label className='text-[20px] leading-7' htmlFor='countryField'>Tipo de Perfil</label>
-                            <Select variant={"secondary"} options={[{ label: "Moçambique", value: "1234566"}, { label: "Angola", value: "654321"}]}/>
+                            <Select variant={"secondary"} options={[{ label: "Moçambique", value: "1234566" }, { label: "Angola", value: "654321" }]}
+                                triggerClassName="rounded-full border-2 border-white px-3 text-white outline-none"
+                                popoverClassName="rounded-[12px] border-2 border-white px-3 text-white outline-none mt-[10px]"
+                                satelliteClassName="border-2 border-white" />
                         </div>
 
                         <div className='flex flex-col gap-2'>
@@ -51,25 +70,29 @@ export const Signup: React.FC = () => {
                             <Input variant={"secondary"} type={showPassword ? 'text' : 'password'} placeholder='******' className='w-full' icon={<EyeOff width={12} height={12} />} iconPosition='right' onIconClick={() => setShowPassword((lastState) => (!lastState))} id='passField' />
                         </div>
 
+                        {/* 
                         <div className='flex flex-col gap-2'>
                             <label className='text-[20px] leading-7' htmlFor='passField'>Confirmar Password</label>
                             <Input variant={"secondary"} type={showPassword ? 'text' : 'password'} placeholder='******' className='w-full' icon={<EyeOff width={12} height={12} />} iconPosition='right' onIconClick={() => setShowPassword((lastState) => (!lastState))} id='passField' />
-                        </div>
+                        </div> 
+                        */}
                     </div>
 
                     <Text className='font-medium leading-7 text-center mt-6 mb-6'>Aceito&nbsp;
                         <Link href="/terms-of-use" className='text-rede-yellow'>Termos de Uso</Link>
-                         &nbsp;e&nbsp;<br/>
-                         <Link href="/privacy-policies" className='text-rede-yellow'>Politica de Privacidade</Link>
-                         </Text>
+                        &nbsp;e&nbsp;<br />
+                        <Link href="/privacy-policies" className='text-rede-yellow'>Politica de Privacidade</Link>
+                    </Text>
 
                     <div className='w-full h-auto flex flex-col gap-6'>
                         <Button variant={"secondary"} icon={<GoogleIcon width={12} height={12} />} className='w-full'>
                             Continue com Google
                         </Button>
+                        {/* 
                         <Button variant={"secondary"} icon={<FacebookIcon width={12} height={12} />} className='w-full'>
                             Continue com Facebook
-                        </Button>
+                        </Button> 
+                        */}
                     </div>
 
                     <div className='w-full mt-8 mb-8'>

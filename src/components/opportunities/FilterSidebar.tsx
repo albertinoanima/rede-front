@@ -61,9 +61,22 @@ export const FilterSidebar: React.FC = () => {
         </div>
 
         <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-white'>Cidade/Proíncia</Heading>
+          <Heading className='text-[20px] font-medium leading-7 text-white'>Tema</Heading>
           <div className="flex items-center">
-            <Select variant='primary' value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
+            <SelectMultiple
+              placeholder="Selecionar profissional"
+              options={[
+                { label: 'Aderecistas', value: 'aderecistas' },
+                { label: 'Animadorxs', value: 'animadorxs' },
+                { label: 'Anotadorxs', value: 'anotadorxs' },
+                { label: 'Argumentistas', value: 'argumentistas' },
+                { label: 'Aderecistas1', value: 'aderecistassx' },
+                { label: 'Animadorxs2', value: 'animadorxssx' },
+                { label: 'Anotadorxs3', value: 'anotadorxssx' },
+                { label: 'Argumentistas4', value: 'argumentistassx' },
+              ]}
+              value={selectedProfissionais}
+              onChange={(vals) => setSelectedProfissionais(vals)}
               triggerClassName="rounded-full border-2 border-white px-3 text-white outline-none"
               popoverClassName="rounded-[12px] border-2 border-white px-3 text-white outline-none mt-[10px]"
               satelliteClassName="border-2 border-white"
@@ -72,18 +85,7 @@ export const FilterSidebar: React.FC = () => {
         </div>
 
         <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-white'>Tipo</Heading>
-          <div className="flex items-center">
-            <Select variant='primary' value='Estágio' placeholder='Selecionar tipo' options={[{ label: "Estágio", value: "estagio" }, { label: "Subvenção", value: "subvencao" }]}
-              triggerClassName="rounded-full border-2 border-white px-3 text-white outline-none"
-              popoverClassName="rounded-[12px] border-2 border-white px-3 text-white outline-none mt-[10px]"
-              satelliteClassName="border-2 border-white"
-            />
-          </div>
-        </div>
-
-        <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-white'>Categoria</Heading>
+          <Heading className='text-[20px] font-medium leading-7 text-white'>Género</Heading>
           <div className="flex items-center">
             <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
               triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"

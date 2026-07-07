@@ -44,6 +44,7 @@
   --color-rede-black: var(--rede-black);
   --color-rede-yellow: var(--rede-yellow);
   --color-rede-red: var(--rede-red);
+  --color-rede-pink: var(--rede-pink);
 
   --background-image-split: var(--gradient-split);
 }
@@ -54,6 +55,7 @@
   --rede-black: #1D1D1B;
   --rede-yellow: #FCCB1C;
   --rede-red: #E6332A;
+  --rede-pink: #818284;
 
   /* === 🚨 TEMA DEFAULT: DARK === */
   --background: var(--rede-black);

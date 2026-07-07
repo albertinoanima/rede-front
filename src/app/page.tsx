@@ -1,24 +1,24 @@
 import Footer from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
-import { HeroSection } from "./home/HeroSection";
-import { JoinSection } from "./home/JoinSection";
-import { NewsSection } from "./home/NewsSection";
-import { OpportunitiesSection } from "./home/OpportunitiesSection";
-import { WorkShopsSection } from "./home/WorkShopsSection";
-import { PartnersSection } from "./home/PartnersSection";
+import { Hero } from "../components/home/Hero";
+import { Join } from "../components/home/Join";
+import { News } from "../components/home/News";
+import { Partners } from "../components/home/Partners";
+import { WorkShops } from "../components/home/WorkShops";
+import { Opportunities } from "../components/home/Opportunities";
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function HomePage() {
   return (
     <main className="bg-black">
       <TopBar/>
-      <HeroSection />
-      <JoinSection/>
-      <NewsSection />
-      <OpportunitiesSection/>
-      <WorkShopsSection/>
-      <PartnersSection/>
-      <Footer />
+      <Hero />
+      <Join/>
+      <News />
+      <Partners/>
+      <WorkShops/>
+      <Opportunities/>
+      <Footer/>
     </main>
   );
 }

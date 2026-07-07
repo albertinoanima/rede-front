@@ -7,7 +7,6 @@ export default function LoginPage() {
         <main>
             <TopBar />
             <Login />
-
         </main>
     )
 }

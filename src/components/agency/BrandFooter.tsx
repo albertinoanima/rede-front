@@ -1,4 +1,4 @@
-export function BrandFooter() {
+export const BrandFooter = () => {
   return (
     <div className="w-full bg-rede-black py-16 px-6 flex items-center justify-center gap-8">
       <span className="text-rede-red font-bold" style={{ fontSize: '120px', lineHeight: 1 }}>
