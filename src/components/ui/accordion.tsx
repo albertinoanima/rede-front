@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, ReactNode } from 'react'
-import { ChevronDown } from 'lucide-react'
-import clsx from 'clsx'
+import clsx from 'clsx';
+import { ChevronDown } from 'lucide-react';
+import { useState, ReactNode } from 'react';
+
 
 interface AccordionItem {
   id: string
