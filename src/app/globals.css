@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+/* Configuração de Fontes e Cores do Tailwind v4 */
+@theme {
+  --text-h1: 128px;
+  --text-h1--line-height: 128px;
+  --text-h1--font-weight: 500;
+
+  --text-h2: 96px;
+  --text-h2--line-height: 96px;
+  --text-h2--font-weight: 500;
+
+  --text-h3: 48px;
+  --text-h3--line-height: 56px;
+  --text-h3--font-weight: 700;
+
+  --text-c1: 20px;
+  --text-c1--line-height: 20px;
+  --text-c1--font-weight: 600;
+
+  --text-b1: 20px;
+  --text-b1--line-height: 28px;
+  --text-b1--font-weight: 600;
+
+  --text-b2: 12px;
+  --text-b2--line-height: 16px;
+  --text-b2--font-weight: 500;
+
+  --text-btn1: 14px;
+  --text-btn1--line-height: 20px;
+  --text-btn1--font-weight: 500;
+
+  --text-btn2: 12px;
+  --text-btn2--line-height: 16px;
+  --text-btn2--font-weight: 500;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+
+  /* BG */
+  --color-rede-bg: var(--rede-bg);
+  --color-rede-bg-100: var(--rede-bg-100);
+  --color-rede-bg-200: var(--rede-bg-200);
+  --color-rede-bg-300: var(--rede-bg-300);
+  --color-rede-bg-400: var(--rede-bg-400);
+  --color-rede-bg-500: var(--rede-bg-500);
+  --color-rede-bg-600: var(--rede-bg-600);
+  --color-rede-bg-700: var(--rede-bg-700);
+  --color-rede-bg-800: var(--rede-bg-800);
+  --color-rede-bg-900: var(--rede-bg-900);
+
+  --color-rede-surface: var(--rede-surface);
+  --color-rede-white: var(--rede-white);
+
+  --color-rede-yellow: var(--rede-yellow);
+  --color-rede-yellow-100: var(--rede-yellow-100);
+  --color-rede-yellow-200: var(--rede-yellow-200);
+  --color-rede-yellow-300: var(--rede-yellow-300);
+  --color-rede-yellow-400: var(--rede-yellow-400);
+  --color-rede-yellow-500: var(--rede-yellow-500);
+
+  --color-rede-red: var(--rede-red);
+  --color-rede-red-100: var(--rede-red-100);
+  --color-rede-red-200: var(--rede-red-200);
+  --color-rede-red-300: var(--rede-red-300);
+  --color-rede-red-400: var(--rede-red-400);
+  --color-rede-red-500: var(--rede-red-500);
+  --color-rede-red-600: var(--rede-red-600);
+
+  --color-rede-gray: var(--rede-gray);
+  --background-image-split: var(--gradient-split);
+}
+
+:root {
+  /* === Tokens primitivos === */
+  --rede-bg: #111111;
+  --rede-bg-900: #1D1D1B;
+  --rede-bg-800: #212121;
+  --rede-bg-700: #3B3B3B;
+  --rede-bg-600: #454545;
+  --rede-bg-500: #58595B;
+  --rede-bg-400: #787878;
+  --rede-bg-300: #818284;
+  --rede-bg-200: #A7A9AC;
+  --rede-bg-100: #D1D3D4;
+
+  --rede-surface: #1D1D1B;
+
+  /* Brand */
+  --rede-white: #FFFFFF;
+
+  --rede-yellow: #FCCB1C;
+  --rede-yellow-500: #FCCB1C;
+  --rede-yellow-400: #FDD234;
+  --rede-yellow-300: #FDDE68;
+  --rede-yellow-200: #FEE89A;
+  --rede-yellow-100: #FFF4CD;
+
+  --rede-red: #E6332A;
+  --rede-red-600: #CF2F25;
+  --rede-red-500: #E6332A;
+  --rede-red-400: #E85051;
+  --rede-red-300: #EE7B7D;
+  --rede-red-200: #F4A8A8;
+  --rede-red-100: #F9D4D3;
+
+
+  --rede-gray: #818284;
+
+
+  /* === 🚨 TEMA DEFAULT: DARK === */
+  --background: var(--rede-bg);
+  --surface: var(--rede-surface);
+  --foreground: var(--rede-white);
+  --muted: var(--rede-gray);
+
+  --accent: var(--rede-yellow);
+  --danger: var(--rede-red);
+
+  --gradient-split: linear-gradient(90deg,
+      var(--rede-bg) 0%,
+      var(--rede-surface) 50%,
+      var(--rede-yellow) 50%,
+      var(--rede-red) 100%);
+}
+
