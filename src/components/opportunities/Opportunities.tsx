@@ -3,6 +3,9 @@
 
 import { FilterSidebar } from '@/components/agency/FilterSidebar';
 import { OpportunityCard, OpportunityType } from '../OpportunityCard';
+import { Button } from '../ui/button';
+import { customBlur } from '@/app/fonts';
+import { Heading } from '../ui/heading';
 
 
 const opportunities: OpportunityType[] = [
@@ -118,24 +121,26 @@ const opportunities: OpportunityType[] = [
 
 export const Opportunities: React.FC = () => {
   return (
-    <section className="w-full h-auto">
-      <div className="w-full max-w-360 h-auto ml-auto mr-auto flex mt-10">
+    <section className="w-full h-auto mt-20">
+      <div className="w-full max-w-360 h-auto ml-auto mr-auto">
 
-        <FilterSidebar />
+        <div className='flex items-center justify-between'>
+          <Heading level={"h2"} className={`${customBlur} ml-3 text-[48px] leading-11.5 font-medium mb-5 text-rede-yellow`}>
+            Todas <br /> Opportunidades
+          </Heading>
 
-        {/* Films list */}
-        <div className="flex-1 flex flex-col">
-          {/* Top bar */}
           <div className="flex justify-end gap-3 px-6 py-4">
-            <button className="text-btn2 text-foreground border border-foreground/30 rounded-full px-4 py-1.5 hover:border-foreground transition-colors">
+            <Button variant={"secondary"}>
               Ordenar por
-            </button>
-            <button className="text-btn2 text-foreground border border-foreground/30 rounded-full px-4 py-1.5 hover:border-foreground transition-colors">
+            </Button>
+            <Button variant={"secondary"}>
               8 resultados
-            </button>
+            </Button>
           </div>
+        </div>
 
-          {/* Cards */}
+        <div className='flex mt-10'>
+          <FilterSidebar />
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-6 pb-6">
             {opportunities.map((opp) => (
               <OpportunityCard
@@ -144,9 +149,9 @@ export const Opportunities: React.FC = () => {
               />
             ))}
           </div>
-          
         </div>
+
       </div>
-    </section>
+    </section >
   )
 }

@@ -16,7 +16,7 @@ export default function HomePage() {
       <Join/>
       <News />
       <Partners/>
-      <WorkShops/>
+      {/* <WorkShops/> */}
       <Opportunities/>
       <Footer/>
     </main>

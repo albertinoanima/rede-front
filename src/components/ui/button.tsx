@@ -12,7 +12,7 @@ const interactionVariants = {
       'text-rede-surface shadow-[0_0_0_0.3px_var(--rede-yellow-200),0_0_0_1px_var(--rede-yellow-200)_inset,0_0_0_4px_var(--rede-bg-900)_inset]'
   },
   secondary: {
-    hover: 'bg-rede-white border-none text-rede-surface',
+    hover: 'bg-rede-white border-[1.3px] border-transparent text-rede-surface',
     active:
       'text-rede-surface shadow-[0_0_0_0.3px_var(--rede-white),0_0_0_1px_var(--rede-white)_inset,0_0_0_4px_var(--rede-bg-900)_inset]'
   },
@@ -30,7 +30,7 @@ const mainButtonVariants = cva(
     variants: {
       variant: {
         primary: 'text-rede-surface bg-rede-yellow-500 hover:bg-rede-yellow-200 active:bg-rede-yellow-200 active:shadow-[0_0_0_0.3px_var(--rede-yellow-200),0_0_0_1px_var(--rede-yellow-200)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:bg-rede-yellow-500/60',
-        secondary: 'text-foreground bg-transparent border-[1.3px] border-rede-white hover:bg-rede-white hover:border-none hover:text-rede-surface active:bg-rede-white active:border-none active:text-rede-surface active:shadow-[0_0_0_0.3px_var(--rede-white),0_0_0_1px_var(--rede-white)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:text-foreground/40 disabled:bg-transparent disabled:border-[1.3px] disabled:border-rede-white/40',
+        secondary: 'text-foreground bg-transparent border-[1.3px] border-rede-white hover:bg-rede-white hover:border-[1.3px] hover:border-transparent hover:text-rede-surface active:bg-rede-white active:border-[1.3px] active:border-transparent active:text-rede-surface active:shadow-[0_0_0_0.3px_var(--rede-white),0_0_0_1px_var(--rede-white)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:text-foreground/40 disabled:bg-transparent disabled:border-[1.3px] disabled:border-rede-white/40',
         danger: 'bg-rede-red-500 text-rede-white hover:bg-rede-red-300 active:bg-rede-red-300 active:shadow-[0_0_0_0.3px_var(--rede-red-300),0_0_0_1px_var(--rede-red-300)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:bg-rede-red-500/60 disabled:text-rede-white/60'
       },
       size: {
@@ -50,7 +50,7 @@ const iconVariants = cva(
     variants: {
       variant: {
         primary: 'text-rede-surface bg-rede-yellow-500 hover:bg-rede-yellow-200 active:bg-rede-yellow-200 active:shadow-[0_0_0_0.3px_var(--rede-yellow-200),0_0_0_1px_var(--rede-yellow-200)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:bg-rede-yellow-500/60',
-        secondary: 'text-foreground bg-transparent border-[1.3px] border-rede-white hover:bg-rede-white hover:border-none hover:text-rede-surface active:bg-rede-white active:border-none active:text-rede-surface active:shadow-[0_0_0_0.3px_var(--rede-white),0_0_0_1px_var(--rede-white)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:text-foreground/40 disabled:bg-transparent disabled:border-[1.3px] disabled:border-rede-white/40',
+        secondary: 'text-foreground bg-transparent border-[1.3px] border-rede-white hover:bg-rede-white hover:border-[1.3px] hover:border-transparent hover:text-rede-surface active:bg-rede-white active:border-[1.3px] active:border-transparent active:text-rede-surface active:shadow-[0_0_0_0.3px_var(--rede-white),0_0_0_1px_var(--rede-white)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:text-foreground/40 disabled:bg-transparent disabled:border-[1.3px] disabled:border-rede-white/40',
         danger: 'bg-rede-red-500 text-rede-white hover:bg-rede-red-300 active:bg-rede-red-300 active:shadow-[0_0_0_0.3px_var(--rede-red-300),0_0_0_1px_var(--rede-red-300)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:bg-rede-red-500/60 disabled:text-rede-white/60'
       },
       size: {

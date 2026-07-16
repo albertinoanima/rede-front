@@ -47,18 +47,12 @@ const opportunities: OpportunityType[] = [
 
 export const Opportunities: React.FC = () => {
 
-    const images = [
-        "/assets/home/opps/opps-1.png",
-        "/assets/home/opps/opps-2.png",
-        "/assets/home/opps/opps-3.png",
-    ];
-
     return (
-        <section className="w-full h-auto bg-rede-white pb-14">
+        <section className="w-full h-auto pb-14 bg-rede-bg">
             <div className="relative w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-28 pb-10">
 
                 <div className="w-full h-36">
-                    <Heading className={`${customBlur.className} text-rede-surface text-[96px] font-medium leading-24`}>Oportunidades</Heading>
+                    <Heading className={`${customBlur.className} text-rede-white text-[96px] font-medium leading-24`}>Oportunidades</Heading>
                 </div>
 
                 {/*

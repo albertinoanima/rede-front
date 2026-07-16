@@ -136,7 +136,7 @@ const PalopMapSection: React.FC = () => {
   const isHovered = useCallback((id: string) => hoveredId === id, [hoveredId]);
 
   return (
-    <section style={{ position: "relative", width: "100%", minHeight: "600px", backgroundColor: COLORS.bg, overflow: "hidden" }}>
+    <section style={{ position: "relative", width: "100%", minHeight: "600px", backgroundColor: COLORS.bg, overflow: "hidden" }} className="pt-17">
       <style>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }`}</style>
 
       <ComposableMap projection="geoMercator" projectionConfig={{ scale: 420, center: [20, 5], rotate: [0, 0, 0] }}

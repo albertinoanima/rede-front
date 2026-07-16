@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, Search, SearchIcon, X } from 'lucide-react'
+import { SearchIcon, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '../ui/heading'
 import { Input } from '../ui/Input'
 import { Select } from '../ui/select'
-import { SelectMultiple } from '../ui/select-multiple'
+import { customBlur } from '@/app/fonts'
 
 const temaOptions = [
   'Direitos humanos',
@@ -31,9 +31,10 @@ export const FilterSidebar: React.FC = () => {
   }
 
   return (
-    <aside className="w-82.75 h-auto pl-6 pr-6 flex flex-col gap-6">
+    <aside className="w-82.75 h-auto p-6 flex flex-col gap-6">
       {/* Search */}
       <div className="flex flex-col gap-4">
+        
         <div className="flex items-center">
           <Input placeholder='Pesquisar...' className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white" icon={<SearchIcon size={18} className="text-rede-white" />} iconPosition={"right"} iconContainerClassName='h-10 w-10 rounded-full border-2 border-white p-2.5"' />
         </div>
