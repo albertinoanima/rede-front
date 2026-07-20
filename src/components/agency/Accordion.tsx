@@ -1,8 +1,9 @@
 'use client'
-import { useState } from 'react'
+
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react'
 import { Text } from '@/components/ui/text'
-import { cn } from '@/lib/utils'
 
 interface AccordionItem {
   label: string
@@ -13,7 +14,7 @@ interface AccordionProps {
   items: AccordionItem[]
 }
 
-export function Accordion({ items }: AccordionProps) {
+export const Accordion = ({ items }: AccordionProps) => {
   const [open, setOpen] = useState<number | null>(null)
 
   return (

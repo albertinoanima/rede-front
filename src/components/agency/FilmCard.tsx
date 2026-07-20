@@ -17,7 +17,7 @@ interface FilmCardProps {
   href?: string
 }
 
-export function FilmCard({
+export const FilmCard = ({
   title,
   director,
   duration,
@@ -25,11 +25,11 @@ export function FilmCard({
   tags,
   thumbnail,
   href = '#',
-}: FilmCardProps) {
+}: FilmCardProps) => {
   return (
-    <div className="flex w-full h-[212px] overflow-hidden">
+    <div className="flex w-full h-53 overflow-hidden">
       {/* Thumbnail */}
-      <div className="relative w-[446px] shrink-0">
+      <div className="relative w-111.5 shrink-0">
         <Image
           src={thumbnail}
           alt={title}
@@ -76,7 +76,7 @@ export function FilmCard({
             href={href}
             className="w-10 h-10 rounded-full bg-rede-yellow flex items-center justify-center hover:bg-rede-yellow/80 transition-colors shrink-0"
           >
-            <ArrowRight size={18} className="text-rede-black" />
+            <ArrowRight size={18} className="text-rede-surface" />
           </a>
         </div>
       </div>

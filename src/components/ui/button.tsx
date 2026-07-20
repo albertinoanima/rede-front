@@ -1,114 +1,158 @@
 "use client"
 
 import { cva, type VariantProps } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
-import { forwardRef } from 'react'
+import { cn, withCurrentColor } from '@/lib/utils'
+import { forwardRef, ReactNode, useState } from 'react'
 
-// 1. Variantes para o botão de Texto (Corpo Principal)
+
+const interactionVariants = {
+  primary: {
+    hover: 'bg-rede-yellow-200 text-rede-surface',
+    active:
+      'text-rede-surface shadow-[0_0_0_0.3px_var(--rede-yellow-200),0_0_0_1px_var(--rede-yellow-200)_inset,0_0_0_4px_var(--rede-bg-900)_inset]'
+  },
+  secondary: {
+    hover: 'bg-rede-white border-[1.3px] border-transparent text-rede-surface',
+    active:
+      'text-rede-surface shadow-[0_0_0_0.3px_var(--rede-white),0_0_0_1px_var(--rede-white)_inset,0_0_0_4px_var(--rede-bg-900)_inset]'
+  },
+  danger: {
+    hover: 'bg-rede-red-300 text-rede-white',
+    active:
+      'text-rede-white shadow-[0_0_0_0.3px_var(--rede-red-300),0_0_0_1px_var(--rede-red-300)_inset,0_0_0_4px_var(--rede-bg-900)_inset]'
+  }
+} as const
+
+
 const mainButtonVariants = cva(
   'inline-flex items-center justify-center font-medium transition-all rounded-full disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
-        primary: 'bg-rede-yellow text-rede-black hover:bg-rede-yellow/80 active:bg-rede-yellow/60 disabled:bg-rede-yellow/40 disabled:text-rede-black/40',
-        secondary: 'bg-transparent text-foreground border border-foreground hover:bg-foreground/10 active:bg-foreground/20 disabled:opacity-30',
-        danger: 'bg-rede-red text-white hover:bg-rede-red/80 active:bg-rede-red/60 disabled:bg-rede-red/40',
+        primary: 'text-rede-surface bg-rede-yellow-500 hover:bg-rede-yellow-200 active:bg-rede-yellow-200 active:shadow-[0_0_0_0.3px_var(--rede-yellow-200),0_0_0_1px_var(--rede-yellow-200)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:bg-rede-yellow-500/60',
+        secondary: 'text-foreground bg-transparent border-[1.3px] border-rede-white hover:bg-rede-white hover:border-[1.3px] hover:border-transparent hover:text-rede-surface active:bg-rede-white active:border-[1.3px] active:border-transparent active:text-rede-surface active:shadow-[0_0_0_0.3px_var(--rede-white),0_0_0_1px_var(--rede-white)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:text-foreground/40 disabled:bg-transparent disabled:border-[1.3px] disabled:border-rede-white/40',
+        danger: 'bg-rede-red-500 text-rede-white hover:bg-rede-red-300 active:bg-rede-red-300 active:shadow-[0_0_0_0.3px_var(--rede-red-300),0_0_0_1px_var(--rede-red-300)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:bg-rede-red-500/60 disabled:text-rede-white/60'
       },
       size: {
-        sm: 'h-8 px-4 text-btn2',
-        md: 'h-9 px-6 text-btn2',
-        lg: 'h-11 px-8 text-btn1',
-        xl: 'h-13 px-10 text-btn1',
-      },
+        sm: 'py-1.5 px-[18px] rounded-[32px] text-btn2',
+        md: 'py-3 px-6 rounded-[40px] text-btn2',
+        lg: 'py-6 px-12 rounded-[32px] text-btn1',
+        xl: 'py-8 px-[84px] rounded-[84px] text-btn1'
+      }
     },
-    defaultVariants: { variant: 'primary', size: 'lg' },
+    defaultVariants: { variant: 'primary', size: 'md' }
   }
 )
 
-// 2. Variantes para o botão do Ícone (Círculo Satélite)
 const iconVariants = cva(
   'inline-flex items-center justify-center rounded-full transition-all shrink-0 disabled:cursor-not-allowed aspect-square',
   {
     variants: {
       variant: {
-        primary: 'bg-rede-yellow text-rede-black hover:bg-rede-yellow/80 active:bg-rede-yellow/60 disabled:bg-rede-yellow/40',
-        secondary: 'bg-transparent text-foreground border border-foreground hover:bg-foreground/10 active:bg-foreground/20 disabled:opacity-30',
-        danger: 'bg-rede-red text-white hover:bg-rede-red/80 active:bg-rede-red/60 disabled:bg-rede-red/40',
+        primary: 'text-rede-surface bg-rede-yellow-500 hover:bg-rede-yellow-200 active:bg-rede-yellow-200 active:shadow-[0_0_0_0.3px_var(--rede-yellow-200),0_0_0_1px_var(--rede-yellow-200)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:bg-rede-yellow-500/60',
+        secondary: 'text-foreground bg-transparent border-[1.3px] border-rede-white hover:bg-rede-white hover:border-[1.3px] hover:border-transparent hover:text-rede-surface active:bg-rede-white active:border-[1.3px] active:border-transparent active:text-rede-surface active:shadow-[0_0_0_0.3px_var(--rede-white),0_0_0_1px_var(--rede-white)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:text-foreground/40 disabled:bg-transparent disabled:border-[1.3px] disabled:border-rede-white/40',
+        danger: 'bg-rede-red-500 text-rede-white hover:bg-rede-red-300 active:bg-rede-red-300 active:shadow-[0_0_0_0.3px_var(--rede-red-300),0_0_0_1px_var(--rede-red-300)_inset,0_0_0_4px_var(--rede-bg-900)_inset] disabled:bg-rede-red-500/60 disabled:text-rede-white/60'
       },
       size: {
-        sm: 'h-8 w-8 text-btn2',
-        md: 'h-9 w-9 text-btn2',
-        lg: 'h-11 w-11 text-btn1',
-        xl: 'h-13 w-13 text-btn1',
-      },
+        sm: 'p-2 rounded-[28px]',
+        md: 'p-[14px] rounded-[40px]',
+        lg: 'p-[26px] rounded-[64px]',
+        xl: 'p-9 rounded-[84px]'
+      }
     },
-    defaultVariants: { variant: 'primary', size: 'lg' },
+    defaultVariants: { variant: 'primary', size: 'md' }
   }
 )
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof mainButtonVariants> {
-  icon?: React.ReactNode
+  VariantProps<typeof mainButtonVariants> {
+  icon?: ReactNode
   iconPosition?: 'left' | 'right'
-  containerClassName?: string  // Para customizar o alinhamento ou gap do bloco todo
-  iconButtonClassName?: string // Para customizar o botão circular de forma independente
+  showMainButton?: boolean
+  containerClassName?: string
+  iconButtonClassName?: string
+  isActive?: boolean;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ 
-    variant, 
-    size, 
-    icon, 
-    iconPosition = 'left', 
-    containerClassName, 
-    iconButtonClassName, 
-    className, 
-    children, 
-    onClick, 
-    disabled, 
-    ...props 
-  }, ref) => {
-    
-    // Função para fazer o clique no ícone ativar a mesma ação do botão principal
-    const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (disabled) return
-      if (onClick) onClick(e as unknown as React.MouseEvent<HTMLButtonElement>)
-    }
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
+  variant,
+  size,
+  icon,
+  iconPosition = 'left',
+  showMainButton = true,
+  containerClassName,
+  iconButtonClassName,
+  className,
+  children,
+  onClick,
+  disabled,
+  isActive = false,
+  ...props
+}, ref) => {
 
-    const renderIconButton = icon ? (
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={handleIconClick}
-        className={cn(iconVariants({ variant, size }), iconButtonClassName)}
-        tabIndex={-1} // Evita que o utilizador precise de dar dois "Tabs" no teclado para passar o mesmo botão
-      >
-        {icon}
-      </button>
-    ) : null
+  const [isInteractionActive, setIsInteractionActive] = useState(isActive)
+  const [isHovered, setIsHovered] = useState(false)
 
-    return (
-      <div className={cn('inline-flex items-center', containerClassName)}>
-        {/* Ícone ao lado esquerdo (FORA do botão principal) */}
-        {iconPosition === 'left' && renderIconButton}
+  const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) return
+    if (onClick) onClick(e as unknown as React.MouseEvent<HTMLButtonElement>)
+  }
 
-        {/* Botão de Texto Real */}
+  const renderIconButton = icon ? (
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={handleIconClick}
+      className={cn(iconVariants({ variant, size }),
+        {
+          [interactionVariants[variant ?? 'primary'].hover]: isActive || isHovered,
+          [interactionVariants[variant ?? 'primary'].active]: isInteractionActive
+        },
+        iconButtonClassName)}
+      tabIndex={-1}
+    >
+      {withCurrentColor(icon)}
+    </button>
+  ) : null
+
+  return (
+    <div
+      className={cn('inline-flex items-center', containerClassName)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsInteractionActive(false);
+      }}
+      onMouseDown={() => setIsInteractionActive(true)}
+      onMouseUp={() => setIsInteractionActive(false)}
+    >
+      {iconPosition === 'left' && renderIconButton}
+
+      {showMainButton && (
         <button
           ref={ref}
           disabled={disabled}
           onClick={onClick}
-          className={cn(mainButtonVariants({ variant, size }), className)}
+          className={cn(
+            mainButtonVariants({ variant, size }),
+            {
+              [interactionVariants[variant ?? 'primary'].hover]: isActive || isHovered,
+              [interactionVariants[variant ?? 'primary'].active]: isInteractionActive
+            },
+            'flex-1',
+            className
+          )}
           {...props}
         >
           {children}
         </button>
+      )}
 
-        {/* Ícone ao lado direito (FORA do botão principal) */}
-        {iconPosition === 'right' && renderIconButton}
-      </div>
-    )
-  }
+      {iconPosition === 'right' && renderIconButton}
+    </div>
+  )
+}
 )
 
 Button.displayName = 'Button'

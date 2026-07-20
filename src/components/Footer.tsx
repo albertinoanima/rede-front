@@ -3,33 +3,37 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
+import { CustomYouTube } from "@/icons/CustomYouTube";
 import { CustomFacebook } from "@/icons/CustomFacebook";
 import { CustomInstagram } from "@/icons/CustomInstagram";
-import { CustomYouTube } from "@/icons/CustomYouTube";
 
-export const Footer: React.FC = () => {
+type VariantType = {
+  variant?: "yellow" | "red" | undefined;
+}
+
+export const Footer: React.FC<VariantType> = ({ variant }) => {
   return (
-    <footer className="w-full h-auto">
-      <div className="w-full max-w-360 h-auto mx-auto">
+    <footer className="w-full h-auto bg-rede-surface">
+      <div className="w-full max-w-360 h-auto mx-auto pt-28 pb-10">
 
         <div className="w-full flex">
           <div className="w-full h-full flex flex-col justify-center gap-4">
-            <Button variant="secondary" size="lg" className="border-2 border-white w-16 h-16 rounded-full p-0 cursor-pointer">
+            <Button variant="secondary" size="lg" containerClassName="w-16 h-16 rounded-full" className="border-2 border-white w-16 h-16 rounded-full p-0 cursor-pointer">
               <CustomFacebook width={64} height={64} />
             </Button>
 
-            <Button variant="secondary" size="lg" className="border-2 border-white w-16 h-16 rounded-full p-0 cursor-pointer">
+            <Button variant="secondary" size="lg" containerClassName="w-16 h-16 rounded-full" className="border-2 border-white w-16 h-16 rounded-full p-0 cursor-pointer">
               <CustomInstagram width={64} height={64} />
             </Button>
 
-            <Button variant="secondary" size="lg" className="border-2 border-white w-16 h-16 rounded-full p-0 cursor-pointer">
+            <Button variant="secondary" size="lg" containerClassName="w-16 h-16 rounded-full" className="border-2 border-white w-16 h-16 rounded-full p-0 cursor-pointer">
               <CustomYouTube width={64} height={64} />
             </Button>
           </div>
 
           <div className="w-full h-full flex flex-col justify-center items-center gap-4">
             <div className="w-fit">
-              <Heading level={"h3"} className="font-medium text-white text-[48px] leading-14 mb-4 text-left">
+              <Heading level={"h3"} className="font-medium text-rede-white text-[48px] leading-14 mb-4 text-left">
                 Menu
               </Heading>
 
@@ -47,7 +51,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="w-full h-full flex flex-col gap-4">
-            <Heading level={"h3"} className="font-medium text-white text-[48px] leading-14">
+            <Heading level={"h3"} className="font-medium text-rede-white text-[48px] leading-14">
               Contactos
             </Heading>
             <ul className="text-[12px] font-medium leading-4">
@@ -61,7 +65,7 @@ export const Footer: React.FC = () => {
 
         <div className="w-full">
           <div className="w-full max-w-348 h-53.25 mx-auto mt-52.5 mb-2.5">
-            <img src="/assets/footer/rede-logo-footer.svg" alt="REDE Logo" className="object-cover" />
+            <img src={`/assets/footer/${variant ? variant : "yellow"}-logo-footer.svg`} alt="REDE Logo" className="object-cover" />
           </div>
         </div>
 

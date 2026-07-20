@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Heading } from '../ui/heading'
 import { Input } from '../ui/Input'
 import { Select } from '../ui/select'
+import { SelectMultiple } from '../ui/select-multiple'
 
 const temaOptions = [
   'Direitos humanos',
@@ -20,6 +21,9 @@ export const FilterSidebar: React.FC = () => {
   const [genero, setGenero] = useState('');
   const [selectedTemas, setSelectedTemas] = useState<string[]>([]);
 
+
+  const [selectedProfissionais, setSelectedProfissionais] = useState<string[]>([])
+
   function toggleTema(tema: string) {
     setSelectedTemas((prev) =>
       prev.includes(tema) ? prev.filter((t) => t !== tema) : [...prev, tema]
@@ -27,53 +31,64 @@ export const FilterSidebar: React.FC = () => {
   }
 
   return (
-    <aside className="w-82.75 h-auto p-6 flex flex-col gap-6">
+    <aside className="w-82.75 h-auto pl-6 pr-6 flex flex-col gap-6">
       {/* Search */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center">
-          <Input placeholder='Pesquisar...' className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-white outline-none placeholder:text-white" icon={<SearchIcon size={18} className="text-white" />} iconPosition={"right"} iconContainerClassName='h-10 w-10 rounded-full border-2 border-white p-2.5"' />
+          <Input placeholder='Pesquisar...' className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white" icon={<SearchIcon size={18} className="text-rede-white" />} iconPosition={"right"} iconContainerClassName='h-10 w-10 rounded-full border-2 border-white p-2.5"' />
         </div>
 
         <div className="flex gap-2">
-          <Button className="w-34.25 h-7 bg-[#FCCB1C] py-4 px-1.5 rounded-4xl text-[#1D1D1B]">
+          <Button containerClassName='w-full'>
             Pesquisar
           </Button>
 
-          <Button className="w-34.25 h-7 bg-black py-3.5 px-1.5 border-2 border-white text-[#ffffff]">
+          <Button containerClassName='w-full' variant={"secondary"}>
             Limpar
           </Button>
         </div>
 
 
         <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-white'>País</Heading>
+          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>País</Heading>
           <div className="flex items-center">
-            <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
-              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
-              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-white outline-none"
-              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
+            <Select variant='primary' value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
+              triggerClassName="rounded-full border-2 border-white px-3 text-rede-white outline-none"
+              popoverClassName="rounded-[12px] border-2 border-white px-3 text-rede-white outline-none mt-[10px]"
+              satelliteClassName="border-2 border-white"
             />
           </div>
         </div>
 
         <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-white'>Tema</Heading>
+          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Cidade/Proíncia</Heading>
           <div className="flex items-center">
-            <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
-              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
-              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-white outline-none"
-              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
+            <Select variant='primary' value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
+              triggerClassName="rounded-full border-2 border-white px-3 text-rede-white outline-none"
+              popoverClassName="rounded-[12px] border-2 border-white px-3 text-rede-white outline-none mt-[10px]"
+              satelliteClassName="border-2 border-white"
             />
           </div>
         </div>
 
         <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-white'>Género</Heading>
+          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Tipo</Heading>
+          <div className="flex items-center">
+            <Select variant='primary' value='Estágio' placeholder='Selecionar tipo' options={[{ label: "Estágio", value: "estagio" }, { label: "Subvenção", value: "subvencao" }]}
+              triggerClassName="rounded-full border-2 border-white px-3 text-rede-white outline-none"
+              popoverClassName="rounded-[12px] border-2 border-white px-3 text-rede-white outline-none mt-[10px]"
+              satelliteClassName="border-2 border-white"
+            />
+          </div>
+        </div>
+
+        <div className='flex flex-col gap-2'>
+          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Categoria</Heading>
           <div className="flex items-center">
             <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
-              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
-              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-white outline-none"
-              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-white outline-none"
+              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
+              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-rede-white outline-none"
+              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
             />
           </div>
         </div>

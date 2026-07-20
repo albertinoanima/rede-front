@@ -2,9 +2,10 @@
 import * as React from 'react'
 import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
+import { Check, ChevronDown } from 'lucide-react'
 
 const selectTriggerVariants = cva(
-  'w-full inline-flex items-center justify-between font-medium transition-all rounded-full bg-transparent text-white border border-white/20 focus:outline-none focus:border-rede-yellow disabled:cursor-not-allowed disabled:opacity-40 text-left',
+  'w-full inline-flex items-center justify-between font-medium transition-all rounded-full bg-transparent text-rede-white border border-white/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 text-left',
   {
     variants: {
       size: {
@@ -19,7 +20,7 @@ const selectTriggerVariants = cva(
 )
 
 const satelliteVariants = cva(
-  'inline-flex items-center justify-center rounded-full transition-all shrink-0 aspect-square bg-transparent text-white border border-white/20 disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center rounded-full transition-all shrink-0 aspect-square bg-transparent text-rede-white border border-white/20 disabled:cursor-not-allowed',
   {
     variants: {
       size: {
@@ -33,6 +34,30 @@ const satelliteVariants = cva(
   }
 )
 
+const variantStyles = {
+  primary: {
+    open: 'border-rede-yellow text-rede-yellow',
+    popover: 'border-rede-yellow',
+    checkFill: 'border-rede-yellow bg-rede-yellow text-rede-surface',
+    checkEmpty: 'border-rede-yellow/40',
+    selected: 'bg-rede-yellow text-rede-surface hover:bg-rede-yellow/90 hover:text-rede-surface',
+  },
+  secondary: {
+    open: 'border-white text-rede-white',
+    popover: 'border-white',
+    checkFill: 'border-white bg-white text-rede-surface',
+    checkEmpty: 'border-white/40',
+    selected: 'bg-white text-rede-surface hover:bg-white/90 hover:text-rede-surface',
+  },
+  danger: {
+    open: 'border-rede-red text-rede-red',
+    popover: 'border-rede-red',
+    checkFill: 'border-rede-red bg-rede-red text-rede-white',
+    checkEmpty: 'border-rede-red/40',
+    selected: 'bg-rede-red text-rede-white hover:bg-rede-red/90 hover:text-rede-white',
+  },
+}
+
 export interface SelectOption {
   value: string
   label: string
@@ -45,10 +70,11 @@ export interface SelectProps {
   placeholder?: string
   disabled?: boolean
   size?: 'sm' | 'md' | 'lg' | 'xl'
-  className?: string          // Controla o container geral (ex: largura)
-  triggerClassName?: string    // Controla a cor/borda do botão principal
-  satelliteClassName?: string  // Controla a cor/borda do botão do ícone
-  popoverClassName?: string    // Controla o fundo/borda do menu suspenso
+  variant?: 'primary' | 'secondary' | 'danger'
+  className?: string
+  triggerClassName?: string
+  satelliteClassName?: string
+  popoverClassName?: string
 }
 
 export const Select = ({
@@ -58,6 +84,7 @@ export const Select = ({
   placeholder = 'Selecione uma opção...',
   disabled,
   size = 'lg',
+  variant = 'primary',
   className,
   triggerClassName,
   satelliteClassName,
@@ -67,6 +94,7 @@ export const Select = ({
   const containerRef = React.useRef<HTMLDivElement>(null)
 
   const selectedOption = options.find((opt) => opt.value === value)
+  const v = variantStyles[variant]
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -81,7 +109,7 @@ export const Select = ({
   return (
     <div ref={containerRef} className={cn('relative inline-flex flex-col w-full gap-2', className)}>
       <div className="inline-flex items-center w-full">
-        
+
         {/* CORPO DO SELECT */}
         <button
           type="button"
@@ -89,8 +117,8 @@ export const Select = ({
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
             selectTriggerVariants({ size }),
-            isOpen && 'border-rede-yellow text-rede-yellow',
-            triggerClassName
+            triggerClassName,
+            isOpen && v.open,
           )}
         >
           <span className={cn(!selectedOption && 'opacity-40')}>
@@ -105,33 +133,23 @@ export const Select = ({
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
             satelliteVariants({ size }),
-            isOpen && 'border-rede-yellow text-rede-yellow',
-            satelliteClassName
+            satelliteClassName,
+            isOpen && v.open,
           )}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+          <ChevronDown
             className={cn('transition-transform duration-200', isOpen && 'rotate-180')}
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
+          />
         </button>
       </div>
 
-      {/* MENU DROPDOWN (VIBE OPTION REAL) */}
+      {/* MENU DROPDOWN */}
       {isOpen && (
         <div
           className={cn(
-            'absolute top-[105%] left-0 w-full z-50 overflow-hidden rounded-2xl border border-white/10 bg-rede-black p-1.5 shadow-xl',
-            popoverClassName
+            'absolute top-[105%] left-0 w-full z-50 overflow-hidden rounded-2xl border bg-rede-surface p-1.5 shadow-xl',
+            popoverClassName,
+            v.popover,
           )}
         >
           <ul className="max-h-60 overflow-y-auto space-y-1">
@@ -147,17 +165,13 @@ export const Select = ({
                     }}
                     className={cn(
                       'w-full text-left px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-150',
-                      'text-white/70 hover:bg-white/5 hover:text-white', // Feedback sutil de hover nas opções
-                      isSelected && 'bg-rede-yellow text-rede-black hover:bg-rede-yellow/90 hover:text-rede-black' // Elemento selecionado com a tua cor dominante
+                      'text-rede-white/70 hover:bg-white/5 hover:text-rede-white',
+                      isSelected && v.selected,
                     )}
                   >
                     <div className="flex items-center justify-between w-full">
                       <span>{option.label}</span>
-                      {isSelected && (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                      )}
+                      {isSelected && <Check width={16} height={16} />}
                     </div>
                   </button>
                 </li>
