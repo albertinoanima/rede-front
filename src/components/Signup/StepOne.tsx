@@ -1,47 +1,58 @@
-import { Building2, ChevronRight, UserRound } from "lucide-react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/Input";
-import { GoogleIcon } from "@/icons/GoogleIcon";
+"use client"
+
 import { Text } from "../ui/text";
-import { AccountType } from "@/types/User";
-import { Dispatch, SetStateAction } from "react";
-import { GoogleProfile } from "./Signup";
+import { Input } from "../ui/Input";
+import { Button } from "../ui/button";
+import { GoogleIcon } from "@/icons/GoogleIcon";
+import { Dispatch, SetStateAction, useState } from "react";
+import { Building2, ChevronRight, UserRound } from "lucide-react";
+import { signupv2 } from "@/actions/authentication";
+import { User } from "@/types/User";
 
 
 type StepOneType = {
-    setStep: Dispatch<SetStateAction<number>>;
-    name: string;
-    setName: Dispatch<SetStateAction<string>>;
-    email: string;
-    setEmail: Dispatch<SetStateAction<string>>;
-    googleProfile: GoogleProfile | null;
-    accountType: AccountType;
-    setAccountType: Dispatch<SetStateAction<AccountType>>;
-    handleGoogleSignup: () => Promise<void>;
-    canGoToStep2: boolean | "";
+    register: User;
+    setRegister: Dispatch<SetStateAction<User>>;
+    canGoToStep2: string | boolean | undefined;
 }
 
-export const StepOne: React.FC<StepOneType> = ({ canGoToStep2, setStep, name, setName, email, setEmail, googleProfile, accountType, setAccountType, handleGoogleSignup }) => {
+export const StepOne: React.FC<StepOneType> = ({ register, setRegister, canGoToStep2 }) => {
+
+    const [googleProfile, setGoogleProfile] = useState<{
+        name: string;
+        image: string;
+        email: string;
+    }>();
+
+
+    const createUser = async (localRegister: User) => {
+        const responseData = await signupv2(localRegister);
+        console.log("responseData front: ", responseData);
+
+        //setStep(2)
+    }
+
+
     return (
         <div className='w-full flex flex-col gap-6'>
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
                 <Button
                     type='button'
-                    variant={accountType === 'individual' ? 'primary' : 'secondary'}
+                    variant={register.profileData.accountType === 'individual' ? 'primary' : 'secondary'}
                     icon={<UserRound width={14} height={14} />}
-                    className={accountType === 'individual' ? 'text-rede-surface' : ''}
+                    className={register.profileData.accountType === 'individual' ? 'text-rede-surface' : ''}
                     containerClassName='w-full'
-                    onClick={() => setAccountType('individual')}
+                    onClick={() => setRegister((lastState) => ({ ...lastState, accountType: 'individual' }))}
                 >
                     Individual
                 </Button>
                 <Button
                     type='button'
-                    variant={accountType === 'company' ? 'primary' : 'secondary'}
+                    variant={register.profileData.accountType === 'company' ? 'primary' : 'secondary'}
                     icon={<Building2 width={14} height={14} />}
-                    className={accountType === 'company' ? 'text-rede-surface' : ''}
+                    className={register.profileData.accountType === 'company' ? 'text-rede-surface' : ''}
                     containerClassName='w-full'
-                    onClick={() => setAccountType('company')}
+                    onClick={() => setRegister((lastState) => ({ ...lastState, accountType: 'company' }))}
                 >
                     Empresa
                 </Button>
@@ -49,15 +60,15 @@ export const StepOne: React.FC<StepOneType> = ({ canGoToStep2, setStep, name, se
 
             <div className='flex flex-col gap-2'>
                 <label className='text-[20px] leading-7' htmlFor='nameField'>Nome</label>
-                <Input variant={"secondary"} placeholder='Seu nome' className='w-full' id='nameField' value={name} onChange={(event) => setName(event.target.value)} />
+                <Input variant={"secondary"} placeholder='Seu nome' className='w-full' id='nameField' value={register.name} onChange={(event) => setRegister((lastState) => ({ ...lastState, name: event.target.value }))} />
             </div>
 
             <div className='flex flex-col gap-2'>
                 <label className='text-[20px] leading-7' htmlFor='emailField'>Email</label>
-                <Input variant={"secondary"} type='email' placeholder='seu@email.com' className='w-full' id='emailField' value={email} onChange={(event) => setEmail(event.target.value)} />
+                <Input variant={"secondary"} type='email' placeholder='seu@email.com' className='w-full' id='emailField' value={register.email} onChange={(event) => setRegister((lastState) => ({ ...lastState, email: event.target.value }))} />
             </div>
 
-            <Button type='button' variant={"secondary"} icon={<GoogleIcon width={12} height={12} />} className='w-full' containerClassName='w-full' onClick={handleGoogleSignup}>
+            <Button type='button' variant={"secondary"} icon={<GoogleIcon width={12} height={12} />} className='w-full' containerClassName='w-full'>
                 Continue com Google
             </Button>
 
@@ -74,7 +85,7 @@ export const StepOne: React.FC<StepOneType> = ({ canGoToStep2, setStep, name, se
                 </div>
             )}
 
-            <Button type='button' containerClassName='w-full' className='text-rede-surface' icon={<ChevronRight width={14} height={14} />} iconPosition='right' disabled={!canGoToStep2} onClick={() => setStep(2)}>
+            <Button type='button' containerClassName='w-full' className='text-rede-surface' icon={<ChevronRight width={14} height={14} />} iconPosition='right' disabled={!canGoToStep2} onClick={() => createUser(register)} >
                 Avançar
             </Button>
         </div>
