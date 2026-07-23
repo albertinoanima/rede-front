@@ -1,18 +1,62 @@
 'use server'
 
-import { AxiosError } from 'axios'
-import { api, apiRoutes } from '@/lib/api'
-import { Profile } from '@/types/Profile'
-import { AccountType, User } from '@/types/User'
+import { api } from '@/lib/api'
+import { User } from '@/types/User'
 
 
-export const signupv2 = async (user: User) => {
+type SignupResponseType = {
+  error?: string;
+  message?: string;
+  data?: {
+    user: User;
+    requiresEmailConfirmation: boolean;
+  };
+}
+
+export const signup = async (user: User): Promise<SignupResponseType> => {
   try {
-    const responseData = await api.post<User>("/api/v1/auth/signup", user);
-    console.log(responseData);
+    const responseData = await api.post("/api/v1/auth/signup", user);
+    if (responseData.data) {
+      const { user, requiresEmailConfirmation } = responseData.data;
+      return {
+        data: { user, requiresEmailConfirmation }
+      }
+    }
 
+    return {
+      message: "Erro desconhecido",
+      error: "",
+      data: undefined
+    };
   } catch (err: any) {
-    console.log(err);
+    return {
+      error: err.response?.data?.error || "Erro desconhecido",
+      message: err.response?.data?.message || "Não foi possível realizar o cadastro"
+    }
+  }
+}
+
+
+export const confirmAccountAndChangePassword = async (token: string, password: string): Promise<SignupResponseType> => {
+  try {
+    const responseData = await api.post("/api/v1/auth/reset-password", { token, password });
+    if (responseData.data) {
+      const { user, requiresEmailConfirmation } = responseData.data;
+      return {
+        data: { user, requiresEmailConfirmation }
+      }
+    }
+
+    return {
+      message: "Erro desconhecido",
+      error: "",
+      data: undefined
+    };
+  } catch (err: any) {
+    return {
+      error: err.response?.data?.error || "Erro desconhecido",
+      message: err.response?.data?.message || "Não foi possível realizar o cadastro"
+    }
   }
 }
 
