@@ -90,7 +90,7 @@ export const AdvancedSearch: React.FC = () => {
 
             <div className="w-full max-w-360 h-auto ml-auto mr-auto">
                 <div className='flex items-center justify-between mt-5'>
-                    <Heading level={"h2"} className={`${customBlur} ml-3 text-[48px] leading-11.5 font-medium mb-5 text-rede-yellow`}>
+                    <Heading level={"h2"} className={`${customBlur.className} ml-3 text-[48px] leading-11.5 font-medium mb-5 text-rede-yellow`}>
                         Pesquisa <br /> Avançada
                     </Heading>
 

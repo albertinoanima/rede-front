@@ -125,7 +125,7 @@ export const Opportunities: React.FC = () => {
       <div className="w-full max-w-360 h-auto ml-auto mr-auto">
 
         <div className='flex items-center justify-between'>
-          <Heading level={"h2"} className={`${customBlur} ml-3 text-[48px] leading-11.5 font-medium mb-5 text-rede-yellow`}>
+          <Heading level={"h2"} className={`${customBlur.className} ml-3 text-[48px] leading-11.5 font-medium mb-5 text-rede-yellow`}>
             Todas <br /> Opportunidades
           </Heading>
 
@@ -140,7 +140,9 @@ export const Opportunities: React.FC = () => {
         </div>
 
         <div className='flex mt-10'>
-          <FilterSidebar />
+          <div className='w-82.75'>
+            <FilterSidebar />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-6 pb-6">
             {opportunities.map((opp) => (
               <OpportunityCard

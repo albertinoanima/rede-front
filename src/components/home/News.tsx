@@ -4,15 +4,11 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { ArticleCard } from "../ArticleCard";
+import Link from "next/link";
+import { NEWS } from "../news/news";
 
 
 export const News: React.FC = () => {
-
-    const images = [
-        "/assets/home/news/news-1.png",
-        "/assets/home/news/news-2.png",
-        "/assets/home/news/news-3.png",
-    ];
 
     return (
         <section className="w-full h-auto bg-rede-surface">
@@ -23,16 +19,19 @@ export const News: React.FC = () => {
                 </div>
 
                 <div className="w-full h-auto flex items-center justify-end mb-5">
-                    <Button variant={"secondary"} icon={<ArrowRight width={12} height={12}/>} iconPosition="right">Ver todas</Button>
+                    <Button variant={"secondary"} icon={<ArrowRight width={12} height={12} />} iconPosition="right">Ver todas</Button>
                 </div>
 
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {
-                        images.map((imageURL: string, pos: number) => (
-                            <ArticleCard imageURL={imageURL} key={"dxhdrhrdhdxr" + (pos * 2)} />
-                        ))
-                    }
+                    {NEWS.map((news) => (
+                        <Link key={news.id} href={"/news-details"}>
+                            <ArticleCard
+
+                                newsData={news}
+                            />
+                        </Link>
+                    ))}
                 </div>
 
             </div>

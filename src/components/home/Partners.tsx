@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { customBlur } from "@/app/fonts";
-import { Heading } from "@/components/ui/heading";
+import { Text } from "../ui/text";
 
 type Logo = {
     src: string;
@@ -9,115 +8,202 @@ type Logo = {
     height: number;
 };
 
-type PartnerGroup = {
-    label: string;
-    logos: Logo[];
-    caption?: string;
-};
-
-type PartnerRow = {
-    left: PartnerGroup;
-    right: PartnerGroup;
-};
-
-const partnerRows: PartnerRow[] = [
-    {
-        left: {
-            label: "Uma Iniciativa",
-            logos: [
-                { src: "/assets/partners/museu-cinema.svg", alt: "Museu do Cinema", width: 222, height: 144 },
-            ],
-        },
-        right: {
-            label: "Parceiros de Implementação",
-            logos: [
-                { src: "/assets/partners/ekran.svg", alt: "Ekran Eventos", width: 222, height: 144 },
-                { src: "/assets/partners/paralax.svg", alt: "Paralax", width: 222, height: 144 },
-                { src: "/assets/partners/ccfm.svg", alt: "CCFM - Centro Cultural Franco-Moçambicano", width: 222, height: 144 },
-                { src: "/assets/partners/tela-digital.svg", alt: "Tela Digital", width: 222, height: 144 },
-            ],
-        },
-    },
-    {
-        left: {
-            label: "Projecto Financiado por",
-            logos: [
-                { src: "/assets/partners/camoes.svg", alt: "Camões, Instituto da Cooperação e da Língua", width: 222, height: 144 },
-            ],
-            caption: "Projecto financiado pela Cooperação Portuguesa. Camões, I.P.",
-        },
-        right: {
-            label: "Outros Apoios Financeiros",
-            logos: [
-                { src: "/assets/partners/creation-africa.svg", alt: "Création Africa Moçambique", width: 222, height: 144 },
-                { src: "/assets/partners/silhueta.svg", alt: "Embaixada Francesa", width: 222, height: 144 },
-                { src: "/assets/partners/institute.svg", alt: "Institut Français", width: 222, height: 144 },
-            ],
-            caption: "Projecto implementado com apoio da Embaixada Francesa em Moçambique – FEF Criação Moçambique 2025",
-        },
-    },
-    {
-        left: {
-            label: "Uma Fase Preliminar Deste Projecto foi Financiado por",
-            logos: [
-                { src: "/assets/partners/uniao-europeia.svg", alt: "União Europeia", width: 222, height: 144 },
-                { src: "/assets/partners/palop-tl.svg", alt: "PALOP-TL UE", width: 222, height: 144 },
-            ],
-        },
-        right: {
-            label: "Parceiros Institucionais",
-            logos: [
-                { src: "/assets/partners/inic.svg", alt: "INIC - Instituto Nacional das Indústrias Culturais e Criativas", width: 222, height: 144 },
-                { src: "/assets/partners/ministerio-da-cultura.svg", alt: "Ministério da Cultura e das Indústrias Criativas", width: 222, height: 144 },
-            ],
-        },
-    },
+const logos: Logo[] = [
+    { src: "/assets/partners/lgs/camoes.png", alt: "Camões, Instituto da Cooperação e da Língua", width: 350, height: 300 },
+    { src: "/assets/partners/lgs/museu-cinema.png", alt: "Museu do Cinema", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/tela-digital.png", alt: "Tela Digital", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/ekran.png", alt: "Ekran Eventos", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/paralax.png", alt: "Paralax", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/cultiv-arte.png", alt: "Cultiv'Arte", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/brasao.png", alt: "Brasão de Armas", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/uniao-europeia.png", alt: "União Europeia", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/expertise-france.png", alt: "Expertise France", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/palop-tl.png", alt: "PALOP-TL UE", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/ccfm.png", alt: "CCFM - Centro Cultural Franco-Moçambicano", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/creation-africa.png", alt: "Création Africa Moçambique", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/silhueta.png", alt: "Embaixada Francesa", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/institute.png", alt: "Institut Français 30", width: 250, height: 200 },
+    { src: "/assets/partners/lgs/inic.png", alt: "Institute Nacional", width: 250, height: 200 },
 ];
-
-const LogoGroup: React.FC<{ group: PartnerGroup }> = ({ group }) => (
-    <div className="flex flex-col items-start gap-6">
-        <span className="text-sm text-rede-surface tracking-wide">{group.label}</span>
-
-        <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
-            {group.logos.map((logo, index) => (
-                <div className={`w-${logo.width} h-${logo.height}`} key={"vr" + index}>
-                    <Image
-                        key={logo.src}
-                        src={logo.src}
-                        alt={logo.alt}
-                        width={logo.width}
-                        height={logo.height}
-                        className="w-full h-full max-h-14 object-cover"
-                    />
-                </div>
-            ))}
-        </div>
-
-        {group.caption && (
-            <p className="w-full text-center text-xs text-rede-surface">{group.caption}</p>
-        )}
-    </div>
-);
 
 export const Partners: React.FC = () => {
     return (
-        <section className="w-full h-auto bg-rede-white">
-            <div className="relative w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-28 pb-10">
+        <section className="w-full h-auto bg-rede-white py-16">
+            <div className="w-full max-w-360 mx-auto flex flex-wrap items-center justify-center gap-x-14  px-5">
 
-                <div className="w-full h-36">
-                    <Heading className={`${customBlur.className} text-rede-surface text-[96px] font-medium leading-24`}>Parceiros</Heading>
+                <div className="w-full h-auto flex flex-col justify-center items-center">
+                    <Text className="text-[12px] leading-4 font-normal text-rede-surface">PROJECTO FINANCIADO POR</Text>
+                    <div className="flex items-center justify-center w-62.5 h-50">
+                        <Image
+                            src={logos[0].src}
+                            alt={logos[0].alt}
+                            width={logos[0].width}
+                            height={logos[0].height}
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
                 </div>
 
-                <div className="flex flex-col w-full gap-14">
-                    {partnerRows.map((row) => (
-                        <div key={row.left.label} className="flex w-full items-start justify-between gap-20">
-                            <LogoGroup group={row.left} />
-                            <LogoGroup group={row.right} />
+                <div className="w-full h-auto flex justify-center items-center">
+                    <div className="w-auto flex flex-col items-center justify-center">
+                        <Text className="text-[12px] leading-4 font-normal text-rede-surface">UMA INICIATIVA</Text>
+                        <div className="flex items-center justify-center w-62.5 h-50">
+                            <Image
+                                src={logos[1].src}
+                                alt={logos[1].alt}
+                                width={logos[1].width}
+                                height={logos[1].height}
+                                className="w-full h-full object-cover"
+                            />
                         </div>
-                    ))}
+                    </div>
+
+                    <div className="w-auto flex flex-col items-center justify-center">
+                        <Text className="text-[12px] leading-4 font-normal text-rede-surface">PARCEIROS DE IMPLEMENTAÇÃO</Text>
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[2].src}
+                                    alt={logos[2].alt}
+                                    width={logos[2].width}
+                                    height={logos[2].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[3].src}
+                                    alt={logos[3].alt}
+                                    width={logos[3].width}
+                                    height={logos[3].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[4].src}
+                                    alt={logos[4].alt}
+                                    width={logos[4].width}
+                                    height={logos[4].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+
+
+                <div className="w-full h-auto flex justify-center items-center">
+                    <div className="w-auto flex flex-col items-center justify-center">
+                        <Text className="text-[12px] leading-4 font-normal text-rede-surface">OUTROS APOIOS FINANCEIROS</Text>
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[5].src}
+                                    alt={logos[5].alt}
+                                    width={logos[5].width}
+                                    height={logos[5].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[6].src}
+                                    alt={logos[6].alt}
+                                    width={logos[6].width}
+                                    height={logos[6].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[7].src}
+                                    alt={logos[7].alt}
+                                    width={logos[7].width}
+                                    height={logos[7].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[8].src}
+                                    alt={logos[8].alt}
+                                    width={logos[8].width}
+                                    height={logos[8].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div className="w-full h-auto flex justify-center items-center">
+                    <div className="w-auto flex flex-col items-center justify-center">
+                        <Text className="text-[12px] leading-4 font-normal text-rede-surface">UMA FASE ANTERIOR DESTE PROJECTO FOI FINANCIADA POR</Text>
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[9].src}
+                                    alt={logos[9].alt}
+                                    width={logos[9].width}
+                                    height={logos[9].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[10].src}
+                                    alt={logos[10].alt}
+                                    width={logos[10].width}
+                                    height={logos[10].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[11].src}
+                                    alt={logos[11].alt}
+                                    width={logos[11].width}
+                                    height={logos[11].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[12].src}
+                                    alt={logos[12].alt}
+                                    width={logos[12].width}
+                                    height={logos[12].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div className="flex items-center justify-center w-62.5 h-50">
+                                <Image
+                                    src={logos[13].src}
+                                    alt={logos[13].alt}
+                                    width={logos[13].width}
+                                    height={logos[13].height}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* {logos.map((logo) => (
+                    <div key={logo.src} className={`flex items-center justify-center w-[250px] h-[200px]`}>
+                        <Image
+                            src={logo.src}
+                            alt={logo.alt}
+                            width={logo.width}
+                            height={logo.height}
+                            className="h-full w-auto object-contain"
+                        />
+                    </div>
+                ))} */}
             </div>
         </section>
     );
-}
+};

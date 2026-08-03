@@ -58,7 +58,8 @@ export const Footer: React.FC<VariantType> = ({ variant }) => {
               <li className="mb-2.5"><Link href="mailto:info@redepaloptl.org">info@redepaloptl.org</Link></li>
               <li className="mb-2.5"><Link href="tel:+258840000000">+258 84 000 0000</Link></li>
               <li className="mb-2.5"><Link href="film-commission">Film Commission</Link></li>
-              <li className="mb-2.5"><Link href="/terms">Termos de uso</Link></li>
+              <li className="mb-2.5"><Link href="/assets/governação_digital_V0_19-07-26_terms.pdf">Termos de uso</Link></li>
+              <li className="mb-2.5"><Link href="/assets/governação-digital_V0_SHORT_VERSION_politicas.pdf">Políticas</Link></li>
             </ul>
           </div>
         </div>

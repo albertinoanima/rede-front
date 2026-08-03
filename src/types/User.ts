@@ -41,3 +41,23 @@ export interface User {
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+
+export interface LoggedUser {
+    id: string;
+
+    name: string;
+    email: string;
+
+    loginType: LoginType; //"normal" | "google"
+    userType: "normal";
+
+    imageUrl?: string;
+    isActive?: string; // Opcional, pois login via Google nao tem senha local
+    isEmailConfirmed: boolean;
+
+    profileData: any;
+
+    createdAt?: Date;
+    updatedAt?: Date;
+}

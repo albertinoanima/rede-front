@@ -12,15 +12,15 @@ import { AssociatedNews } from "@/components/profile/AssociatedNews";
 export default function ProfilePage() {
     return (
         <main className="bg-rede-bg">
-            <TopBar/>
-            <Hero/>
-            <Bio/>
-            <Skills/>
-            <Achievements/>
-            <Filmography/>
-            <OutsideAgency/>
-            <AssociatedNews/>
-            <Footer/>
+            <TopBar />
+            <Hero />
+            <Bio />
+            <Skills />
+            <Achievements />
+            <Filmography />
+            <OutsideAgency />
+            <AssociatedNews />
+            <Footer />
         </main>
     )
 }

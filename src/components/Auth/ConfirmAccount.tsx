@@ -5,25 +5,19 @@ import { SubmitEvent } from 'react';
 import { Input } from "../ui/Input";
 import { Button } from "../ui/button";
 import { Eye, EyeOff } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { confirmAccountAndChangePassword } from "@/actions/authentication";
+import { useAuth } from "@/hooks/useAuth";
 
-export const ConfirmAccount: React.FC = () => {
-    const searchParams = useSearchParams();
+export const ConfirmAccount: React.FC<{ token: string }> = ({ token }) => {
+    const { updaInternalDataState } = useAuth();
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<string>("");
-    const [theToken, setTheToken] = useState<string>();
+    const [successInfo, setSuccessInfo] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showRePassword, setShowRePassword] = useState(false);
-
-    useEffect(() => {
-        const token = searchParams.get('token');
-        if (!token) return;
-        setTheToken(String(token || ""));
-    }, [searchParams]);
 
 
     const submitForm = async (event: SubmitEvent<HTMLFormElement>) => {
@@ -42,12 +36,22 @@ export const ConfirmAccount: React.FC = () => {
         }
 
         setIsLoading(true);
-        const responseData = await confirmAccountAndChangePassword(theToken!, password);
-        console.log(responseData);
+        const responseData = await confirmAccountAndChangePassword(token, password);
         const { error, message } = responseData;
 
         if (String(error || "").length > 0 && String(message || "").length > 0) {
             setMessage(String(message || ""));
+            return;
+        }
+
+        if (responseData?.user && responseData?.token) {
+            setSuccessInfo(true);
+            updaInternalDataState({ profileData: responseData?.user, token: responseData?.token });
+            setMessage("Palavra-passe alteradaa com sucesso! A Redirecionar...");
+
+            setTimeout(() => {
+                location.href = "/onboarding";
+            }, 2000)
         }
 
         setIsLoading(false);
@@ -75,12 +79,16 @@ export const ConfirmAccount: React.FC = () => {
                     />
                 </div>
 
-                {
+                {/* {
                     (message.length > 0) &&
                     <Text className='text-[14px] leading-6 font-bold text-center flex justify-center items-center gap-2.5 text-rede-red' dangerouslySetInnerHTML={{ __html: message }} />
+                } */}
+
+                {(message.length > 0) &&
+                    <Text className={`text-[12px] leading-[16px] ${successInfo ? "text-rede-yellow" : "text-rede-red"} text-center`} dangerouslySetInnerHTML={{ __html: message }} />
                 }
 
-                <Button type='submit' containerClassName='w-full' className='text-rede-surface' disabled={isLoading} onClick={() => changePassword()} >
+                <Button type='submit' containerClassName='w-full' className='text-rede-surface' disabled={isLoading} >
                     {isLoading ? "A processar" : "Alterar"}
                 </Button>
             </div>

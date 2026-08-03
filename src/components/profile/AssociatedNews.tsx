@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { ArticleCard } from "../ArticleCard";
+import { NEWS } from "../news/news";
+import Link from "next/link";
 
 
 export const AssociatedNews: React.FC = () => {
@@ -22,13 +24,15 @@ export const AssociatedNews: React.FC = () => {
                     <Heading className={`${customBlur.className} text-rede-white text-[48px] font-medium leading-12`}>Noticias associadas</Heading>
                 </div>
 
-
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {
-                        images.map((imageURL: string, pos: number) => (
-                            <ArticleCard imageURL={imageURL} key={"dxhdrhrdhdxr" + (pos * 2)} />
-                        ))
-                    }
+                    {NEWS.map((news) => (
+                        <Link key={news.id} href={"/news-details"}>
+                            <ArticleCard
+
+                                newsData={news}
+                            />
+                        </Link>
+                    ))}
                 </div>
 
             </div>

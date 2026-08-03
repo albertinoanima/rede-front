@@ -4,25 +4,30 @@ import { customBlur } from '@/app/fonts';
 import { User } from '@/types/User';
 import { Heading } from "../ui/heading"
 import { Text } from '../ui/text';
-import { SubmitEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { signup } from '@/actions/authentication';
 import { Button } from '../ui/button';
 import { Building2, ChevronRight, UserRound } from 'lucide-react';
 import { Input } from '../ui/Input';
 import { GoogleIcon } from '@/icons/GoogleIcon';
-
-
-const selectClassNames = {
-    triggerClassName: "rounded-full border-2 border-white px-3 text-rede-white outline-none",
-    popoverClassName: "rounded-[12px] border-2 border-white px-3 text-rede-white outline-none mt-[10px]",
-    satelliteClassName: "border-2 border-white",
-};
+import { useAuth } from '@/hooks/useAuth';
 
 
 export const Signup: React.FC = () => {
+    const { sigNup } = useAuth();
+
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
+
+    // if (!isAuthenticated) {
+    //     return <div>Não autenticado</div>;
+    // }
+
+
     const [message, setMessage] = useState("");
     const [showMessaage, setShowMessaage] = useState(false);
+    const [requireConfirmation, setRequireConfirmation] = useState(false);
 
     const [googleProfile, setGoogleProfile] = useState<{
         name: string;
@@ -62,27 +67,45 @@ export const Signup: React.FC = () => {
     }, [googleProfile])
 
 
-    const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
         setShowMessaage(false);
-
-        const responseData = await signup(register);
-        if (responseData?.error) {
-            setShowMessaage(true);
-            setMessage(responseData?.message || "Ocorreu um erro ao criar a conta.");
-            return;
-        }
-
-        if (responseData?.data) {
-            const { user, requiresEmailConfirmation } = responseData?.data;
-            if (user.loginType === "google") {
-                //
-            }
-
-            if (user.loginType === "normal" && requiresEmailConfirmation) {
+        try {
+            const responseData = await sigNup(register);
+            if (responseData?.error) {
                 setShowMessaage(true);
-                setMessage("Conta criada com sucesso.<br/> Aceda ao seu e-mail para confirmar a conta.");
+                setMessage(responseData?.message || "Ocorreu um erro ao criar a conta.");
+
+                setTimeout(() => {
+                    setShowMessaage(false);
+                    setMessage("");
+                }, 3000);
+                return;
             }
+
+            if (responseData?.data) {
+                const { user, requiresEmailConfirmation, emailConfirmationToken } = responseData?.data;
+                setRequireConfirmation(requiresEmailConfirmation);
+
+                if (user.loginType === "google") {
+                    //
+                }
+
+                if (user.loginType === "normal" && requiresEmailConfirmation) {
+                    setShowMessaage(true);
+                    setMessage("Conta criada com sucesso.<br/> Aceda ao seu e-mail para confirmar a conta.");
+
+                    setTimeout(() => {
+                        setShowMessaage(false);
+                        setMessage("");
+                        window.location.assign(
+                            `/confirm-account?confirm=${encodeURIComponent(emailConfirmationToken || "")}&continueParam=yes`
+                        );
+                    }, 3000);
+                }
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -137,10 +160,6 @@ export const Signup: React.FC = () => {
                         <Input variant={"secondary"} type='email' placeholder='seu@email.com' className='w-full' id='emailField' value={register.email} onChange={(event) => setRegister((lastState) => ({ ...lastState, email: event.target.value }))} />
                     </div>
 
-                    <Button type='button' variant={"secondary"} icon={<GoogleIcon width={12} height={12} />} className='w-full' containerClassName='w-full'>
-                        Continue com Google
-                    </Button>
-
                     {googleProfile && (
                         <div className='flex items-center gap-3 rounded-lg border border-rede-white/20 p-3'>
                             <div
@@ -154,8 +173,16 @@ export const Signup: React.FC = () => {
                         </div>
                     )}
 
+                    {(showMessaage && message.length > 0) &&
+                        <Text className={`text-[12px] leading-4 ${requireConfirmation ? "text-rede-yellow" : "text-rede-red"} text-center`} dangerouslySetInnerHTML={{ __html: message }} />
+                    }
+
                     <Button type='submit' containerClassName='w-full' className='text-rede-surface' icon={<ChevronRight width={14} height={14} />} iconPosition='right'>
                         Avançar
+                    </Button>
+
+                    <Button type='button' variant={"secondary"} icon={<GoogleIcon width={12} height={12} />} className='w-full' containerClassName='w-full'>
+                        Continue com Google
                     </Button>
                 </div>
                 <div className='w-full flex justify-center mt-8 mb-2'>

@@ -1,10 +1,9 @@
 "use client"
 
-import { ChevronLeft } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/Input";
 import { Text } from "../ui/text";
-import { Dispatch, SetStateAction, SubmitEvent, TransitionStartFunction, useMemo, useState } from "react";
+import { SubmitEvent, useMemo, useState } from "react";
 import Link from "next/link";
 import { Select, SelectOption } from "../ui/select";
 import { countries, socialFields } from "./data";
@@ -13,6 +12,8 @@ import { SocialNetwork } from "@/types/Profile";
 import { User } from "@/types/User";
 import { customBlur } from "@/app/fonts";
 import { Heading } from "../ui/heading";
+import { updateLoggedUser } from "@/actions/users";
+import { useAuth } from "@/hooks/useAuth";
 
 
 type OnBoardingType = {
@@ -24,7 +25,8 @@ type OnBoardingType = {
 }
 
 export const OnBoarding: React.FC<OnBoardingType> = ({ selectClassNames }) => {
-    const services = [];
+    const { user } = useAuth();
+    const services: any[] = [];
     const [isLoading, setLoading] = useState();
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
@@ -109,9 +111,17 @@ export const OnBoarding: React.FC<OnBoardingType> = ({ selectClassNames }) => {
     }
 
 
-    const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("Final Data: ", register);
+
+        console.log(register.profileData);
+
+        // const response = await updateLoggedUser({
+        //     profileData: register.profileData,
+        // });
+
+        location.href = "/profile";
+
     }
 
 
@@ -126,13 +136,13 @@ export const OnBoarding: React.FC<OnBoardingType> = ({ selectClassNames }) => {
                     <div className={`h-2 rounded-full bg-rede-yellow`} key={"fjfddckv"} />
                 </div>
                 <Text className="text-[12px] font-bold leading-4 text-rede-yellow">
-                    Passo 1 de 2: {register.profileData.accountType === 'individual' ? 'Perfil Individual' : 'Perfil Empresa'}
+                    Passo 2 de 2: {register.profileData.accountType === 'individual' ? 'Perfil Individual' : 'Perfil Empresa'}
                 </Text>
             </div>
 
             <form className='w-full h-auto mt-6' onSubmit={handleSubmit}>
                 <div className='w-full flex flex-col gap-6'>
-                    {register.profileData.accountType === 'individual' ? (
+                    {register?.profileData?.accountType === 'individual' ? (
                         <>
                             <div className='flex flex-col gap-2'>
                                 <label className='text-[20px] leading-7' htmlFor='artisticNameField'>Nome Artístico</label>
@@ -256,7 +266,7 @@ export const OnBoarding: React.FC<OnBoardingType> = ({ selectClassNames }) => {
                         Voltar
                     </Button> */}
                         <Button type='submit' containerClassName='w-full' className='text-rede-surface' disabled={isLoading}>
-                            {isLoading ? 'A criar...' : 'Criar Conta'}
+                            {isLoading ? 'A processar...' : 'Terminar'}
                         </Button>
                     </div>
                 </div>
