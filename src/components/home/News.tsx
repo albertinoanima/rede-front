@@ -15,21 +15,19 @@ export const News: React.FC = () => {
             <div className="relative w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-28 pb-10">
 
                 <div className="w-full h-36">
-                    <Heading className={`${customBlur.className} text-rede-yellow text-[96px] font-medium leading-24`}>Noticias</Heading>
+                    <Heading className={`${customBlur.className} text-rede-yellow text-[96px] font-medium leading-24`}>Notícias</Heading>
                 </div>
 
                 <div className="w-full h-auto flex items-center justify-end mb-5">
-                    <Button variant={"secondary"} icon={<ArrowRight width={12} height={12} />} iconPosition="right">Ver todas</Button>
+                    <Link href={"/news"}>
+                        <Button variant={"secondary"} icon={<ArrowRight width={12} height={12} />} iconPosition="right">Ver todas</Button>
+                    </Link>
                 </div>
-
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {NEWS.map((news) => (
-                        <Link key={news.id} href={"/news-details"}>
-                            <ArticleCard
-
-                                newsData={news}
-                            />
+                        <Link key={news.id} href={"/news-details?id=" + news.id}>
+                            <ArticleCard newsData={news}/>
                         </Link>
                     ))}
                 </div>

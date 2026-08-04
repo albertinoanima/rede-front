@@ -34,7 +34,7 @@ export const ProfileCard: React.FC<{ profileData: ProfileType }> = ({ profileDat
         }
       </div>
 
-      <Heading level={"h3"} className="text-[20px] font-semibold leading-5 mt-1">
+      <Heading level={"h3"} className="text-[20px] font-semibold leading-7 mt-1">
         {profileData.title}
       </Heading>
 

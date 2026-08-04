@@ -152,7 +152,7 @@ export const Select = ({
             v.popover,
           )}
         >
-          <ul className="max-h-60 overflow-y-auto space-y-1">
+          <ul className="max-h-80 overflow-y-auto space-y-1">
             {options.map((option) => {
               const isSelected = option.value === value
               return (

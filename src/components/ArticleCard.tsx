@@ -39,11 +39,11 @@ export const ArticleCard: React.FC<ArticleCardType> = ({ newsData }) => {
                 </span>
             </div>
 
-            <Heading level={"h3"} className="text-[20px] font-semibold leading-5 mt-1">
+            <Heading level={"h3"} className="text-[20px] font-semibold leading-7 mt-1">
                 {newsData?.title}
             </Heading>
 
-            <Text className="rounded-4xl text-[12px] font-medium leading-4">
+            <Text className="text-[12px] font-medium leading-4 line-clamp-2">
                 {newsData?.description}
             </Text>
         </Card>

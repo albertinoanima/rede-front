@@ -53,9 +53,6 @@ const films: FilmCardType[] = [
 ];
 
 
-
-
-
 export const Filmography: React.FC = () => {
   return (
     <section className="w-full h-auto">
@@ -64,7 +61,7 @@ export const Filmography: React.FC = () => {
           <Heading
             className={`${customBlur.className} text-[48px] leading-12 mb-6`}
           >
-            Filmography
+            Filmografia
           </Heading>
 
           <div className="flex gap-5">

@@ -28,12 +28,10 @@ export const WorkShops: React.FC = () => {
                     <Button variant={"secondary"} icon={<ArrowRight width={12} height={12} />} iconPosition="right">Ver todas</Button>
                 </div>
 
-
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {NEWS.map((news) => (
-                        <Link key={news.id} href={"/news-details"}>
+                        <Link key={news.id} href={"/news-details?id=" + news.id}>
                             <ArticleCard
-
                                 newsData={news}
                             />
                         </Link>

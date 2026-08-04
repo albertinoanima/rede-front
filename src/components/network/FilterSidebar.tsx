@@ -9,7 +9,7 @@ import { Select } from '../ui/select'
 import { customBlur } from '@/app/fonts'
 import { angolaCitiesByProvince, angolaProvincesList, caboVerdeIslandsList, caboVerdeMunicipalitiesByIsland, countriesList, guineaBissauRegionsList, guineaBissauSectorsByRegion, mozambiqueDistrictsByProvince, mozambiqueProvincesList, saoTomePrincipeCitiesByRegion, saoTomePrincipeRegionsList, SelectItemType, timorLesteAdministrativePostsByMunicipality, timorLesteMunicipalitiesList } from './palop'
 
-type CountryCode =
+export type CountryCode =
   | 'angola'
   | 'cabo-verde'
   | 'guine-bissau'
@@ -36,7 +36,7 @@ const citiesByCountryAndProvince: Record<CountryCode, Record<string, SelectItemT
 }
 
 
-const profileTypesList: SelectItemType[] = [
+export const profileTypesList: SelectItemType[] = [
   {
     label: "Empresa",
     value: "empresa"
@@ -52,7 +52,7 @@ const profileTypesList: SelectItemType[] = [
 ];
 
 
-const categoriesList: SelectItemType[] = [
+export const categoriesList: SelectItemType[] = [
   { label: "Aderecistas", value: "aderecistas" },
   { label: "Animadoras", value: "animadoras" },
   { label: "Anotadoras", value: "anotadoras" },
@@ -224,25 +224,25 @@ export const FilterSidebar: React.FC = () => {
           </div>
         </div>
 
-    {
-      (selectedType === 'profissionais') && 
-      <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Categoria</Heading>
-          <div className="flex items-center">
-            <Select
-              variant='primary'
-              value={selectedCategory}
-              placeholder='Selecione a categoria'
-              options={categoriesList}
-              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
-              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-rede-white outline-none"
-              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
-              onChange={(val: string) => setSelectedCategory(val)}
-            />
+        {
+          (selectedType === 'profissionais') &&
+          <div className='flex flex-col gap-2'>
+            <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Categoria</Heading>
+            <div className="flex items-center">
+              <Select
+                variant='primary'
+                value={selectedCategory}
+                placeholder='Selecione a categoria'
+                options={categoriesList}
+                triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
+                popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-rede-white outline-none"
+                satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
+                onChange={(val: string) => setSelectedCategory(val)}
+              />
+            </div>
           </div>
-        </div>
-    }
-        
+        }
+
       </div>
     </aside>
   )

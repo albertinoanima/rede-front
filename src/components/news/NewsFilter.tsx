@@ -2,7 +2,6 @@
 
 
 import { FilterSidebar } from './FilterSidebar';
-import { OpportunityCard, OpportunityType } from '../OpportunityCard';
 import { Button } from '../ui/button';
 import { customBlur } from '@/app/fonts';
 import { Heading } from '../ui/heading';
@@ -40,11 +39,8 @@ export const NewsFilter: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-6 pb-6">
             {NEWS.map((news) => (
-              <Link  key={news.id} href={"/news-details"}>
-                <ArticleCard
-               
-                newsData={news}
-              />
+              <Link key={news.id} href={"/news-details?id=" + news.id}>
+                <ArticleCard newsData={news}/>
               </Link>
             ))}
           </div>

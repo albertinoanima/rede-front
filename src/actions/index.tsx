@@ -79,3 +79,14 @@ export const ensureHttps = (url: string): string => {
   // Caso contrário, adiciona https://
   return "https://" + cleanUrl.replace(/^\/+/, "");
 };
+
+
+export const linkify = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s<]+)/g;
+    if (!text || text.length === 0) return "";
+
+    return text.replace(
+        urlRegex,
+        (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer" class="underline text-rede-yellow hover:opacity-80">${url}</a>`
+    );
+};

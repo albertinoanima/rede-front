@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { OpportunityCard, OpportunityType } from "../OpportunityCard";
+import Link from "next/link";
 
 const opportunities: OpportunityType[] = [
     {
@@ -56,10 +57,12 @@ export const Opportunities: React.FC = () => {
                 </div>
 
                 <div className="w-full h-auto flex items-center justify-end mb-5">
-                    <Button
-                        icon={<ArrowRight width={12} height={12} />} iconPosition="right">
-                        Ver todas
-                    </Button>
+                    <Link href="/opportunities">
+                        <Button
+                            icon={<ArrowRight width={12} height={12} />} iconPosition="right">
+                            Ver todas
+                        </Button>
+                    </Link>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

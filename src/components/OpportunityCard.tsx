@@ -27,7 +27,7 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
         className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
       footer={
         <div className="flex items-end justify-between gap-4 mt-2">
-          <Text className="rounded-4xl text-[12px] font-medium leading-4">
+          <Text className="text-[12px] font-medium leading-4 line-clamp-2">
             {opportunityData.description}
           </Text>
 
@@ -73,7 +73,7 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
       </div>
 
 
-      <Heading level={"h3"} className="text-[20px] font-semibold leading-5 mt-1">
+      <Heading level={"h3"} className="text-[20px] font-semibold leading-7 mt-1">
         {opportunityData.title}
       </Heading>
 

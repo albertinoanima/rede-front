@@ -1,33 +1,81 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronDown, Search, SearchIcon, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '../ui/heading'
 import { Input } from '../ui/Input'
 import { Select } from '../ui/select'
-import { SelectMultiple } from '../ui/select-multiple'
+import { angolaCitiesByProvince, angolaProvincesList, caboVerdeIslandsList, caboVerdeMunicipalitiesByIsland, countriesList, guineaBissauRegionsList, guineaBissauSectorsByRegion, mozambiqueDistrictsByProvince, mozambiqueProvincesList, saoTomePrincipeCitiesByRegion, saoTomePrincipeRegionsList, SelectItemType, timorLesteAdministrativePostsByMunicipality, timorLesteMunicipalitiesList } from '../network/palop'
+import { categoriesList, CountryCode, profileTypesList } from '../network/FilterSidebar'
 
-const temaOptions = [
-  'Direitos humanos',
-  'Direitos humanos',
-  'Direitos humanos',
-  'Direitos humanos',
-]
+const provincesByCountry: Record<CountryCode, SelectItemType[]> = {
+  angola: angolaProvincesList,
+  'cabo-verde': caboVerdeIslandsList,
+  'guine-bissau': guineaBissauRegionsList,
+  mocambique: mozambiqueProvincesList,
+  'sao-tome-e-principe': saoTomePrincipeRegionsList,
+  'timor-leste': timorLesteMunicipalitiesList,
+}
+
+const citiesByCountryAndProvince: Record<CountryCode, Record<string, SelectItemType[]>> = {
+  angola: angolaCitiesByProvince,
+  'cabo-verde': caboVerdeMunicipalitiesByIsland,
+  'guine-bissau': guineaBissauSectorsByRegion,
+  mocambique: mozambiqueDistrictsByProvince,
+  'sao-tome-e-principe': saoTomePrincipeCitiesByRegion,
+  'timor-leste': timorLesteAdministrativePostsByMunicipality,
+}
 
 export const FilterSidebar: React.FC = () => {
-  const [pais, setPais] = useState('');
-  const [search, setSearch] = useState('');
-  const [genero, setGenero] = useState('');
-  const [selectedTemas, setSelectedTemas] = useState<string[]>([]);
+  const [search, setSearch] = useState('')
+  const [selectedCountry, setSelectedCountry] = useState('')
+  const [selectedProvince, setSelectedProvince] = useState('')
+  const [selectedCity, setSelectedCity] = useState('')
+  const [selectedType, setSelectedType] = useState<string>(profileTypesList[0].value)
+  const [selectedCategory, setSelectedCategory] = useState('')
 
+  const provinceOptions = selectedCountry
+    ? provincesByCountry[selectedCountry as CountryCode] ?? []
+    : []
 
-  const [selectedProfissionais, setSelectedProfissionais] = useState<string[]>([])
+  const cityOptions = selectedCountry && selectedProvince
+    ? citiesByCountryAndProvince[selectedCountry as CountryCode]?.[selectedProvince] ?? []
+    : []
 
-  function toggleTema(tema: string) {
-    setSelectedTemas((prev) =>
-      prev.includes(tema) ? prev.filter((t) => t !== tema) : [...prev, tema]
-    )
+  useEffect(() => {
+    setSelectedProvince('')
+    setSelectedCity('')
+  }, [selectedCountry])
+
+  useEffect(() => {
+    setSelectedCity('')
+  }, [selectedProvince])
+
+  useEffect(() => {
+    if (selectedType === 'profissionais') return
+    setSelectedCategory('')
+  }, [selectedType])
+
+  function handleClear() {
+    setSearch('')
+    setSelectedCountry('')
+    setSelectedProvince('')
+    setSelectedCity('')
+    setSelectedType(profileTypesList[0].value)
+    setSelectedCategory('')
+  }
+
+  function handleSearch() {
+    // TODO: ligar aos query params / chamada à API quando existir
+    console.log({
+      search,
+      selectedCountry,
+      selectedProvince,
+      selectedCity,
+      selectedType,
+      selectedCategory,
+    })
   }
 
   return (
@@ -52,21 +100,47 @@ export const FilterSidebar: React.FC = () => {
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-rede-white'>País</Heading>
           <div className="flex items-center">
-            <Select variant='primary' value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
+            <Select
+              variant='primary'
+              value={selectedCountry}
+              placeholder='Selecione o país'
+              options={countriesList}
               triggerClassName="rounded-full border-2 border-white px-3 text-rede-white outline-none"
               popoverClassName="rounded-[12px] border-2 border-white px-3 text-rede-white outline-none mt-[10px]"
               satelliteClassName="border-2 border-white"
+              onChange={(val: string) => setSelectedCountry(val)}
             />
           </div>
         </div>
 
         <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Cidade/Proíncia</Heading>
+          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Província</Heading>
           <div className="flex items-center">
-            <Select variant='primary' value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
+            <Select
+              variant='primary'
+              value={selectedProvince}
+              placeholder={selectedCountry ? 'Selecione a província' : 'Selecione o país primeiro'}
+              options={provinceOptions}
               triggerClassName="rounded-full border-2 border-white px-3 text-rede-white outline-none"
               popoverClassName="rounded-[12px] border-2 border-white px-3 text-rede-white outline-none mt-[10px]"
               satelliteClassName="border-2 border-white"
+              onChange={(val: string) => setSelectedProvince(val)}
+            />
+          </div>
+        </div>
+
+        <div className='flex flex-col gap-2'>
+          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Localidade/Cidade</Heading>
+          <div className="flex items-center">
+            <Select
+              variant='primary'
+              value={selectedCity}
+              placeholder={selectedProvince ? 'Selecione a localidade' : 'Selecione a província primeiro'}
+              options={cityOptions}
+              triggerClassName="rounded-full border-2 border-white px-3 text-rede-white outline-none"
+              popoverClassName="rounded-[12px] border-2 border-white px-3 text-rede-white outline-none mt-[10px]"
+              satelliteClassName="border-2 border-white"
+              onChange={(val: string) => setSelectedCity(val)}
             />
           </div>
         </div>
@@ -74,24 +148,37 @@ export const FilterSidebar: React.FC = () => {
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Tipo</Heading>
           <div className="flex items-center">
-            <Select variant='primary' value='Estágio' placeholder='Selecionar tipo' options={[{ label: "Estágio", value: "estagio" }, { label: "Subvenção", value: "subvencao" }]}
+            <Select
+              variant='primary'
+              value={selectedType}
+              placeholder='Selecionar tipo'
+              options={profileTypesList}
               triggerClassName="rounded-full border-2 border-white px-3 text-rede-white outline-none"
               popoverClassName="rounded-[12px] border-2 border-white px-3 text-rede-white outline-none mt-[10px]"
               satelliteClassName="border-2 border-white"
+              onChange={(val: string) => setSelectedType(val)}
             />
           </div>
         </div>
 
-        <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Categoria</Heading>
-          <div className="flex items-center">
-            <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Podes", value: "Indo" }, { label: "Podes 2", value: "Indo2" }]}
-              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
-              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-rede-white outline-none"
-              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
-            />
+        {
+          (selectedType === 'profissionais') &&
+          <div className='flex flex-col gap-2'>
+            <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Categoria</Heading>
+            <div className="flex items-center">
+              <Select
+                variant='primary'
+                value={selectedCategory}
+                placeholder='Selecione a categoria'
+                options={categoriesList}
+                triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
+                popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-rede-white outline-none"
+                satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
+                onChange={(val: string) => setSelectedCategory(val)}
+              />
+            </div>
           </div>
-        </div>
+        }
       </div>
     </aside>
   )

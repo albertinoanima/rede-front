@@ -46,20 +46,20 @@ const team: TeamMember[] = [
     flagEmoji: "🇸🇹",
     imageUrl: "/assets/team/katya.jpeg",
   },
-  {
-    name: "Kay Seran Limak",
-    role: "Coordenação Local",
-    location: "Timor-Leste",
-    flagEmoji: "🇹🇱",
-    imageUrl: "/assets/team/kay.jpeg",
-  },
-  {
-    name: "Welket Bungué",
-    role: "Coordenação Local",
-    location: "Guiné-Bissau",
-    flagEmoji: "🇬🇼",
-    imageUrl: "/assets/team/welket.jpeg",
-  },
+  // {
+  //   name: "Kay Seran Limak",
+  //   role: "Coordenação Local",
+  //   location: "Timor-Leste",
+  //   flagEmoji: "🇹🇱",
+  //   imageUrl: "/assets/team/kay.jpeg",
+  // },
+  // {
+  //   name: "Welket Bungué",
+  //   role: "Coordenação Local",
+  //   location: "Guiné-Bissau",
+  //   flagEmoji: "🇬🇼",
+  //   imageUrl: "/assets/team/welket.jpeg",
+  // },
 ];
 
 export function TeamSection() {
@@ -68,16 +68,12 @@ export function TeamSection() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {team.map((member) => (
-            <div
-              key={member.name}
-              className="overflow-hidden rounded-2xl bg-rede-surface"
-            >
-              <div className="relative aspect-[4/3] w-full">
-                <Image
+            <div key={member.name} className="overflow-hidden rounded-2xl bg-rede-surface">
+              <div className="w-full relative aspect-[4/3]">
+                <img
                   src={member.imageUrl}
                   alt={member.name}
-                  fill
-                  className="object-cover grayscale"
+                  className="w-full h-full object-cover"
                 />
               </div>
 

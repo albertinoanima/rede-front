@@ -25,7 +25,7 @@ export const FilmCard: React.FC<{ filmData: FilmCardType, v?: "v1" | "v2" | unde
       footer={
         <div className="w-full flex items-end justify-between gap-4 mt-2">
           <div className="w-auto h-auto flex flex-col gap-2.5">
-            <Heading level={"h3"} className="text-[20px] font-semibold leading-5 mt-1">
+            <Heading level={"h3"} className="text-[20px] font-semibold leading-7 mt-1">
               {filmData.title}
             </Heading>
 
