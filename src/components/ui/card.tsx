@@ -28,12 +28,12 @@ export default function Card({ image, footer, className, children, v, ...props }
   return (
     <article className={cn("overflow-hidden bg-rede-surface", className)}{...props}>
       {image && (
-        <div className="w-full h-82.5 overflow-hidden">
+        <div className="w-full h-75 overflow-hidden">
           {image}
         </div>
       )}
 
-      <div className={`flex flex-col gap-4 p-6 ${vs(v)}`}>
+      <div className={`w-full h-auto flex flex-col gap-4 p-6 ${vs(v)}`}>
         {children}
 
         {footer && (

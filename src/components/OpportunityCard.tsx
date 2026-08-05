@@ -26,7 +26,7 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
         src={opportunityData.cover}
         className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
       footer={
-        <div className="flex items-end justify-between gap-4 mt-2">
+        <div className="flex items-center justify-between gap-4 mt-2">
           <Text className="text-[12px] font-medium leading-4 line-clamp-2">
             {opportunityData.description}
           </Text>

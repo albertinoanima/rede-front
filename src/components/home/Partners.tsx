@@ -104,7 +104,7 @@ export const Partners: React.FC = () => {
                                     alt={logos[5].alt}
                                     width={logos[5].width}
                                     height={logos[5].height}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-contain"
                                 />
                             </div>
                             <div className="flex items-center justify-center w-62.5 h-50">
