@@ -4,12 +4,19 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
 import Card from "./ui/card";
+import { Tag } from "./Tag";
 
 export type ProfileType = {
   id: string;
   title: string;
   tags: string[];
   cover: string;
+  country?: string;
+  province?: string;
+  city?: string;
+  type?: string;
+  category?: string;
+  subCategory?: string;
 }
 
 export const ProfileCard: React.FC<{ profileData: ProfileType }> = ({ profileData }) => {
@@ -27,9 +34,7 @@ export const ProfileCard: React.FC<{ profileData: ProfileType }> = ({ profileDat
       <div className="flex flex-wrap gap-2.5">
         {
           profileData.tags.map((tag, index) => (
-            <span className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap" key={index + "vertxxx"}>
-              {tag}
-            </span>
+            <Tag href={`/network?tag=${tag}`} label={tag} key={tag + "x" + index}/>
           ))
         }
       </div>

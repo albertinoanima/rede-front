@@ -4,33 +4,9 @@ import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 import { Heading } from "../ui/heading";
 import { customBlur } from '@/app/fonts';
+import { packages } from "./data";
 
-const packages = [
-  {
-    title: "Curadoria 1",
-    type: "Uso comercial",
-  },
-  {
-    title: "Curadoria 2",
-    type: "Uso não comercial",
-  },
-  {
-    title: "Curadoria 3",
-    type: "Uso não comercial",
-  },
-  {
-    title: "Curadoria 4",
-    type: "Uso comercial",
-  },
-  {
-    title: "Curadoria 5",
-    type: "Uso não comercial",
-  },
-  {
-    title: "Curadoria 6",
-    type: "Uso não comercial",
-  },
-]
+
 
 export const Packages = () => {
   return (

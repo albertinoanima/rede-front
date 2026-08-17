@@ -2,20 +2,14 @@
 import { customBlur } from "@/app/fonts";
 import { Heading } from "@/components/ui/heading";
 import { ArticleCard } from "../ArticleCard";
-import { NEWS } from "../news/news";
-import Link from "next/link";
+import { NEWS } from "../news/data";
 
 
 export const AssociatedNews: React.FC = () => {
 
-    const images = [
-        "/assets/home/news/news-1.png",
-        "/assets/home/news/news-2.png",
-        "/assets/home/news/news-3.png",
-    ];
 
     return (
-        <section className="w-full h-auto bg-rede-surface">
+        <section className="w-full h-auto bg-rede-bg">
             <div className="relative w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-28 pb-10">
 
                 <div className="w-full h-36">
@@ -23,10 +17,8 @@ export const AssociatedNews: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {NEWS.map((news) => (
-                        <Link key={news.id} href={"/news-details?id" + news.id}>
-                            <ArticleCard newsData={news} />
-                        </Link>
+                    {NEWS.map((news, index) => (
+                        <ArticleCard newsData={news} key={"vintus" + index} />
                     ))}
                 </div>
 

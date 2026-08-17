@@ -85,7 +85,7 @@ export const ConfirmAccount: React.FC<{ token: string }> = ({ token }) => {
                 } */}
 
                 {(message.length > 0) &&
-                    <Text className={`text-[12px] leading-[16px] ${successInfo ? "text-rede-yellow" : "text-rede-red"} text-center`} dangerouslySetInnerHTML={{ __html: message }} />
+                    <Text className={`text-[14px] leading-5 ${successInfo ? "text-rede-yellow" : "text-rede-red"} text-center`} dangerouslySetInnerHTML={{ __html: message }} />
                 }
 
                 <Button type='submit' containerClassName='w-full' className='text-rede-surface' disabled={isLoading} >

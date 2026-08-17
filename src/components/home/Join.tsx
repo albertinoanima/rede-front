@@ -6,10 +6,10 @@ import { Heading } from "@/components/ui/heading";
 export const Join: React.FC = () => {
     return (
         <section className="w-full h-auto bg-rede-white">
-            <div className="relative w-full max-w-360 h-124.25 mx-auto flex flex-col justify-center items-center gap-4">
+            <div className="relative w-full max-w-360 h-60 mx-auto flex flex-col justify-center items-center gap-4">
 
-                <Heading className={`text-rede-surface text-5xl ${customBlur.className} font-medium leading-10`}>Junte-se a comunidade</Heading>
-                <Text className="text-rede-surface text-[12px] font-medium leading-4">Histórias que conectam culturas e aproximam pessoas. Descobre novos <br />
+                <Heading className={`text-rede-surface text-5xl ${customBlur.className} font-medium leading-10`}>Junte-se à comunidade</Heading>
+                <Text className="text-rede-surface text-[14px] leading-relaxed font-medium">Histórias que conectam culturas e aproximam pessoas. Descobre novos <br />
                     talentos, cria sem limites e colabora numa rede feita para impulsionar <br />
                     o cinema dos PALOP.</Text>
 

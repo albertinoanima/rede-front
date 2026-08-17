@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { ArticleCard } from "../ArticleCard";
 import Link from "next/link";
-import { NEWS } from "../news/news";
+import { NEWS } from "../news/data";
 
 
 export const News: React.FC = () => {
@@ -24,14 +24,11 @@ export const News: React.FC = () => {
                     </Link>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {NEWS.map((news) => (
-                        <Link key={news.id} href={"/news-details?id=" + news.id}>
-                            <ArticleCard newsData={news}/>
-                        </Link>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                    {NEWS.slice(0, 3).map((news) => (
+                        <ArticleCard key={news.id} newsData={news} />
                     ))}
                 </div>
-
             </div>
         </section>
     );

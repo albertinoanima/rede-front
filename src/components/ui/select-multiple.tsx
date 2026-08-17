@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import { Check, ChevronDown } from 'lucide-react'
 
 const selectTriggerVariants = cva(
-  'w-full inline-flex items-center justify-between font-medium transition-all rounded-full bg-transparent text-rede-white border border-white/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 text-left',
+  'w-full inline-flex items-center justify-between font-medium transition-all rounded-lg bg-transparent text-rede-white border border-white/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 text-left',
   {
     variants: {
       size: {
@@ -207,7 +207,7 @@ export const SelectMultiple = ({
                     <div className="flex items-center gap-3 w-full">
                       {/* CHECKBOX CIRCULAR */}
                       <span className={cn(
-                        'flex items-center justify-center w-5 h-5 rounded-full border-2 shrink-0 transition-all duration-150',
+                        'flex items-center justify-center w-5 h-5 rounded-full border-[1.3px] shrink-0 transition-all duration-150',
                         isSelected ? v.checkFill : v.checkEmpty,
                       )}>
                         {isSelected && <Check width={11} height={11} strokeWidth={3} />}

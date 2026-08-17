@@ -3,35 +3,9 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Heading } from "../ui/heading";
+import { licensingItems } from "./data";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
-const items = [
-  {
-    title: "Ideal para festivais",
-    content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  },
-  {
-    title: "Duração da Licença",
-    content:
-      "Licença válida conforme os termos acordados entre as partes.",
-  },
-  {
-    title: "Território",
-    content:
-      "Disponível para licenciamento nacional ou internacional.",
-  },
-  {
-    title: "Custos e Taxas",
-    content:
-      "Os custos variam de acordo com o tipo de utilização pretendida.",
-  },
-  {
-    title: "Requisitos Técnicos",
-    content:
-      "Entrega em formato ProRes, H264 ou DCP, dependendo da finalidade.",
-  },
-]
 
 export const Licensing: React.FC = () => {
   const [open, setOpen] = useState<number | null>(0)
@@ -46,7 +20,7 @@ export const Licensing: React.FC = () => {
 
         <div className="space-y-2">
 
-          {items.map((item, index) => (
+          {licensingItems.map((item, index) => (
             <div key={index} className="border-b border-white/25">
               <button
                 onClick={() =>

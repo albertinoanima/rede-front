@@ -24,11 +24,11 @@ export const Hero: React.FC = () => {
                 </div>
 
                 <div className="w-[50%] h-full relative">
-                    <img src="/assets/home/hero-2.png" alt="REDE Hero" className="w-full h-full object-cover"/>
+                    <img src="/assets/home/hero-2.jpeg" alt="REDE Hero" className="w-full h-full object-cover"/>
 
                     {/* overlay de textos centralizada no bloco direito */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-4 p-4">
-                        <Heading className={`text-rede-yellow ${customBlur.className} text-[128px] font-medium`}>
+                        <Heading className={`text-rede-red ${customBlur.className} text-[128px] font-medium`}>
                             Agência
                         </Heading>
 

@@ -2,6 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import { Heading } from '../ui/heading'
 import { Text } from '../ui/text'
+import { Tag } from '../Tag'
 
 interface Tag {
   label: string
@@ -42,17 +43,13 @@ export const FilmCard = ({
       <div className="flex-1 bg-rede-red flex flex-col justify-between p-5 relative">
         {/* Tags */}
         <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span
-              key={tag.label}
-              className="text-btn2 text-rede-white border border-rede-white/50 rounded-full px-3 py-0.5"
-            >
-              {tag.label}
-            </span>
-          ))}
-          <span className="text-btn2 text-rede-white border border-rede-white/50 rounded-full px-3 py-0.5">
-            {year}
-          </span>
+          {
+            tags.map((tag, index) => (
+              <Tag label={tag.label} key={tag.label + "dhbg" + index} />
+            ))
+          }
+
+          <Tag label={year} />
         </div>
 
         {/* Title */}

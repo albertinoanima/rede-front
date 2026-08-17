@@ -10,7 +10,7 @@ export const Hero: React.FC<{ title?: string, description?: string }> = ({ title
       <div className="relative w-full max-w-[1920px] h-124.25 mx-auto">
 
         <img
-          src="/assets/agency/hero.png"
+          src="/assets/news/hero.jpg"
           alt="REDE Hero"
           className="w-full h-full object-cover"
         />
@@ -34,8 +34,6 @@ export const Hero: React.FC<{ title?: string, description?: string }> = ({ title
             }
           </div>
         }
-
-
       </div>
     </section>
   )

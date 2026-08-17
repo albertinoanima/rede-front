@@ -1,90 +1,34 @@
 "use client"
 
+import { useMemo, useState } from 'react';
 import { customBlur } from '@/app/fonts';
-import { ProfileCard, ProfileType } from '../ProfileCard';
-import { Button } from '../ui/button';
+import { ProfileCard } from '../ProfileCard';
 import { Heading } from '../ui/heading';
-import { FilterSidebar } from './FilterSidebar';
+import { defaultNetworkFilters, FilterSidebar } from './FilterSidebar';
+import { filterProfiles } from './actions';
+import { profiles } from './data';
+import { Text } from '../ui/text';
 
 
-// 
-//Array de perfis
-const profiles: ProfileType[] = [
-    {
-        id: "fhxtuhndkuhndxrjdx",
-        cover: "/assets/profiles/logo-1.png",
-        tags: ["Guiné-Bissau", "Bissau", "Fotográfo"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "qmpwlszkvbterygaxc",
-        cover: "/assets/opportunities/image-5.png",
-        tags: ["Moçambique", "Nampula", "Produtor"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "znxbdotgmreiaqycvh",
-        cover: "/assets/profiles/photo-2.png",
-        tags: ["Moçambique", "Nampula", "Produtor"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "jrkeulcmxzsqbgtvfw",
-        cover: "/assets/opportunities/image-6.png",
-        tags: ["Guiné-Bissau", "Bissau", "Fotográfo"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "wmvqcslzjnrytexbao",
-        cover: "/assets/profiles/logo-2.png",
-        tags: ["Angola", "Luanda", "Animador"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "gpxfuadyvnmzeklcqi",
-        cover: "/assets/opportunities/image-7.png",
-        tags: ["Guiné-Bissau", "Bissau", "Fotográfo"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "btnhysjcmqvewxoduz",
-        cover: "/assets/profiles/photo-5.png",
-        tags: ["Angola", "Luanda", "Animador"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "lcvmyszqpajodwiukr",
-        cover: "/assets/profiles/logo-3.png",
-        tags: ["Angola", "Luanda", "Animador"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "vhqzmdotuenraxysbc",
-        cover: "/assets/opportunities/image-7.png",
-        tags: ["Angola", "Luanda", "Animador"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "eyoltqbxvdznucpmiw",
-        cover: "/assets/profiles/logo-4.png",
-        tags: ["Guiné-Bissau", "Bissau", "Fotográfo"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "rzupwmavjcxnbeqhkt",
-        cover: "/assets/opportunities/image-8.png",
-        tags: ["Moçambique", "Nampula", "Produtor"],
-        title: "Lorem ipsum dolor sit consectetur"
-    },
-    {
-        id: "ndqxytlvamockjzguf",
-        cover: "/assets/opportunities/image-2.png",
-        tags: ["Moçambique", "Nampula", "Produtor"],
-        title: "Lorem ipsum dolor sit consectetur"
-    }
-];
 
 export const AdvancedSearch: React.FC = () => {
+    const [filters, setFilters] = useState(defaultNetworkFilters);
+    const [appliedFilters, setAppliedFilters] = useState(defaultNetworkFilters);
+
+    // TODO: once a real API exists, replace this with a fetch keyed on
+    // `appliedFilters` (e.g. useEffect + setResults) instead of filtering
+    // the static `profiles` array in memory.
+    const results = useMemo(
+        () => filterProfiles(profiles, appliedFilters),
+        [appliedFilters],
+    );
+
+    const handleSearch = () => setAppliedFilters(filters);
+    const handleClear = () => {
+        setFilters(defaultNetworkFilters);
+        setAppliedFilters(defaultNetworkFilters);
+    };
+
     return (
         <section className="w-full h-auto">
 
@@ -95,21 +39,29 @@ export const AdvancedSearch: React.FC = () => {
                     </Heading>
 
                     <div className="flex justify-end gap-3 px-6 py-4">
+                        {/* 
                         <Button variant={"secondary"}>
                             Ordenar por
-                        </Button>
-                        <Button variant={"secondary"}>
-                            8 resultados
-                        </Button>     
+                        </Button> 
+                        */}
+
+                        <Text className="text-[14px] leading-4" >
+                            {results.length} {results.length === 1 ? 'resultado' : 'resultados'}
+                        </Text>
                     </div>
                 </div>
 
                 <div className="flex mt-10">
-                    <FilterSidebar />
+                    <FilterSidebar
+                        filters={filters}
+                        onFiltersChange={setFilters}
+                        onSearch={handleSearch}
+                        onClear={handleClear}
+                    />
                     <div className="flex-1 flex flex-col">
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-6 pb-6">
                             {
-                                profiles.map((profile, index) => (
+                                results.map((profile) => (
                                     <ProfileCard profileData={profile} key={profile.id} />
                                 ))
                             }

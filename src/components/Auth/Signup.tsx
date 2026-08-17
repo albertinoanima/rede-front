@@ -11,6 +11,7 @@ import { Building2, ChevronRight, UserRound } from 'lucide-react';
 import { Input } from '../ui/Input';
 import { GoogleIcon } from '@/icons/GoogleIcon';
 import { useAuth } from '@/hooks/useAuth';
+import { signInWithGoogle } from '@/lib/googleAuth';
 
 
 export const Signup: React.FC = () => {
@@ -28,6 +29,7 @@ export const Signup: React.FC = () => {
     const [message, setMessage] = useState("");
     const [showMessaage, setShowMessaage] = useState(false);
     const [requireConfirmation, setRequireConfirmation] = useState(false);
+    const [googleLoading, setGoogleLoading] = useState(false);
 
     const [googleProfile, setGoogleProfile] = useState<{
         name: string;
@@ -67,6 +69,35 @@ export const Signup: React.FC = () => {
     }, [googleProfile])
 
 
+    const handleGoogleSignup = async () => {
+        setShowMessaage(false);
+        setGoogleLoading(true);
+
+        try {
+            const { profile } = await signInWithGoogle();
+
+            setGoogleProfile(profile);
+            setRegister((lastState) => ({
+                ...lastState,
+                name: profile.name || lastState.name,
+                email: profile.email || lastState.email,
+                imageUrl: profile.image || lastState.imageUrl,
+                loginType: "google",
+            }));
+        } catch (err) {
+            setRequireConfirmation(false);
+            setShowMessaage(true);
+            setMessage(err instanceof Error ? err.message : "Não foi possível continuar com o Google.");
+
+            setTimeout(() => {
+                setShowMessaage(false);
+                setMessage("");
+            }, 3000);
+        } finally {
+            setGoogleLoading(false);
+        }
+    }
+
     const handleSubmit = async (event: any) => {
         event.preventDefault();
         setShowMessaage(false);
@@ -88,7 +119,14 @@ export const Signup: React.FC = () => {
                 setRequireConfirmation(requiresEmailConfirmation);
 
                 if (user.loginType === "google") {
-                    //
+                    setShowMessaage(true);
+                    setMessage("Conta criada com sucesso através do Google.<br/> Pode agora iniciar sessão.");
+
+                    setTimeout(() => {
+                        setShowMessaage(false);
+                        setMessage("");
+                        window.location.assign("/login");
+                    }, 3000);
                 }
 
                 if (user.loginType === "normal" && requiresEmailConfirmation) {
@@ -114,13 +152,13 @@ export const Signup: React.FC = () => {
 
             <div className="w-full h-auto flex flex-col items-center gap-4">
                 <Heading className={`text-rede-white ${customBlur.className} text-[48px] leading-14`}>Criar conta</Heading>
-                <Text className="text-[12px] font-medium leading-4">Crie sua conta na REDE PALOP+TL</Text>
+                <Text className="text-[14px] leading-5 font-medium">Crie sua conta na REDE PALOP+TL</Text>
 
                 <div className='w-full grid grid-cols-2 gap-3 mt-2'>
                     <div className={`h-2 rounded-full bg-rede-yellow`} key={"fjfddckv"} />
                     <div className={`h-2 rounded-full 'bg-rede-white/20`} key={"fjfdsckv"} />
                 </div>
-                <Text className="text-[12px] font-bold leading-4 text-rede-yellow">
+                <Text className="text-[14px] leading-5 font-bold text-rede-yellow">
                     Passo 1 de 2: {register.profileData.accountType === 'individual' ? 'Perfil Individual' : 'Perfil Empresa'}
                 </Text>
             </div>
@@ -134,7 +172,7 @@ export const Signup: React.FC = () => {
                             icon={<UserRound width={14} height={14} />}
                             className={register.profileData.accountType === 'individual' ? 'text-rede-surface' : ''}
                             containerClassName='w-full'
-                            onClick={() => setRegister((lastState) => ({ ...lastState, accountType: 'individual' }))}
+                            onClick={() => setRegister((lastState) => ({ ...lastState, profileData: { ...lastState.profileData, accountType: 'individual' } }))}
                         >
                             Individual
                         </Button>
@@ -144,7 +182,7 @@ export const Signup: React.FC = () => {
                             icon={<Building2 width={14} height={14} />}
                             className={register.profileData.accountType === 'company' ? 'text-rede-surface' : ''}
                             containerClassName='w-full'
-                            onClick={() => setRegister((lastState) => ({ ...lastState, accountType: 'company' }))}
+                            onClick={() => setRegister((lastState) => ({ ...lastState, profileData: { ...lastState.profileData, accountType: 'company' } }))}
                         >
                             Empresa
                         </Button>
@@ -167,28 +205,28 @@ export const Signup: React.FC = () => {
                                 style={{ backgroundImage: googleProfile.image ? `url(${googleProfile.image})` : undefined }}
                             />
                             <div className='min-w-0'>
-                                <Text className='text-[13px] font-bold truncate'>{googleProfile.name}</Text>
-                                <Text className='text-[12px] text-rede-white/70 truncate'>{googleProfile.email}</Text>
+                                <Text className='text-[15px] leading-5.5 font-bold truncate'>{googleProfile.name}</Text>
+                                <Text className='text-[14px] leading-5 text-rede-white/70 truncate'>{googleProfile.email}</Text>
                             </div>
                         </div>
                     )}
 
                     {(showMessaage && message.length > 0) &&
-                        <Text className={`text-[12px] leading-4 ${requireConfirmation ? "text-rede-yellow" : "text-rede-red"} text-center`} dangerouslySetInnerHTML={{ __html: message }} />
+                        <Text className={`text-[14px] leading-5 ${requireConfirmation ? "text-rede-yellow" : "text-rede-red"} text-center`} dangerouslySetInnerHTML={{ __html: message }} />
                     }
 
                     <Button type='submit' containerClassName='w-full' className='text-rede-surface' icon={<ChevronRight width={14} height={14} />} iconPosition='right'>
                         Avançar
                     </Button>
 
-                    <Button type='button' variant={"secondary"} icon={<GoogleIcon width={12} height={12} />} className='w-full' containerClassName='w-full'>
-                        Continue com Google
+                    <Button type='button' variant={"secondary"} icon={<GoogleIcon width={12} height={12} />} className='w-full' containerClassName='w-full' disabled={googleLoading} onClick={handleGoogleSignup}>
+                        {googleLoading ? "A ligar ao Google..." : "Continue com Google"}
                     </Button>
                 </div>
                 <div className='w-full flex justify-center mt-8 mb-2'>
-                    <Text className='text-[12px] leading-4 font-bold text-center flex items-center gap-2.5'>
+                    <Text className='text-[14px] leading-5 font-bold text-center flex items-center gap-2.5'>
                         Já tem uma conta?
-                        <Link href="/login" className='text-[12px] leading-4 font-bold text-rede-yellow'>
+                        <Link href="/login" className='text-[14px] leading-5 font-bold text-rede-yellow'>
                             Fazer Login
                         </Link>
                     </Text>

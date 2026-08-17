@@ -1,6 +1,4 @@
-// components/assets/teamSection.tsx
-import Image from "next/image";
-import { MapPin } from "lucide-react";
+import Link from "next/link";
 
 interface TeamMember {
   name: string;
@@ -68,8 +66,8 @@ export function TeamSection() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {team.map((member) => (
-            <div key={member.name} className="overflow-hidden rounded-2xl bg-rede-surface">
-              <div className="w-full relative aspect-[4/3]">
+            <div key={member.name} className="h-95 overflow-hidden bg-rede-surface">
+              <div className="w-full relative aspect-4/3">
                 <img
                   src={member.imageUrl}
                   alt={member.name}
@@ -77,21 +75,17 @@ export function TeamSection() {
                 />
               </div>
 
-              <div className="p-4">
+              <div className="w-full flex flex-col mt-2 mb-4">
                 <h3 className="text-base font-semibold text-rede-white">
                   {member.name}
                 </h3>
-                <p className="mt-1 text-sm text-rede-gray">{member.role}</p>
-
-                <div className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1">
-                  <span className="text-xs leading-none">
-                    {member.flagEmoji}
-                  </span>
-                  <span className="text-xs text-rede-gray">
-                    {member.location}
-                  </span>
-                </div>
+                <p className="text-[12px] leading-4 font-medium mt-1">{member.role}</p>
               </div>
+
+              <Link href={`/network?tag=${member?.location}`}  className="w-auto border-[1.3px] border-[#454545] px-4.5 py-1.5 rounded-lg text-[14px] leading-5 font-medium">
+                {member?.location}
+              </Link>
+
             </div>
           ))}
         </div>

@@ -6,7 +6,7 @@ import type { HTMLAttributes, ReactNode } from "react";
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   image?: ReactNode;
   footer?: ReactNode;
-  v?: "v1" | "v2" | "v3"| undefined;
+  v?: "v1" | "v2" | "v3" | undefined;
 };
 
 export default function Card({ image, footer, className, children, v, ...props }: CardProps) {
@@ -33,15 +33,20 @@ export default function Card({ image, footer, className, children, v, ...props }
         </div>
       )}
 
-      <div className={`w-full h-auto flex flex-col gap-4 p-6 ${vs(v)}`}>
-        {children}
+      <div className={`w-full h-80 flex flex-col justify-between gap-4 p-6 ${vs(v)}`}>
+
+        <div className="w-full h-auto flex flex-col gap-4">
+          {children}
+        </div>
 
         {footer && (
-          <div className="flex items-center justify-between gap-3">
+          <div className={`w-full ${vs(v)}`}>
             {footer}
           </div>
         )}
+
       </div>
+
     </article>
   );
 }

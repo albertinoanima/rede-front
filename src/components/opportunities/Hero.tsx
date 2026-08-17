@@ -10,7 +10,7 @@ export const Hero: React.FC = () => {
       <div className="relative w-full max-w-[1920px] h-124.25 mx-auto">
 
         <img
-          src="/assets/agency/hero.png"
+          src="/assets/opportunities/hero.jpg"
           alt="REDE Hero"
           className="w-full h-full object-cover"
         />
@@ -23,7 +23,6 @@ export const Hero: React.FC = () => {
 
           <Text className="text-rede-white font-semibold max-w-2xl">
             Oportunidades que transformam ideias em projetos sustentáveis.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehen derit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
           </Text>
         </div>
 

@@ -75,7 +75,36 @@ export type LoginUsingEmailAndPassResponseType = {
 }
 
 export const loginUsingEmailAndPassword = async (email: string, password: string): Promise<LoginUsingEmailAndPassResponseType> => {
-  return {}
+  try {
+    const responseData = await api.post<LoginUsingEmailAndPassResponseType>("/api/v1/auth/login-using-email-and-password", { email, password });
+    const { user, token } = responseData.data;
+
+    return { user, token }
+  } catch (err: any) {
+    return {
+      error: err.response?.data?.error || "Erro desconhecido",
+      message: err.response?.data?.message || "Não foi possível iniciar sessão"
+    }
+  }
+}
+
+
+export type GoogleLoginPayload = {
+  idToken: string;
+}
+
+export const loginUsingGoogle = async ({ idToken }: GoogleLoginPayload): Promise<LoginUsingEmailAndPassResponseType> => {
+  try {
+    const responseData = await api.post<LoginUsingEmailAndPassResponseType>("/api/v1/auth/login-with-google", { idToken });
+    const { user, token } = responseData.data;
+
+    return { user, token }
+  } catch (err: any) {
+    return {
+      error: err.response?.data?.error || "Erro desconhecido",
+      message: err.response?.data?.message || "Não foi possível iniciar sessão com o Google"
+    }
+  }
 }
 
 

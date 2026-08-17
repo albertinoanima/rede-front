@@ -1,3 +1,4 @@
+"use client";
 
 import { customBlur } from "@/app/fonts";
 import { ArrowRight } from "lucide-react";
@@ -5,45 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { OpportunityCard, OpportunityType } from "../OpportunityCard";
 import Link from "next/link";
-
-const opportunities: OpportunityType[] = [
-    {
-        id: "dxtjdtjtdjdtj",
-        title: 'Lorem ipsum dolor sit amet consectetur',
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-        isAvailable: true,
-        status: "open",
-        startDate: "12",
-        endDate: "15 Fev",
-        type: "Financiamento",
-        eligibility: ["Angola", "Luanda"],
-        cover: '/assets/opportunities/image-1.png',
-    },
-    {
-        id: "dxtjdtjtdjdtj2",
-        title: 'Lorem ipsum dolor sit amet consectetur',
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-        isAvailable: true,
-        status: "open",
-        startDate: "12",
-        endDate: "15 Fev",
-        type: "Parceria",
-        eligibility: ["Angola", "Luanda"],
-        cover: '/assets/opportunities/image-2.png',
-    },
-    {
-        id: "dxtjdtjtdjdtj33",
-        title: 'Lorem ipsum dolor sit amet consectetur',
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-        isAvailable: true,
-        status: "open",
-        startDate: "12",
-        endDate: "15 Fev",
-        type: "Co-produção",
-        eligibility: ["Angola", "Luanda"],
-        cover: '/assets/opportunities/image-3.png',
-    }
-]
+import { opportunities } from "../opportunities/data";
 
 
 export const Opportunities: React.FC = () => {

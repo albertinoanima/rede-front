@@ -1,135 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FilterSidebar } from "./FilterSidebar";
-import { OpportunityCard, OpportunityType } from "../OpportunityCard";
+import { OpportunityCard } from "../OpportunityCard";
 import { Button } from "../ui/button";
 import { customBlur } from "@/app/fonts";
 import { Heading } from "../ui/heading";
+import { defaultOpportunityFilters, filterOpportunities } from "./actions";
+import { opportunities } from "./data";
+import { Text } from "../ui/text";
 
-const opportunities: OpportunityType[] = [
-  {
-    id: "dxtjdtjtdjdtj",
-    title: "Lorem ipsum dolor sit amet consectetur",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    isAvailable: true,
-    status: "open",
-    startDate: "12",
-    endDate: "15 Fev",
-    type: "Financiamento",
-    eligibility: ["Angola", "Luanda"],
-    cover: "/assets/opportunities/image-1.png",
-  },
-  {
-    id: "dxtjdtjtdjdtj2",
-    title: "Lorem ipsum dolor sit amet consectetur",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    isAvailable: true,
-    status: "open",
-    startDate: "12",
-    endDate: "15 Fev",
-    type: "Parceria",
-    eligibility: ["Angola", "Luanda"],
-    cover: "/assets/opportunities/image-2.png",
-  },
-  {
-    id: "dxtjdtjtdjdtj33",
-    title: "Lorem ipsum dolor sit amet consectetur",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    isAvailable: true,
-    status: "open",
-    startDate: "12",
-    endDate: "15 Fev",
-    type: "Co-produção",
-    eligibility: ["Angola", "Luanda"],
-    cover: "/assets/opportunities/image-3.png",
-  },
-  {
-    id: "dxtjdtjtdjdtj44",
-    title: "Lorem ipsum dolor sit amet consectetur",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    isAvailable: true,
-    status: "starting",
-    startDate: "12",
-    endDate: "15 Fev",
-    type: "Financiamento",
-    eligibility: ["Angola", "Luanda"],
-    cover: "/assets/opportunities/image-4.png",
-  },
-  {
-    id: "dxtjdtjtdjdtj55",
-    title: "Lorem ipsum dolor sit amet consectetur",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    isAvailable: true,
-    status: "starting",
-    startDate: "12",
-    endDate: "15 Fev",
-    type: "Financiamento",
-    eligibility: ["Angola", "Luanda"],
-    cover: "/assets/opportunities/image-5.png",
-  },
-  {
-    id: "dxtjdtjtdjdtj66",
-    title: "Lorem ipsum dolor sit amet consectetur",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    isAvailable: true,
-    status: "starting",
-    startDate: "12",
-    endDate: "15 Fev",
-    type: "Financiamento",
-    eligibility: ["Angola", "Luanda"],
-    cover: "/assets/opportunities/image-6.png",
-  },
-  {
-    id: "dxtjdtjtdjdtj77",
-    title: "Lorem ipsum dolor sit amet consectetur",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    isAvailable: true,
-    status: "expired",
-    startDate: "12",
-    endDate: "15 Fev",
-    type: "Financiamento",
-    eligibility: ["Angola", "Luanda"],
-    cover: "/assets/opportunities/image-7.png",
-  },
-  {
-    id: "dxtjdtjtdjdtj88",
-    title: "Lorem ipsum dolor sit amet consectetur",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    isAvailable: true,
-    status: "expired",
-    startDate: "12",
-    endDate: "15 Fev",
-    type: "Financiamento",
-    eligibility: ["Angola", "Luanda"],
-    cover: "/assets/opportunities/image-8.png",
-  },
-  {
-    id: "dxtjdtjtdjdtj99",
-    title: "Lorem ipsum dolor sit amet consectetur",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-    isAvailable: true,
-    status: "expired",
-    startDate: "12",
-    endDate: "15 Fev",
-    type: "Financiamento",
-    eligibility: ["Angola", "Luanda"],
-    cover: "/assets/opportunities/image-9.png",
-  },
-];
+
+
 
 export const Opportunities: React.FC = () => {
-  const [filteredOpportunities, setFilteredOpportunities] =
-    useState<OpportunityType[]>(opportunities);
+  const [filters, setFilters] = useState(defaultOpportunityFilters);
+  const [appliedFilters, setAppliedFilters] = useState(defaultOpportunityFilters);
+
+  // TODO: once a real API exists, replace this with a fetch keyed on
+  // `appliedFilters` (e.g. useEffect + setResults) instead of filtering
+  // the static `opportunities` array in memory.
+  const filteredOpportunities = useMemo(
+    () => filterOpportunities(opportunities, appliedFilters),
+    [appliedFilters],
+  );
+
+  const handleSearch = () => setAppliedFilters(filters);
+  const handleClear = () => {
+    setFilters(defaultOpportunityFilters);
+    setAppliedFilters(defaultOpportunityFilters);
+  };
 
   return (
     <section className="mt-20 h-auto w-full">
@@ -144,24 +44,28 @@ export const Opportunities: React.FC = () => {
           </Heading>
 
           <div className="flex justify-end gap-3 px-6 py-4">
+            {/* 
             <Button variant="secondary">
               Ordenar por
-            </Button>
+            </Button> 
+            */}
 
-            <Button variant="secondary">
+            <Text className="text-[14px] leading-4" >
               {filteredOpportunities.length}{" "}
               {filteredOpportunities.length === 1
                 ? "resultado"
                 : "resultados"}
-            </Button>
+            </Text>
           </div>
         </div>
 
         <div className="mt-10 flex">
           <div className="w-82.75 shrink-0">
             <FilterSidebar
-              opportunities={opportunities}
-              setFilteredOpportunities={setFilteredOpportunities}
+              filters={filters}
+              onFiltersChange={setFilters}
+              onSearch={handleSearch}
+              onClear={handleClear}
             />
           </div>
 

@@ -26,7 +26,7 @@ export const NewsletterCard: React.FC<NewsletterCardType> = ({ newsletterData })
             className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
             footer={
                 <div className="w-full flex items-end justify-between gap-4 mt-2">
-                    <span className="border-2 border-transparent px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4">
+                    <span className="border-[1.3px] border-transparent px-4.5 py-1.5 rounded-4xl text-[12px] leading-4 font-medium">
                         {newsletterData?.date}
                     </span>
 

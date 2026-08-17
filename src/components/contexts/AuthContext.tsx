@@ -30,8 +30,10 @@ import {
 } from "@/actions";
 
 import {
+    GoogleLoginPayload,
     LoginUsingEmailAndPassResponseType,
     loginUsingEmailAndPassword,
+    loginUsingGoogle,
     signup,
     SignupResponseType,
 } from "@/actions/authentication";
@@ -52,6 +54,10 @@ export interface AuthInterface {
         password: string
     ) => Promise<LoginUsingEmailAndPassResponseType>;
 
+    signInUsingGoogle: (
+        payload: GoogleLoginPayload
+    ) => Promise<LoginUsingEmailAndPassResponseType>;
+
     signOut: (path?: string) => Promise<void>;
 
     updateLoggedUserData: (data: any) => void;
@@ -68,6 +74,8 @@ export const AuthContext = createContext<AuthInterface>({
     loading: true,
     sigNup: async () => ({} as SignupResponseType),
     signInUsingEmailAndPassword: async () =>
+        ({} as LoginUsingEmailAndPassResponseType),
+    signInUsingGoogle: async () =>
         ({} as LoginUsingEmailAndPassResponseType),
     signOut: async () => { },
     updateLoggedUserData: () => { },
@@ -151,18 +159,29 @@ export const AuthProvider = ({
     /**
      * Login.
      */
-    const signInUsingEmailAndPassword = useCallback(
-        async (
-            email: string,
-            password: string
-        ) => {
-            return await loginUsingEmailAndPassword(
-                email,
-                password
-            );
-        },
-        []
-    );
+    const signInUsingEmailAndPassword = async (email: string, password: string) => {
+        const response = await loginUsingEmailAndPassword(email, password);
+
+        if (response?.user && response?.token) {
+            updaInternalDataState({ profileData: response.user, token: response.token });
+        }
+
+        return response;
+    }
+
+
+    /**
+     * Login via Google.
+     */
+    const signInUsingGoogle = async (payload: GoogleLoginPayload) => {
+        const response = await loginUsingGoogle(payload);
+
+        if (response?.user && response?.token) {
+            updaInternalDataState({ profileData: response.user, token: response.token });
+        }
+
+        return response;
+    }
 
 
     /**
@@ -269,6 +288,7 @@ export const AuthProvider = ({
 
             sigNup,
             signInUsingEmailAndPassword,
+            signInUsingGoogle,
             signOut,
 
             updateLoggedUserData,
@@ -283,6 +303,7 @@ export const AuthProvider = ({
 
             sigNup,
             signInUsingEmailAndPassword,
+            signInUsingGoogle,
             signOut,
 
             updateLoggedUserData,

@@ -1,4 +1,3 @@
-import { TopBar } from "@/components/TopBar";
 import { Signup } from "@/components/Auth/Signup";
 
 export default function SignupPage() {

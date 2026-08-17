@@ -1,83 +1,73 @@
 "use client"
 
+import { useMemo, useState } from 'react'
 import { FilterSidebar } from '@/components/agency/FilterSidebar'
 import { ChevronRight } from 'lucide-react'
 import { Button } from '../ui/button'
+import { defaultFilmFilters, filterFilms, getFilmYearOptions } from './actions'
+import { films } from './data'
+import { Tag } from '../Tag'
+import { Text } from '../ui/text'
 
-const films = [
-  {
-    title: 'Uma História de Angola',
-    director: 'Ferdinando Silmingo',
-    duration: '28\'32"',
-    year: '2025',
-    tags: [{ label: 'Angola' }, { label: 'Ficção' }, { label: 'Direitos Humanos' }],
-    thumbnail: '/assets/agency/movies/image-1.png',
-  },
-  {
-    title: 'Vozes do Atlântico',
-    director: 'Ferdinando Silmingo',
-    duration: '32\'15"',
-    year: '2025',
-    tags: [{ label: 'Moçambique' }, { label: 'Ficção' }, { label: 'Género' }, { label: 'Animação' }],
-    thumbnail: '/assets/agency/movies/image-2.png',
-  },
-  {
-    title: 'Ilhas do Atlântico',
-    director: 'Ferdinando Silmingo',
-    duration: '28\'20"',
-    year: '2025',
-    tags: [{ label: 'Cabo Verde' }, { label: 'Experimental' }, { label: 'Ambiente' }],
-    thumbnail: '/assets/agency/movies/image-3.png',
-  },
-  {
-    title: 'São Tomé: Terra e Mar',
-    director: 'Ferdinando Silmingo',
-    duration: '28\'20"',
-    year: '2025',
-    tags: [{ label: 'São Tomé' }, { label: 'Experimental' }, { label: 'Ambiente' }],
-    thumbnail: '/assets/agency/movies/image-4.png',
-  },
-  {
-    title: 'Caminhos da Guiné',
-    director: 'Ferdinando Silmingo',
-    duration: '28\'20"',
-    year: '2025',
-    tags: [{ label: 'Guiné' }, { label: 'Animação' }, { label: 'Direitos Humanos' }],
-    thumbnail: '/assets/agency/movies/image-5.png',
-  },
-  {
-    title: 'Timor: Entre Mundos',
-    director: 'Ferdinando Silmingo',
-    duration: '28\'20"',
-    year: '2025',
-    tags: [{ label: 'Angola' }, { label: 'Animação' }, { label: 'Direitos Humanos' }],
-    thumbnail: '/assets/agency/movies/image-6.png',
-  },
-]
+export type FilmType = {
+  id: string
+  title: string
+  director: string
+  duration: string
+  year: string
+  tags: { label: string }[]
+  thumbnail: string
+  country: string
+  genre: string
+}
 
 export const FilmsSection: React.FC = () => {
+  const [filters, setFilters] = useState(defaultFilmFilters)
+  const [appliedFilters, setAppliedFilters] = useState(defaultFilmFilters)
+
+  const yearOptions = useMemo(() => getFilmYearOptions(films), [])
+
+  // TODO: once a real API exists, replace this with a fetch keyed on
+  // `appliedFilters` (e.g. useEffect + setResults) instead of filtering
+  // the static `films` array in memory.
+  const results = useMemo(() => filterFilms(films, appliedFilters), [appliedFilters])
+
+  const handleSearch = () => setAppliedFilters(filters)
+  const handleClear = () => {
+    setFilters(defaultFilmFilters)
+    setAppliedFilters(defaultFilmFilters)
+  }
+
   return (
     <section className="w-full h-auto">
-
       <div className="w-full max-w-360 h-auto ml-auto mr-auto">
 
           <div className='flex items-center justify-end mt-15'>
             <div className="flex justify-end gap-3 px-6 py-4">
+              {/* 
               <Button variant={"secondary"}>
                 Ordenar por
-              </Button>
-              <Button variant={"secondary"}>
-                8 resultados
-              </Button>
+              </Button> 
+              */}
+
+              <Text className="text-[14px] leading-4" >
+                {results.length} {results.length === 1 ? 'resultado' : 'resultados'}
+              </Text>
             </div>
           </div>
 
           <div className="flex mt-10">
-            <FilterSidebar />
-            <div className="flex flex-col gap-4 px-6 pb-6">
-              {films.map((film, index) => (
+            <FilterSidebar
+              filters={filters}
+              onFiltersChange={setFilters}
+              onSearch={handleSearch}
+              onClear={handleClear}
+              yearOptions={yearOptions}
+            />
+            <div className="flex-1 flex flex-col gap-4 px-6 pb-6">
+              {results.map((film) => (
                 <div
-                  key={index}
+                  key={film.id}
                   className="flex h-56 overflow-hidden bg-[#e52b22]"
                 >
                   {/* Imagem */}
@@ -95,17 +85,10 @@ export const FilmsSection: React.FC = () => {
                       {/* Tags */}
                       <div className="flex flex-wrap gap-2 mb-6">
                         {film.tags.map((tag, i) => (
-                          <span
-                            key={i}
-                            className="border border-white rounded-full px-4 py-1 text-xs text-rede-white"
-                          >
-                            {tag.label}
-                          </span>
+                          <Tag label={tag.label} key={tag.label + "dhbg" + i} className='bg-rede-bg-600' />
                         ))}
 
-                        <span className="border border-white rounded-full px-4 py-1 text-xs text-rede-white">
-                          {film.year}
-                        </span>
+                        <Tag label={film.year} className='bg-rede-bg-600' />
                       </div>
 
                       {/* Título */}
@@ -127,10 +110,16 @@ export const FilmsSection: React.FC = () => {
                   </div>
                 </div>
               ))}
+
+              {results.length === 0 && (
+                <div className="flex min-h-56 items-center justify-center text-rede-white">
+                  Nenhum filme encontrado para os filtros selecionados.
+                </div>
+              )}
             </div>
           </div>
 
- 
+
       </div>
 
     </section>

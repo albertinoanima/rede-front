@@ -3,9 +3,9 @@
 import { OnBoarding } from "@/components/Auth/OnBoarding";
 
 const selectClassNames = {
-  triggerClassName: "rounded-full border-2 border-white px-3 text-rede-white outline-none",
-  popoverClassName: "rounded-[12px] border-2 border-white px-3 text-rede-white outline-none mt-[10px]",
-  satelliteClassName: "border-2 border-white",
+  triggerClassName: "rounded-full border-[1.3px] border-white px-3 text-rede-white outline-none",
+  popoverClassName: "rounded-[12px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]",
+  satelliteClassName: "border-[1.3px] border-white",
 };
 
 

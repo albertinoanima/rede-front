@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import { Check, ChevronDown } from 'lucide-react'
 
 const selectTriggerVariants = cva(
-  'w-full inline-flex items-center justify-between font-medium transition-all rounded-full bg-transparent text-rede-white border border-white/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 text-left',
+  'w-full inline-flex items-center justify-between font-medium transition-all rounded-lg bg-transparent text-rede-white border border-white/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 text-left',
   {
     variants: {
       size: {
@@ -152,7 +152,13 @@ export const Select = ({
             v.popover,
           )}
         >
-          <ul className="max-h-80 overflow-y-auto space-y-1">
+          <ul className="max-h-80 overflow-y-auto space-y-1
+            [&::-webkit-scrollbar]:w-2
+            [&::-webkit-scrollbar]:h-3
+            [&::-webkit-scrollbar-track]:bg-transparent
+            [&::-webkit-scrollbar-thumb]:bg-rede-yellow
+            [&::-webkit-scrollbar-thumb]:rounded-full
+          ">
             {options.map((option) => {
               const isSelected = option.value === value
               return (

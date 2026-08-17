@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
 import { Text } from "./ui/text";
 import Card from "./ui/card";
+import { Tag } from "./Tag";
 
 export type OpportunityType = {
   id: string;
@@ -16,6 +17,7 @@ export type OpportunityType = {
   endDate: string;
   type: string;
   eligibility: Array<string>,
+  country: string;
   cover: string;
 }
 
@@ -26,8 +28,8 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
         src={opportunityData.cover}
         className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
       footer={
-        <div className="flex items-center justify-between gap-4 mt-2">
-          <Text className="text-[12px] font-medium leading-4 line-clamp-2">
+        <div className="w-full h-12 flex items-center justify-between gap-4 mt-2">
+          <Text className="text-[14px] leading-relaxed font-medium line-clamp-2">
             {opportunityData.description}
           </Text>
 
@@ -37,41 +39,24 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
 
       <div className="flex flex-wrap gap-2.5">
         {opportunityData.status === "open" && (
-          <span className="border-2 border-transparent bg-rede-white text-rede-surface px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap">
-            Aberta
-          </span>
+          <Tag label="Aberta" className="border-transparent bg-rede-white text-rede-surface" />
         )}
 
         {opportunityData.status === "starting" && (
-          <span className="border-2 border-transparent bg-rede-gray text-rede-surface px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap">
-            A iniciar
-          </span>
+          <Tag label="A iniciar" className="border-transparent bg-rede-gray text-rede-surface" />
         )}
 
         {opportunityData.status === "expired" && (
-          <span className="border-2 border-transparent bg-rede-red text-rede-surface px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap">
-            Encerrada
-          </span>
+          <Tag label="Encerrada" className="border-transparent bg-rede-red text-rede-surface" />
         )}
 
-        <span className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap">
-          {`${opportunityData.startDate} - ${opportunityData.endDate}`}
-        </span>
-
-        <span className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap">
-          {opportunityData.type}
-        </span>
+        <Tag label={`${opportunityData?.startDate} - ${opportunityData.endDate}`} href={``} />
+        <Tag label={`${opportunityData?.type}`} href={``} />
 
         {opportunityData.eligibility.map((eligibility: any, index: number) => (
-          <span
-            key={index}
-            className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap"
-          >
-            {eligibility}
-          </span>
+          <Tag href={`?tag=${eligibility}`} label={eligibility} key={eligibility + "xD" + index}/>
         ))}
       </div>
-
 
       <Heading level={"h3"} className="text-[20px] font-semibold leading-7 mt-1">
         {opportunityData.title}

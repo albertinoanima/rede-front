@@ -33,7 +33,7 @@ export function SearchInput({
   }
 
   return (
-    <div className={cn('flex items-center w-full border border-foreground rounded-full overflow-hidden', className)}>
+    <div className={cn('flex items-center w-full border border-foreground rounded-lg overflow-hidden', className)}>
       {/* Input */}
       <input
         type="text"
@@ -47,7 +47,7 @@ export function SearchInput({
       {/* Search button */}
       <button
         onClick={() => onSearch?.(current)}
-        className="w-12 h-12 rounded-full border border-foreground flex items-center justify-center shrink-0 mr-1 hover:bg-foreground/10 transition-colors"
+        className="w-12 h-12 rounded-lg border border-foreground flex items-center justify-center shrink-0 mr-1 hover:bg-foreground/10 transition-colors"
       >
         <Search size={18} className="text-foreground" />
       </button>

@@ -3,6 +3,9 @@
 import { customBlur } from "@/app/fonts";
 import { Heading } from "@/components/ui/heading";
 import { FilmCard, FilmCardType } from "../FilmCard";
+import { User } from "@/types/User";
+import { Button } from "../ui/button";
+import { Edit2 } from "lucide-react";
 
 const films: FilmCardType[] = [
   {
@@ -53,16 +56,22 @@ const films: FilmCardType[] = [
 ];
 
 
-export const Filmography: React.FC = () => {
+export const Filmography: React.FC<{ isAuthenticated?: boolean, profile?: User }> = ({ isAuthenticated = false, profile }) => {
   return (
     <section className="w-full h-auto">
       <div className="relative w-full max-w-[1920px] min-h-90 h-auto mx-auto flex items-center justify-center">
         <div className="w-full max-w-360 h-auto">
-          <Heading
-            className={`${customBlur.className} text-[48px] leading-12 mb-6`}
-          >
-            Filmografia
-          </Heading>
+
+          <div className='flex gap-4'>
+            <Heading className={`${customBlur.className} text-[48px] leading-12 mb-6`}>Filmografia</Heading>
+            {
+              isAuthenticated &&
+              <Button variant="secondary" className="rounded-full p-0 shrink-0 aspect-square w-10 h-10 flex items-center justify-center -mt-5">
+                <Edit2 width={12} height={12} />
+              </Button>
+            }
+          </div>
+
 
           <div className="flex gap-5">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">

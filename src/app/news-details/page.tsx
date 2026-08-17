@@ -2,7 +2,7 @@ import { Hero } from "@/components/news/Hero";
 import { Footer } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
 import { SectionViewNews } from "@/components/news/SectionViewNews";
-import { NEWS } from "@/components/news/news";
+import { NEWS } from "@/components/news/data";
 import { SimilarNews } from "@/components/news/SimilarNews";
 import { getSimilarNews } from "@/components/news/getSimilarNews";
 
@@ -35,13 +35,9 @@ export default async function NewsDetailsPage({
   return (
     <main className="bg-rede-bg">
       <TopBar />
-
       <Hero />
-
       <SectionViewNews selectedNews={theNews} />
-
       <SimilarNews similarNews={similarNews} />
-
       <Footer />
     </main>
   );

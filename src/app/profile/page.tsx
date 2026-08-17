@@ -1,24 +1,31 @@
+"use client"
+
 import { TopBar } from "@/components/TopBar";
 import { Bio } from "@/components/profile/Bio";
 import { Hero } from "@/components/profile/Hero";
-import { Skills } from "@/components/profile/Skills";
+// import { Skills } from "@/components/profile/Skills";
 import { Achievements } from "@/components/profile/Achievements";
 import { Filmography } from "@/components/profile/Filmography";
 import { OutsideAgency } from "@/components/profile/OutsideAgency";
 import Footer from "@/components/Footer";
 import { AssociatedNews } from "@/components/profile/AssociatedNews";
+import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react";
 
 
 export default function ProfilePage() {
+    const { user, isAuthenticated } = useAuth();
+    const [updatedProfile, setUpdatedProfile] = useState<any>({});
+
     return (
         <main className="bg-rede-bg">
             <TopBar />
-            <Hero />
-            <Bio />
-            <Skills />
-            <Achievements />
-            <Filmography />
-            <OutsideAgency />
+            <Hero isAuthenticated={true} />
+            <Bio isAuthenticated={true}/>
+            {/* <Skills /> */}
+            <Achievements isAuthenticated={true}/>
+            <Filmography isAuthenticated={true} />
+            <OutsideAgency isAuthenticated={true} />
             <AssociatedNews />
             <Footer />
         </main>

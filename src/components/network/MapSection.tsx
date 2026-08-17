@@ -23,37 +23,40 @@ interface CountryData {
   companies: number;
   festivals: number;
   institutions: number;
+  labelFlip?: boolean;
 }
 
 const countries: CountryData[] = [
   {
     id: "024", iso3: "AGO", name: "Angola", nameInTopojson: "Angola",
-    isIsland: false, markerCoordinates: [11.9739, -11.2027],
+    isIsland: false, markerCoordinates: [10.9739, -11.2027],
     professionals: 342, companies: 89, festivals: 12, institutions: 45,
   },
   {
     id: "132", iso3: "CPV", name: "Cabo Verde", nameInTopojson: "Cape Verde",
-    isIsland: true, markerCoordinates: [-26.6052, 15.5000],
+    isIsland: true, markerCoordinates: [-19.6000, 16.0000],
     professionals: 156, companies: 34, festivals: 8, institutions: 22,
+    labelFlip: true,
   },
   {
     id: "624", iso3: "GNB", name: "Guiné-Bissau", nameInTopojson: "Guinea-Bissau",
-    isIsland: false, markerCoordinates: [-18.1804, 11.8037],
+    isIsland: false, markerCoordinates: [-10.1804, 11.8037],
     professionals: 98, companies: 21, festivals: 5, institutions: 15,
+    labelFlip: true,
   },
   {
     id: "508", iso3: "MOZ", name: "Moçambique", nameInTopojson: "Mozambique",
-    isIsland: false, markerCoordinates: [30.9000, -19.6657],
+    isIsland: false, markerCoordinates: [29.9000, -19.6657],
     professionals: 708, companies: 125, festivals: 17, institutions: 68,
   },
   {
     id: "678", iso3: "STP", name: "São Tomé e Príncipe", nameInTopojson: "Sao Tome and Principe",
-    isIsland: true, markerCoordinates: [4.6111, 1.1864],
+    isIsland: true, markerCoordinates: [3.6111, 1.1864],
     professionals: 67, companies: 15, festivals: 4, institutions: 12,
   },
   {
     id: "626", iso3: "TLS", name: "Timor-Leste", nameInTopojson: "Timor-Leste",
-    isIsland: true, markerCoordinates: [122.7275, -8.8742],
+    isIsland: true, markerCoordinates: [120.7275, -8.8742],
     professionals: 234, companies: 56, festivals: 9, institutions: 31,
   },
 ];
@@ -114,13 +117,26 @@ const StatRow: React.FC<{ value: number; label: string }> = ({ value, label }) =
 );
 
 
-const ArrowButton: React.FC<{ onClick: () => void; isActive: boolean; isHovered: boolean }> =
-  ({ onClick, isActive, isHovered }) => (
+// const ArrowButton: React.FC<{ onClick: () => void; isActive: boolean; isHovered: boolean }> =
+//   ({ onClick, isActive, isHovered }) => (
+//     <g onClick={(e) => { e.stopPropagation(); onClick(); }} style={{ cursor: "pointer" }}>
+//       <circle r="15" fill={isActive ? COLORS.selected : isHovered ? COLORS.hover : COLORS.buttonDefault}
+//         stroke={isActive ? COLORS.selectedStroke : "#555"} strokeWidth="1" style={{ transition: "all 0.2s ease" }} />
+//       <path d="M -4 0 L 2 0 M 0 -3 L 4 0 L 0 3" fill="none"
+//       transform="scale(1.3)"
+//         stroke={isActive ? COLORS.cardText : "#fff"} strokeWidth="1.5"
+//         strokeLinecap="round" strokeLinejoin="round" style={{ pointerEvents: "none" }} />
+//     </g>
+//   );
+
+
+const ArrowButton: React.FC<{ onClick: () => void; isActive: boolean; isHovered: boolean; flip?: boolean }> =
+  ({ onClick, isActive, isHovered, flip }) => (
     <g onClick={(e) => { e.stopPropagation(); onClick(); }} style={{ cursor: "pointer" }}>
-      <circle r="7" fill={isActive ? COLORS.selected : isHovered ? COLORS.hover : COLORS.buttonDefault}
+      <circle r="15" fill={isActive ? COLORS.selected : isHovered ? COLORS.hover : COLORS.buttonDefault}
         stroke={isActive ? COLORS.selectedStroke : "#555"} strokeWidth="1" style={{ transition: "all 0.2s ease" }} />
       <path d="M -4 0 L 2 0 M 0 -3 L 4 0 L 0 3" fill="none"
-      transform="scale(0.7)"
+        transform={`scale(${flip ? -1.5 : 1.5}, 1.5)`}
         stroke={isActive ? COLORS.cardText : "#fff"} strokeWidth="1.5"
         strokeLinecap="round" strokeLinejoin="round" style={{ pointerEvents: "none" }} />
     </g>
@@ -159,7 +175,7 @@ const PalopMapSection: React.FC = () => {
         }}
       >
 
-      <ComposableMap
+        <ComposableMap
           projection="geoMercator"
           projectionConfig={{ scale: 480, center: [60, -8], rotate: [0, 0, 0] }}
           width={1800}
@@ -172,95 +188,94 @@ const PalopMapSection: React.FC = () => {
           }}
         >
 
-        <Geographies geography={GEO_URL}>
-          {({ geographies }: any) => {
-            const nonPalop = geographies.filter((geo: any) => !isPalopCountry(geo));
-            const palop = geographies.filter((geo: any) => isPalopCountry(geo));
+          <Geographies geography={GEO_URL}>
+            {({ geographies }: any) => {
+              const nonPalop = geographies.filter((geo: any) => !isPalopCountry(geo));
+              const palop = geographies.filter((geo: any) => isPalopCountry(geo));
 
-            console.log("nonPalop count:", nonPalop.length, "palop count:", palop.length);
+              console.log("nonPalop count:", nonPalop.length, "palop count:", palop.length);
 
-            return (
-              <>
-                {nonPalop.map((geo: any) => (
-                  <Geography key={geo.rsmKey} geography={geo}
-                    fill={COLORS.default} stroke={COLORS.stroke} strokeWidth={0.5}
-                    style={{ default: { outline: "none" }, hover: { outline: "none" }, pressed: { outline: "none" } }}
-                  />
-                ))}
-                {palop.map((geo: any) => {
-                  const country = isPalopCountry(geo)!; // <-- adiciona esta linha
-                  const sel = country.id === selectedId;
-                  const hov = country.id === hoveredId;
-                  return (
+              return (
+                <>
+                  {nonPalop.map((geo: any) => (
                     <Geography key={geo.rsmKey} geography={geo}
-                      fill={sel ? COLORS.selected : hov ? COLORS.hover : COLORS.defaultBg }
-                      stroke={sel ? COLORS.selectedStroke : COLORS.stroke}
-                      strokeWidth={sel ? 2 : 1}
-                      style={{
-                        default: { outline: "none", transition: "all 0.25s ease", cursor: "pointer" },
-                        hover: { outline: "none", transition: "all 0.25s ease", cursor: "pointer" },
-                        pressed: { outline: "none" }
-                      }}
-                      onMouseEnter={() => setHoveredId(country.id)}
-                      onMouseLeave={() => setHoveredId(null)}
-                      onClick={() => setSelectedId(country.id)}
+                      fill={COLORS.default} stroke={COLORS.stroke} strokeWidth={0.5}
+                      style={{ default: { outline: "none" }, hover: { outline: "none" }, pressed: { outline: "none" } }}
                     />
-                  );
-                })}
-              </>
-            );
-          }}
-        </Geographies>
+                  ))}
+                  {palop.map((geo: any) => {
+                    const country = isPalopCountry(geo)!; // <-- adiciona esta linha
+                    const sel = country.id === selectedId;
+                    const hov = country.id === hoveredId;
+                    return (
+                      <Geography key={geo.rsmKey} geography={geo}
+                        fill={sel ? COLORS.selected : hov ? COLORS.hover : COLORS.defaultBg}
+                        stroke={sel ? COLORS.selectedStroke : COLORS.stroke}
+                        strokeWidth={sel ? 2 : 1}
+                        style={{
+                          default: { outline: "none", transition: "all 0.25s ease", cursor: "pointer" },
+                          hover: { outline: "none", transition: "all 0.25s ease", cursor: "pointer" },
+                          pressed: { outline: "none" }
+                        }}
+                        onMouseEnter={() => setHoveredId(country.id)}
+                        onMouseLeave={() => setHoveredId(null)}
+                        onClick={() => setSelectedId(country.id)}
+                      />
+                    );
+                  })}
+                </>
+              );
+            }}
+          </Geographies>
 
-        {countries.map((c: any) => {
-          const sel = isSelected(c.id);
-          const hov = isHovered(c.id);
-          return (
-            <Marker key={c.id} coordinates={c.markerCoordinates}>
-              <g
-                onMouseEnter={() => setHoveredId(c.id)}
-                onMouseLeave={() => setHoveredId(null)}
-                onClick={() => setSelectedId(c.id)}
-                style={{ cursor: "pointer" }}
-              >
-                <circle r="20" fill="transparent" />
-
-                {/* Ponto para países sem polígono visível */}
-                {(c.isIsland || c.id === "624") && (
-                  <circle r="4"
-                    fill={sel ? COLORS.selectedStroke : hov ? COLORS.hover : "#444"}
-                    stroke={sel ? COLORS.selectedStroke : "#666"}
-                    strokeWidth={1}
-                    style={{ transition: "all 0.25s ease", pointerEvents: "none" }}
-                  />
-                )}
-
-                <text
-                  x={-15} 
-                  y={0}
-                  textAnchor="end"
-                  dominantBaseline="central"
-                  fill={"#ffffff"}
-                  fontSize="7px"
-                  fontWeight={sel ? 700 : 400}
-                  style={{ pointerEvents: "none", transition: "fill 0.25s ease", lineHeight: "16px", fontWeight: "500" }}
+          {countries.map((c: any) => {
+            const sel = isSelected(c.id);
+            const hov = isHovered(c.id);
+            return (
+              <Marker key={c.id} coordinates={c.markerCoordinates}>
+                <g
+                  onMouseEnter={() => setHoveredId(c.id)}
+                  onMouseLeave={() => setHoveredId(null)}
+                  onClick={() => setSelectedId(c.id)}
+                  style={{ cursor: "pointer" }}
                 >
-                  {c.name}
-                </text>
+                  <circle r="20" fill="transparent" />
 
-           
+                  {(c.isIsland || c.id === "624") && (
+                    <circle r="4"
+                      fill={sel ? COLORS.selectedStroke : hov ? COLORS.hover : "#444"}
+                      stroke={sel ? COLORS.selectedStroke : "#666"}
+                      strokeWidth={1}
+                      style={{ transition: "all 0.25s ease", pointerEvents: "none" }}
+                    />
+                  )}
+
+                  <text
+                    x={c.labelFlip ? 24 : -24}
+                    y={0}
+                    textAnchor={c.labelFlip ? "start" : "end"}
+                    dominantBaseline="central"
+                    fill={"#ffffff"}
+                    fontSize="18px"
+                    fontWeight={sel ? 700 : 400}
+                    style={{ pointerEvents: "none", transition: "fill 0.25s ease", lineHeight: "16px", fontWeight: "500" }}
+                  >
+                    {c.name}
+                  </text>
+
                   <ArrowButton
                     onClick={() => setSelectedId(c.id)}
                     isActive={sel}
                     isHovered={hov}
+                    flip={c.labelFlip}
                   />
-              </g>
-            </Marker>
-          );
-        })}
-      </ComposableMap>
+                </g>
+              </Marker>
+            );
+          })}
+        </ComposableMap>
 
-       </div>
+      </div>
 
       <InfoCard country={selectedCountry} />
 

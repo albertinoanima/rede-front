@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
 import { Text } from "./ui/text";
 import Card from "./ui/card";
+import { Tag } from "./Tag";
 
 export type FilmCardType = {
   id: string;
@@ -15,7 +16,6 @@ export type FilmCardType = {
   countries: string[];
   cover: string;
 }
-
 
 export const FilmCard: React.FC<{ filmData: FilmCardType, v?: "v1" | "v2" | undefined }> = ({ filmData, v }) => {
   return (
@@ -29,7 +29,7 @@ export const FilmCard: React.FC<{ filmData: FilmCardType, v?: "v1" | "v2" | unde
               {filmData.title}
             </Heading>
 
-            <Text className="rounded-4xl text-[12px] font-medium leading-4">
+            <Text className="rounded-4xl text-[14px] leading-5 font-medium">
               {filmData.director}
             </Text>
           </div>
@@ -39,29 +39,20 @@ export const FilmCard: React.FC<{ filmData: FilmCardType, v?: "v1" | "v2" | unde
       } v={v}>
 
       <div className="flex flex-wrap gap-2 text-xs font-medium">
-
         {
           filmData.countries.map((country: string, index: number) => (
-            <span key={"county" + index} className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap">
-              {country}
-            </span>
+            <Tag label={country} key={"county" + index} />
           ))
         }
-
 
         {
           filmData.type.map((type: string, index: number) => (
-            <span key={"type" + index} className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap">
-              {type}
-            </span>
+            <Tag label={type} key={"type" + index} />
           ))
         }
 
+        <Tag label={filmData.year + ""} />
 
-
-        <span className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4 whitespace-nowrap">
-          {filmData.year}
-        </span>
       </div>
     </Card>
   );

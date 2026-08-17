@@ -4,7 +4,6 @@ import { Hero } from "../components/home/Hero";
 import { Join } from "../components/home/Join";
 import { News } from "../components/home/News";
 import { Partners } from "../components/home/Partners";
-import { WorkShops } from "../components/home/WorkShops";
 import { Opportunities } from "../components/home/Opportunities";
 import { Newsletter } from "@/components/home/Newsletter";
 

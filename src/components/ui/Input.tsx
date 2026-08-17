@@ -24,7 +24,7 @@ const interactionVariants = {
 } as const
 
 const inputVariants = cva(
-  'w-full font-medium transition-all rounded-full bg-rede-surface text-rede-white border outline-none disabled:cursor-not-allowed disabled:opacity-40 px-6 h-11 text-btn1',
+  'w-full font-medium transition-all rounded-[8px] bg-rede-surface text-rede-white border outline-none disabled:cursor-not-allowed disabled:opacity-40 px-6 h-11 text-btn1',
   {
     variants: {
       variant: {
@@ -40,7 +40,7 @@ const inputVariants = cva(
 )
 
 const iconSatelliteVariants = cva(
-  'inline-flex items-center justify-center rounded-full transition-all shrink-0 aspect-square h-11 w-11 border bg-transparent',
+  'inline-flex items-center justify-center rounded-[8px] transition-all shrink-0 aspect-square h-11 w-11 border bg-transparent',
   {
     variants: {
       variant: {

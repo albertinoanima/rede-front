@@ -1,5 +1,9 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# Regras de Privacidade do Projeto
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+## Arquivos Ignorados
+O agente não deve ler, modificar ou analisar os seguintes arquivos e pastas:
+.env
+node_modules/
+config/secrets.json
+*.pem
+dist/

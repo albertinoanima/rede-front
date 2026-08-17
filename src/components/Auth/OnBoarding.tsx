@@ -129,13 +129,13 @@ export const OnBoarding: React.FC<OnBoardingType> = ({ selectClassNames }) => {
         <div className="w-md max-w-[calc(100vw-32px)] bg-rede-surface p-6">
             <div className="w-full h-auto flex flex-col items-center gap-4">
                 <Heading className={`text-rede-white ${customBlur.className} text-[48px] leading-14`}>Preencher Perfil</Heading>
-                <Text className="text-[12px] font-medium leading-4">Crie sua conta na REDE PALOP+TL</Text>
+                <Text className="text-[14px] leading-5 font-medium">Crie sua conta na REDE PALOP+TL</Text>
 
                 <div className='w-full grid grid-cols-2 gap-3 mt-2'>
                     <div className={`h-2 rounded-full 'bg-rede-white/20`} key={"fjfdsckv"} />
                     <div className={`h-2 rounded-full bg-rede-yellow`} key={"fjfddckv"} />
                 </div>
-                <Text className="text-[12px] font-bold leading-4 text-rede-yellow">
+                <Text className="text-[14px] leading-5 font-bold text-rede-yellow">
                     Passo 2 de 2: {register.profileData.accountType === 'individual' ? 'Perfil Individual' : 'Perfil Empresa'}
                 </Text>
             </div>
@@ -244,7 +244,7 @@ export const OnBoarding: React.FC<OnBoardingType> = ({ selectClassNames }) => {
 
                                 {register.profileData.rentsEquipment && (
                                     <textarea
-                                        className='min-h-28 w-full rounded-2xl border-2 border-white bg-rede-surface px-6 py-4 text-[14px] font-medium text-rede-white outline-none placeholder:text-rede-white/40'
+                                        className='min-h-28 w-full rounded-2xl border-[1.3px] border-white bg-rede-surface px-6 py-4 text-[14px] font-medium text-rede-white outline-none placeholder:text-rede-white/40'
                                         placeholder='Indique quais equipamentos estão disponíveis para aluguer'
                                         value={register.profileData.rentsEquipment?.equipmentName}
                                         onChange={(event) => setRegister((lastState) => ({ ...lastState, profileData: { ...lastState.profileData, rentsEquipment: { status: true, equipmentName: event.target.value } } }))}
@@ -273,9 +273,9 @@ export const OnBoarding: React.FC<OnBoardingType> = ({ selectClassNames }) => {
 
 
                 <div className='w-full flex justify-center mt-8 mb-2'>
-                    <Text className='text-[12px] leading-4 font-bold text-center flex items-center gap-2.5'>
+                    <Text className='text-[14px] leading-5 font-bold text-center flex items-center gap-2.5'>
                         Já tem uma conta?
-                        <Link href="/login" className='text-[12px] leading-4 font-bold text-rede-yellow'>
+                        <Link href="/login" className='text-[14px] leading-5 font-bold text-rede-yellow'>
                             Fazer Login
                         </Link>
                     </Text>

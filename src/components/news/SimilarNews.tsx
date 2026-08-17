@@ -1,12 +1,9 @@
 import { customBlur } from "@/app/fonts";
 import { Heading } from "@/components/ui/heading";
 import { ArticleCard } from "../ArticleCard";
-import Link from "next/link";
-import { NewsType } from "../news/news";
+import { NewsType } from "./data";
 
-export const SimilarNews: React.FC<{
-  similarNews: NewsType[];
-}> = ({ similarNews }) => {
+export const SimilarNews: React.FC<{similarNews: NewsType[] }> = ({ similarNews }) => {
   return (
     <section className="w-full h-auto bg-rede-surface">
       <div className="relative w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-28 pb-10">
@@ -24,13 +21,8 @@ export const SimilarNews: React.FC<{
           </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-            {similarNews.map((news) => (
-              <Link
-                key={news.id}
-                href={`/news-details?id=${news.id}`}
-              >
-                <ArticleCard newsData={news} />
-              </Link>
+            {similarNews.map((news, index) => (
+                <ArticleCard newsData={news} key={news.id + "-" + index} />
             ))}
           </div>
         )}

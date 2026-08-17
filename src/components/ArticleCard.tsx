@@ -5,10 +5,13 @@ import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
 import { Plus } from "lucide-react";
 import Card from "./ui/card";
+import Link from "next/link";
+import { Tag } from "./Tag";
 
 
 type ArticleCardType = {
     newsData: {
+        id?: string;
         imageUrl?: string;
         title?: string;
         description?: string;
@@ -19,33 +22,42 @@ type ArticleCardType = {
 
 export const ArticleCard: React.FC<ArticleCardType> = ({ newsData }) => {
     return (
-        <Card image={<img
-            src={newsData?.imageUrl || "/assets/home/news/news-1.png"}
-            className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
+        <Card image={
+            <img src={newsData?.imageUrl || "/assets/home/news/news-1.png"} className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
             footer={
-                <div className="w-full flex items-end justify-between gap-4 mt-2">
-                    <span className="border-2 border-transparent px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4">
+                <div className="w-full h-12 flex items-center justify-between gap-4 mt-2">
+                    <span className="text-[12px] leading-4 font-medium">
                         {newsData?.date}
                     </span>
 
-                    <Button showMainButton={false} iconPosition="right" icon={<Plus width={12} height={12} />} onClick={() => console.log("htddhdt")} />
+                    <Link href={"/news-details?id=" + newsData?.id} className="cursor-pointer">
+                        <Button showMainButton={false} iconPosition="right" icon={<Plus width={12} height={12} />} />
+                    </Link>
                 </div>
             }
-            v={"v1"}
-        >
-            <div className="flex gap-2 text-xs font-medium">
-                <span className="border-2 border-rede-white px-4.5 py-1.5 rounded-4xl text-[12px] font-medium leading-4">
-                    {newsData?.location}
-                </span>
+            v={"v1"}>
+
+            <div className="w-full h-auto flex flex-col gap-2">
+                <div className="w-full h-auto flex flex-wrap gap-2 text-xs font-medium">
+                    {newsData?.location
+                        ?.split(",")
+                        .map((loc) => loc.trim())
+                        .filter(Boolean)
+                        .map((loc) => (
+                            <Tag key={loc} label={loc} href={`/news?tag=${encodeURIComponent(loc)}`} />
+                        ))}
+                </div>
+
+                <div className="w-full h-auto">
+                    <Heading level={"h3"} className="text-[20px] font-semibold leading-7 mt-1">
+                        {newsData?.title}
+                    </Heading>
+                </div>
+
+                <Text className="text-[14px] leading-relaxed font-medium line-clamp-2">
+                    {newsData?.description}
+                </Text>
             </div>
-
-            <Heading level={"h3"} className="text-[20px] font-semibold leading-7 mt-1">
-                {newsData?.title}
-            </Heading>
-
-            <Text className="text-[12px] font-medium leading-4 line-clamp-2">
-                {newsData?.description}
-            </Text>
         </Card>
     );
 };

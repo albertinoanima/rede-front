@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { customBlur } from "@/app/fonts";
 import { ArticleCard } from "../ArticleCard";
-import { NEWS } from "../news/news";
+import { NEWS } from "../news/data";
 import Link from "next/link";
 
 
@@ -30,11 +30,9 @@ export const WorkShops: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {NEWS.map((news) => (
-                        <Link key={news.id} href={"/news-details?id=" + news.id}>
-                            <ArticleCard
-                                newsData={news}
-                            />
-                        </Link>
+                        <ArticleCard
+                            newsData={news}
+                        />
                     ))}
                 </div>
 

@@ -87,6 +87,6 @@ export const linkify = (text: string) => {
 
     return text.replace(
         urlRegex,
-        (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer" class="underline text-rede-yellow hover:opacity-80">${url}</a>`
+        (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer" class="underline hover:opacity-80" style="color: #FCCB1C">${url}</a>`
     );
 };

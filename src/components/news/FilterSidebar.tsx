@@ -1,55 +1,54 @@
 'use client'
 
-import { useState } from 'react'
-import { ArrowRight, ChevronDown, Search, SearchIcon, X } from 'lucide-react'
+import { SearchIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '../ui/heading'
 import { Input } from '../ui/Input'
 import { Select } from '../ui/select'
-import { SelectMultiple } from '../ui/select-multiple'
-import { CountryCode } from '../network/FilterSidebar'
-import { angolaCitiesByProvince, angolaProvincesList, caboVerdeIslandsList, caboVerdeMunicipalitiesByIsland, countriesList, guineaBissauRegionsList, guineaBissauSectorsByRegion, mozambiqueDistrictsByProvince, mozambiqueProvincesList, saoTomePrincipeCitiesByRegion, saoTomePrincipeRegionsList, SelectItemType, timorLesteAdministrativePostsByMunicipality, timorLesteMunicipalitiesList } from '../network/palop'
+import { countriesList, SelectItemType } from '../network/filters'
+import { categories } from './data'
+import { NewsFilters } from './actions'
 
-const provincesByCountry: Record<CountryCode, SelectItemType[]> = {
-  angola: angolaProvincesList,
-  'cabo-verde': caboVerdeIslandsList,
-  'guine-bissau': guineaBissauRegionsList,
-  mocambique: mozambiqueProvincesList,
-  'sao-tome-e-principe': saoTomePrincipeRegionsList,
-  'timor-leste': timorLesteMunicipalitiesList,
+type FilterSidebarProps = {
+  filters: NewsFilters
+  onFiltersChange: (filters: NewsFilters) => void
+  onSearch: () => void
+  onClear: () => void
+  yearOptions: SelectItemType[]
 }
 
-const citiesByCountryAndProvince: Record<CountryCode, Record<string, SelectItemType[]>> = {
-  angola: angolaCitiesByProvince,
-  'cabo-verde': caboVerdeMunicipalitiesByIsland,
-  'guine-bissau': guineaBissauSectorsByRegion,
-  mocambique: mozambiqueDistrictsByProvince,
-  'sao-tome-e-principe': saoTomePrincipeCitiesByRegion,
-  'timor-leste': timorLesteAdministrativePostsByMunicipality,
-}
+export const FilterSidebar: React.FC<FilterSidebarProps> = ({ filters, onFiltersChange, onSearch, onClear, yearOptions }) => {
+  const { search, country: selectedCountry, category: selectedCategory, year: selectedYear } = filters
 
-export const FilterSidebar: React.FC = () => {
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const handleSearchChange = (value: string) =>
+    onFiltersChange({ ...filters, search: value })
 
+  const handleCountryChange = (value: string) =>
+    onFiltersChange({ ...filters, country: value })
+
+  const handleCategoryChange = (value: string) =>
+    onFiltersChange({ ...filters, category: value })
+
+  const handleYearChange = (value: string) =>
+    onFiltersChange({ ...filters, year: value })
 
   return (
     <aside className="w-82.75 h-auto pl-6 pr-6 flex flex-col gap-6">
       {/* Search */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mb-10">
         <div className="flex items-center">
-          <Input placeholder='Pesquisar...' className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white" icon={<SearchIcon size={18} className="text-rede-white" />} iconPosition={"right"} iconContainerClassName='h-10 w-10 rounded-full border-2 border-white p-2.5"' />
+          <Input
+            onIconClick={onSearch}
+            placeholder='Pesquisar...'
+            value={search}
+            onChange={({ target }) => handleSearchChange(target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && onSearch()}
+            className="h-10 w-full border-[1.3px] border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white"
+            icon={<SearchIcon size={18} className="text-rede-white" />}
+            iconPosition={"right"}
+            iconContainerClassName='h-10 w-10 border-[1.3px] border-white p-2.5"'
+          />
         </div>
-
-        <div className="flex gap-2">
-          <Button containerClassName='w-full'>
-            Pesquisar
-          </Button>
-
-          <Button containerClassName='w-full' variant={"secondary"}>
-            Limpar
-          </Button>
-        </div>
-
 
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-rede-white'>País</Heading>
@@ -59,10 +58,10 @@ export const FilterSidebar: React.FC = () => {
               value={selectedCountry}
               placeholder='Selecione o país'
               options={countriesList}
-              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
-              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-rede-white outline-none"
-              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
-              onChange={(val: string) => setSelectedCountry(val)}
+              triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
+              popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"
+              satelliteClassName="border-[1.3px] border-white"
+              onChange={handleCountryChange}
             />
           </div>
         </div>
@@ -70,20 +69,42 @@ export const FilterSidebar: React.FC = () => {
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Ano</Heading>
           <div className="flex items-center">
-            <Input placeholder='Pesquisar...' type='month' className="h-10 w-full rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white" icon={<ArrowRight size={18} className="text-rede-white" />} iconPosition={"right"} iconContainerClassName='h-10 w-10 rounded-full border-2 border-white p-2.5"' />
+            <Select
+              variant='primary'
+              value={selectedYear}
+              placeholder={yearOptions.length > 0 ? 'Selecione o ano' : 'Sem anos disponíveis'}
+              options={yearOptions}
+              triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
+              popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"
+              satelliteClassName="border-[1.3px] border-white"
+              onChange={handleYearChange}
+            />
           </div>
         </div>
 
         <div className='flex flex-col gap-2'>
           <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Categoria</Heading>
           <div className="flex items-center">
-            <Select value='Indo' placeholder='Selecione o Pais' options={[{ label: "Opção 1", value: "opcao-1" }, { label: "Opção 2", value: "opcao-2" }]}
-              triggerClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
-              popoverClassName="rounded-[12px] border-1 mt-[15px] border-white px-3 text-rede-white outline-none"
-              satelliteClassName="rounded-full border-2 border-white bg-transparent px-3 text-rede-white outline-none"
+            <Select
+              variant='primary'
+              value={selectedCategory}
+              placeholder='Selecione a categoria'
+              options={categories}
+              triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
+              popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"
+              satelliteClassName="border-[1.3px] border-white"
+              onChange={handleCategoryChange}
             />
           </div>
         </div>
+
+
+        <div className="flex gap-2 mt-5">
+          <Button containerClassName='w-full' variant={"secondary"} onClick={onClear}>
+            Limpar filtro
+          </Button>
+        </div>
+
       </div>
     </aside>
   )

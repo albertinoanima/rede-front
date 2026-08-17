@@ -21,11 +21,10 @@ export const Newsletter: React.FC = () => {
                     </div>
 
                     <div className="w-full h-auto flex flex-col items-center justify-center gap-6 mb-5">
-                        <Input variant={"secondary"} placeholder="O seu email aqui" className="max-w-90 mr-auto ml-auto bg-transparent" />
+                        <Input variant={"secondary"} placeholder="O seu email aqui" className="max-w-90 mr-auto ml-auto bg-transparent placeholder:text-[#dddddd]"  />
                         <Button>Subscrever</Button>
                     </div>
                 </div>
-
 
             </div>
         </section>

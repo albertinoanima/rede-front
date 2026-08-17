@@ -18,15 +18,15 @@ export const Footer: React.FC<VariantType> = ({ variant }) => {
 
         <div className="w-full flex">
           <div className="w-full h-full flex flex-col justify-center gap-4">
-            <Button variant="secondary" size="lg" containerClassName="w-16 h-16 rounded-full" className="border-2 border-white w-16 h-16 rounded-full p-0 cursor-pointer">
-              <CustomFacebook width={64} height={64} />
+            <Button variant="secondary" size="lg" containerClassName="w-16 h-16 rounded-full" className="border-[1.3px] border-white w-16 h-16 rounded-full p-0 cursor-pointer">
+              <CustomFacebook width={64} height={64} className="hover:text-black" />
             </Button>
 
-            <Button variant="secondary" size="lg" containerClassName="w-16 h-16 rounded-full" className="border-2 border-white w-16 h-16 rounded-full p-0 cursor-pointer">
+            <Button variant="secondary" size="lg" containerClassName="w-16 h-16 rounded-full" className="border-[1.3px] border-white w-16 h-16 rounded-full p-0 cursor-pointer">
               <CustomInstagram width={64} height={64} />
             </Button>
 
-            <Button variant="secondary" size="lg" containerClassName="w-16 h-16 rounded-full" className="border-2 border-white w-16 h-16 rounded-full p-0 cursor-pointer">
+            <Button variant="secondary" size="lg" containerClassName="w-16 h-16 rounded-full" className="border-[1.3px] border-white w-16 h-16 rounded-full p-0 cursor-pointer">
               <CustomYouTube width={64} height={64} />
             </Button>
           </div>
@@ -37,7 +37,7 @@ export const Footer: React.FC<VariantType> = ({ variant }) => {
                 Menu
               </Heading>
 
-              <ul className="text-[12px] font-medium leading-4 text-left">
+              <ul className="text-[14px] leading-5 font-medium text-left">
                 <li className="mb-2.5"><Link href="/about">Sobre Nós</Link></li>
                 <li className="mb-2.5"><Link href="/network">Rede</Link></li>
                 <li className="mb-2.5"><Link href="/agency">Agência</Link></li>
@@ -54,7 +54,7 @@ export const Footer: React.FC<VariantType> = ({ variant }) => {
             <Heading level={"h3"} className="font-medium text-rede-white text-[48px] leading-14">
               Contactos
             </Heading>
-            <ul className="text-[12px] font-medium leading-4">
+            <ul className="text-[14px] leading-5 font-medium">
               <li className="mb-2.5"><Link href="mailto:info@redepaloptl.org">info@redepaloptl.org</Link></li>
               <li className="mb-2.5"><Link href="tel:+258840000000">+258 84 000 0000</Link></li>
               <li className="mb-2.5"><Link href="film-commission">Film Commission</Link></li>
