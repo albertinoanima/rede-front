@@ -4,7 +4,7 @@ import { TopBar } from "@/components/TopBar";
 import { SectionViewNews } from "@/components/news/SectionViewNews";
 import { NEWS } from "@/components/news/data";
 import { SimilarNews } from "@/components/news/SimilarNews";
-import { getSimilarNews } from "@/components/news/getSimilarNews";
+import { getSimilarNews } from "@/components/news/actions";
 
 interface NewsDetailsPageProps {
   searchParams: Promise<{

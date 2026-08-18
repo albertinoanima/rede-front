@@ -40,7 +40,7 @@ const inputVariants = cva(
 )
 
 const iconSatelliteVariants = cva(
-  'inline-flex items-center justify-center rounded-[8px] transition-all shrink-0 aspect-square h-11 w-11 border bg-transparent',
+  'inline-flex items-center justify-center rounded-full transition-all shrink-0 aspect-square h-11 w-11 border bg-transparent',
   {
     variants: {
       variant: {
