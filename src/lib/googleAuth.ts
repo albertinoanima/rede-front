@@ -45,6 +45,32 @@ declare global {
 
 let scriptPromise: Promise<void> | null = null
 
+function getCurrentOrigin(): string {
+  if (typeof window === 'undefined') return ''
+  return window.location.origin
+}
+
+function getGoogleOriginError(): Error {
+  const origin = getCurrentOrigin()
+  const suffix = origin ? ` Origem atual: ${origin}` : ''
+
+  return new Error(`Esta origem nao esta autorizada para o Google Sign-In.${suffix}`)
+}
+
+function maskClientId(clientId: string): string {
+  if (clientId.length <= 18) return clientId
+  return `${clientId.slice(0, 10)}...${clientId.slice(-8)}`
+}
+
+function logGoogleConfig(clientId: string): void {
+  if (process.env.NODE_ENV !== 'development') return
+
+  console.info('[Google Sign-In]', {
+    origin: getCurrentOrigin(),
+    clientId: maskClientId(clientId),
+  })
+}
+
 function loadGoogleScript(): Promise<void> {
   if (typeof window === 'undefined') {
     return Promise.reject(new Error('O Google Sign-In só está disponível no browser.'))
@@ -105,6 +131,8 @@ async function ensureGoogleInitialized(): Promise<void> {
 
   await loadGoogleScript()
 
+  logGoogleConfig(clientId)
+
   if (initialized) return
 
   const google = window.google
@@ -143,7 +171,7 @@ export async function signInWithGoogle(): Promise<GoogleSignInResult> {
         notification.isDismissedMoment()
       ) {
         pendingCredential = null
-        reject(new Error('Não foi possível concluir o login com o Google. Tente novamente.'))
+        reject(getGoogleOriginError())
       }
     })
   })

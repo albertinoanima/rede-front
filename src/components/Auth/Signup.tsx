@@ -30,12 +30,15 @@ export const Signup: React.FC = () => {
     const [showMessaage, setShowMessaage] = useState(false);
     const [requireConfirmation, setRequireConfirmation] = useState(false);
     const [googleLoading, setGoogleLoading] = useState(false);
+    const [acceptedTerms, setAcceptedTerms] = useState(false);
 
     const [googleProfile, setGoogleProfile] = useState<{
         name: string;
         image: string;
         email: string;
     }>();
+
+    const canAdvance = acceptedTerms;
 
     const [register, setRegister] = useState<User>({
         name: "",
@@ -100,6 +103,8 @@ export const Signup: React.FC = () => {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault();
+        if (!canAdvance) return;
+
         setShowMessaage(false);
         try {
             const responseData = await sigNup(register);
@@ -215,11 +220,29 @@ export const Signup: React.FC = () => {
                         <Text className={`text-[14px] leading-5 ${requireConfirmation ? "text-rede-yellow" : "text-rede-red"} text-center`} dangerouslySetInnerHTML={{ __html: message }} />
                     }
 
-                    <Button type='submit' containerClassName='w-full' className='text-rede-surface' icon={<ChevronRight width={14} height={14} />} iconPosition='right'>
+
+                    <div className='flex items-start gap-3 rounded-lg border border-rede-white/20 p-3 transition-colors hover:border-rede-white/40'>
+                        <input
+                            id='acceptedTermsField'
+                            type='checkbox'
+                            checked={acceptedTerms}
+                            onChange={(event) => setAcceptedTerms(event.target.checked)}
+                            aria-describedby='termsAgreementText'
+                            className='mt-1 h-4 w-4 shrink-0 cursor-pointer accent-rede-yellow-500'
+                        />
+                        <Text id='termsAgreementText' as='div' className='text-[14px] leading-5 font-medium'>
+                            <label htmlFor='acceptedTermsField' className='cursor-pointer'>Aceito</label>&nbsp;
+                            <Link href="/assets/governação_digital_V0_19-07-26_terms.pdf" target='_blank' className='text-rede-yellow'>Termos de Uso</Link>
+                            &nbsp;e&nbsp;
+                            <Link href="/assets/governação-digital_V0_SHORT_VERSION_politicas.pdf" target='_blank' className='text-rede-yellow'>Política de Privacidade</Link>
+                        </Text>
+                    </div>
+
+                    <Button type='submit' containerClassName='w-full' className='text-rede-surface' icon={<ChevronRight width={14} height={14} />} iconPosition='right' disabled={!canAdvance}>
                         Avançar
                     </Button>
 
-                    <Button type='button' variant={"secondary"} icon={<GoogleIcon width={12} height={12} />} className='w-full' containerClassName='w-full' disabled={googleLoading} onClick={handleGoogleSignup}>
+                    <Button type='button' variant={"secondary"} icon={<GoogleIcon width={12} height={12} />} className='w-full' containerClassName='w-full' disabled={googleLoading || !canAdvance} onClick={handleGoogleSignup}>
                         {googleLoading ? "A ligar ao Google..." : "Continue com Google"}
                     </Button>
                 </div>

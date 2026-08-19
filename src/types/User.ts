@@ -3,6 +3,23 @@ import { SocialLinks } from "./Profile";
 export type LoginType = 'normal' | 'google';
 export type AccountType = 'individual' | 'company';
 
+export type ProfileAchievement = {
+    id: string;
+    type: string;
+    title: string;
+    link?: string;
+};
+
+export type ProfileFilm = {
+    id: string;
+    title: string;
+    director: string;
+    type: string[];
+    year: number;
+    countries: string[];
+    cover: string;
+};
+
 export interface User {
     name: string;
     email: string;
@@ -36,6 +53,14 @@ export interface User {
         services: string[];
         otherService: string;
         rentsEquipment?: { status: boolean, equipmentName: string }
+
+        profession?: string;
+        bio?: string;
+        skills?: string[];
+        achievements?: ProfileAchievement[];
+        filmography?: ProfileFilm[];
+        outsideAgency?: ProfileFilm[];
+        username?: string;
     }
 
     createdAt?: Date;
@@ -56,7 +81,7 @@ export interface LoggedUser {
     isActive?: string; // Opcional, pois login via Google nao tem senha local
     isEmailConfirmed: boolean;
 
-    profileData: any;
+    profileData: User["profileData"];
 
     createdAt?: Date;
     updatedAt?: Date;

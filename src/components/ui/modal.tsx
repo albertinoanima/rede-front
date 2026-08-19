@@ -3,6 +3,7 @@
 import { ReactNode, useEffect } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "./button";
 
 type ModalProps = {
   open: boolean;
@@ -39,22 +40,18 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, children, className
       )}
       onClick={onClose}
     >
-      <div
-        className={cn(
-          "relative w-full max-w-140 max-h-[90vh] overflow-y-auto bg-rede-surface rounded-3xl p-10",
-          panelClassName
-        )}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          type="button"
+      <div className="relative w-full max-w-170" onClick={(e) => e.stopPropagation()}>
+        <Button
+          variant="secondary"
+          showMainButton={false}
+          icon={<X width={12} height={12} />}
+          iconButtonClassName="!w-12 !h-12 !p-0 absolute left-full top-6 ml-0 z-10 max-sm:!left-auto max-sm:!right-0 max-sm:!-top-16 max-sm:!ml-0"
           onClick={onClose}
-          className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-rede-surface border border-rede-white/20 flex items-center justify-center text-rede-white hover:bg-rede-white/10 transition-colors"
-        >
-          <X width={16} height={16} />
-        </button>
+        />
 
-        {children}
+        <div className={cn("w-full max-h-[90vh] overflow-y-auto bg-rede-surface rounded-3xl p-5", panelClassName)}>
+          {children}
+        </div>
       </div>
     </div>
   );

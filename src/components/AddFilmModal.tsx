@@ -1,50 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ChevronDown, Move, ZoomIn, ZoomOut } from "lucide-react";
+import { Move, ZoomIn, ZoomOut } from "lucide-react";
 import { Modal } from "./ui/modal";
 import { Input } from "./ui/Input";
 import { Button } from "./ui/button";
 import { Text } from "./ui/text";
-
-const COUNTRY_OPTIONS = ["Angola", "Cabo Verde", "Guiné-Bissau", "Moçambique", "São Tomé e Príncipe", "Timor-Leste"];
-const THEME_OPTIONS = ["Direitos humanos", "Ambiente", "Identidade", "Migração", "Memória"];
-const GENRE_OPTIONS = ["Ficção", "Documentário", "Animação", "Experimental"];
-
-type SelectPillProps = {
-  label: string;
-  placeholder: string;
-  options: string[];
-  value: string;
-  onChange: (value: string) => void;
-};
-
-const SelectPill: React.FC<SelectPillProps> = ({ label, placeholder, options, value, onChange }) => (
-  <div className="flex flex-col gap-2 flex-1">
-    <Text className="text-[16px] font-medium">{label}</Text>
-    <div className="relative">
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full appearance-none bg-transparent border border-rede-white/40 rounded-full pl-4 pr-9 h-11 text-btn2 text-rede-white outline-none cursor-pointer"
-      >
-        <option value="" disabled className="bg-rede-surface text-rede-white/40">
-          {placeholder}
-        </option>
-        {options.map((option) => (
-          <option key={option} value={option} className="bg-rede-surface text-rede-white">
-            {option}
-          </option>
-        ))}
-      </select>
-      <ChevronDown
-        width={14}
-        height={14}
-        className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-rede-white/70"
-      />
-    </div>
-  </div>
-);
+import { Select } from "./ui/select";
+import { uploadImage } from "@/lib/uploadImage";
 
 export type FilmFormData = {
   id?: string;
@@ -56,6 +19,7 @@ export type FilmFormData = {
   genre: string;
   link: string;
   cover: string;
+  coverFile?: File;
   coverZoom: number;
   coverPosition: { x: number; y: number };
 };
@@ -76,7 +40,7 @@ const EMPTY_FORM: FilmFormData = {
 type FilmFormModalProps = {
   open: boolean;
   onClose: () => void;
-  onSubmit: (data: FilmFormData) => void;
+  onSubmit: (data: FilmFormData) => void | Promise<void>;
   initialData?: Partial<FilmFormData>;
 };
 
@@ -87,9 +51,10 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
   initialData,
 }) => {
   const [form, setForm] = useState<FilmFormData>({ ...EMPTY_FORM, ...initialData });
+  const [isUploading, setIsUploading] = useState(false);
+  const [error, setError] = useState("");
   const dragRef = useRef<{ startX: number; startY: number; origin: { x: number; y: number } } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
 
   const update = <K extends keyof FilmFormData>(key: K, value: FilmFormData[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -97,8 +62,10 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    setError("");
     const url = URL.createObjectURL(file);
-    update("cover", url);
+    setForm((prev) => ({ ...prev, cover: url, coverFile: file }));
   };
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -122,15 +89,25 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
     dragRef.current = null;
   };
 
-  const handleSubmit = () => {
-    onSubmit(form);
+  const handleSubmit = async () => {
+    setError("");
+    setIsUploading(true);
+
+    try {
+      const cover = form.coverFile ? (await uploadImage(form.coverFile, "films")).url : form.cover;
+      await onSubmit({ ...form, cover, coverFile: undefined });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Nao foi possivel enviar a imagem.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} panelClassName="w-full max-w-[680px] rounded-none border-[1.3px] boder-white/900">
       <div className="flex flex-col gap-6">
         <div
-          className="relative w-full h-63 rounded-2xl overflow-hidden border border-dashed border-rede-white/30 bg-rede-surface-800 cursor-move select-none"
+          className="relative w-full h-63 overflow-hidden border-[1.3px] border-dashed border-rede-white/900 bg-rede-surface-800 cursor-move select-none"
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
@@ -157,7 +134,6 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
             </button>
           )}
 
-          {/* faixas laterais indicando área de corte */}
           <div className="absolute inset-y-0 left-0 w-1/4 bg-black/40 pointer-events-none" />
           <div className="absolute inset-y-0 right-0 w-1/4 bg-black/40 pointer-events-none" />
 
@@ -182,75 +158,72 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
         </div>
 
         <div className="flex items-center gap-3">
-          <ZoomOut width={16} height={16} className="text-rede-white/60 shrink-0" />
-          <input
-            type="range"
-            min={1}
-            max={2.5}
-            step={0.01}
-            value={form.coverZoom}
-            onChange={(e) => update("coverZoom", Number(e.target.value))}
-            className="flex-1 accent-rede-yellow-500"
-          />
-          <ZoomIn width={16} height={16} className="text-rede-white/60 shrink-0" />
-          <Text className="text-xs text-rede-white/50 max-w-45 shrink-0">
-            Mantém o conteúdo principal dentro da área vazia. As faixas laterais podem ser cortadas consoante o formato do cartão.
-          </Text>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <Text className="text-[16px] font-medium">Título</Text>
-          <Input
-            variant="secondary"
-            placeholder="Ex: Terra Vermelha"
-            value={form.title}
-            onChange={(e) => update("title", e.target.value)}
-          />
-        </div>
-
-        <div className="flex gap-4">
-          <div className="flex flex-col gap-2 flex-1">
-            <Text className="text-[16px] font-medium">Ano</Text>
-            <Input
-              variant="secondary"
-              placeholder="2026"
-              value={form.year}
-              onChange={(e) => update("year", e.target.value)}
+          <div className="w-1/2 flex gap-1 items-center">
+            <ZoomOut width={16} height={16} className="text-rede-white/60 shrink-0" />
+            <input
+              type="range"
+              min={1}
+              max={2.5}
+              step={0.01}
+              value={form.coverZoom}
+              onChange={(e) => update("coverZoom", Number(e.target.value))}
+              className="flex-1 accent-rede-yellow-500"
             />
+            <ZoomIn width={16} height={16} className="text-rede-white/60 shrink-0" />
           </div>
-          <div className="flex flex-col gap-2 flex-1">
-            <Text className="text-[16px] font-medium">Duração</Text>
-            <Input
-              variant="secondary"
-              placeholder="14 min"
-              value={form.duration}
-              onChange={(e) => update("duration", e.target.value)}
-            />
+          <div className="w-1/2">
+            <Text className="text-[12px] leading-4 text-rede-white/30">
+              Mantem o conteudo principal dentro da area vazia. As faixas laterais podem ser cortadas consoante o formato do cartao.
+            </Text>
           </div>
         </div>
 
-        <div className="flex gap-4">
-          <SelectPill
-            label="País"
-            placeholder="Selecionar país"
-            options={COUNTRY_OPTIONS}
-            value={form.country}
-            onChange={(v) => update("country", v)}
-          />
-          <SelectPill
-            label="Tema"
-            placeholder="Selecionar tema"
-            options={THEME_OPTIONS}
-            value={form.theme}
-            onChange={(v) => update("theme", v)}
-          />
-          <SelectPill
-            label="Género"
-            placeholder="Selecionar género"
-            options={GENRE_OPTIONS}
-            value={form.genre}
-            onChange={(v) => update("genre", v)}
-          />
+        <div className="w-full flex gap-3">
+          <div className="w-1/2 flex flex-col gap-2">
+            <Text className="text-[16px] font-medium">Titulo</Text>
+            <Input
+              variant="secondary"
+              placeholder="Ex: Terra Vermelha"
+              value={form.title}
+              onChange={(e) => update("title", e.target.value)}
+            />
+          </div>
+
+          <div className="w-1/2 flex gap-2">
+            <div className="flex flex-col gap-2">
+              <Text className="text-[16px] font-medium">Ano</Text>
+              <Input
+                variant="secondary"
+                placeholder="2026"
+                value={form.year}
+                onChange={(e) => update("year", e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Text className="text-[16px] font-medium">Duracao</Text>
+              <Input
+                variant="secondary"
+                placeholder="14 min"
+                value={form.duration}
+                onChange={(e) => update("duration", e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-between gap-2" >
+          <div className="w-full flex flex-col gap-2">
+            <Text className="text-[16px] font-medium">Pais</Text>
+            <Select placeholder="Selecionar pais" variant="secondary" options={[]} />
+          </div>
+          <div className="w-full flex flex-col gap-2">
+            <Text className="text-[16px] font-medium">Tema</Text>
+            <Select placeholder="Selecionar tema" variant="secondary" options={[]} />
+          </div>
+          <div className="w-full flex flex-col gap-2">
+            <Text className="text-[16px] font-medium">Genero</Text>
+            <Select placeholder="Selecionar genero" variant="secondary" options={[]} />
+          </div>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -258,24 +231,24 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
             <Text className="text-[16px] font-medium">Link do filme</Text>
             <span className="text-xs text-rede-white/40">(opcional)</span>
           </div>
-          <div className="flex items-center border border-rede-white/40 rounded-lg h-11 overflow-hidden">
-            <span className="px-4 text-btn2 text-rede-white/60 border-r border-rede-white/40 shrink-0">
-              https://
-            </span>
-            <input
-              value={form.link}
-              onChange={(e) => update("link", e.target.value)}
-              placeholder="vimeo.com..."
-              className="flex-1 h-full bg-transparent px-4 text-btn2 text-rede-white outline-none placeholder:text-rede-white/40"
-            />
-          </div>
+          <Input
+            variant="secondary"
+            placeholder="Link..."
+            value={form.link}
+            onChange={(e) => update("link", e.target.value)}
+            icon={<span className="text-sm">https://</span>}
+            iconContainerClassName="w-18 rounded-[8px]"
+            iconPosition="left"
+          />
         </div>
 
+        {error && <Text className="text-[14px] leading-5 text-rede-red">{error}</Text>}
+
         <div className="flex justify-end gap-2 mt-2">
-          <Button variant="secondary" onClick={onClose}>
+          <Button variant="secondary" disabled={isUploading} onClick={onClose}>
             Cancelar
           </Button>
-          <Button onClick={handleSubmit}>Guardar filme</Button>
+          <Button disabled={isUploading} onClick={handleSubmit}>{isUploading ? "A enviar..." : "Guardar filme"}</Button>
         </div>
       </div>
     </Modal>

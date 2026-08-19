@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import { Check, ChevronDown } from 'lucide-react'
 
 const selectTriggerVariants = cva(
-  'w-full inline-flex items-center justify-between font-medium transition-all rounded-lg bg-transparent text-rede-white border border-white/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 text-left',
+  'w-full inline-flex items-center justify-between font-medium transition-all rounded-lg bg-transparent text-rede-white border border-white/90 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 text-left',
   {
     variants: {
       size: {
@@ -20,7 +20,7 @@ const selectTriggerVariants = cva(
 )
 
 const satelliteVariants = cva(
-  'inline-flex items-center justify-center rounded-full transition-all shrink-0 aspect-square bg-transparent text-rede-white border border-white/20 disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center rounded-full transition-all shrink-0 aspect-square bg-transparent text-rede-white border border-white/90 disabled:cursor-not-allowed',
   {
     variants: {
       size: {
@@ -121,7 +121,7 @@ export const Select = ({
             isOpen && v.open,
           )}
         >
-          <span className={cn(!selectedOption && 'opacity-40')}>
+          <span className={cn(!selectedOption && 'opacity-40 text-[12px] leading-4')}>
             {selectedOption ? selectedOption.label : placeholder}
           </span>
         </button>

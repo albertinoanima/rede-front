@@ -16,7 +16,7 @@ export type UpdateUserResponseType = {
   error?: string;
   message?: string;
   data?: {
-    user: User;
+    user?: User;
   };
 };
 
@@ -25,6 +25,18 @@ export type DeleteUserResponseType = {
   message?: string;
 };
 
+type ApiError = {
+  response?: {
+    data?: {
+      error?: string;
+      message?: string;
+    };
+  };
+};
+
+const getApiError = (err: unknown): ApiError => {
+  return typeof err === "object" && err !== null ? err as ApiError : {};
+};
 
 export const updateLoggedUser = async (
   data: UpdateUserInput
@@ -35,28 +47,25 @@ export const updateLoggedUser = async (
       data
     );
 
-    if (responseData.data) {
-      return {
-        data: {
+    return {
+      data: responseData.data?.user
+        ? {
           user: responseData.data.user,
-        },
-        message:
-          responseData.data.message ||
-          "Dados atualizados com sucesso.",
-      };
-    }
+        }
+        : undefined,
+      message:
+        responseData.data?.message ||
+        "Dados atualizados com sucesso.",
+    };
+  } catch (err: unknown) {
+    const apiError = getApiError(err);
 
     return {
-      error: "Erro desconhecido",
-      message: "Não foi possível atualizar os dados.",
-    };
-  } catch (err: any) {
-    return {
       error:
-        err.response?.data?.error ||
+        apiError.response?.data?.error ||
         "Erro desconhecido",
       message:
-        err.response?.data?.message ||
+        apiError.response?.data?.message ||
         "Não foi possível atualizar os dados.",
     };
   }
@@ -73,13 +82,15 @@ export const deleteLoggedUser = async (): Promise<DeleteUserResponseType> => {
         responseData.data?.message ||
         "Usuário apagado com sucesso.",
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const apiError = getApiError(err);
+
     return {
       error:
-        err.response?.data?.error ||
+        apiError.response?.data?.error ||
         "Erro desconhecido",
       message:
-        err.response?.data?.message ||
+        apiError.response?.data?.message ||
         "Não foi possível apagar o usuário.",
     };
   }

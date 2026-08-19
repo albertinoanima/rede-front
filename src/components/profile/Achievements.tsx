@@ -6,26 +6,15 @@ import { Heading } from "@/components/ui/heading";
 import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 import { Input } from "../ui/Input";
-import { ChevronDown, Edit2, Plus, Trash, Trash2 } from "lucide-react";
-import { User } from "@/types/User";
+import { Edit2, Plus, Trash } from "lucide-react";
 import { Select } from "../ui/select";
+import { ProfileAchievement } from "@/types/User";
 
-type EntryType = "Festival" | "Categoria" | "Prémio";
+type EntryType = "Festival" | "Categoria" | "Premio" | "Exibicao";
 
-type AchievementEntry = {
-  id: string;
-  type: EntryType;
-  title: string;
-  link: string;
+export type AchievementEntry = ProfileAchievement & {
+  type: EntryType | string;
 };
-
-const ENTRY_TYPES: EntryType[] = ["Festival", "Categoria", "Prémio"];
-
-const INITIAL_DATA: AchievementEntry[] = [
-  { id: "1", type: "Festival", title: "Krakow Film Festival", link: "" },
-  { id: "2", type: "Categoria", title: "Lorem ipsum dolor sit amet", link: "" },
-  { id: "3", type: "Categoria", title: "Lorem ipsum dolor sit amet", link: "" },
-];
 
 const createEmptyEntry = (): AchievementEntry => ({
   id: crypto.randomUUID(),
@@ -40,20 +29,21 @@ type EntryFieldProps = {
   onRemove: (id: string) => void;
 };
 
+const entryTypeOptions = [
+  { label: "Festivais", value: "Festival" },
+  { label: "Premios", value: "Premio" },
+  { label: "Exibicoes", value: "Exibicao" },
+  { label: "Categorias", value: "Categoria" },
+];
+
 const EntryTypePill = ({ entry, onChange }: Pick<EntryFieldProps, "entry" | "onChange">) => (
   <div className="relative shrink-0">
-    <Select variant="secondary" options={[{
-      label: "Festivais",
-      value: "festivais"
-    },
-    {
-      label: "Prémios",
-      value: "prémios"
-    },
-    {
-      label: "Exibições",
-      value: "exibições"
-    }]} />
+    <Select
+      variant="secondary"
+      options={entryTypeOptions}
+      value={entry.type}
+      onChange={(value) => onChange(entry.id, { type: value })}
+    />
   </div>
 );
 
@@ -63,11 +53,11 @@ const EntryField: React.FC<EntryFieldProps> = ({ entry, onChange, onRemove }) =>
       <div className="min-w-[260px] max-w-1/2 w-auto h-auto">
         <EntryTypePill entry={entry} onChange={onChange} />
       </div>
-      
+
       <div className="w-full h-auto flex flex-col gap-4">
         <Input
           variant="secondary"
-          placeholder="Título..."
+          placeholder="Titulo..."
           value={entry.title}
           onChange={(e) => onChange(entry.id, { title: e.target.value })}
           icon={<Trash width={12} height={12} />}
@@ -78,14 +68,11 @@ const EntryField: React.FC<EntryFieldProps> = ({ entry, onChange, onRemove }) =>
         <Input
           variant="secondary"
           placeholder="Link..."
-          value={entry.title}
-          onChange={(e) => onChange(entry.id, { title: e.target.value })}
-          icon={<span className="text-sm">
-            https://
-          </span>}
+          value={entry.link ?? ""}
+          onChange={(e) => onChange(entry.id, { link: e.target.value })}
+          icon={<span className="text-sm">https://</span>}
           iconContainerClassName="w-18 rounded-[8px]"
           iconPosition="left"
-          onIconClick={() => onRemove(entry.id)}
         />
       </div>
     </div>
@@ -100,19 +87,31 @@ const AddEntryTile = ({ onAdd }: { onAdd: () => void }) => (
   </div>
 );
 
-export const Achievements: React.FC<{ isAuthenticated?: boolean; profile?: User }> = ({ isAuthenticated = false, profile }) => {
+type AchievementsProps = {
+  isAuthenticated?: boolean;
+  achievements?: AchievementEntry[];
+  isSaving?: boolean;
+  onSaveAchievements?: (achievements: AchievementEntry[]) => boolean | Promise<boolean>;
+};
+
+export const Achievements: React.FC<AchievementsProps> = ({
+  isAuthenticated = false,
+  achievements,
+  isSaving = false,
+  onSaveAchievements,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [data, setData] = useState<AchievementEntry[]>(INITIAL_DATA);
-  const [draft, setDraft] = useState<AchievementEntry[]>(INITIAL_DATA);
+  const [draft, setDraft] = useState<AchievementEntry[]>(achievements ?? []);
+  const data = achievements ?? [];
 
   const startEditing = () => {
     setDraft(data);
     setIsEditing(true);
   };
 
-  const handleSave = () => {
-    setData(draft);
-    setIsEditing(false);
+  const handleSave = async () => {
+    const saved = await onSaveAchievements?.(draft);
+    if (saved) setIsEditing(false);
   };
 
   const handleCancel = () => {
@@ -138,7 +137,7 @@ export const Achievements: React.FC<{ isAuthenticated?: boolean; profile?: User 
         <div className="w-full max-w-360 h-auto mb-40">
           <div className="flex items-center gap-4 mb-6">
             <Heading className={`${customBlur.className} text-[48px] leading-12`}>
-              Festivais, Prémios e Exibições
+              Festivais, Premios e Exibicoes
             </Heading>
 
             {isAuthenticated && !isEditing && (
@@ -153,8 +152,8 @@ export const Achievements: React.FC<{ isAuthenticated?: boolean; profile?: User 
 
             {isAuthenticated && isEditing && (
               <div className="flex gap-1">
-                <Button onClick={handleSave}>Guardar</Button>
-                <Button variant="secondary" onClick={handleCancel}>
+                <Button disabled={isSaving} onClick={handleSave}>{isSaving ? "A guardar..." : "Guardar"}</Button>
+                <Button variant="secondary" disabled={isSaving} onClick={handleCancel}>
                   Cancelar
                 </Button>
               </div>
@@ -164,18 +163,22 @@ export const Achievements: React.FC<{ isAuthenticated?: boolean; profile?: User 
           {!isEditing ? (
             <div className="flex gap-5">
               <div className="w-full bg-transparent text-rede-white">
-                <div className="grid grid-cols-2 gap-x-8">
-                  {data.map((item) => (
-                    <div key={item.id} className="contents">
-                      <div className="border-b border-rede-white pb-4">
-                        <span className="text-xs leading-4 text-rede-white">{item.type}</span>
-                        <Text className="mt-1 text-[20px] leading-7 font-semibold">
-                          {item.title}
-                        </Text>
+                {data.length > 0 ? (
+                  <div className="grid grid-cols-2 gap-x-8">
+                    {data.map((item) => (
+                      <div key={item.id} className="contents">
+                        <div className="border-b border-rede-white pb-4">
+                          <span className="text-xs leading-4 text-rede-white">{item.type}</span>
+                          <Text className="mt-1 text-[20px] leading-7 font-semibold">
+                            {item.title}
+                          </Text>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <Text>Ainda nao existem festivais, premios ou exibicoes.</Text>
+                )}
               </div>
             </div>
           ) : (

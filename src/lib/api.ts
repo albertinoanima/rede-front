@@ -6,8 +6,8 @@ const apiBaseUrl =
   process.env.API_BASE_URL ?? `${apiHost}:${apiPort}`;
 
 export const api = axios.create({
-  //sbaseURL: apiBaseUrl,
-  baseURL: "https://rede-back.vercel.app",
+  baseURL: apiBaseUrl,
+  //baseURL: "https://rede-back.vercel.app",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

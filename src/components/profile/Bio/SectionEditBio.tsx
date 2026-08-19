@@ -11,17 +11,16 @@ type SectionEditBioProps = {
   isEditingBio?: boolean;
   setIsEditingBio?: Dispatch<SetStateAction<boolean>>;
   bio?: string;
-  onSaveBio?: (bio: string) => void;
+  isSaving?: boolean;
+  onSaveBio?: (bio: string) => void | Promise<void>;
 }
-
-const DEFAULT_BIO =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.";
 
 export const SectionEditBio: React.FC<SectionEditBioProps> = ({
   isAuthenticated,
   isEditingBio = false,
   setIsEditingBio,
-  bio = DEFAULT_BIO,
+  bio = "",
+  isSaving = false,
   onSaveBio,
 }) => {
   const [draftBio, setDraftBio] = useState(bio);
@@ -29,8 +28,7 @@ export const SectionEditBio: React.FC<SectionEditBioProps> = ({
   const toggleEditing = () => setIsEditingBio?.((lastState) => !lastState);
 
   const handleSave = () => {
-    onSaveBio?.(draftBio);
-    toggleEditing();
+    void onSaveBio?.(draftBio);
   };
 
   const handleCancel = () => {
@@ -57,8 +55,8 @@ export const SectionEditBio: React.FC<SectionEditBioProps> = ({
 
         {isAuthenticated && isEditingBio && (
           <div className="w-full flex gap-1">
-            <Button onClick={handleSave}>Guardar</Button>
-            <Button variant="secondary" onClick={handleCancel}>
+            <Button disabled={isSaving} onClick={handleSave}>{isSaving ? "A guardar..." : "Guardar"}</Button>
+            <Button variant="secondary" disabled={isSaving} onClick={handleCancel}>
               Cancelar
             </Button>
           </div>
@@ -72,7 +70,7 @@ export const SectionEditBio: React.FC<SectionEditBioProps> = ({
           onChange={(e) => setDraftBio(e.target.value)}
         />
       ) : (
-        <Text>{bio}</Text>
+        bio.trim() ? <Text>{bio}</Text> : <Text>Ainda nao existe biografia.</Text>
       )}
     </div>
   );
