@@ -1,36 +1,58 @@
 "use client"
 
-
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { FilterSidebar } from './FilterSidebar';
-import { Button } from '../ui/button';
 import { customBlur } from '@/app/fonts';
 import { Heading } from '../ui/heading';
 import { ArticleCard } from '../ArticleCard';
-import { NEWS } from './data';
-import { defaultNewsFilters, filterNews, getNewsYearOptions } from './actions';
+import { categories, NEWS } from './data';
+import { defaultNewsFilters, filterNews, getNewsYearOptions, NewsFilters } from './actions';
 import { Text } from '../ui/text';
+import { countriesList } from '../network/filters';
 
 
-export const NewsFilter: React.FC = () => {
-  const [filters, setFilters] = useState(defaultNewsFilters);
-  const [appliedFilters, setAppliedFilters] = useState(defaultNewsFilters);
+const normalizeTag = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
 
-  const yearOptions = useMemo(() => getNewsYearOptions(NEWS), []);
+const getInitialFilters = (tag: string): NewsFilters => {
+  const normalizedTag = normalizeTag(tag);
 
-  // TODO: once a real API exists, replace this with a fetch keyed on
-  // `appliedFilters` (e.g. useEffect + setResults) instead of filtering
-  // the static `NEWS` array in memory.
-  const results = useMemo(
-    () => filterNews(NEWS, appliedFilters),
-    [appliedFilters],
+  if (!normalizedTag) return defaultNewsFilters;
+
+  const country = countriesList.find(
+    (option) => normalizeTag(option.value) === normalizedTag || normalizeTag(option.label) === normalizedTag,
   );
 
-  const handleSearch = () => setAppliedFilters(filters);
-  const handleClear = () => {
-    setFilters(defaultNewsFilters);
-    setAppliedFilters(defaultNewsFilters);
-  };
+  if (country) {
+    return { ...defaultNewsFilters, country: country.value };
+  }
+
+  const category = categories.find(
+    (option) => normalizeTag(option.value) === normalizedTag || normalizeTag(option.label) === normalizedTag,
+  );
+
+  if (category) {
+    return { ...defaultNewsFilters, category: category.value };
+  }
+
+  return { ...defaultNewsFilters, search: tag };
+};
+
+const NewsFilterContent: React.FC<{ initialTag: string }> = ({ initialTag }) => {
+  const [filters, setFilters] = useState(() => getInitialFilters(initialTag));
+
+  const yearOptions = useMemo(() => getNewsYearOptions(NEWS), []);
+  const results = useMemo(
+    () => filterNews(NEWS, filters),
+    [filters],
+  );
+
+  const handleClear = () => setFilters(defaultNewsFilters);
 
   return (
     <section className="w-full h-auto mt-20">
@@ -42,12 +64,6 @@ export const NewsFilter: React.FC = () => {
           </Heading>
 
           <div className="flex justify-end gap-3 px-6 py-4">
-            {/* 
-            <Button variant={"secondary"}>
-              Ordenar por
-            </Button> 
-            */}
-
             <Text className="text-[14px] leading-4" >
               {results.length}{" "}
               {results.length === 1
@@ -62,7 +78,6 @@ export const NewsFilter: React.FC = () => {
             <FilterSidebar
               filters={filters}
               onFiltersChange={setFilters}
-              onSearch={handleSearch}
               onClear={handleClear}
               yearOptions={yearOptions}
             />
@@ -84,4 +99,11 @@ export const NewsFilter: React.FC = () => {
       </div>
     </section >
   )
+}
+
+export const NewsFilter: React.FC = () => {
+  const searchParams = useSearchParams();
+  const tag = searchParams.get('tag') ?? '';
+
+  return <NewsFilterContent key={tag} initialTag={tag} />;
 }

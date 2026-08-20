@@ -18,6 +18,8 @@ export type ProfileFilm = {
     year: number;
     countries: string[];
     cover: string;
+    duration?: string;
+    link?: string;
 };
 
 export interface User {

@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState } from 'react';
 import { User } from '@/types/User';
@@ -50,6 +50,7 @@ export const Bio: React.FC<BioType> = ({
             isAuthenticated={isAuthenticated}
             isEditingSkils={isEditingSkills}
             setIsEditingSkils={setIsEditingSkils}
+            profileData={profileData}
             skills={profileData.skills}
             isSaving={isSaving}
             onSaveSkills={handleSaveSkills}

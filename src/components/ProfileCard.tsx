@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
 import Card from "./ui/card";
 import { Tag } from "./Tag";
+import { getNetworkTagHref } from "./network/FilterSidebar";
 
 export type ProfileType = {
   id: string;
@@ -34,7 +35,7 @@ export const ProfileCard: React.FC<{ profileData: ProfileType }> = ({ profileDat
       <div className="flex flex-wrap gap-2.5">
         {
           profileData.tags.map((tag, index) => (
-            <Tag href={`/network?tag=${tag}`} label={tag} key={tag + "x" + index}/>
+            <Tag href={getNetworkTagHref(tag)} label={tag} key={tag + "x" + index}/>
           ))
         }
       </div>

@@ -32,34 +32,54 @@ const defaultProfileData: ProfileData = {
     imageUrl: "",
 };
 
-export default function ProfilePage() {
-    const { user, isAuthenticated, updateLoggedUserData } = useAuth();
+const isBrowserBlobUrl = (value?: string | null) => Boolean(value?.startsWith("blob:"));
+
+const hydrateProfileData = (profile?: User | null): ProfileData => ({
+    ...defaultProfileData,
+    ...profile?.profileData,
+});
+
+const sanitizeProfileDataForSave = (profileData: ProfileData): ProfileData => ({
+    ...profileData,
+    coverImageUrl: isBrowserBlobUrl(profileData.coverImageUrl) ? "" : profileData.coverImageUrl,
+    imageUrl: isBrowserBlobUrl(profileData.imageUrl) ? "" : profileData.imageUrl,
+    filmography: profileData.filmography?.filter((film) => !isBrowserBlobUrl(film.cover)),
+    outsideAgency: profileData.outsideAgency?.filter((film) => !isBrowserBlobUrl(film.cover)),
+});
+
+type ProfileContentProps = {
+    isAuthenticated: boolean;
+    profile: User | null;
+    updateLoggedUserData: (data: User) => void;
+};
+
+const ProfileContent: React.FC<ProfileContentProps> = ({
+    isAuthenticated,
+    profile,
+    updateLoggedUserData,
+}) => {
     const [message, setMessage] = useState("");
     const [isSaving, setIsSaving] = useState(false);
+    const [profileData, setProfileData] = useState<ProfileData>(() => hydrateProfileData(profile));
 
-    const profile = user as User | null;
-    const [profileData, setProfileData] = useState<ProfileData>(() => ({
-        ...defaultProfileData,
-        ...profile?.profileData,
-    }));
-
-    const saveProfileData = async (patch: Partial<ProfileData>) => {
+    const saveProfileData = async (patch: Partial<ProfileData>, userPatch: Partial<Pick<User, "name">> = {}) => {
         setMessage("");
         setIsSaving(true);
 
-        const nextProfileData = {
+        const nextProfileData = sanitizeProfileDataForSave({
             ...profileData,
             ...patch,
-        };
+        });
 
         const response = await updateLoggedUser({
+            ...userPatch,
             profileData: nextProfileData,
         });
 
         setIsSaving(false);
 
         if (response.error) {
-            setMessage(response.message || "Nao foi possivel atualizar o perfil.");
+            setMessage(response.message || "Não foi possível atualizar o perfil.");
             return false;
         }
 
@@ -70,6 +90,7 @@ export default function ProfilePage() {
         if (updatedUser) {
             updateLoggedUserData({
                 ...updatedUser,
+                ...userPatch,
                 profileData: {
                     ...defaultProfileData,
                     ...updatedUser.profileData,
@@ -82,8 +103,7 @@ export default function ProfilePage() {
     };
 
     return (
-        <main className="bg-rede-surface">
-            <TopBar />
+        <>
             {message && (
                 <div className="fixed right-6 top-20 z-20 max-w-sm rounded-lg border border-rede-red bg-rede-surface px-4 py-3 text-sm text-rede-red">
                     {message}
@@ -121,6 +141,24 @@ export default function ProfilePage() {
                 films={profileData.outsideAgency}
                 isSaving={isSaving}
                 onSaveFilms={(outsideAgency) => saveProfileData({ outsideAgency })}
+            />
+        </>
+    );
+};
+
+export default function ProfilePage() {
+    const { user, isAuthenticated, updateLoggedUserData } = useAuth();
+    const profile = user as User | null;
+    const profileKey = profile?.email ?? "guest";
+
+    return (
+        <main className="bg-rede-surface">
+            <TopBar />
+            <ProfileContent
+                key={profileKey}
+                isAuthenticated={isAuthenticated}
+                profile={profile}
+                updateLoggedUserData={updateLoggedUserData}
             />
             <AssociatedNews />
             <Footer />

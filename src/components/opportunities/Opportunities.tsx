@@ -1,35 +1,24 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { FilterSidebar } from "./FilterSidebar";
 import { OpportunityCard } from "../OpportunityCard";
-import { Button } from "../ui/button";
 import { customBlur } from "@/app/fonts";
 import { Heading } from "../ui/heading";
 import { defaultOpportunityFilters, filterOpportunities } from "./actions";
 import { opportunities } from "./data";
 import { Text } from "../ui/text";
 
+const OpportunitiesContent: React.FC<{ initialTag: string }> = ({ initialTag }) => {
+  const [filters, setFilters] = useState(() => ({ ...defaultOpportunityFilters, search: initialTag }));
 
-
-
-export const Opportunities: React.FC = () => {
-  const [filters, setFilters] = useState(defaultOpportunityFilters);
-  const [appliedFilters, setAppliedFilters] = useState(defaultOpportunityFilters);
-
-  // TODO: once a real API exists, replace this with a fetch keyed on
-  // `appliedFilters` (e.g. useEffect + setResults) instead of filtering
-  // the static `opportunities` array in memory.
   const filteredOpportunities = useMemo(
-    () => filterOpportunities(opportunities, appliedFilters),
-    [appliedFilters],
+    () => filterOpportunities(opportunities, filters),
+    [filters],
   );
 
-  const handleSearch = () => setAppliedFilters(filters);
-  const handleClear = () => {
-    setFilters(defaultOpportunityFilters);
-    setAppliedFilters(defaultOpportunityFilters);
-  };
+  const handleClear = () => setFilters(defaultOpportunityFilters);
 
   return (
     <section className="mt-20 h-auto w-full">
@@ -44,12 +33,6 @@ export const Opportunities: React.FC = () => {
           </Heading>
 
           <div className="flex justify-end gap-3 px-6 py-4">
-            {/* 
-            <Button variant="secondary">
-              Ordenar por
-            </Button> 
-            */}
-
             <Text className="text-[14px] leading-4" >
               {filteredOpportunities.length}{" "}
               {filteredOpportunities.length === 1
@@ -64,7 +47,6 @@ export const Opportunities: React.FC = () => {
             <FilterSidebar
               filters={filters}
               onFiltersChange={setFilters}
-              onSearch={handleSearch}
               onClear={handleClear}
             />
           </div>
@@ -89,4 +71,11 @@ export const Opportunities: React.FC = () => {
       </div>
     </section>
   );
+};
+
+export const Opportunities: React.FC = () => {
+  const searchParams = useSearchParams();
+  const tag = searchParams.get("tag") ?? "";
+
+  return <OpportunitiesContent key={tag} initialTag={tag} />;
 };

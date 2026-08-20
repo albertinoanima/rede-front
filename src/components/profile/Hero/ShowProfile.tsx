@@ -1,11 +1,12 @@
 import Image from "next/image"
 import { Text } from "../../ui/text"
 import { Button } from "../../ui/button"
-import { Dispatch, SetStateAction, useRef, useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { User } from "@/types/User"
 import { Camera, Edit2, GlobeIcon, Mail, MapPin, PhoneIcon, Plus } from "lucide-react"
 import { customBlur } from "@/app/fonts"
-import { uploadImage } from "@/lib/uploadImage"
+import { Modal } from "@/components/ui/modal"
+import { ImageCropUploader } from "@/components/ImageCropUploader"
 
 type ProfileData = User["profileData"];
 
@@ -16,7 +17,7 @@ type ShowProfileType = {
     isSaving?: boolean;
     editting?: boolean;
     setIsEditing?: Dispatch<SetStateAction<boolean>>;
-    onSaveProfileData?: (patch: Partial<ProfileData>) => Promise<boolean>;
+    onSaveProfileData?: (patch: Partial<ProfileData>, userPatch?: Partial<Pick<User, "name">>) => Promise<boolean>;
     onImageUploadError?: (message: string) => void;
 }
 
@@ -30,58 +31,37 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
   onSaveProfileData,
   onImageUploadError,
 }) => {
-  const [isAvatarUploading, setIsAvatarUploading] = useState(false);
-  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const [isAvatarCropOpen, setIsAvatarCropOpen] = useState(false);
   const displayName = profile?.name || profileData.artisticName || profileData.commercialName || "Perfil";
   const location = [profileData.city, profileData.country].filter(Boolean).join(", ");
   const website = profileData.socialLinks?.website;
 
-  const handleAvatarSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  const handleAvatarUploaded = async (url: string) => {
+    const saved = await onSaveProfileData?.({ imageUrl: url });
 
-    setIsAvatarUploading(true);
-    onImageUploadError?.("");
-
-    try {
-      const { url } = await uploadImage(file, "profile-avatars");
-      const saved = await onSaveProfileData?.({ imageUrl: url });
-
-      if (!saved) {
-        onImageUploadError?.("Nao foi possivel guardar a foto no perfil.");
-      }
-    } catch (err) {
-      onImageUploadError?.(err instanceof Error ? err.message : "Nao foi possivel enviar a foto.");
-    } finally {
-      setIsAvatarUploading(false);
-      event.target.value = "";
+    if (saved) {
+      setIsAvatarCropOpen(false);
+      return;
     }
+
+    onImageUploadError?.("N\u00e3o foi poss\u00edvel guardar a foto no perfil.");
   };
 
   return (
     <div className='w-full max-w-360 flex gap-5'>
       <div className={`w-53 h-53 relative ${isAuthenticated ? "border-[1.3] border-white" : ""}`}>
         {isAuthenticated && (
-          <>
-            <input
-              ref={avatarInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleAvatarSelect}
-              className="hidden"
-            />
-            <div className='absolute inset-1 z-10 flex items-center justify-center opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100'>
-              <Button
-                variant={"secondary"}
-                disabled={isSaving || isAvatarUploading}
-                onClick={() => avatarInputRef.current?.click()}
-                className='rounded-full p-9 shrink-0 aspect-square flex items-center justify-center'
-              >
-                <Camera width={12} height={12} />
-                <span className="sr-only">Alterar foto</span>
-              </Button>
-            </div>
-          </>
+          <div className='absolute inset-1 z-10 flex items-center justify-center opacity-0 transition-opacity hover:opacity-100 focus-within:opacity-100'>
+            <Button
+              variant={"secondary"}
+              disabled={isSaving}
+              onClick={() => setIsAvatarCropOpen(true)}
+              className='rounded-full p-9 shrink-0 aspect-square flex items-center justify-center'
+            >
+              <Camera width={12} height={12} />
+              <span className="sr-only">Alterar foto</span>
+            </Button>
+          </div>
         )}
         <Image width={212} height={212} src={profileData.imageUrl || profile?.imageUrl || "/assets/profile/profile.png"} alt={displayName} className='w-full h-full object-cover' />
       </div>
@@ -136,6 +116,21 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
           )}
         </div>
       </div>
+
+      <Modal open={isAvatarCropOpen} onClose={() => setIsAvatarCropOpen(false)} panelClassName="rounded-none border-[1.3px] border-rede-white/20">
+        <ImageCropUploader
+          value={profileData.imageUrl || profile?.imageUrl}
+          folder="profile-avatars"
+          aspectRatio={1}
+          cropShape="circle"
+          minHeight={420}
+          uploadLabel="Guardar foto"
+          helperText="Arraste e ajuste o zoom para enquadrar a foto de perfil."
+          disabled={isSaving}
+          onUploaded={handleAvatarUploaded}
+          onError={onImageUploadError}
+        />
+      </Modal>
     </div>
   )
 }

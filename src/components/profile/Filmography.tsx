@@ -71,14 +71,12 @@ export const Filmography: React.FC<FilmographyProps> = ({
       id: editingFilm.id,
       title: editingFilm.title,
       year: String(editingFilm.year),
-      duration: "",
+      duration: editingFilm.duration ?? "",
       country: editingFilm.countries[0] ?? "",
       theme: editingFilm.type[1] ?? "",
       genre: editingFilm.type[0] ?? "",
-      link: "",
+      link: editingFilm.link ?? "",
       cover: editingFilm.cover,
-      coverZoom: 1,
-      coverPosition: { x: 50, y: 50 },
     };
   }, [editingFilm]);
 
@@ -92,6 +90,8 @@ export const Filmography: React.FC<FilmographyProps> = ({
       year: Number(formData.year) || new Date().getFullYear(),
       countries: [formData.country].filter(Boolean),
       cover: formData.cover,
+      duration: formData.duration,
+      link: formData.link,
     };
 
     setDraft((prev) =>

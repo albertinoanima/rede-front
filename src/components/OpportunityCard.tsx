@@ -51,10 +51,10 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
         )}
 
         <Tag label={`${opportunityData?.startDate} - ${opportunityData.endDate}`} href={``} />
-        <Tag label={`${opportunityData?.type}`} href={``} />
+        <Tag label={`${opportunityData?.type}`} href={`/opportunities?tag=${encodeURIComponent(opportunityData.type)}`} />
 
-        {opportunityData.eligibility.map((eligibility: any, index: number) => (
-          <Tag href={`?tag=${eligibility}`} label={eligibility} key={eligibility + "xD" + index}/>
+        {opportunityData.eligibility.map((eligibility: string, index: number) => (
+          <Tag href={`/opportunities?tag=${encodeURIComponent(eligibility)}`} label={eligibility} key={eligibility + "xD" + index}/>
         ))}
       </div>
 

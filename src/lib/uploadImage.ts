@@ -18,7 +18,7 @@ export const uploadImage = async (file: File, folder = "profiles"): Promise<Uplo
   const data = await response.json().catch(() => null) as Partial<UploadImageResult> & { message?: string } | null;
 
   if (!response.ok || !data?.url || !data.path) {
-    throw new Error(data?.message ?? "Nao foi possivel enviar a imagem.");
+    throw new Error(data?.message ?? "N\u00e3o foi poss\u00edvel enviar a imagem.");
   }
 
   return {

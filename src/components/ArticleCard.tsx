@@ -3,7 +3,7 @@
 import { Text } from "./ui/text";
 import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
-import { Plus } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Card from "./ui/card";
 import Link from "next/link";
 import { Tag } from "./Tag";
@@ -31,7 +31,7 @@ export const ArticleCard: React.FC<ArticleCardType> = ({ newsData }) => {
                     </span>
 
                     <Link href={"/news-details?id=" + newsData?.id} className="cursor-pointer">
-                        <Button showMainButton={false} iconPosition="right" icon={<Plus width={12} height={12} />} />
+                        <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} />
                     </Link>
                 </div>
             }

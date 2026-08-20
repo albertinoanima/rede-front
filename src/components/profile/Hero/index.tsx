@@ -5,9 +5,10 @@ import { Camera } from "lucide-react";
 import { User } from '@/types/User';
 import { EditProfile, ProfileHeroDraft } from './EditProfile';
 import { ShowProfile } from './ShowProfile';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { uploadImage } from "@/lib/uploadImage";
+import { Modal } from "@/components/ui/modal";
+import { ImageCropUploader } from "@/components/ImageCropUploader";
 
 type ProfileData = User["profileData"];
 
@@ -16,7 +17,7 @@ type HeroProps = {
   profileData: ProfileData;
   isAuthenticated?: boolean;
   isSaving?: boolean;
-  onSaveProfileData?: (patch: Partial<ProfileData>) => Promise<boolean>;
+  onSaveProfileData?: (patch: Partial<ProfileData>, userPatch?: Partial<Pick<User, "name">>) => Promise<boolean>;
   onImageUploadError?: (message: string) => void;
 }
 
@@ -29,13 +30,14 @@ export const Hero: React.FC<HeroProps> = ({
   onImageUploadError,
 }) => {
   const [editting, setIsEditing] = useState(false);
-  const [isCoverUploading, setIsCoverUploading] = useState(false);
-  const coverInputRef = useRef<HTMLInputElement>(null);
+  const [isCoverCropOpen, setIsCoverCropOpen] = useState(false);
 
   const handleSave = async (draft: ProfileHeroDraft) => {
     const saved = await onSaveProfileData?.({
       profession: draft.profession,
       username: draft.username,
+    }, {
+      name: draft.name,
     });
 
     if (saved) {
@@ -43,26 +45,15 @@ export const Hero: React.FC<HeroProps> = ({
     }
   };
 
-  const handleCoverSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  const handleCoverUploaded = async (url: string) => {
+    const saved = await onSaveProfileData?.({ coverImageUrl: url });
 
-    setIsCoverUploading(true);
-    onImageUploadError?.("");
-
-    try {
-      const { url } = await uploadImage(file, "profile-covers");
-      const saved = await onSaveProfileData?.({ coverImageUrl: url });
-
-      if (!saved) {
-        onImageUploadError?.("Nao foi possivel guardar a capa no perfil.");
-      }
-    } catch (err) {
-      onImageUploadError?.(err instanceof Error ? err.message : "Nao foi possivel enviar a capa.");
-    } finally {
-      setIsCoverUploading(false);
-      event.target.value = "";
+    if (saved) {
+      setIsCoverCropOpen(false);
+      return;
     }
+
+    onImageUploadError?.("N\u00e3o foi poss\u00edvel guardar a capa no perfil.");
   };
 
   return (
@@ -78,21 +69,14 @@ export const Hero: React.FC<HeroProps> = ({
 
         {isAuthenticated && (
           <div className="absolute right-6 top-6 z-10">
-            <input
-              ref={coverInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleCoverSelect}
-              className="hidden"
-            />
             <Button
               variant="secondary"
-              disabled={isSaving || isCoverUploading}
+              disabled={isSaving}
               icon={<Camera width={12} height={12} />}
               iconPosition="left"
-              onClick={() => coverInputRef.current?.click()}
+              onClick={() => setIsCoverCropOpen(true)}
             >
-              {isCoverUploading ? "A enviar..." : "Alterar capa"}
+              Alterar capa
             </Button>
           </div>
         )}
@@ -122,6 +106,20 @@ export const Hero: React.FC<HeroProps> = ({
           )}
         </div>
       </div>
+
+      <Modal open={isCoverCropOpen} onClose={() => setIsCoverCropOpen(false)} panelClassName="rounded-none border-[1.3px] border-rede-white/20">
+        <ImageCropUploader
+          value={profileData.coverImageUrl}
+          folder="profile-covers"
+          aspectRatio={16 / 9}
+          minHeight={320}
+          uploadLabel="Guardar capa"
+          helperText="Arraste e ajuste o zoom para enquadrar a capa do perfil."
+          disabled={isSaving}
+          onUploaded={handleCoverUploaded}
+          onError={onImageUploadError}
+        />
+      </Modal>
     </section>
   )
 }

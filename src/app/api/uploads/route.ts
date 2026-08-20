@@ -13,12 +13,14 @@ export async function POST(request: Request) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const bucket =
+    process.env.NEXT_PUBLIC_BUCKET ??
     process.env.SUPABASE_STORAGE_BUCKET ??
-    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET;
+    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET ??
+    "rede_storage";
 
   if (!supabaseUrl || !serviceRoleKey || !bucket) {
     return NextResponse.json(
-      { message: "Configuracao do Supabase Storage incompleta." },
+      { message: "Configura\u00e7\u00e3o do Supabase Storage incompleta." },
       { status: 500 }
     );
   }
@@ -28,7 +30,7 @@ export async function POST(request: Request) {
   const folder = safeSegment(String(formData.get("folder") ?? "profiles")) || "profiles";
 
   if (!(file instanceof File)) {
-    return NextResponse.json({ message: "Imagem nao enviada." }, { status: 400 });
+    return NextResponse.json({ message: "Imagem n\u00e3o enviada." }, { status: 400 });
   }
 
   if (!file.type.startsWith("image/")) {
@@ -58,7 +60,7 @@ export async function POST(request: Request) {
     const details = await uploadResponse.text();
 
     return NextResponse.json(
-      { message: "Nao foi possivel enviar a imagem.", details },
+      { message: "N\u00e3o foi poss\u00edvel enviar a imagem.", details },
       { status: uploadResponse.status }
     );
   }

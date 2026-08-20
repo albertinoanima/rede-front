@@ -1,5 +1,5 @@
 import { ProfileType } from '../ProfileCard'
-import { NetworkFilters } from './FilterSidebar'
+import { NetworkFilters, normalizeNetworkValue } from './FilterSidebar'
 
 // Local, static-data implementation of the network search. Keeps the same
 // (profiles, filters) -> ProfileType[] shape a real API call would have, so
@@ -25,8 +25,13 @@ export function filterProfiles(
     if (filters.type && profile.type !== filters.type) return false
     if (filters.category && profile.category !== filters.category)
       return false
-    if (filters.subCategory && profile.subCategory !== filters.subCategory)
-      return false
+    if (filters.subCategory) {
+      const tagMatchesSubCategory = profile.tags.some((tag) => normalizeNetworkValue(tag) === filters.subCategory)
+      const profileSubCategories = Array.isArray(profile.subCategory) ? profile.subCategory : [profile.subCategory].filter(Boolean)
+      const subCategoryMatches = profileSubCategories.some((subCategory) => subCategory === filters.subCategory)
+
+      if (!subCategoryMatches && !tagMatchesSubCategory) return false
+    }
 
     return true
   })

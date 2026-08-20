@@ -15,9 +15,18 @@ export type FilmCardType = {
   year: number;
   countries: string[];
   cover: string;
+  duration?: string;
+  link?: string;
 }
 
 export const FilmCard: React.FC<{ filmData: FilmCardType, v?: "v1" | "v2" | undefined }> = ({ filmData, v }) => {
+  const hasLink = Boolean(filmData.link);
+
+  const openFilmLink = () => {
+    if (!filmData.link) return;
+    window.open(filmData.link, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <Card image={<img
       src={filmData.cover}
@@ -34,7 +43,7 @@ export const FilmCard: React.FC<{ filmData: FilmCardType, v?: "v1" | "v2" | unde
             </Text>
           </div>
 
-          <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} onClick={() => console.log("htddhdt")} />
+          <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} onClick={openFilmLink} disabled={!hasLink} />
         </div>
       } v={v}>
 
@@ -52,6 +61,7 @@ export const FilmCard: React.FC<{ filmData: FilmCardType, v?: "v1" | "v2" | unde
         }
 
         <Tag label={filmData.year + ""} />
+        {filmData.duration && <Tag label={filmData.duration} />}
 
       </div>
     </Card>

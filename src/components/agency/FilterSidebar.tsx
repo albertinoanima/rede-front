@@ -12,12 +12,11 @@ import { FilmFilters } from './actions'
 type FilterSidebarProps = {
   filters: FilmFilters
   onFiltersChange: (filters: FilmFilters) => void
-  onSearch: () => void
   onClear: () => void
   yearOptions: SelectItemType[]
 }
 
-export const FilterSidebar: React.FC<FilterSidebarProps> = ({ filters, onFiltersChange, onSearch, onClear, yearOptions }) => {
+export const FilterSidebar: React.FC<FilterSidebarProps> = ({ filters, onFiltersChange, onClear, yearOptions }) => {
   const { search, country: selectedCountry, genre: selectedGenre, year: selectedYear } = filters
 
   const handleSearchChange = (value: string) =>
@@ -38,11 +37,9 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ filters, onFilters
       <div className="flex flex-col gap-4 mb-10">
         <div className="flex items-center">
           <Input
-            onIconClick={onSearch}
             placeholder='Pesquisar...'
             value={search}
             onChange={({ target }) => handleSearchChange(target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && onSearch()}
             className="h-10 w-full border-[1.3px] border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white"
             icon={<SearchIcon size={18} className="text-rede-white" />}
             iconPosition={"right"}
@@ -100,7 +97,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ filters, onFilters
 
 
         <div className="flex gap-2 mt-5">
-          <Button containerClassName='w-full' variant={"secondary"} onClick={onClear}>
+          <Button containerClassName='w-full' variant={"primary"} onClick={onClear}>
             Limpar filtro
           </Button>
         </div>

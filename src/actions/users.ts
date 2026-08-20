@@ -3,6 +3,11 @@
 import { api } from "@/lib/api";
 import { User } from "@/types/User";
 
+export type NetworkUser = Omit<User, "profileData"> & {
+  id?: string;
+  _id?: string;
+  profileData?: User["profileData"] | null;
+};
 
 export type UpdateUserInput = {
   name?: string;
@@ -25,6 +30,21 @@ export type DeleteUserResponseType = {
   message?: string;
 };
 
+export type GetUsersResponseType = {
+  error?: string;
+  message?: string;
+  data?: {
+    users: NetworkUser[];
+  };
+};
+
+type UsersApiResponse = {
+  users?: NetworkUser[];
+  data?: {
+    users?: NetworkUser[];
+  };
+};
+
 type ApiError = {
   response?: {
     data?: {
@@ -36,6 +56,37 @@ type ApiError = {
 
 const getApiError = (err: unknown): ApiError => {
   return typeof err === "object" && err !== null ? err as ApiError : {};
+};
+
+const normalizeUsersResponse = (data: UsersApiResponse | NetworkUser[]): NetworkUser[] => {
+  if (Array.isArray(data)) return data;
+
+  return data.users ?? data.data?.users ?? [];
+};
+
+export const getUsers = async (): Promise<GetUsersResponseType> => {
+  try {
+    const responseData = await api.get<UsersApiResponse | NetworkUser[]>(
+      "/api/v1/users"
+    );
+
+    return {
+      data: {
+        users: normalizeUsersResponse(responseData.data),
+      },
+    };
+  } catch (err: unknown) {
+    const apiError = getApiError(err);
+
+    return {
+      error:
+        apiError.response?.data?.error ||
+        "Erro desconhecido",
+      message:
+        apiError.response?.data?.message ||
+        "N\u00e3o foi poss\u00edvel carregar os usu\u00e1rios.",
+    };
+  }
 };
 
 export const updateLoggedUser = async (
@@ -66,7 +117,7 @@ export const updateLoggedUser = async (
         "Erro desconhecido",
       message:
         apiError.response?.data?.message ||
-        "Não foi possível atualizar os dados.",
+        "N\u00e3o foi poss\u00edvel atualizar os dados.",
     };
   }
 };
@@ -80,7 +131,7 @@ export const deleteLoggedUser = async (): Promise<DeleteUserResponseType> => {
     return {
       message:
         responseData.data?.message ||
-        "Usuário apagado com sucesso.",
+        "Usu\u00e1rio apagado com sucesso.",
     };
   } catch (err: unknown) {
     const apiError = getApiError(err);
@@ -91,7 +142,7 @@ export const deleteLoggedUser = async (): Promise<DeleteUserResponseType> => {
         "Erro desconhecido",
       message:
         apiError.response?.data?.message ||
-        "Não foi possível apagar o usuário.",
+        "N\u00e3o foi poss\u00edvel apagar o usu\u00e1rio.",
     };
   }
 };

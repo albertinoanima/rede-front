@@ -280,8 +280,8 @@ const PalopMapSection: React.FC = () => {
       <InfoCard country={selectedCountry} />
 
       <div style={{
-        position: "absolute", bottom: "40px", left: "50%", transform: "translateX(-50%)",
-        textAlign: "center", color: COLORS.text, fontSize: "15px", lineHeight: "1.6", maxWidth: "500px", opacity: 0.8
+        position: "absolute", bottom: "450px", left: "50%", transform: "translateX(-50%)",
+        textAlign: "center", color: COLORS.text, fontSize: "20px", lineHeight: "1.6", maxWidth: "500px", opacity: 0.9
       }}>
         Encontra, conecta-te e colabora com profissionais dos PALOP, enquanto aumentas a tua presença na rede — AQUI.
       </div>

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Heading } from '../ui/heading'
 import { Text } from '../ui/text'
 import { Tag } from '../Tag'
+import { Button } from '../ui/button'
 
 interface Tag {
   label: string
@@ -73,7 +74,7 @@ export const FilmCard = ({
             href={href}
             className="w-10 h-10 rounded-full bg-rede-yellow flex items-center justify-center hover:bg-rede-yellow/80 transition-colors shrink-0"
           >
-            <ArrowRight size={18} className="text-rede-surface" />
+            <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} />
           </a>
         </div>
       </div>
