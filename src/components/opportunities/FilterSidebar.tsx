@@ -9,7 +9,10 @@ import { opportunityCategories } from './data'
 import { countriesList, SelectItemType } from '../network/filters'
 import { OpportunityFilters } from './actions'
 
-const categories: SelectItemType[] = opportunityCategories.map((item) => ({ label: item, value: item.toLowerCase() }))
+const categories: SelectItemType[] = opportunityCategories.map((category) => ({
+  label: category,
+  value: category.toLowerCase(),
+}))
 
 type FilterSidebarProps = {
   filters: OpportunityFilters
@@ -17,73 +20,106 @@ type FilterSidebarProps = {
   onClear: () => void
 }
 
-export const FilterSidebar: React.FC<FilterSidebarProps> = ({filters, onFiltersChange, onClear }) => {
-  const { search, country: selectedCountry, category: selectedCategory } = filters
+export const FilterSidebar: React.FC<FilterSidebarProps> = ({
+  filters,
+  onFiltersChange,
+  onClear,
+}) => {
+  const {
+    search,
+    country: selectedCountry,
+    category: selectedCategory,
+  } = filters
 
-  const handleSearchChange = (value: string) =>
-    onFiltersChange({ ...filters, search: value })
+  const handleSearchChange = (value: string) => {
+    onFiltersChange({
+      ...filters,
+      search: value,
+    })
+  }
 
-  const handleCountryChange = (value: string) =>
-    onFiltersChange({ ...filters, country: value })
+  const handleCountryChange = (value: string) => {
+    onFiltersChange({
+      ...filters,
+      country: value,
+    })
+  }
 
-  const handleCategoryChange = (value: string) =>
-    onFiltersChange({ ...filters, category: value })
+  const handleCategoryChange = (value: string) => {
+    onFiltersChange({
+      ...filters,
+      category: value,
+    })
+  }
+
+  const selectTriggerClassName =
+    'w-full border-[1.3px] border-white px-3 text-rede-white outline-none'
+
+  const selectPopoverClassName =
+    'mt-2.5 max-w-[calc(100vw-2rem)] rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none sm:max-w-none'
 
   return (
-    <aside className="w-82.75 h-auto p-6 flex flex-col gap-6">
-      {/* Search */}
-      <div className="flex flex-col gap-4 mb-10">
-        <div className="flex items-center -mt-5">
+    <aside className="flex h-auto w-full min-w-0 flex-col gap-6 px-4 py-6 sm:px-6 lg:w-82.75 lg:p-6">
+      <div className="mb-6 flex w-full min-w-0 flex-col gap-4 lg:mb-10">
+        <div className="flex w-full min-w-0 items-center lg:-mt-5">
           <Input
-            placeholder='Pesquisar...'
+            placeholder="Pesquisar..."
             value={search}
             onChange={({ target }) => handleSearchChange(target.value)}
-            className="h-10 w-full border-[1.3px] border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white"
+            className="h-10 w-full min-w-0 border-[1.3px] border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white"
             icon={<SearchIcon size={18} className="text-rede-white" />}
-            iconPosition={"right"}
-            iconContainerClassName='h-10 w-10 border-[1.3px] border-white p-2.5"'
+            iconPosition="right"
+            iconContainerClassName="h-10 w-10 shrink-0 border-[1.3px] border-white p-2.5"
           />
         </div>
 
-        <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>País</Heading>
-          <div className="flex items-center">
+        <div className="flex min-w-0 flex-col gap-2">
+          <Heading className="text-lg font-medium leading-7 text-rede-white sm:text-[20px]">
+            País
+          </Heading>
+
+          <div className="flex w-full min-w-0 items-center">
             <Select
-              variant='primary'
+              variant="primary"
               value={selectedCountry}
-              placeholder='Selecione o país'
+              placeholder="Selecione o país"
               options={countriesList}
-              triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
-              popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"
+              triggerClassName={selectTriggerClassName}
+              popoverClassName={selectPopoverClassName}
               satelliteClassName="border-[1.3px] border-white"
               onChange={handleCountryChange}
             />
           </div>
         </div>
 
-        <div className='flex flex-col gap-2'>
-          <Heading className='text-[20px] font-medium leading-7 text-rede-white'>Categoria</Heading>
-          <div className="flex items-center">
+        <div className="flex min-w-0 flex-col gap-2">
+          <Heading className="text-lg font-medium leading-7 text-rede-white sm:text-[20px]">
+            Categoria
+          </Heading>
+
+          <div className="flex w-full min-w-0 items-center">
             <Select
-              variant='primary'
+              variant="primary"
               value={selectedCategory}
-              placeholder='Selecione a categoria'
+              placeholder="Selecione a categoria"
               options={categories}
-              triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
-              popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"
+              triggerClassName={selectTriggerClassName}
+              popoverClassName={selectPopoverClassName}
               satelliteClassName="border-[1.3px] border-white"
               onChange={handleCategoryChange}
             />
           </div>
         </div>
 
-
-        <div className="flex gap-2 mt-5">
-          <Button containerClassName='w-full' variant={"primary"} onClick={onClear}>
-            Limpar filtro
+        <div className="mt-3 flex w-full gap-2 lg:mt-5">
+          <Button
+            containerClassName="w-full"
+            variant="primary"
+            onClick={onClear}
+          >
+            Limpar filtros
           </Button>
         </div>
-
       </div>
     </aside>
   )

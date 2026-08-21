@@ -4,7 +4,7 @@ import { customBlur } from '@/app/fonts';
 import { User } from '@/types/User';
 import { Heading } from "../ui/heading"
 import { Text } from '../ui/text';
-import { useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import { Building2, ChevronRight, UserRound } from 'lucide-react';
@@ -13,6 +13,23 @@ import { GoogleIcon } from '@/icons/GoogleIcon';
 import { useAuth } from '@/hooks/useAuth';
 import { signInWithGoogle } from '@/lib/googleAuth';
 
+const normalizeUsernameBase = (value: string) => {
+    return value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 24);
+};
+
+const generateUsername = (user: User) => {
+    const emailName = user.email.split("@")[0] ?? "";
+    const base = normalizeUsernameBase(user.name || emailName || "utilizador");
+    const suffix = Math.random().toString(36).slice(2, 8);
+
+    return `${base || "utilizador"}-${suffix}`;
+};
 
 export const Signup: React.FC = () => {
     const { sigNup } = useAuth();
@@ -61,17 +78,10 @@ export const Signup: React.FC = () => {
             professionalPhone: "",
             services: [],
             coverImageUrl: "",
-            imageUrl: ""
+            imageUrl: "",
+            username: ""
         }
     });
-
-    useEffect(() => {
-        if (googleProfile && ((googleProfile?.name?.length > 0) || (googleProfile?.email?.length > 0) || (googleProfile?.image?.length > 0))) {
-            setRegister((lastState) => ({ ...lastState, loginType: "google" }))
-        }
-    }, [googleProfile])
-
-
     const handleGoogleSignup = async () => {
         setShowMessaage(false);
         setGoogleLoading(true);
@@ -101,13 +111,20 @@ export const Signup: React.FC = () => {
         }
     }
 
-    const handleSubmit = async (event: any) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!canAdvance) return;
 
         setShowMessaage(false);
         try {
-            const responseData = await sigNup(register);
+            const signupData: User = {
+                ...register,
+                profileData: {
+                    ...register.profileData,
+                    username: register.profileData.username?.trim() || generateUsername(register),
+                },
+            };
+            const responseData = await sigNup(signupData);
             if (responseData?.error) {
                 setShowMessaage(true);
                 setMessage(responseData?.message || "Ocorreu um erro ao criar a conta.");

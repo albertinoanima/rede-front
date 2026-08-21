@@ -1,44 +1,67 @@
+"use client";
+
+import Image from "next/image";
+
 import { customBlur } from "@/app/fonts";
-
-import { Text } from "@/components/ui/text";
 import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
 
+const heroItems = [
+  {
+    title: "REDE",
+    image: "/assets/home/hero-1.png",
+    imageAlt: "Profissionais da REDE de Cinema e Audiovisual PALOP e Timor-Leste",
+    titleClassName: "text-rede-yellow",
+    description:
+      "Encontra, conecta-te e colabora com profissionais dos PALOP e de Timor-Leste, enquanto aumentas a tua presença na REDE.",
+  },
+  {
+    title: "Agência",
+    image: "/assets/home/hero-2.jpeg",
+    imageAlt: "Profissionais da Agência de Cinema e Audiovisual",
+    titleClassName: "text-rede-red",
+    description:
+      "Descobre oportunidades, estabelece novas parcerias e promove o teu trabalho junto de profissionais do sector audiovisual.",
+  },
+] as const;
 
 export const Hero: React.FC = () => {
-    return (
-        <section className="w-full h-auto pt-17">
-            <div className="relative w-full max-w-[1920px] h-124.25 mx-auto flex">
+  return (
+    <section className="w-full pt-16">
+      <div className="mx-auto grid w-full max-w-[1920px] grid-cols-1 md:grid-cols-2">
+        {heroItems.map((item) => (
+          <article
+            key={item.title}
+            className="relative min-h-[420px] overflow-hidden sm:min-h-[500px] md:min-h-[560px] lg:min-h-[620px]"
+          >
+            <Image
+              src={item.image}
+              alt={item.imageAlt}
+              fill
+              priority
+              sizes="(max-width: 767px) 100vw, 50vw"
+              className="object-cover"
+            />
 
-                <div className="w-[50%] h-full relative">
-                    <img src="/assets/home/hero-1.png" alt="REDE Hero" className="w-full h-full object-cover"/>
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-black/35"
+            />
 
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-4 p-4">
-                        <Heading className={`text-rede-yellow ${customBlur.className} text-[128px] font-medium`}>
-                            Rede
-                        </Heading>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-5 py-10 text-center sm:px-8 lg:gap-6 lg:px-12">
+              <Heading
+                className={`${customBlur.className} ${item.titleClassName} text-[clamp(4rem,10vw,8rem)] leading-none font-medium`}
+              >
+                {item.title}
+              </Heading>
 
-                        <Text className="text-rede-white font-semibold max-w-2xl">
-                            Encontra, conecta-te e colabora com <br/>profissionais dos PALOP, enquanto<br/> aumentas a tua presença na rede.
-                        </Text>
-                    </div>
-                </div>
-
-                <div className="w-[50%] h-full relative">
-                    <img src="/assets/home/hero-2.jpeg" alt="REDE Hero" className="w-full h-full object-cover"/>
-
-                    {/* overlay de textos centralizada no bloco direito */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-4 p-4">
-                        <Heading className={`text-rede-red ${customBlur.className} text-[128px] font-medium`}>
-                            Agência
-                        </Heading>
-
-                        <Text className="text-rede-white font-semibold max-w-2xl">
-                            Encontra, conecta-te e colabora com <br/>profissionais dos PALOP, enquanto<br/> aumentas a tua presença na rede.
-                        </Text>
-                    </div>
-                </div>
-
+              <Text className="max-w-xl text-sm leading-relaxed font-semibold text-rede-white sm:text-base lg:text-lg">
+                {item.description}
+              </Text>
             </div>
-        </section>
-    );
-}
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+};

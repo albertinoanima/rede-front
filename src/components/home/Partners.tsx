@@ -1,139 +1,216 @@
+"use client";
+
 import Image from "next/image";
+
 import { Text } from "../ui/text";
 
-// Ajusta aqui o tamanho default de todos os logos
-const LOGO_SIZE = { width: 200, height: 100 };
+const LOGO_SIZE = {
+  width: 200,
+  height: 100,
+} as const;
 
 type Logo = {
-    src: string;
-    alt?: string;
-    width?: number;
-    height?: number;
-    className?: string;
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  className?: string;
 };
 
-type PartnerGroup = {
-    title: string;
-    align?: "left" | "right";
-    logos: Logo[];
+type PartnerGroupData = {
+  title: string;
+  align?: "left" | "right";
+  logos: Logo[];
 };
 
 type PartnerRow = {
-    left: PartnerGroup;
-    right?: PartnerGroup;
+  left: PartnerGroupData;
+  right?: PartnerGroupData;
 };
 
 const PARTNER_ROWS: PartnerRow[] = [
-    {
-        left: {
-            title: "UMA INICIATIVA",
-            logos: [{ src: "/assets/partners/museu-cinema.png" }],
+  {
+    left: {
+      title: "UMA INICIATIVA",
+      logos: [
+        {
+          src: "/assets/partners/museu-cinema.png",
+          alt: "Museu do Cinema",
         },
-        right: {
-            title: "PARCEIROS DE IMPLEMENTAÇÃO",
-            align: "right",
-            logos: [
-                { src: "/assets/partners/ekran-eventos.png" },
-                { src: "/assets/partners/paralax.png" },
-                { src: "/assets/partners/tela-digital.png" },
-            ],
-        },
+      ],
     },
-    {
-        left: {
-            title: "FINANCIADO PELA COOPERAÇÃO PORTUGUESA - CAMÕES, IP",
-            logos: [{ src: "/assets/partners/camoes.png" }],
+    right: {
+      title: "PARCEIROS DE IMPLEMENTAÇÃO",
+      align: "right",
+      logos: [
+        {
+          src: "/assets/partners/ekran-eventos.png",
+          alt: "Ekran Eventos",
         },
-        right: {
-            title: "PARCEIROS INSTITUCIONAIS",
-            align: "right",
-            logos: [
-                { src: "/assets/partners/inic.png" },
-                { src: "/assets/partners/ministerio-da-cultura.png" },
-            ],
+        {
+          src: "/assets/partners/paralax.png",
+          alt: "Paralax",
         },
+        {
+          src: "/assets/partners/tela-digital.png",
+          alt: "Tela Digital",
+        },
+      ],
     },
-    {
-        left: {
-            title: "OUTROS APOIOS FINANCEIROS",
-            logos: [
-                { src: "/assets/partners/cultivarte.png" },
-                { src: "/assets/partners/ministerio-da-educacao.png" },
-                { src: "/assets/partners/uniao.png" },
-                { src: "/assets/partners/expertise-france.png" },
-            ],
+  },
+  {
+    left: {
+      title: "FINANCIADO PELA COOPERAÇÃO PORTUGUESA — CAMÕES, I.P.",
+      logos: [
+        {
+          src: "/assets/partners/camoes.png",
+          alt: "Camões — Instituto da Cooperação e da Língua, I.P.",
         },
+      ],
     },
-    {
-        left: {
-            title: "FASES DESTE PROJECTO TIVERAM APOIO FINANCEIRO",
-            logos: [
-                { src: "/assets/partners/uniao-europeia.png" },
-                { src: "/assets/partners/palop-tl.png" },
-                { src: "/assets/partners/ue.png", className: "ml-[-8px]" },
-            ],
+    right: {
+      title: "PARCEIROS INSTITUCIONAIS",
+      align: "right",
+      logos: [
+        {
+          src: "/assets/partners/inic.png",
+          alt: "INIC",
         },
-        right: {
-            title: "IMPLEMENTAÇÃO COM APOIO DE FRANÇA EM MOÇAMBIQUE",
-            align: "right",
-            logos: [
-                { src: "/assets/partners/ccfm.png" },
-                { src: "/assets/partners/france-2.png" },
-            ],
+        {
+          src: "/assets/partners/ministerio-da-cultura.png",
+          alt: "Ministério da Cultura",
         },
+      ],
     },
+  },
+  {
+    left: {
+      title: "OUTROS APOIOS FINANCEIROS",
+      logos: [
+        {
+          src: "/assets/partners/cultivarte.png",
+          alt: "Cultiv'Arte",
+        },
+        {
+          src: "/assets/partners/ministerio-da-educacao.png",
+          alt: "Ministério da Educação",
+        },
+        {
+          src: "/assets/partners/uniao.png",
+          alt: "União Europeia",
+        },
+        {
+          src: "/assets/partners/expertise-france.png",
+          alt: "Expertise France",
+        },
+      ],
+    },
+  },
+  {
+    left: {
+      title: "FASES DESTE PROJETO TIVERAM APOIO FINANCEIRO",
+      logos: [
+        {
+          src: "/assets/partners/uniao-europeia.png",
+          alt: "União Europeia",
+        },
+        {
+          src: "/assets/partners/palop-tl.png",
+          alt: "PALOP e Timor-Leste",
+        },
+        {
+          src: "/assets/partners/ue.png",
+          alt: "União Europeia",
+          className: "lg:-ml-2",
+        },
+      ],
+    },
+    right: {
+      title: "IMPLEMENTAÇÃO COM O APOIO DA FRANÇA EM MOÇAMBIQUE",
+      align: "right",
+      logos: [
+        {
+          src: "/assets/partners/ccfm.png",
+          alt: "Centro Cultural Franco-Moçambicano",
+        },
+        {
+          src: "/assets/partners/france-2.png",
+          alt: "França",
+        },
+      ],
+    },
+  },
 ];
 
-function LogoBox({ src, alt = "", width, height, className = "" }: Logo) {
-    return (
-        <div
-            className={`h-37.5 ${className}`}
-            style={{ width: width ?? LOGO_SIZE.width }}
-        >
-            <Image
-                src={src}
-                width={width ?? LOGO_SIZE.width}
-                height={height ?? LOGO_SIZE.height}
-                alt={alt}
-                className="w-full h-full object-contain"
-            />
-        </div>
-    );
+function LogoBox({
+  src,
+  alt = "",
+  width,
+  height,
+  className = "",
+}: Logo) {
+  const logoWidth = width ?? LOGO_SIZE.width;
+  const logoHeight = height ?? LOGO_SIZE.height;
+
+  return (
+    <div
+      className={`h-28 max-w-full shrink-0 sm:h-32 lg:h-37.5 ${className}`}
+      style={{ width: logoWidth }}
+    >
+      <Image
+        src={src}
+        width={logoWidth}
+        height={logoHeight}
+        alt={alt}
+        className="h-full w-full object-contain"
+      />
+    </div>
+  );
 }
 
-function PartnerGroup({ title, align = "left", logos }: PartnerGroup) {
-    return (
-        <div className="w-auto flex-col">
-            <Text
-                className={`text-[12px] leading-4 font-medium text-rede-surface ${
-                    align === "right" ? "text-right" : ""
-                }`}
-            >
-                {title}
-            </Text>
-            <div className="w-auto h-37.5 flex gap-1">
-                {logos.map((logo) => (
-                    <LogoBox key={logo.src} {...logo} />
-                ))}
-            </div>
-        </div>
-    );
+function PartnerGroup({
+  title,
+  align = "left",
+  logos,
+}: PartnerGroupData) {
+  return (
+    <div className="flex w-full min-w-0 flex-col lg:w-auto">
+      <Text
+        className={`text-xs leading-4 font-medium text-rede-surface ${
+          align === "right" ? "text-left lg:text-right" : "text-left"
+        }`}
+      >
+        {title}
+      </Text>
+
+      <div
+        className={`flex h-auto w-full flex-wrap gap-1 lg:h-37.5 lg:w-auto lg:flex-nowrap ${
+          align === "right" ? "lg:justify-end" : "justify-start"
+        }`}
+      >
+        {logos.map((logo, index) => (
+          <LogoBox key={`${logo.src}-${index}`} {...logo} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export function Partners() {
-    return (
-        <section className="bg-rede-white py-16">
-            <div className="w-full max-w-[1440px] flex flex-col gap-6 mr-auto ml-auto">
-                {PARTNER_ROWS.map((row) => (
-                    <div
-                        key={row.left.title}
-                        className="w-full flex justify-between items-center"
-                    >
-                        <PartnerGroup {...row.left} />
-                        {row.right && <PartnerGroup {...row.right} />}
-                    </div>
-                ))}
-            </div>
-        </section>
-    );
+  return (
+    <section className="bg-rede-white py-12 sm:py-14 lg:py-16">
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-10 px-4 sm:px-6 lg:gap-6 xl:px-0">
+        {PARTNER_ROWS.map((row) => (
+          <div
+            key={row.left.title}
+            className="flex w-full flex-col items-start justify-between gap-8 lg:flex-row lg:items-center lg:gap-4"
+          >
+            <PartnerGroup {...row.left} />
+
+            {row.right && <PartnerGroup {...row.right} />}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }

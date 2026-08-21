@@ -163,7 +163,7 @@ export const Login: React.FC = () => {
                         </Link>
 
                         {(showMessaage && message.length > 0) &&
-                            <Text className={`text-[14px] leading-5 ${isError ? "text-rede-yellow" : "text-rede-red"} text-center`} dangerouslySetInnerHTML={{ __html: message }} />
+                            <Text className={`text-[14px] leading-5 ${isError ? "text-rede-red" : "text-rede-yellow"} text-center`} dangerouslySetInnerHTML={{ __html: message }} />
                         }
 
 

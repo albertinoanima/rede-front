@@ -134,3 +134,4 @@ export const EditProfile: React.FC<EditProfileType> = ({ profile, profileData, i
     </div>
   )
 }
+

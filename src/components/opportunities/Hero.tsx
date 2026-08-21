@@ -1,31 +1,30 @@
-"use client"
+'use client'
 
-import { customBlur } from '@/app/fonts';
-import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
+import { customBlur } from '@/app/fonts'
+import { Heading } from '@/components/ui/heading'
+import { Text } from '@/components/ui/text'
 
 export const Hero: React.FC = () => {
   return (
-    <section className="w-full h-auto pt-17">
-      <div className="relative w-full max-w-[1920px] h-124.25 mx-auto">
-
+    <section className="h-auto w-full pt-17">
+      <div className="relative mx-auto h-[420px] w-full max-w-[1920px] overflow-hidden sm:h-[450px] lg:h-124.25">
         <img
           src="/assets/opportunities/hero.jpg"
-          alt="REDE Hero"
-          className="w-full h-full object-cover"
+          alt="Imagem de destaque das oportunidades"
+          className="h-full w-full object-cover"
         />
 
-        {/* overlay de textos */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-4">
-          <Heading className={`${customBlur.className} text-rede-yellow text-[128px] font-medium`}>
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/20 px-4 text-center sm:gap-4 sm:px-6 lg:bg-transparent">
+          <Heading
+            className={`${customBlur.className} max-w-full break-words text-[52px] font-medium leading-none text-rede-yellow sm:text-[82px] lg:text-[128px]`}
+          >
             Oportunidades
           </Heading>
 
-          <Text className="text-rede-white font-semibold max-w-2xl">
+          <Text className="max-w-[560px] text-sm font-semibold leading-relaxed text-rede-white sm:text-base lg:max-w-2xl">
             Oportunidades que transformam ideias em projetos sustentáveis.
           </Text>
         </div>
-
       </div>
     </section>
   )

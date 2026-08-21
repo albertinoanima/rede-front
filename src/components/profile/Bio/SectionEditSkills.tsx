@@ -134,7 +134,7 @@ export const SectionEditSkills: React.FC<SectionEditSkillsProps> = ({
         <div className="w-1/2 flex flex-col h-auto">
             <div className="flex items-center gap-4">
                 <Heading className={`${customBlur.className} text-[48px] leading-12`}>
-                    Competencias
+                    Competências
                 </Heading>
 
                 {isAuthenticated && !isEditingSkils && (

@@ -1,43 +1,49 @@
-"use client"
+"use client";
 
-import { useState } from 'react';
-import { User } from '@/types/User';
-import { SectionEditBio } from './SectionEditBio';
-import { SectionEditSkills } from './SectionEditSkills';
+import { useState } from "react";
+import { User } from "@/types/User";
+import { SectionEditBio } from "./SectionEditBio";
+import { SectionEditSkills } from "./SectionEditSkills";
 
 type ProfileData = User["profileData"];
 
-type BioType = {
+type BioProps = {
   isAuthenticated?: boolean;
   profile?: User;
   profileData: ProfileData;
   isSaving?: boolean;
   onSaveProfileData?: (patch: Partial<ProfileData>) => Promise<boolean>;
-}
+};
 
-export const Bio: React.FC<BioType> = ({
+export const Bio: React.FC<BioProps> = ({
   isAuthenticated = false,
   profileData,
   isSaving = false,
   onSaveProfileData,
 }) => {
   const [isEditingBio, setIsEditingBio] = useState(false);
-  const [isEditingSkills, setIsEditingSkils] = useState(false);
+  const [isEditingSkills, setIsEditingSkills] = useState(false);
 
   const handleSaveBio = async (bio: string) => {
     const saved = await onSaveProfileData?.({ bio });
-    if (saved) setIsEditingBio(false);
+
+    if (saved) {
+      setIsEditingBio(false);
+    }
   };
 
   const handleSaveSkills = async (skills: string[]) => {
     const saved = await onSaveProfileData?.({ skills });
-    if (saved) setIsEditingSkils(false);
+
+    if (saved) {
+      setIsEditingSkills(false);
+    }
   };
 
   return (
-    <section className="w-full h-auto">
-      <div className="relative w-full max-w-[1920px] min-h-90 h-auto mx-auto flex items-center justify-center">
-        <div className='w-full max-w-360 h-auto flex gap-6 pt-25 pb-40'>
+    <section className="h-auto w-full">
+      <div className="relative mx-auto flex min-h-90 w-full max-w-[1920px] items-center justify-center">
+        <div className="flex h-auto w-full max-w-360 flex-col gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:flex-row lg:gap-6 lg:px-0 lg:pb-40 lg:pt-25">
           <SectionEditBio
             isAuthenticated={isAuthenticated}
             isEditingBio={isEditingBio}
@@ -46,10 +52,11 @@ export const Bio: React.FC<BioType> = ({
             isSaving={isSaving}
             onSaveBio={handleSaveBio}
           />
+
           <SectionEditSkills
             isAuthenticated={isAuthenticated}
             isEditingSkils={isEditingSkills}
-            setIsEditingSkils={setIsEditingSkils}
+            setIsEditingSkils={setIsEditingSkills}
             profileData={profileData}
             skills={profileData.skills}
             isSaving={isSaving}
@@ -58,5 +65,5 @@ export const Bio: React.FC<BioType> = ({
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

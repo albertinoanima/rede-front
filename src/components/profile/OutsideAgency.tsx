@@ -1,55 +1,84 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Edit2, Plus, Trash2 } from "lucide-react";
 import { customBlur } from "@/app/fonts";
+import { ProfileFilm } from "@/types/User";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Button } from "../ui/button";
 import { FilmCard, FilmCardType } from "../FilmCard";
-import { Edit2, Plus, Trash2 } from "lucide-react";
 import { AddFilmModal, FilmFormData } from "../AddFilmModal";
-import { ProfileFilm } from "@/types/User";
 
-type FilmCardProps = {
+type LocalFilmCardProps = {
   film: FilmCardType;
   isEditing: boolean;
   onEdit: (id: string) => void;
   onRemove: (id: string) => void;
 };
 
-const FilmCardLocal: React.FC<FilmCardProps> = ({ film, isEditing, onEdit, onRemove }) => (
-  <div className="relative">
+const FilmCardLocal: React.FC<LocalFilmCardProps> = ({
+  film,
+  isEditing,
+  onEdit,
+  onRemove,
+}) => (
+  <div className="relative w-full">
     <FilmCard filmData={film} v="v2" />
 
     {isEditing && (
-      <div className="absolute top-3 right-3 flex gap-2 z-10">
-        <button type="button" onClick={() => onEdit(film.id)} className="w-8 h-8 rounded-full bg-black/50 backdrop-blur flex items-center justify-center text-rede-white hover:bg-black/70 transition-colors">
-          <Edit2 width={12} height={12} />
+      <div className="absolute right-3 top-3 z-10 flex gap-2">
+        <button
+          type="button"
+          aria-label={`Editar o filme ${film.title}`}
+          onClick={() => onEdit(film.id)}
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-rede-white backdrop-blur transition-colors hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rede-white sm:h-8 sm:w-8"
+        >
+          <Edit2 width={12} height={12} aria-hidden="true" />
         </button>
-        <button type="button" onClick={() => onRemove(film.id)} className="w-8 h-8 rounded-full bg-black/50 backdrop-blur flex items-center justify-center text-rede-white hover:bg-black/70 transition-colors">
-          <Trash2 width={12} height={12} />
+
+        <button
+          type="button"
+          aria-label={`Remover o filme ${film.title}`}
+          onClick={() => onRemove(film.id)}
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-rede-white backdrop-blur transition-colors hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rede-white sm:h-8 sm:w-8"
+        >
+          <Trash2 width={12} height={12} aria-hidden="true" />
         </button>
       </div>
     )}
   </div>
 );
 
-const AddFilmTile = ({ onAdd }: { onAdd: () => void }) => (
-  <div className="w-full min-h-[380px] border border-dashed border-rede-white/30 rounded-lg flex items-center justify-center">
-    <Button variant="secondary" className="border border-dashed" iconPosition="left" icon={<Plus width={12} height={12} />} onClick={onAdd} iconButtonClassName="border border-dashed">
+type AddFilmTileProps = {
+  onAdd: () => void;
+};
+
+const AddFilmTile: React.FC<AddFilmTileProps> = ({ onAdd }) => (
+  <div className="flex min-h-[280px] w-full items-center justify-center rounded-lg border border-dashed border-rede-white/30 px-4 sm:min-h-[380px]">
+    <Button
+      variant="secondary"
+      className="border border-dashed"
+      iconPosition="left"
+      icon={<Plus width={12} height={12} aria-hidden="true" />}
+      iconButtonClassName="border border-dashed"
+      onClick={onAdd}
+    >
       Adicionar filme externo
     </Button>
   </div>
 );
 
-type FilmographyProps = {
+type OutsideAgencyProps = {
   isAuthenticated?: boolean;
   films?: ProfileFilm[];
   isSaving?: boolean;
-  onSaveFilms?: (films: ProfileFilm[]) => Promise<boolean> | boolean;
+  onSaveFilms?: (
+    films: ProfileFilm[],
+  ) => Promise<boolean> | boolean;
 };
 
-export const OutsideAgency: React.FC<FilmographyProps> = ({
+export const OutsideAgency: React.FC<OutsideAgencyProps> = ({
   isAuthenticated = false,
   films,
   isSaving = false,
@@ -58,14 +87,24 @@ export const OutsideAgency: React.FC<FilmographyProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState<ProfileFilm[]>(films ?? []);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingFilmId, setEditingFilmId] = useState<string | null>(null);
+  const [editingFilmId, setEditingFilmId] = useState<string | null>(
+    null,
+  );
   const [formSession, setFormSession] = useState(0);
 
   const data = films ?? [];
   const visibleFilms = isEditing ? draft : data;
-  const editingFilm = editingFilmId ? draft.find((film) => film.id === editingFilmId) : undefined;
-  const initialFormData = useMemo<Partial<FilmFormData> | undefined>(() => {
-    if (!editingFilm) return undefined;
+
+  const editingFilm = editingFilmId
+    ? draft.find((film) => film.id === editingFilmId)
+    : undefined;
+
+  const initialFormData = useMemo<
+    Partial<FilmFormData> | undefined
+  >(() => {
+    if (!editingFilm) {
+      return undefined;
+    }
 
     return {
       id: editingFilm.id,
@@ -81,7 +120,10 @@ export const OutsideAgency: React.FC<FilmographyProps> = ({
   }, [editingFilm]);
 
   const handleFormSubmit = (formData: FilmFormData) => {
-    const currentFilm = formData.id ? draft.find((film) => film.id === formData.id) : undefined;
+    const currentFilm = formData.id
+      ? draft.find((film) => film.id === formData.id)
+      : undefined;
+
     const submittedFilm: ProfileFilm = {
       id: formData.id ?? crypto.randomUUID(),
       title: formData.title.trim(),
@@ -94,11 +136,14 @@ export const OutsideAgency: React.FC<FilmographyProps> = ({
       link: formData.link,
     };
 
-    setDraft((prev) =>
+    setDraft((currentDraft) =>
       formData.id
-        ? prev.map((film) => (film.id === formData.id ? submittedFilm : film))
-        : [...prev, submittedFilm]
+        ? currentDraft.map((film) =>
+            film.id === formData.id ? submittedFilm : film,
+          )
+        : [...currentDraft, submittedFilm],
     );
+
     setEditingFilmId(null);
     setIsFormOpen(false);
   };
@@ -110,7 +155,10 @@ export const OutsideAgency: React.FC<FilmographyProps> = ({
 
   const handleSave = async () => {
     const saved = await onSaveFilms?.(draft);
-    if (saved) setIsEditing(false);
+
+    if (saved) {
+      setIsEditing(false);
+    }
   };
 
   const handleCancel = () => {
@@ -121,18 +169,20 @@ export const OutsideAgency: React.FC<FilmographyProps> = ({
   };
 
   const removeFilm = (id: string) => {
-    setDraft((prev) => prev.filter((film) => film.id !== id));
+    setDraft((currentDraft) =>
+      currentDraft.filter((film) => film.id !== id),
+    );
   };
 
   const addFilm = () => {
     setEditingFilmId(null);
-    setFormSession((session) => session + 1);
+    setFormSession((currentSession) => currentSession + 1);
     setIsFormOpen(true);
   };
 
   const handleEditFilm = (id: string) => {
     setEditingFilmId(id);
-    setFormSession((session) => session + 1);
+    setFormSession((currentSession) => currentSession + 1);
     setIsFormOpen(true);
   };
 
@@ -142,41 +192,80 @@ export const OutsideAgency: React.FC<FilmographyProps> = ({
   };
 
   return (
-    <section className="w-full h-auto bg-rede-bg">
-      <div className="relative w-full max-w-[1920px] min-h-90 h-auto mx-auto flex items-center justify-center">
-        <div className="w-full max-w-360 h-auto pt-20 pb-20">
-          <div className="flex items-center justify-between gap-4 mb-6 pb-4 border-b border-rede-white/20">
-            <div className="flex items-center gap-4">
-              <Heading className={`${customBlur.className} text-[32px] leading-9`}>Fora da agencia</Heading>
+    <section className="h-auto w-full bg-rede-bg">
+      <div className="relative mx-auto flex h-auto min-h-90 w-full max-w-[1920px] items-center justify-center">
+        <div className="h-auto w-full max-w-360 px-4 py-14 sm:px-6 sm:py-16 lg:px-0 lg:pb-20 lg:pt-20">
+          <div className="mb-6 flex flex-col gap-4 border-b border-rede-white/20 pb-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-center gap-4">
+              <Heading
+                className={`${customBlur.className} min-w-0 text-[32px] leading-9`}
+              >
+                Fora da agência
+              </Heading>
 
               {isAuthenticated && !isEditing && (
-                <Button variant="secondary" className="rounded-full p-0 shrink-0 aspect-square w-10 h-10 flex items-center justify-center" onClick={startEditing}>
-                  <Edit2 width={12} height={12} />
+                <Button
+                  variant="secondary"
+                  aria-label="Editar filmes fora da agência"
+                  className="flex aspect-square h-10 w-10 shrink-0 items-center justify-center rounded-full p-0"
+                  onClick={startEditing}
+                >
+                  <Edit2 width={12} height={12} aria-hidden="true" />
                 </Button>
               )}
             </div>
 
             {isAuthenticated && isEditing && (
-              <div className="flex gap-1">
-                <Button disabled={isSaving} onClick={handleSave}>{isSaving ? "A guardar..." : "Guardar"}</Button>
-                <Button variant="secondary" disabled={isSaving} onClick={handleCancel}>Cancelar</Button>
+              <div className="flex w-full gap-2 sm:w-auto sm:gap-1">
+                <Button
+                  disabled={isSaving}
+                  className="flex-1 sm:flex-none"
+                  onClick={handleSave}
+                >
+                  {isSaving ? "A guardar..." : "Guardar"}
+                </Button>
+
+                <Button
+                  variant="secondary"
+                  disabled={isSaving}
+                  className="flex-1 sm:flex-none"
+                  onClick={handleCancel}
+                >
+                  Cancelar
+                </Button>
               </div>
             )}
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {visibleFilms.length > 0 ? visibleFilms.map((film) => (
-              <FilmCardLocal key={film.id} film={film} isEditing={isEditing} onEdit={handleEditFilm} onRemove={removeFilm} />
-            )) : !isEditing && (
-              <Text>Ainda nao existem filmes fora da agencia.</Text>
-            )}
+            {visibleFilms.length > 0
+              ? visibleFilms.map((film) => (
+                  <FilmCardLocal
+                    key={film.id}
+                    film={film}
+                    isEditing={isEditing}
+                    onEdit={handleEditFilm}
+                    onRemove={removeFilm}
+                  />
+                ))
+              : !isEditing && (
+                  <Text className="md:col-span-2 xl:col-span-3">
+                    Ainda não existem filmes fora da agência.
+                  </Text>
+                )}
 
             {isEditing && <AddFilmTile onAdd={addFilm} />}
           </div>
         </div>
       </div>
 
-      <AddFilmModal key={formSession} open={isFormOpen} onClose={handleCloseForm} onSubmit={handleFormSubmit} initialData={initialFormData} />
+      <AddFilmModal
+        key={formSession}
+        open={isFormOpen}
+        onClose={handleCloseForm}
+        onSubmit={handleFormSubmit}
+        initialData={initialFormData}
+      />
     </section>
   );
 };

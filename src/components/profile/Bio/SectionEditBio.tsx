@@ -70,7 +70,7 @@ export const SectionEditBio: React.FC<SectionEditBioProps> = ({
           onChange={(e) => setDraftBio(e.target.value)}
         />
       ) : (
-        bio.trim() ? <Text>{bio}</Text> : <Text>Ainda nao existe biografia.</Text>
+        bio.trim() ? <Text>{bio}</Text> : <Text>Ainda não existe biografia.</Text>
       )}
     </div>
   );

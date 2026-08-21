@@ -1,32 +1,79 @@
+"use client";
+
+import Image from "next/image";
+import { FormEvent, useState } from "react";
+
 import { customBlur } from "@/app/fonts";
-
+import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import { Button } from "../ui/button";
-import { Input } from "../ui/Input";
-
+import { Input } from "@/components/ui/Input";
 
 export const Newsletter: React.FC = () => {
-    return (
-        <section className="w-full h-auto bg-rede-bg">
-            <div className="relative w-full max-w-[1920px] h-124.25 mx-auto">
-                <img
-                    src="/assets/home/hero-3.png"
-                    alt="Newsletter"
-                    className="w-full h-full object-cover"
-                />
+  const [email, setEmail] = useState("");
 
-                <div className="absolute inset-0 w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-28 pb-10">
-                    <div className="w-full h-36">
-                        <Heading className={`${customBlur.className} text-rede-white text-[96px] font-medium leading-24`}>Newsletter</Heading>
-                    </div>
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-                    <div className="w-full h-auto flex flex-col items-center justify-center gap-6 mb-5">
-                        <Input variant={"secondary"} placeholder="O seu email aqui" className="max-w-90 mr-auto ml-auto bg-transparent placeholder:text-[#dddddd]"  />
-                        <Button>Subscrever</Button>
-                    </div>
-                </div>
+    const normalizedEmail = email.trim();
 
-            </div>
-        </section>
-    );
-}
+    if (!normalizedEmail) {
+      return;
+    }
+
+    setEmail(normalizedEmail);
+  };
+
+  return (
+    <section className="w-full bg-rede-bg">
+      <div className="relative mx-auto min-h-[420px] w-full max-w-[1920px] overflow-hidden sm:min-h-[480px] lg:min-h-[520px]">
+        <Image
+          src="/assets/home/hero-3.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-black/45"
+        />
+
+        <div className="relative z-10 mx-auto flex min-h-[420px] w-full max-w-360 flex-col items-center justify-center gap-8 px-4 py-16 text-center sm:min-h-[480px] sm:px-6 lg:min-h-[520px] lg:px-8">
+          <Heading
+            className={`${customBlur.className} break-words text-6xl leading-none font-medium text-rede-white sm:text-7xl md:text-8xl lg:text-[96px]`}
+          >
+            Newsletter
+          </Heading>
+
+          <form
+            onSubmit={handleSubmit}
+            className="flex w-full max-w-md flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-center"
+          >
+            <label htmlFor="newsletter-email" className="sr-only">
+              Endereço de e-mail
+            </label>
+
+            <Input
+              id="newsletter-email"
+              name="email"
+              type="email"
+              variant="secondary"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="O seu e-mail"
+              autoComplete="email"
+              inputMode="email"
+              required
+              className="w-full bg-transparent placeholder:text-[#dddddd]"
+            />
+
+            <Button type="submit" className="w-full shrink-0 sm:w-auto">
+              Subscrever
+            </Button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};

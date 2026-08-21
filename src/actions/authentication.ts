@@ -77,7 +77,7 @@ export type LoginUsingEmailAndPassResponseType = {
 export const loginUsingEmailAndPassword = async (email: string, password: string): Promise<LoginUsingEmailAndPassResponseType> => {
   try {
     const responseData = await api.post<LoginUsingEmailAndPassResponseType>("/api/v1/auth/login-using-email-and-password", { email, password });
-    const { user, token } = responseData.data;
+    const { data: user, token } = responseData.data as LoginUsingEmailAndPassResponseType & { data?: LoggedUser };
 
     return { user, token }
   } catch (err: any) {
@@ -95,8 +95,8 @@ export type GoogleLoginPayload = {
 
 export const loginUsingGoogle = async ({ idToken }: GoogleLoginPayload): Promise<LoginUsingEmailAndPassResponseType> => {
   try {
-    const responseData = await api.post<LoginUsingEmailAndPassResponseType>("/api/v1/auth/login-with-google", { idToken });
-    const { user, token } = responseData.data;
+    const responseData = await api.post<LoginUsingEmailAndPassResponseType>("/api/v1/auth/login-using-google", { idToken });
+    const { data: user, token } = responseData.data as LoginUsingEmailAndPassResponseType & { data?: LoggedUser };
 
     return { user, token }
   } catch (err: any) {

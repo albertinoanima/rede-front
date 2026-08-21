@@ -1,80 +1,108 @@
-"use client"
+'use client'
 
-import { useMemo, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { FilterSidebar } from './FilterSidebar';
-import { customBlur } from '@/app/fonts';
-import { Heading } from '../ui/heading';
-import { ArticleCard } from '../ArticleCard';
-import { categories, NEWS } from './data';
-import { defaultNewsFilters, filterNews, getNewsYearOptions, NewsFilters } from './actions';
-import { Text } from '../ui/text';
-import { countriesList } from '../network/filters';
+import { useMemo, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { customBlur } from '@/app/fonts'
+import { FilterSidebar } from './FilterSidebar'
+import { Heading } from '../ui/heading'
+import { ArticleCard } from '../ArticleCard'
+import { categories, NEWS } from './data'
+import {
+  defaultNewsFilters,
+  filterNews,
+  getNewsYearOptions,
+  NewsFilters,
+} from './actions'
+import { Text } from '../ui/text'
+import { countriesList } from '../network/filters'
 
+type NewsFilterContentProps = {
+  initialTag: string
+}
 
 const normalizeTag = (value: string) =>
   value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
     .trim()
-    .toLowerCase();
+    .toLowerCase()
 
 const getInitialFilters = (tag: string): NewsFilters => {
-  const normalizedTag = normalizeTag(tag);
+  const normalizedTag = normalizeTag(tag)
 
-  if (!normalizedTag) return defaultNewsFilters;
+  if (!normalizedTag) {
+    return defaultNewsFilters
+  }
 
   const country = countriesList.find(
-    (option) => normalizeTag(option.value) === normalizedTag || normalizeTag(option.label) === normalizedTag,
-  );
+    (option) =>
+      normalizeTag(option.value) === normalizedTag ||
+      normalizeTag(option.label) === normalizedTag,
+  )
 
   if (country) {
-    return { ...defaultNewsFilters, country: country.value };
+    return {
+      ...defaultNewsFilters,
+      country: country.value,
+    }
   }
 
   const category = categories.find(
-    (option) => normalizeTag(option.value) === normalizedTag || normalizeTag(option.label) === normalizedTag,
-  );
+    (option) =>
+      normalizeTag(option.value) === normalizedTag ||
+      normalizeTag(option.label) === normalizedTag,
+  )
 
   if (category) {
-    return { ...defaultNewsFilters, category: category.value };
+    return {
+      ...defaultNewsFilters,
+      category: category.value,
+    }
   }
 
-  return { ...defaultNewsFilters, search: tag };
-};
+  return {
+    ...defaultNewsFilters,
+    search: tag,
+  }
+}
 
-const NewsFilterContent: React.FC<{ initialTag: string }> = ({ initialTag }) => {
-  const [filters, setFilters] = useState(() => getInitialFilters(initialTag));
+const NewsFilterContent: React.FC<NewsFilterContentProps> = ({
+  initialTag,
+}) => {
+  const [filters, setFilters] = useState<NewsFilters>(() =>
+    getInitialFilters(initialTag),
+  )
 
-  const yearOptions = useMemo(() => getNewsYearOptions(NEWS), []);
-  const results = useMemo(
-    () => filterNews(NEWS, filters),
-    [filters],
-  );
+  const yearOptions = useMemo(() => getNewsYearOptions(NEWS), [])
+  const results = useMemo(() => filterNews(NEWS, filters), [filters])
 
-  const handleClear = () => setFilters(defaultNewsFilters);
+  const handleClear = () => {
+    setFilters(defaultNewsFilters)
+  }
 
   return (
-    <section className="w-full h-auto mt-20">
-      <div className="w-full max-w-360 h-auto ml-auto mr-auto">
-
-        <div className='flex items-center justify-between'>
-          <Heading level={"h2"} className={`${customBlur.className} ml-3 text-[48px] leading-11.5 font-medium mb-5 text-rede-yellow`}>
-            Todas <br /> Notícias
+    <section className="mt-12 h-auto w-full sm:mt-16 lg:mt-20">
+      <div className="mx-auto h-auto w-full max-w-360">
+        <div className="flex items-end justify-between gap-4 px-4 sm:items-center sm:px-6 lg:px-0">
+          <Heading
+            level="h2"
+            className={`${customBlur.className} mb-3 text-[38px] font-medium leading-[0.95] text-rede-yellow sm:mb-5 sm:text-[44px] lg:ml-3 lg:text-[48px] lg:leading-11.5`}
+          >
+            Todas as
+            <br />
+            notícias
           </Heading>
 
-          <div className="flex justify-end gap-3 px-6 py-4">
-            <Text className="text-[14px] leading-4" >
-              {results.length}{" "}
-              {results.length === 1
-                ? "resultado"
-                : "resultados"}
+          <div className="flex shrink-0 justify-end py-4 sm:px-6">
+            <Text className="text-[14px] leading-4">
+              {results.length}{' '}
+              {results.length === 1 ? 'resultado' : 'resultados'}
             </Text>
           </div>
         </div>
 
-        <div className='w-full flex mt-10'>
-          <div className='w-82.75'>
+        <div className="mt-6 flex w-full min-w-0 flex-col lg:mt-10 lg:flex-row">
+          <div className="w-full shrink-0 lg:w-82.75">
             <FilterSidebar
               filters={filters}
               onFiltersChange={setFilters}
@@ -84,26 +112,25 @@ const NewsFilterContent: React.FC<{ initialTag: string }> = ({ initialTag }) => 
           </div>
 
           {results.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 px-6 pb-6">
+            <div className="grid min-w-0 flex-1 grid-cols-1 gap-4 px-4 pb-6 sm:grid-cols-2 sm:px-6 xl:grid-cols-3">
               {results.map((news) => (
-                <ArticleCard newsData={news} key={news?.id} />
+                <ArticleCard key={news.id} newsData={news} />
               ))}
             </div>
           ) : (
-            <div className="flex-1 flex items-center justify-center px-6 pb-6 text-rede-white">
+            <div className="flex min-h-56 min-w-0 flex-1 items-center justify-center px-4 pb-6 text-center text-rede-white sm:px-6">
               Nenhuma notícia encontrada para os filtros selecionados.
             </div>
           )}
         </div>
-
       </div>
-    </section >
+    </section>
   )
 }
 
 export const NewsFilter: React.FC = () => {
-  const searchParams = useSearchParams();
-  const tag = searchParams.get('tag') ?? '';
+  const searchParams = useSearchParams()
+  const tag = searchParams.get('tag') ?? ''
 
-  return <NewsFilterContent key={tag} initialTag={tag} />;
+  return <NewsFilterContent key={tag} initialTag={tag} />
 }

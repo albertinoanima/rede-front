@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
@@ -18,9 +19,12 @@ export type ProfileType = {
   type?: string;
   category?: string;
   subCategory?: string;
+  username?: string;
 }
 
 export const ProfileCard: React.FC<{ profileData: ProfileType }> = ({ profileData }) => {
+  const router = useRouter();
+
   return (
     <Card
       image={<img
@@ -28,7 +32,13 @@ export const ProfileCard: React.FC<{ profileData: ProfileType }> = ({ profileDat
         className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
       footer={
         <div className="w-full h-auto flex items-center justify-end mt-2">
-          <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} onClick={() => console.log("htddhdt")} />
+          <Button
+            showMainButton={false}
+            iconPosition="right"
+            icon={<ArrowRight width={12} height={12} />}
+            disabled={!profileData.username}
+            onClick={() => profileData.username && router.push(`/${encodeURIComponent(profileData.username)}`)}
+          />
         </div>
       }>
 

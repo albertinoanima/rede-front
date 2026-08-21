@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Text } from "../../ui/text"
 import { Button } from "../../ui/button"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, ReactNode, SetStateAction, useState } from "react"
 import { User } from "@/types/User"
 import { Camera, Edit2, GlobeIcon, Mail, MapPin, PhoneIcon, Plus } from "lucide-react"
 import { customBlur } from "@/app/fonts"
@@ -11,15 +11,44 @@ import { ImageCropUploader } from "@/components/ImageCropUploader"
 type ProfileData = User["profileData"];
 
 type ShowProfileType = {
-    profile?: User;
-    profileData: ProfileData;
-    isAuthenticated?: boolean;
-    isSaving?: boolean;
-    editting?: boolean;
-    setIsEditing?: Dispatch<SetStateAction<boolean>>;
-    onSaveProfileData?: (patch: Partial<ProfileData>, userPatch?: Partial<Pick<User, "name">>) => Promise<boolean>;
-    onImageUploadError?: (message: string) => void;
+  profile?: User;
+  profileData: ProfileData;
+  isAuthenticated?: boolean;
+  isSaving?: boolean;
+  editting?: boolean;
+  setIsEditing?: Dispatch<SetStateAction<boolean>>;
+  onSaveProfileData?: (patch: Partial<ProfileData>, userPatch?: Partial<Pick<User, "name">>) => Promise<boolean>;
+  onImageUploadError?: (message: string) => void;
 }
+
+const StaticContactChip = ({
+  children,
+  icon,
+  variant = "secondary",
+}: {
+  children: ReactNode;
+  icon: ReactNode;
+  variant?: "primary" | "secondary";
+}) => {
+  const isPrimary = variant === "primary";
+  const iconClassName = isPrimary
+    ? "border-rede-yellow bg-rede-yellow text-rede-surface"
+    : "border-rede-white text-rede-white";
+  const labelClassName = isPrimary
+    ? "border-rede-yellow bg-rede-yellow text-rede-surface"
+    : "border-rede-white text-rede-white";
+
+  return (
+    <span className="inline-flex items-center">
+      <span className={`inline-flex aspect-square items-center justify-center rounded-full border-[1.3px] p-[14px] ${iconClassName}`}>
+        {icon}
+      </span>
+      <span className={`rounded-[40px] border-[1.3px] px-6 py-3 text-btn2 font-medium ${labelClassName}`}>
+        {children}
+      </span>
+    </span>
+  );
+};
 
 export const ShowProfile: React.FC<ShowProfileType> = ({
   profile,
@@ -80,19 +109,37 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
 
         <div className='w-full flex flex-wrap gap-5 mt-5'>
           {location && (
-            <Button variant={"secondary"} icon={<MapPin width={12} height={12} />} iconPosition='left'>
-              {location}
-            </Button>
+            isAuthenticated ? (
+              <Button variant={"secondary"} icon={<MapPin width={12} height={12} />} iconPosition='left'>
+                {location}
+              </Button>
+            ) : (
+              <StaticContactChip icon={<MapPin width={12} height={12} />}>
+                {location}
+              </StaticContactChip>
+            )
           )}
           {profileData.professionalEmail && (
-            <Button variant={"secondary"} icon={<Mail width={12} height={12} />} iconPosition='left'>
-              {profileData.professionalEmail}
-            </Button>
+            isAuthenticated ? (
+              <Button variant={"secondary"} icon={<Mail width={12} height={12} />} iconPosition='left'>
+                {profileData.professionalEmail}
+              </Button>
+            ) : (
+              <StaticContactChip icon={<Mail width={12} height={12} />}>
+                {profileData.professionalEmail}
+              </StaticContactChip>
+            )
           )}
           {website && (
-            <Button variant={"secondary"} icon={<GlobeIcon width={12} height={12} />} iconPosition='left'>
-              {website.replace(/^https?:\/\//, "")}
-            </Button>
+            isAuthenticated ? (
+              <Button variant={"secondary"} icon={<GlobeIcon width={12} height={12} />} iconPosition='left'>
+                {website.replace(/^https?:\/\//, "")}
+              </Button>
+            ) : (
+              <StaticContactChip icon={<GlobeIcon width={12} height={12} />}>
+                {website.replace(/^https?:\/\//, "")}
+              </StaticContactChip>
+            )
           )}
 
           {isAuthenticated && (
@@ -104,9 +151,15 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
 
         <div className='w-full flex flex-wrap gap-5 mt-5'>
           {profileData.professionalPhone && (
-            <Button icon={<PhoneIcon width={12} height={12} color='black' />} iconPosition='left' className='bg-rede-yellow border-none text-rede-surface' iconButtonClassName="border-none">
-              Contactar
-            </Button>
+            isAuthenticated ? (
+              <Button icon={<PhoneIcon width={12} height={12} color='black' />} iconPosition='left' className='bg-rede-yellow border-none text-rede-surface' iconButtonClassName="border-none">
+                Contactar
+              </Button>
+            ) : (
+              <StaticContactChip icon={<PhoneIcon width={12} height={12} />} variant="primary">
+                {profileData.professionalPhone}
+              </StaticContactChip>
+            )
           )}
 
           {isAuthenticated && (
@@ -117,13 +170,15 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
         </div>
       </div>
 
-      <Modal open={isAvatarCropOpen} onClose={() => setIsAvatarCropOpen(false)} panelClassName="rounded-none border-[1.3px] border-rede-white/20">
+      <Modal open={isAvatarCropOpen} onClose={() => setIsAvatarCropOpen(false)} panelClassName="flex justify-center rounded-none border-[1.3px] border-rede-white/20">
         <ImageCropUploader
+          className="w-[350px]"
+          height={350}
           value={profileData.imageUrl || profile?.imageUrl}
           folder="profile-avatars"
           aspectRatio={1}
           cropShape="circle"
-          minHeight={420}
+          //minHeight={420}
           uploadLabel="Guardar foto"
           helperText="Arraste e ajuste o zoom para enquadrar a foto de perfil."
           disabled={isSaving}
