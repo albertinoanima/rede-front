@@ -4,6 +4,7 @@ import { TopBar } from "@/components/TopBar";
 import { AssociatedNews } from "@/components/profile/AssociatedNews";
 import { PublicProfile } from "@/components/profile/PublicProfile";
 import { User } from "@/types/User";
+import { getServerApiBaseUrl } from "@/lib/serverApi";
 
 type PublicUsersResponse =
   | User[]
@@ -33,12 +34,6 @@ const reservedRoutes = new Set([
 ]);
 
 
-const getApiBaseUrl = () => {
-  const apiPort = process.env.API_PORT ?? "4001";
-  const apiHost = process.env.API_HOST ?? "http://localhost";
-
-  return process.env.API_BASE_URL ?? `${apiHost}:${apiPort}`;
-};
 
 const normalizeUsername = (username?: string) => username?.trim().toLowerCase() ?? "";
 
@@ -49,7 +44,7 @@ const normalizeUsersResponse = (data: PublicUsersResponse): User[] => {
 };
 
 const getUsers = async () => {
-  const response = await fetch(`${getApiBaseUrl()}/api/v1/users`, {
+  const response = await fetch(`${getServerApiBaseUrl()}/api/v1/users`, {
     cache: "no-store",
     headers: {
       Accept: "application/json",

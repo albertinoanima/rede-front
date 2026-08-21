@@ -39,6 +39,8 @@ export type GetUsersResponseType = {
 };
 
 type UsersApiResponse = {
+  error?: string;
+  message?: string;
   users?: NetworkUser[];
   data?: {
     users?: NetworkUser[];
@@ -66,13 +68,31 @@ const normalizeUsersResponse = (data: UsersApiResponse | NetworkUser[]): Network
 
 export const getUsers = async (): Promise<GetUsersResponseType> => {
   try {
-    const responseData = await api.get<UsersApiResponse | NetworkUser[]>(
-      "/api/v1/users"
-    );
+    const responseData = await fetch("/api/users", {
+      cache: "no-store",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    const data = await responseData.json() as UsersApiResponse | NetworkUser[];
+
+    if (!responseData.ok) {
+      return {
+        error:
+          Array.isArray(data)
+            ? "Erro desconhecido"
+            : data.error || "Erro desconhecido",
+        message:
+          Array.isArray(data)
+            ? "N\u00e3o foi poss\u00edvel carregar os usu\u00e1rios."
+            : data.message || "N\u00e3o foi poss\u00edvel carregar os usu\u00e1rios.",
+      };
+    }
 
     return {
       data: {
-        users: normalizeUsersResponse(responseData.data),
+        users: normalizeUsersResponse(data),
       },
     };
   } catch (err: unknown) {
