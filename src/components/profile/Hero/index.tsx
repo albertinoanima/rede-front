@@ -38,7 +38,8 @@ export const Hero: React.FC<HeroProps> = ({
   const handleSave = async (draft: ProfileHeroDraft) => {
     const saved = await onSaveProfileData?.(
       {
-        profession: draft.profession,
+        coreSkills: draft.coreSkills,
+        skills: draft.skills,
         username: draft.username,
       },
       {

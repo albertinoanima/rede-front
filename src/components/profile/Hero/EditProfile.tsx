@@ -7,19 +7,17 @@ import { Button } from "../../ui/button"
 import { Dispatch, SetStateAction, useState } from "react"
 import { User } from "@/types/User"
 import { Select } from "@/components/ui/select"
-import {
-  categoriesList,
-  companiesCategoryList,
-  festivalsCategoryList,
-  institutionsCategoryList,
-} from "@/components/network/data"
+import { Tag } from "@/components/Tag"
+import { getSkillOptions } from "../Bio/SectionEditSkills"
+import { X } from "lucide-react"
 
 type ProfileData = User["profileData"];
 
 export type ProfileHeroDraft = {
   name: string;
-  profession: string;
   username: string;
+  coreSkills: string[];
+  skills: string[];
 };
 
 type EditProfileType = {
@@ -30,36 +28,19 @@ type EditProfileType = {
   onSave?: (draft: ProfileHeroDraft) => void | Promise<void>;
 }
 
-type NetworkProfileType = "profissionais" | "empresa" | "festival" | "instituicao";
+const uniqueSkills = (skills: string[]): string[] => {
+  const seen = new Set<string>();
 
-const getProfileType = (profileData: ProfileData): NetworkProfileType => {
-  const legacyProfileData = profileData as ProfileData & {
-    type?: string;
-    profileType?: string;
-  };
-  const legacyType = legacyProfileData.type ?? legacyProfileData.profileType;
+  return skills.filter((skill) => {
+    const normalizedSkill = skill.trim();
+    const normalizedKey = normalizedSkill.toLowerCase();
 
-  if (
-    legacyType === "profissionais" ||
-    legacyType === "empresa" ||
-    legacyType === "festival" ||
-    legacyType === "instituicao"
-  ) {
-    return legacyType;
-  }
+    if (!normalizedSkill || seen.has(normalizedKey)) return false;
 
-  return profileData.accountType === "company" ? "empresa" : "profissionais";
+    seen.add(normalizedKey);
+    return true;
+  });
 };
-
-// Helper: separa a string "A | B | C" em array limpo
-const parseProfessions = (value: string): string[] =>
-  value
-    .split('|')
-    .map((p) => p.trim())
-    .filter(Boolean);
-
-// Helper: reconstrói a string a partir do array
-const joinProfessions = (list: string[]): string => list.join(' | ');
 
 export const EditProfile: React.FC<EditProfileType> = ({
   profile,
@@ -68,49 +49,50 @@ export const EditProfile: React.FC<EditProfileType> = ({
   setIsEditing,
   onSave
 }) => {
+  const initialCoreSkills = uniqueSkills(profileData.coreSkills ?? []).slice(0, 3);
+
   const [draft, setDraft] = useState<ProfileHeroDraft>({
     name: profile?.name ?? "",
-    profession: profileData.profession ?? "",
     username: profileData.username ?? "",
+    coreSkills: initialCoreSkills,
+    skills: uniqueSkills([...(profileData.skills ?? []), ...initialCoreSkills]),
   });
 
-  const updateDraft = (key: keyof ProfileHeroDraft, value: string) => {
+  const updateDraft = (key: "name" | "username", value: string) => {
     setDraft((lastState) => ({ ...lastState, [key]: value }));
   };
 
-  const selectedType = getProfileType(profileData);
+  const skillOptions = getSkillOptions(profileData).filter((option) => {
+    const normalizedCoreSkills = draft.coreSkills.map((skill) => skill.toLowerCase());
 
-  const categoryOptions =
-    selectedType === 'profissionais'
-      ? categoriesList
-      : selectedType === 'empresa'
-        ? companiesCategoryList
-        : selectedType === 'festival'
-          ? festivalsCategoryList
-          : selectedType === 'instituicao'
-            ? institutionsCategoryList
-            : [
-              ...categoriesList,
-              ...companiesCategoryList,
-              ...festivalsCategoryList,
-              ...institutionsCategoryList,
-            ];
-
-  // Ao escolher no Select, ADICIONA ao invés de substituir
-  const handleProfessionAdd = (value: string) => {
-    const selectedOption = categoryOptions.find((option) => option.value === value);
-    const label = selectedOption?.label ?? value;
-
-    const current = parseProfessions(draft.profession);
-
-    // evita duplicados (case-insensitive)
-    const alreadyExists = current.some(
-      (p) => p.toLowerCase() === label.toLowerCase()
+    return (
+      !normalizedCoreSkills.includes(option.label.toLowerCase()) &&
+      !normalizedCoreSkills.includes(option.value.toLowerCase())
     );
-    if (alreadyExists) return;
+  });
 
-    const next = joinProfessions([...current, label]);
-    updateDraft("profession", next);
+  const handleCoreSkillAdd = (value: string) => {
+    if (draft.coreSkills.length >= 3) return;
+
+    const selectedOption = skillOptions.find((option) => option.value === value);
+    const coreSkill = selectedOption?.label ?? value;
+    const normalizedCoreSkill = coreSkill.trim();
+
+    if (!normalizedCoreSkill) return;
+
+    setDraft((lastState) => ({
+      ...lastState,
+      coreSkills: uniqueSkills([...lastState.coreSkills, normalizedCoreSkill]).slice(0, 3),
+      skills: uniqueSkills([...lastState.skills, normalizedCoreSkill]),
+    }));
+  };
+
+  const removeCoreSkill = (coreSkill: string) => {
+    setDraft((lastState) => ({
+      ...lastState,
+      coreSkills: lastState.coreSkills.filter((skill) => skill !== coreSkill),
+      skills: lastState.skills.filter((skill) => skill !== coreSkill),
+    }));
   };
 
   return (
@@ -140,25 +122,36 @@ export const EditProfile: React.FC<EditProfileType> = ({
             </div>
 
             <div className='flex flex-col gap-2'>
-              <Text className='text-[20px] leading-7 font-medium'>Profissão</Text>
+              <Text className='text-[20px] leading-7 font-medium'>Competências principais</Text>
 
-              <div className="flex">
-                <Input
-                  variant={"secondary"}
-                  value={draft.profession}
-                  className='w-full w-[450px] bg-transparent'
-                  placeholder='Adicione ou digite profissões'
-                  onChange={(event) => updateDraft("profession", event.target.value)}
-                />
+              <div className="flex flex-col gap-2">
+                <div className="flex min-h-11 w-[450px] flex-wrap items-center gap-2 border-[1.3px] border-white px-3 py-2 rounded-[8px]">
+                  {draft.coreSkills.length > 0 ? draft.coreSkills.map((coreSkill) => (
+                    <Tag key={coreSkill} className="flex items-center gap-1 bg-rede-surface">
+                      {coreSkill}
+                      <X
+                        width={12}
+                        height={12}
+                        color="#ffffff"
+                        className="cursor-pointer"
+                        onClick={() => removeCoreSkill(coreSkill)}
+                      />
+                    </Tag>
+                  )) : (
+                    <Text className="text-[14px] leading-[20px] text-rede-white/70">Selecione até 3 competências</Text>
+                  )}
+                </div>
 
                 <Select
                   variant="secondary"
-                  placeholder="Adicionar profissão"
-                  options={categoryOptions}
+                  value=""
+                  placeholder="Adicionar competência"
+                  options={skillOptions}
+                  disabled={draft.coreSkills.length >= 3}
                   triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
                   popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"
                   satelliteClassName="border-[1.3px] border-white"
-                  onChange={handleProfessionAdd}
+                  onChange={handleCoreSkillAdd}
                 />
               </div>
             </div>

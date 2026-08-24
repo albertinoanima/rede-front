@@ -57,6 +57,7 @@ export interface User {
         rentsEquipment?: { status: boolean, equipmentName: string }
 
         profession?: string;
+        coreSkills?: string[];
         bio?: string;
         skills?: string[];
         achievements?: ProfileAchievement[];

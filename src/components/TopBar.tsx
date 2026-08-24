@@ -44,7 +44,8 @@ export const TopBar: React.FC = () => {
     user?.profileData?.imageUrl ?? user?.imageUrl ?? user?.avatarUrl;
 
   const profession =
-    user?.profileData?.profession ?? user?.profession;
+  user?.profileData?.coreSkills?.join(" | ") ?? user?.coreSkills?.join(" | ") ?? "";
+
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

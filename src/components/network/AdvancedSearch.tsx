@@ -100,9 +100,8 @@ const buildTags = (user: NetworkUser): string[] => {
   const tags = [
     profileData?.country,
     profileData?.city,
-    profileData?.profession,
     ...(profileData?.services ?? []),
-    ...(profileData?.skills ?? []),
+    ...(profileData?.coreSkills ?? []),
   ].filter((tag): tag is string => Boolean(tag));
 
   return Array.from(new Set(tags));
@@ -132,13 +131,14 @@ const toProfileCardData = (
   const category = slugify(
     isCompany
       ? profileData?.services?.[0]
-      : profileData?.profession,
+      : profileData?.coreSkills?.[0]
   );
 
   return {
     id: user.id ?? user._id ?? user.email ?? `user-${index}`,
     title: getProfileTitle(user),
     tags: buildTags(user),
+    bio: profileData?.bio,
     cover:
       profileData?.imageUrl ||
       user.imageUrl ||

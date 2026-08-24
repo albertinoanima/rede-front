@@ -5,6 +5,7 @@ import { AssociatedNews } from "@/components/profile/AssociatedNews";
 import { PublicProfile } from "@/components/profile/PublicProfile";
 import { User } from "@/types/User";
 import { getServerApiBaseUrl } from "@/lib/serverApi";
+import { ScrollToTop } from "./ScrollToTop";
 
 type PublicUsersResponse =
   | User[]
@@ -75,6 +76,7 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
 
   return (
     <main className="bg-rede-surface">
+      <ScrollToTop scrollKey={normalizedUsername} />
       <TopBar />
       <PublicProfile profile={profile} />
       <AssociatedNews />

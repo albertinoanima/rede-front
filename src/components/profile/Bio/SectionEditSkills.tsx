@@ -58,7 +58,7 @@ const uniqueOptions = (options: SelectOption[]): SelectOption[] => {
     });
 };
 
-const getSkillOptions = (profileData?: ProfileData): SelectOption[] => {
+export const getSkillOptions = (profileData?: ProfileData): SelectOption[] => {
     const selectedType = getProfileType(profileData);
     const categoriesByType = subCategoriesByType[selectedType] ?? {};
     const categoryOptions = getCategoryOptions(selectedType);

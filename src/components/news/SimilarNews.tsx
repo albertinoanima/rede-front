@@ -3,16 +3,14 @@ import { Heading } from "@/components/ui/heading";
 import { ArticleCard } from "../ArticleCard";
 import { NewsType } from "./data";
 
-export const SimilarNews: React.FC<{similarNews: NewsType[] }> = ({ similarNews }) => {
+export const SimilarNews: React.FC<{ similarNews: NewsType[] }> = ({ similarNews }) => {
   return (
     <section className="w-full h-auto bg-rede-surface">
       <div className="relative w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-28 pb-10">
         <div className="w-full h-36">
-          <Heading
-            className={`${customBlur.className} text-rede-yellow text-[96px] font-medium leading-24`}
-          >
-            Semelhantes
-          </Heading>
+          <div className="w-full h-36">
+            <Heading className={`${customBlur.className} text-rede-white text-[48px] font-medium leading-12`}>Notícias associadas</Heading>
+          </div>
         </div>
 
         {similarNews.length === 0 ? (
@@ -22,7 +20,7 @@ export const SimilarNews: React.FC<{similarNews: NewsType[] }> = ({ similarNews 
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
             {similarNews.map((news, index) => (
-                <ArticleCard newsData={news} key={news.id + "-" + index} />
+              <ArticleCard newsData={news} key={news.id + "-" + index} />
             ))}
           </div>
         )}

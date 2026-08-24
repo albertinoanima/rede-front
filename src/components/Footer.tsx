@@ -26,8 +26,8 @@ const menuItems = [
 
 const contactItems = [
   {
-    label: "info@redepaloptl.org",
-    href: "mailto:info@redepaloptl.org",
+    label: "info@redecinemapaloptl.org",
+    href: "mailto:info@redecinemapaloptl.org",
   },
   {
     label: "+258 84 000 0000",

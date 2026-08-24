@@ -142,8 +142,8 @@ export const Filmography: React.FC<FilmographyProps> = ({
     setDraft((currentDraft) =>
       formData.id
         ? currentDraft.map((film) =>
-            film.id === formData.id ? submittedFilm : film,
-          )
+          film.id === formData.id ? submittedFilm : film,
+        )
         : [...currentDraft, submittedFilm],
     );
 
@@ -243,19 +243,19 @@ export const Filmography: React.FC<FilmographyProps> = ({
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {visibleFilms.length > 0
               ? visibleFilms.map((film) => (
-                  <FilmCardLocal
-                    key={film.id}
-                    film={film}
-                    isEditing={isEditing}
-                    onEdit={handleEditFilm}
-                    onRemove={removeFilm}
-                  />
-                ))
+                <FilmCardLocal
+                  key={film.id}
+                  film={film}
+                  isEditing={isEditing}
+                  onEdit={handleEditFilm}
+                  onRemove={removeFilm}
+                />
+              ))
               : !isEditing && (
-                  <Text className="md:col-span-2 xl:col-span-3">
-                    Ainda não existem filmes na filmografia.
-                  </Text>
-                )}
+                <Text className="md:col-span-2 xl:col-span-3">
+                  Ainda não existem filmes na filmografia.
+                </Text>
+              )}
 
             {isEditing && <AddFilmTile onAdd={addFilm} />}
           </div>

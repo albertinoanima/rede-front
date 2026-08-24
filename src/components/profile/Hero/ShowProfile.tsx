@@ -64,6 +64,8 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
   const displayName = profile?.name || profileData.artisticName || profileData.commercialName || "Perfil";
   const location = [profileData.city, profileData.country].filter(Boolean).join(", ");
   const website = profileData.socialLinks?.website;
+  const coreSkills = profileData.coreSkills ?? [];
+  const coreSkillsLabel = coreSkills.join(" | ");
 
   const handleAvatarUploaded = async (url: string) => {
     const saved = await onSaveProfileData?.({ imageUrl: url });
@@ -105,8 +107,8 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
         </div>
 
         <Text className={`text-[20px] leading-5 font-medium mt-2.5 ${
-          !profileData.profession ? 'text-rede-white/70' : ''}`
-          }>{profileData.profession || "Adicionar profissão"}</Text>
+          !coreSkillsLabel ? 'text-rede-white/70' : ''}`
+          }>{coreSkillsLabel || "Competências principais"}</Text>
         {profileData.username && <Text className='text-[14px] leading-5 text-rede-white/70 mt-1'>@{profileData.username}</Text>}
 
         <div className='w-full flex flex-wrap gap-5 mt-5'>
