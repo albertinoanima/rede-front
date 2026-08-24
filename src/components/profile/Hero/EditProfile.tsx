@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 import { Text } from "../../ui/text"
 import { Input } from "../../ui/Input"
@@ -49,7 +51,23 @@ const getProfileType = (profileData: ProfileData): NetworkProfileType => {
   return profileData.accountType === "company" ? "empresa" : "profissionais";
 };
 
-export const EditProfile: React.FC<EditProfileType> = ({ profile, profileData, isSaving = false, setIsEditing, onSave }) => {
+// Helper: separa a string "A | B | C" em array limpo
+const parseProfessions = (value: string): string[] =>
+  value
+    .split('|')
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+// Helper: reconstrói a string a partir do array
+const joinProfessions = (list: string[]): string => list.join(' | ');
+
+export const EditProfile: React.FC<EditProfileType> = ({
+  profile,
+  profileData,
+  isSaving = false,
+  setIsEditing,
+  onSave
+}) => {
   const [draft, setDraft] = useState<ProfileHeroDraft>({
     name: profile?.name ?? "",
     profession: profileData.profession ?? "",
@@ -59,7 +77,6 @@ export const EditProfile: React.FC<EditProfileType> = ({ profile, profileData, i
   const updateDraft = (key: keyof ProfileHeroDraft, value: string) => {
     setDraft((lastState) => ({ ...lastState, [key]: value }));
   };
-
 
   const selectedType = getProfileType(profileData);
 
@@ -77,61 +94,98 @@ export const EditProfile: React.FC<EditProfileType> = ({ profile, profileData, i
               ...companiesCategoryList,
               ...festivalsCategoryList,
               ...institutionsCategoryList,
-            ]
+            ];
 
-  const selectedProfessionValue =
-    categoryOptions.find((option) => option.value === draft.profession || option.label === draft.profession)?.value ?? "";
-
-  const handleProfessionChange = (value: string) => {
+  // Ao escolher no Select, ADICIONA ao invés de substituir
+  const handleProfessionAdd = (value: string) => {
     const selectedOption = categoryOptions.find((option) => option.value === value);
+    const label = selectedOption?.label ?? value;
 
-    updateDraft("profession", selectedOption?.label ?? value);
+    const current = parseProfessions(draft.profession);
+
+    // evita duplicados (case-insensitive)
+    const alreadyExists = current.some(
+      (p) => p.toLowerCase() === label.toLowerCase()
+    );
+    if (alreadyExists) return;
+
+    const next = joinProfessions([...current, label]);
+    updateDraft("profession", next);
   };
 
   return (
     <div className='w-full max-w-360 flex gap-5'>
       <div className='w-53 h-53'>
-        <Image width={212} height={212} src={profileData.imageUrl || profile?.imageUrl || "/assets/profile/profile.png"} alt={profile?.name || 'Perfil'} className='w-full h-full object-cover' />
+        <Image
+          width={212}
+          height={212}
+          src={profileData.imageUrl || profile?.imageUrl || "/assets/profile/profile.png"}
+          alt={profile?.name || 'Perfil'}
+          className='w-full h-full object-cover'
+        />
       </div>
       <div className='flex flex-col gap-4'>
-        <div className='w-full flex gap-2'>
-          <div className='flex flex-col gap-2'>
-            <Text className='text-[20px] leading-7 font-medium'>Nome</Text>
-            <Input variant={"secondary"} value={draft.name} onChange={(event) => updateDraft("name", event.target.value)} placeholder='Nome' className='bg-transparent' />
+        <div className='w-full flex flex-col gap-2'>
+
+          <div className="w-full flex gap-4">
+            <div className='flex flex-col gap-2'>
+              <Text className='text-[20px] leading-7 font-medium'>Nome</Text>
+              <Input
+                variant={"secondary"}
+                value={draft.name}
+                onChange={(event) => updateDraft("name", event.target.value)}
+                placeholder='Nome'
+                className='bg-transparent'
+              />
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <Text className='text-[20px] leading-7 font-medium'>Profissão</Text>
+
+              <div className="flex">
+                <Input
+                  variant={"secondary"}
+                  value={draft.profession}
+                  className='w-full w-[450px] bg-transparent'
+                  placeholder='Adicione ou digite profissões'
+                  onChange={(event) => updateDraft("profession", event.target.value)}
+                />
+
+                <Select
+                  variant="secondary"
+                  placeholder="Adicionar profissão"
+                  options={categoryOptions}
+                  triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
+                  popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"
+                  satelliteClassName="border-[1.3px] border-white"
+                  onChange={handleProfessionAdd}
+                />
+              </div>
+            </div>
           </div>
 
           <div className='flex flex-col gap-2'>
-            <Text className='text-[20px] leading-7 font-medium'>Profissão</Text>
-
-            <Select
-              variant="secondary"
-              value={selectedProfessionValue}
-              placeholder="Selecione a profissão"
-              options={categoryOptions}
-              triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
-              popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"
-              satelliteClassName="border-[1.3px] border-white"
-              onChange={handleProfessionChange}
+            <Text className='text-[20px] leading-7 font-medium'>Nome de utilizador</Text>
+            <Input
+              variant={"secondary"}
+              value={draft.username}
+              onChange={(event) => updateDraft("username", event.target.value)}
+              placeholder='nome-de-utilizador'
+              className='max-w-[350px] bg-transparent'
             />
           </div>
-        </div>
 
-        <div className='flex flex-col gap-2'>
-          <Text className='text-[20px] leading-7 font-medium'>Nome de utilizador</Text>
-          <Input variant={"secondary"} value={draft.username} onChange={(event) => updateDraft("username", event.target.value)} placeholder='nome-de-utilizador' className='bg-transparent' />
-        </div>
+          <div className='w-full flex gap-1'>
+            <Button disabled={isSaving} onClick={() => onSave?.(draft)}>
+              {isSaving ? "A guardar..." : "Guardar"}
+            </Button>
 
-        <div className='w-full flex gap-1'>
-          <Button disabled={isSaving} onClick={() => onSave?.(draft)}>
-            {isSaving ? "A guardar..." : "Guardar"}
-          </Button>
-
-          <Button variant={"secondary"} disabled={isSaving} onClick={() => setIsEditing?.((lastState) => !lastState)}>
-            Cancelar
-          </Button>
+            <Button variant={"secondary"} disabled={isSaving} onClick={() => setIsEditing?.((lastState) => !lastState)}>
+              Cancelar
+            </Button>
+          </div>
         </div>
       </div>
     </div>
-  )
-}
-
+  );
+};

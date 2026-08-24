@@ -104,7 +104,9 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
           )}
         </div>
 
-        <Text className='text-[20px] leading-5 font-medium mt-2.5'>{profileData.profession || "Adicionar profissao"}</Text>
+        <Text className={`text-[20px] leading-5 font-medium mt-2.5 ${
+          !profileData.profession ? 'text-rede-white/70' : ''}`
+          }>{profileData.profession || "Adicionar profissão"}</Text>
         {profileData.username && <Text className='text-[14px] leading-5 text-rede-white/70 mt-1'>@{profileData.username}</Text>}
 
         <div className='w-full flex flex-wrap gap-5 mt-5'>

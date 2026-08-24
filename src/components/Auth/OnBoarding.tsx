@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 
 type ProfileData = User["profileData"];
 type OnboardingUser = Partial<Omit<User, "profileData">> & { profileData?: Partial<ProfileData> | null };
-type ApiCountry = "Angola" | "Cabo Verde" | "Guine-Bissau" | "Mocambique" | "Sao Tome e Principe";
+type ApiCountry = "Angola" | "Cabo Verde" | "Guine-Bissau" | "Moçambique" | "São Tome e Principe";
 type MiniStepKey = "identity" | "contact" | "association" | "services" | "social";
 type MiniStep = {
     key: MiniStepKey;
@@ -61,8 +61,8 @@ const apiCountryByFormValue: Record<string, ApiCountry> = {
     angola: "Angola",
     "cabo-verde": "Cabo Verde",
     "guine-bissau": "Guine-Bissau",
-    mocambique: "Mocambique",
-    "sao-tome-principe": "Sao Tome e Principe",
+    mocambique: "Moçambique",
+    "sao-tome-principe": "São Tome e Principe",
 };
 const formCountryByApiValue = Object.entries(apiCountryByFormValue).reduce<Record<string, string>>(
     (countriesByApiValue, [formValue, apiValue]) => ({
@@ -124,37 +124,47 @@ const buildRegisterFromUser = (user?: OnboardingUser | null): User => {
         profileData: hydratedProfileData,
     };
 };
-const getMiniSteps = (accountType: ProfileData["accountType"]): MiniStep[] => {
+const getMiniSteps = (
+    accountType: ProfileData["accountType"],
+): MiniStep[] => {
     const commonSteps: MiniStep[] = [
         {
             key: "identity",
-            title: accountType === "individual" ? "Dados artisticos" : "Dados da entidade",
-            description: "Comece pelo essencial do perfil.",
+            title:
+                accountType === "individual"
+                    ? "Dados artísticos"
+                    : "Dados da entidade",
+            description: "Comece pelos dados essenciais do perfil.",
         },
         {
             key: "contact",
-            title: "Localizacao e contacto",
-            description: "Informe onde esta e como pode ser contactado.",
+            title: "Localização e contacto",
+            description: "Indique onde está e como pode ser contactado.",
         },
     ];
-    const accountStep: MiniStep = accountType === "individual"
-        ? {
-            key: "association",
-            title: "Associacao",
-            description: "Pode indicar uma empresa ou colectivo associado.",
-        }
-        : {
-            key: "services",
-            title: "Servicos",
-            description: "Mostre que servicos a entidade disponibiliza.",
-        };
+
+    const accountStep: MiniStep =
+        accountType === "individual"
+            ? {
+                  key: "association",
+                  title: "Associação",
+                  description:
+                      "Pode indicar uma empresa ou um colectivo associado.",
+              }
+            : {
+                  key: "services",
+                  title: "Serviços",
+                  description:
+                      "Indique os serviços disponibilizados pela entidade.",
+              };
+
     return [
         ...commonSteps,
         accountStep,
         {
             key: "social",
             title: "Redes sociais",
-            description: "Adicione apenas os links que quiser mostrar.",
+            description: "Adicione apenas as ligações que pretende apresentar.",
         },
     ];
 };
