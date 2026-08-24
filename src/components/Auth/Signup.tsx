@@ -249,9 +249,9 @@ export const Signup: React.FC = () => {
                         />
                         <Text id='termsAgreementText' as='div' className='text-[14px] leading-5 font-medium'>
                             <label htmlFor='acceptedTermsField' className='cursor-pointer'>Aceito</label>&nbsp;
-                            <Link href="/assets/governação_digital_V0_19-07-26_terms.pdf" target='_blank' className='text-rede-yellow'>Termos de Uso</Link>
+                            <Link href="/assets/termos-de-utilização.pdf" target='_blank' className='text-rede-yellow'>Termos de Uso</Link>
                             &nbsp;e&nbsp;
-                            <Link href="/assets/governação-digital_V0_SHORT_VERSION_politicas.pdf" target='_blank' className='text-rede-yellow'>Política de Privacidade</Link>
+                            <Link href="/assets/política-de-privacidade.pdf" target='_blank' className='text-rede-yellow'>Política de Privacidade</Link>
                         </Text>
                     </div>
 

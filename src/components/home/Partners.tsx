@@ -108,7 +108,7 @@ const PARTNER_ROWS: PartnerRow[] = [
   },
   {
     left: {
-      title: "FASES DESTE PROJETO TIVERAM APOIO FINANCEIRO",
+      title: "FASES ANTERIORES DESTE PROJECTO TIVERAM APOIO FINANCEIRO",
       logos: [
         {
           src: "/assets/partners/uniao-europeia.png",
@@ -126,7 +126,7 @@ const PARTNER_ROWS: PartnerRow[] = [
       ],
     },
     right: {
-      title: "IMPLEMENTAÇÃO COM O APOIO DA FRANÇA EM MOÇAMBIQUE",
+      title: "IMPLEMENTADO COM O APOIO DA EMBAIXADA DE FRANÇA EM MOÇAMBIQUE",
       align: "right",
       logos: [
         {

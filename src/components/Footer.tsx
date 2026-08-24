@@ -34,16 +34,12 @@ const contactItems = [
     href: "tel:+258840000000",
   },
   {
-    label: "Film Commission",
-    href: "/film-commission",
-  },
-  {
     label: "Termos de utilização",
-    href: "/assets/governação_digital_V0_19-07-26_terms.pdf",
+    href: "/assets/termos-de-utilização.pdf",
   },
   {
-    label: "Políticas",
-    href: "/assets/governação-digital_V0_SHORT_VERSION_politicas.pdf",
+    label: "Política de privacidade",
+    href: "/assets/política-de-privacidade.pdf",
   },
 ] as const;
 
