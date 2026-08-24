@@ -331,12 +331,12 @@ export const OnBoarding: React.FC = () => {
                     <Input variant={"secondary"} placeholder='Nome comercial' id='commercialNameField' value={register.profileData.commercialName} onChange={(event) => updateProfileData("commercialName", event.target.value)} />
                 </div>
                 <div className={fieldGroupClassName}>
-                    <label className={labelClassName} htmlFor='creationDateField'>Data de Criacao</label>
+                    <label className={labelClassName} htmlFor='creationDateField'>Data de Criação</label>
                     <Input variant={"secondary"} type='date' id='creationDateField' value={register.profileData.creationDate} onChange={(event) => updateProfileData("creationDate", event.target.value)} />
                 </div>
                 <div className={fieldGroupClassName}>
                     <label className={labelClassName}>A entidade esta registada?</label>
-                    <Select variant={"secondary"} options={[{ label: 'Sim', value: 'yes' }, { label: 'Nao', value: 'no' }]} value={register.profileData.isRegistered ? "yes" : "no"} onChange={(value) => updateProfileData("isRegistered", value === "yes")} />
+                    <Select variant={"secondary"} options={[{ label: 'Sim', value: 'yes' }, { label: 'Não', value: 'no' }]} value={register.profileData.isRegistered ? "yes" : "no"} onChange={(value) => updateProfileData("isRegistered", value === "yes")} />
                 </div>
             </div>
         );

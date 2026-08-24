@@ -13,6 +13,7 @@ import {
 import { User } from "@/types/User";
 import { Edit2, X } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
+import { Text } from "@/components/ui/text";
 
 type ProfileData = User["profileData"];
 type NetworkProfileType = "profissionais" | "empresa" | "festival" | "instituicao";
@@ -172,8 +173,13 @@ export const SectionEditSkills: React.FC<SectionEditSkillsProps> = ({
                                 />
                             )}
                         </Tag>
-                    )) : <span className="text-[14px] leading-5 text-rede-white/70">Ainda nao existem competencias.</span>}
+                    )) :
+                        <Text>
+                            Ainda não existem competências.
+                        </Text>
+                    }
                 </div>
+
 
                 {isEditingSkils && (
                     <Select
