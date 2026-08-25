@@ -1,33 +1,56 @@
-"use client"
+"use client";
 
-import { Text } from '@/components/ui/text';
-import { Heading } from '@/components/ui/heading';
+import { customBlur } from "@/app/fonts";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
 
 export const About: React.FC = () => {
   return (
-    <section className="w-full h-auto">
-      <div className="relative w-full max-w-6xl min-h-30 h-auto mx-auto pt-20 flex">
-
-        <div className="w-1/2 h-auto px-4">
-          <Heading level={"h2"} className="text-2xl font-bold text-rede-white mb-4">Equipa</Heading>
-          <Text className="text-[14px] font-medium leading-5">
-            A equipa é formada Diana Manhiça - Coordenadora-Geral e de Comunicação -, e António Maxlhaieie - Assessor de Coordenação e Director de Produção do FilmLab, que representam Moçambique, por parte da AAMCM – Associação dos Amigos do Museu do Cinema em Moçambique, onde contam ainda com o apoio de uma Gestora de Projeto e uma Estagiária de Mapeamento e Administração.<br /><br />
-
-            Em Cabo Verde, a equipa é formada pelas realizadoras e produtoras Samira Vera-Cruz – Coordenadora Local, Coordenadora de Formação e de Parcerias Internacionais -, e Emília Wojciechowska – Coordenadora Local e de Curadoria.<br /><br />
-          </Text>
+    <section className="h-auto w-full">
+      <div className="relative mx-auto flex h-auto min-h-30 w-full max-w-6xl flex-col px-4 pt-14 sm:px-6 sm:pt-16 lg:px-0 lg:pt-20">
+        <div className="mb-8 h-auto w-full lg:w-1/2 lg:px-4">
+          <Heading
+            className={`${customBlur.className} text-[56px] font-medium leading-none text-rede-yellow sm:text-[72px] lg:text-[96px] lg:leading-[96px]`}
+          >
+            Equipa
+          </Heading>
         </div>
 
-        <div className="w-1/2 h-auto px-4">
-          <Heading level={"h2"} className="text-2xl font-bold text-rede-white mb-12"></Heading>
-          <Text className="text-[14px] font-medium leading-5">
-            Em São Tomé e Príncipe, a equipa é representada pela realizadora e produtora Katya Aragão, diretora do São Tomé FilmLab, como Coordenadora Local.<br /><br />
+        <div className="flex flex-col gap-8 lg:flex-row lg:gap-0">
+          <div className="h-auto w-full lg:w-1/2 lg:px-4">
+            <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+              A equipa é formada por Diana Manhiça — coordenadora-geral e de
+              comunicação — e António Maxlhaieie — assessor de coordenação e
+              diretor de produção do FilmLab —, que representam Moçambique
+              através da AAMCM — Associação dos Amigos do Museu do Cinema em
+              Moçambique. Contam ainda com o apoio de uma gestora de projeto e
+              de uma estagiária de mapeamento e administração.
+              <br />
+              <br />
+              Em Cabo Verde, a equipa é formada pelas realizadoras e produtoras
+              Samira Vera-Cruz — coordenadora local, coordenadora de formação e
+              de parcerias internacionais — e Emília Wojciechowska —
+              coordenadora local e de curadoria.
+            </Text>
+          </div>
 
-            Na Guiné-Bissau e em Timor-Leste, a equipa tem pontos focais, o actor e realizador Welket Bungué e o músico e produtor Kay Seran Limak, respetivamente.
-            Atualmente, a equipa não tem representação em Angola.<br /><br />
-          </Text>
+          <div className="h-auto w-full lg:w-1/2 lg:px-4">
+            <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+              Em São Tomé e Príncipe, a equipa é representada pela realizadora
+              e produtora Katya Aragão, diretora do São Tomé FilmLab, na
+              qualidade de coordenadora local.
+              <br />
+              <br />
+              Na Guiné-Bissau e em Timor-Leste, a equipa conta com dois pontos
+              focais: o ator e realizador Welket Bungué e o músico e produtor
+              Kay Seran Limak, respetivamente.
+              <br />
+              <br />
+              Atualmente, a equipa não tem representação em Angola.
+            </Text>
+          </div>
         </div>
-
       </div>
     </section>
-  )
-}
+  );
+};

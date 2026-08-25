@@ -24,9 +24,7 @@ export const Hero: React.FC = () => {
           </Heading>
 
           <Text className="max-w-[600px] text-sm font-semibold leading-relaxed text-rede-white sm:text-base lg:max-w-2xl">
-            A Rede está a desenvolver um trabalho de elaboração de recomendações
-            para a implementação do modelo de Film Commissions nos PALOP e em
-            Timor-Leste.
+            A Rede está a desenvolver um trabalho para a elaboração de recomendações para a implementação do modelo de Film Commissions nos PALOP e Timor-Leste.
           </Text>
         </div>
       </div>

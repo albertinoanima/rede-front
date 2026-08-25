@@ -176,17 +176,15 @@ function PartnerGroup({
   return (
     <div className="flex w-full min-w-0 flex-col lg:w-auto">
       <Text
-        className={`text-xs leading-4 font-medium text-rede-surface ${
-          align === "right" ? "text-left lg:text-right" : "text-left"
-        }`}
+        className={`text-xs leading-4 font-medium text-rede-surface ${align === "right" ? "text-left lg:text-right" : "text-left"
+          }`}
       >
         {title}
       </Text>
 
       <div
-        className={`flex h-auto w-full flex-wrap gap-1 lg:h-37.5 lg:w-auto lg:flex-nowrap ${
-          align === "right" ? "lg:justify-end" : "justify-start"
-        }`}
+        className={`flex h-auto w-full flex-wrap gap-1 lg:h-37.5 lg:w-auto lg:flex-nowrap ${align === "right" ? "lg:justify-end" : "justify-start"
+          }`}
       >
         {logos.map((logo, index) => (
           <LogoBox key={`${logo.src}-${index}`} {...logo} />
@@ -195,6 +193,7 @@ function PartnerGroup({
     </div>
   );
 }
+
 
 export function Partners() {
   return (
@@ -210,6 +209,19 @@ export function Partners() {
             {row.right && <PartnerGroup {...row.right} />}
           </div>
         ))}
+      </div>
+        <br/>
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-2 px-4 sm:px-6 lg:gap-6 xl:px-0">
+        <Text className="text-[12px] text-rede-surface text-center font-semibold">DECLARAÇÕES DE RESPONSABILIDADE</Text>
+        <Text className="text-[12px] text-rede-surface text-center">
+
+          
+          Esta plataforma foi produzida pela AAMCM - Associação dos Amigos do Museu do Cinema em Moçambique e seus parceiros de implementação, para a iniciativa REDE de Cinema e Audiovisual PALOP + TL, com apoio financeiro do Camões - Instituto da Cooperação e da Língua, I.P., através do programa PROCERIS. Todas as informações e opiniões aqui expressas são da inteira responsabilidade dos/as autores/as, e não representam a posição do Camões, I.P.
+        </Text>
+
+        <Text className="text-[12px] text-rede-surface text-center">
+          Esta plataforma teve  apoio adicional do Cultiv'arte - financiado pela União Europeia, implementado pela Expertise France em parceria com o Ministério da Educação e Cultura de Moçambique. O seu conteúdo é da exclusiva responsabilidade do Beneficiário e não pode, de forma alguma, ser considerado como refletindo as opiniões da Expertise France e do Doador.
+        </Text>
       </div>
     </section>
   );

@@ -4,9 +4,10 @@ import { TeamSection } from "@/components/about/TeamSection";
 import { Footer } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
 import { About } from "@/components/about/About";
-import { ProjectsSection } from "@/components/about/ProjectsSection";
-import { MisionVisionObjetivesSection } from "@/components/about/MisionVisionObjetivesSection";
-import { GovementAndStrategy } from "@/components/about/GovementAndStrategy";
+import { GovernanceFrameworkSection } from "@/components/about/GovernanceFrameworkSection";
+import { CommunicationAndVisibilityStrategy } from "@/components/about/CommunicationAndVisibilityStrategy";
+import { ProjectSection } from "@/components/about/ProjectSection";
+import { ObjectivesSection } from "@/components/about/ObjectivesSection";
 
 export default function AboutPage() {
   return (
@@ -15,10 +16,11 @@ export default function AboutPage() {
       <Hero />
       <About />
       <TeamSection />
-      <ProjectsSection/>
-      <MisionVisionObjetivesSection/>
-      <GovementAndStrategy/>
-      <Footer variant="red"/>
+      <ProjectSection/>
+      <ObjectivesSection/>
+      <GovernanceFrameworkSection/>
+      <CommunicationAndVisibilityStrategy/>
+      <Footer/>
     </main>
   )
 }

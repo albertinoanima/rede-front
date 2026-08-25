@@ -10,10 +10,20 @@ type ModalProps = {
   onClose: () => void;
   children: ReactNode;
   className?: string;
+  wrapperClassName?: string;
   panelClassName?: string;
+  closeButtonClassName?: string;
 };
 
-export const Modal: React.FC<ModalProps> = ({ open, onClose, children, className, panelClassName }) => {
+export const Modal: React.FC<ModalProps> = ({
+  open,
+  onClose,
+  children,
+  className,
+  wrapperClassName,
+  panelClassName,
+  closeButtonClassName,
+}) => {
   useEffect(() => {
     if (!open) return;
 
@@ -40,12 +50,15 @@ export const Modal: React.FC<ModalProps> = ({ open, onClose, children, className
       )}
       onClick={onClose}
     >
-      <div className="relative w-full max-w-170" onClick={(e) => e.stopPropagation()}>
+      <div className={cn("relative w-full max-w-170", wrapperClassName)} onClick={(e) => e.stopPropagation()}>
         <Button
           variant="secondary"
           showMainButton={false}
           icon={<X width={12} height={12} />}
-          iconButtonClassName="!w-12 !h-12 !p-0 absolute left-full top-6 ml-0 z-10 max-sm:!left-auto max-sm:!right-0 max-sm:!-top-16 max-sm:!ml-0"
+          iconButtonClassName={cn(
+            "!w-12 !h-12 !p-0 absolute left-full top-6 ml-0 z-10 max-sm:!left-auto max-sm:!right-0 max-sm:!-top-16 max-sm:!ml-0",
+            closeButtonClassName
+          )}
           onClick={onClose}
         />
 

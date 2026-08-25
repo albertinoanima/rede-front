@@ -3,6 +3,7 @@
 import { customBlur } from '@/app/fonts'
 import { Heading } from '@/components/ui/heading'
 import { Text } from '@/components/ui/text'
+import { Tag } from '../Tag'
 
 const workAreas = [
   {
@@ -82,9 +83,7 @@ export const WhatItComprises: React.FC = () => {
                   {area.number}
                 </Text>
 
-                <span className="max-w-[65%] rounded-xl bg-rede-white px-[18px] py-[6px] text-center text-[12px] font-medium leading-4 text-rede-bg">
-                  {area.category}
-                </span>
+                <Tag label={area.category} className='text-[12px] leading-4 text-center rounded-[8px] px-[18px] py-[6px] bg-black border-none' />
               </div>
 
               <div className="flex h-auto w-full flex-1 items-start px-[18px] pb-3">

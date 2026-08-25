@@ -503,9 +503,9 @@ const PalopMapSection: React.FC = () => {
 
       <div className="mx-auto flex w-full max-w-lg flex-col gap-6 px-4 py-8 lg:contents">
         <div className="text-center text-base leading-relaxed text-[#e0e0e0] opacity-90 sm:text-lg lg:absolute lg:bottom-[450px] lg:left-1/2 lg:w-full lg:max-w-[500px] lg:-translate-x-1/2 lg:px-0 lg:text-xl lg:leading-[1.6]">
-          Encontra, conecta-te e colabora com profissionais dos
-          PALOP e de Timor-Leste, enquanto aumentas a tua presença
-          na REDE — aqui.
+          Conecta-te a realizadores, produtores, técnicos e criativos dos PALOP + Timor-Leste, fortalece a 
+          tua rede profissional e descobre novas oportunidades de colaboração, circulação e desenvolvimento 
+          no setor audiovisual.
         </div>
 
         <InfoCard country={selectedCountry} />

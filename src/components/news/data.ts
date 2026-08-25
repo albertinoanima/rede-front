@@ -27,7 +27,7 @@ Esta é uma oportunidade de estágio profissional criada pela REDE, sendo que a 
     },
     {
         id: "mgiamzdcwierkrbsydcaqq",
-        title: "Encontro de Profissionais marca início do Mapeamento, em Moçambique",
+        title: "Encontro Profissional para Mapeamento, em Moçambique",
         description: `Entre as atividades que a REDE de Cinema e Audiovisual PALOP+TL se encontra a realizar, destaca-se o mapeamento do setor do cinema e audiovisual, sendo que a equipa local, em Moçambique, já começou os contactos e recolha de dados sobre de profissionais e empresas nacionais do setor.<br/><br/>
 Ao longo dos próximos três meses, este trabalho de pretende concretizar a sistematização, melhoria e divulgação do diretório profissional digital, prototipado em 2019, que se encontra em atualização e que ficará, brevemente, disponível online.<br/><br/>
 Este processo, incluído nos objetivos gerais da REDE de Cinema e Audiovisual PALOP + TL, pretende reforçar o conhecimento da contribuição do setor audiovisual para as economias nacionais, promovendo a utilização dessa informação. Esperamos, como sociedade civil, contribuir para a existência de dados sistematizados que colaborem para o desenvolvimento de políticas públicas, mas também, e essencialmente, promover a divulgação de informação sobre os profissionais e obras no contexto internacional, demonstrando e catapultando o seu potencial.<br/><br/>
@@ -47,7 +47,7 @@ A REDE e o INICC comprometeram-se a realizar mais encontros desta natureza, para
     },
     {
         id: "rnkiuwzezdzytuwudhwabq",
-        title: "FilmLabs têm lugar, este ano, em Maputo e na Cidade da Praia",
+        title: "FilmLabs, este ano, Maputo e Cidade da Praia",
         description: `Terão lugar, este ano, em Maputo e na cidade da Praia, dois momentos de capacitação de jovens cineastas dos PALOP+TL.<br/><br/>
 As candidaturas já encerraram e estão selecionad@s seis jovens cineastas de Moçambique, Angola e São Tomé e Príncipe, para o FilmLab Moçambique, que terá lugar em Maputo, de 25 de Agosto a 5 de Setembro de 2026, em colaboração com o 16.º KUGOMA 2026.<br/><br/>
 A seleção d@s participantes para o FilmLab Cabo Verde, que decorrerá de 6 a 16 de Outubro em parceria com o Kafuka – African Film Festival está em fase de finalização.<br/><br/>
@@ -63,11 +63,11 @@ A REDE de Cinema e Audiovisual PALOP+TL propõe-se assim, contribuir para a capa
         location: "Moçambique, Cabo Verde, Angola, São Tomé e Príncipe",
         countries: ["mocambique", "cabo-verde", "angola", "sao-tome-e-principe"],
         category: "formacao",
-        imageUrl: "/assets/news/news-5.jpg"
+        imageUrl: "/assets/news/news-3.jpg"
     },
     {
         id: "xrooabebmfbokagyigndwj",
-        title: "Começa o Estudo sobre a criação de Film Commissions",
+        title: "Começa o estudo sobre Film Commissions",
         description: `Arrancou, em Julho, o Estudo sobre Modelos de Film Commissions e Elaboração de Documento de Recomendações para os PALOP-TL.<br/><br/>
 A REDE de Cinema e Audiovisual dos PALOP-TL iniciou, em julho, um estudo sobre os diferentes modelos de Film Commissions existentes a nível internacional, com vista à elaboração de um documento de recomendações para a criação de Film Commissions em Angola, Cabo Verde, Guiné-Bissau, Moçambique, São Tomé e Príncipe e Timor-Leste.<br/><br/>
 As Film Commissions desempenham um papel central na atração de produções audiovisuais para um território, funcionando como ponte entre produtores e as entidades públicas e privadas envolvidas no processo de rodagem. Ao simplificar procedimentos de licenciamento, facilitar o acesso a locais de filmagem e, em muitos casos, oferecer incentivos fiscais, estas estruturas contribuem para dinamizar as economias criativas locais, gerar emprego qualificado e promover o território junto de públicos internacionais através do cinema. Em contextos como o dos PALOP-TL, onde a maioria dos países ainda não dispõe deste tipo de estrutura, a criação de Film Commissions representa uma oportunidade estratégica para valorizar o património natural e cultural, atrair investimento externo e fortalecer as indústrias audiovisuais nacionais.<br/><br/>
@@ -84,7 +84,7 @@ Adicionalmente, serão também elaboradas as bases para a realização de um est
     },
     {
         id: "lgrnlighhjdrnjjxhxirhr",
-        title: "Encontros de Profissionais de Audiovisual",
+        title: "Encontros de Profissionais de Audiovisual, em Díli",
         description: `A REDE de Cinema e Audiovisual PALOP + TL realizou, a 9 e a 16 de Junho de 2026, na Fundação Oriente, em Díli, encontros com profissionais do sector do cinema e audiovisual local.<br/><br/>
 Com apoio da equipa local, em Timor-Leste, constituída por um Ponto Focal e três estagiários, o auditório da Fundação Oriente, em Díli, recebeu cerca de três dezenas de jovens profissionais que se juntaram a nós para conhecer o que propõe a REDE de Cinema e Audiovisual PALOP + TL e como o trabalho colaborativo pode ter também, esta dimensão regional.
 O/as colegas timorenses colocaram várias questões e apresentaram inquietações sobre os desafios que encontram no seu contexto. Quiseram perceber que oportunidades a REDE lhes poderá trazer e como poderão integrar-se de forma que essa colaboração possa ser útil para o desenvolvimento das suas atividades.
@@ -96,11 +96,11 @@ A nossa expectativa, em Timor-Leste, é recolher e verificar dados de profission
         location: "Timor-Leste",
         countries: ["timor-leste"],
         category: "projetos-da-rede",
-        imageUrl: "/assets/news/news-3.jpg"
+        imageUrl: "/assets/news/news-5.jpg"
     },
     {
         id: "lgrnghlidrntxhxirhr",
-        title: "Mostra de Cinema PALOP",
+        title: "Mostra de Cinema PALOP, Fundação Oriente, Díli",
         description: `Esta mostra marcou um ponto de charneira no trabalho da REDE de Cinema e Audiovisual PALOP + TL que, desde 2018, vem desenvolvendo actividades articuladas com festivais de cinema em Cabo Verde, Moçambique e São Tomé e Príncipe, Portugal e Brasil, e cujas acções desenvolvidas têm visado, em resumo, um objectivo principal - promover o (re)conhecimento e o desenvolvimento do sector do cinema e audiovisual dos PALOP, a nível regional e internacional.<br/><br/>
 A MOSTRA DE CINEMA PALOP realizada em Junho de 2026, em Díli, serviu assim dois propósitos: divulgar o cinema feito nos Países Africanos de Língua Oficial Portuguesa junto do público local, mas também, ser uma porta de entrada da REDE em Timor-Leste, para tal incluindo uma série de conversas-encontros com profissionais locais, nos quais nos apresentámos - quem somos, o que fazemos, como, mas acima de tudo, o que nos move – iniciando assim o trabalho de cartografia e curadoria que temos previsto para os próximos 12 meses, e que culminará:
 na apresentação pública de um Relatório Overview com recomendações para políticas do sector;<br/><br/>
@@ -119,7 +119,7 @@ Obrigadu barak!
     },
     {
         id: "lgrnlidrnxhxirhr",
-        title: "Mapeamento do sector tem início",
+        title: "Mapeamento do sector inicia em Timor-Leste",
         description: `REDE de Cinema e Audiovisual PALOP + TL, tem desenhado uma série de actividades, entre as quais se encontra o mapeamento do sector do cinema e audiovisual, tendo criado uma equipa local, em Timor-Leste, constituída por um Ponto Focal e três estagiários que, ao longo de cinco meses, colaborarão na recolha de informação e dados sobre os profissionais e empresas nacionais do país.
 Este trabalho de recolha e análise de dados vai concretizar a sistematização, atualização, melhoria e divulgação do diretório profissional, prototipado em 2019, e a sua disponibilização online.<br/><br/>
 O processo pretende reforçar o conhecimento sobre a contribuição do sector audiovisual para as economias nacionais, promovendo a utilização dessa informação. Esperamos, como sociedade civil, contribuir para a existência de dados sistematizados que colaborem para o desenvolvimento de políticas públicas, mas também, essencialmente, promover a divulgação de informação sobre os profissionais e obras no contexto internacional, demonstrando e catapultando o seu potencial de contribuição para as economias nacionais.

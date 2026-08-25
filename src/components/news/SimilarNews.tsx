@@ -9,13 +9,13 @@ export const SimilarNews: React.FC<{ similarNews: NewsType[] }> = ({ similarNews
       <div className="relative w-full max-w-360 h-auto mx-auto flex flex-col justify-center items-center gap-2.5 pt-28 pb-10">
         <div className="w-full h-36">
           <div className="w-full h-36">
-            <Heading className={`${customBlur.className} text-rede-white text-[48px] font-medium leading-12`}>Notícias associadas</Heading>
+            <Heading className={`${customBlur.className} text-rede-white text-[48px] font-medium leading-12`}>Notícias relacionadas</Heading>
           </div>
         </div>
 
         {similarNews.length === 0 ? (
           <p className="text-white">
-            Não existem notícias semelhantes.
+            Não existem notícias relacionadas.
           </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">

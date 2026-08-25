@@ -13,7 +13,7 @@ const heroItems = [
     imageAlt: "Profissionais da REDE de Cinema e Audiovisual PALOP e Timor-Leste",
     titleClassName: "text-rede-yellow",
     description:
-      "Encontra, conecta-te e colabora com profissionais dos PALOP e de Timor-Leste, enquanto aumentas a tua presença na REDE.",
+      "Encontra, conecta-te e colabora com profissionais dos PALOP, enquanto aumentas a tua presença na rede — AQUI.",
   },
   {
     title: "Agência",
@@ -21,7 +21,7 @@ const heroItems = [
     imageAlt: "Profissionais da Agência de Cinema e Audiovisual",
     titleClassName: "text-rede-red",
     description:
-      "Descobre oportunidades, estabelece novas parcerias e promove o teu trabalho junto de profissionais do sector audiovisual.",
+      "Faz o teu trabalho chegar mais longe, junto de quem o pode projetar e partilhar — AQUI.",
   },
 ] as const;
 

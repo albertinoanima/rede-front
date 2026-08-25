@@ -1,34 +1,41 @@
-"use client"
+"use client";
 
-import { customBlur } from '@/app/fonts';
-import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
+import { customBlur } from "@/app/fonts";
+import { Heading } from "@/components/ui/heading";
+import { Text } from "@/components/ui/text";
 
 export const Hero: React.FC = () => {
   return (
-    <section className="w-full h-auto pt-17">
-      <div className="relative w-full max-w-[1920px] h-124.25 mx-auto">
-
+    <section className="h-auto w-full pt-17">
+      <div className="relative mx-auto h-[580px] w-full max-w-[1920px] overflow-hidden sm:h-[540px] lg:h-124.25">
         <img
           src="/assets/agency/hero.png"
-          alt="REDE Hero"
-          className="w-full h-full object-cover"
+          alt="Equipa da REDE de Cinema e Audiovisual PALOP+TL"
+          className="h-full w-full object-cover"
         />
 
-        {/* overlay de textos */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-4">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-black/40 lg:bg-black/20"
+        />
 
-          <Heading className={`${customBlur.className} text-rede-yellow text-[128px] font-medium`}>
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-5 text-center sm:px-8 lg:px-0">
+          <Heading
+            className={`${customBlur.className} text-[56px] font-medium leading-none text-rede-yellow sm:text-[80px] lg:text-[128px]`}
+          >
             Sobre nós
           </Heading>
 
-          <Text className="text-rede-white font-semibold max-w-2xl">
-            A REDE de Cinema e Audiovisual PALOP+TL é uma iniciativa criada em 2018, por jovens realizadores, produtores e diretores de festivais dos Países Africanos de Língua Oficial Portuguesa. Procuramos formas de contribuir para a melhoria do ecossistema do sector audiovisual destes países, através de ações complementares, com vários focos de atuação.
+          <Text className="max-w-2xl text-sm font-semibold leading-6 text-rede-white sm:text-base sm:leading-7 lg:leading-normal">
+            A REDE de Cinema e Audiovisual PALOP+TL é uma iniciativa criada em
+            2018 por jovens realizadores, produtores e diretores de festivais
+            dos Países Africanos de Língua Oficial Portuguesa. Procuramos
+            formas de contribuir para a melhoria do ecossistema do sector
+            audiovisual destes países, através de ações complementares, com
+            vários focos de atuação.
           </Text>
-
         </div>
-
       </div>
     </section>
-  )
-}
+  );
+};
