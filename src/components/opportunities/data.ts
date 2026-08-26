@@ -1,18 +1,5 @@
+import { newsCategories } from "../news/data";
 import { OpportunityType } from "../OpportunityCard";
-
-export const opportunityCategories = [
-    'Emprego',
-    "Co-produção",
-    "Parceria",
-    "Financiamento",
-    "Festval",
-    "Encontro",
-    "Workshop",
-    "Formação"
-]
-
-export type opportunityCategory = 'Emprego' | "Co-produção" | "Parceria" | "Financiamento" | "Festval" | "Encontro" | "Workshop" | "Formação"
-
 
 
 export const opportunities: OpportunityType[] = [
@@ -27,6 +14,7 @@ export const opportunities: OpportunityType[] = [
     endDate: "Outubro 2026",
     type: "Formação",
     eligibility: ["Cabo Verde", "Moçambique"],
+    themes: ["FilmLabs", "Workshops", "Género", "Juventude", "Green Filming", "Pitch", "Distribuição"],
     country: "cabo verde",
     cover: "/assets/opportunities/film-labs.jpg",
   },
@@ -41,6 +29,18 @@ export const opportunities: OpportunityType[] = [
     endDate: "4 Set 2026",
     type: "Workshop",
     eligibility: ["Moçambique"],
+    themes: [
+      "FilmLabs",
+      "Workshops",
+      "Género",
+      "Representação",
+      "Juventude",
+      "Ambiente",
+      "Green Filming",
+      "Conservação",
+      "Distribuição",
+      "Impacto"
+    ],
     country: "mocambique",
     cover: "/assets/opportunities/film-labs.jpg",
   },
@@ -55,7 +55,21 @@ export const opportunities: OpportunityType[] = [
     endDate: "22 Julho 2026",
     type: "Estágio",
     eligibility: ["Cabo Verde"],
+    themes: [
+      "Género",
+      "Juventude",
+      "Formação",
+      "Estágios",
+      "Mapeamento",
+      "Dados do Setor",
+      "Estatísticas"
+    ],
     country: "cabo verde",
     cover: "/assets/opportunities/estagiarias.jpg",
   },
 ];
+
+
+export const opportunityCategories = newsCategories;
+
+export type opportunityCategory = 'Emprego' | "Co-produção" | "Parceria" | "Financiamento" | "Festval" | "Encontro" | "Workshop" | "Formação"

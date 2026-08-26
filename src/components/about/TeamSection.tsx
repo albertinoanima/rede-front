@@ -3,21 +3,15 @@
 import { useState } from "react";
 import { Modal } from "../ui/modal";
 import { Tag } from "../Tag";
+import { Text } from "../ui/text";
 
 interface TeamMember {
   name: string;
   role: string;
   location: string;
   imageUrl: string;
-  bioHeading: string;
   bio: string;
 }
-
-const defaultBioHeading =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.";
-
-const defaultBio =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.";
 
 const team: TeamMember[] = [
   {
@@ -25,72 +19,83 @@ const team: TeamMember[] = [
     role: "Coordenação-geral e comunicação",
     location: "Moçambique",
     imageUrl: "/assets/team/diana.jpeg",
-    bioHeading: defaultBioHeading,
-    bio: defaultBio,
+    bio: `Diana Manhiça (n.1975, Lisboa) é bacharel em Artes Plásticas pela Faculdade de Belas-Artes de Lisboa, mestre em Comunicação Educacional e Media Digitais pela Universidade Aberta, doutoranda em Media-Arte Digital pela Universidade do Algarve e em Educação à Distância e e-Learning pela Universidade do Minho.<br/><br/>
+ 
+Desde 2005, está envolvida na produção cinematográfica de ficção e não ficção, em várias funções. Faz a curadoria de festivais de cinema, desenvolve propostas educativas, curriculares e iniciativas de mapeamento e networking, e gere a comunicação digital de projetos culturais.<br/>
+Desenvolve investigação sobre história(s) do cinema em Moçambique, património audiovisual, domínio público e acesso, com atividades de reutilização, advocacia, conteúdos e contextos educativos assistidos por tecnologia.
+ 
+Está associada à criação e produção de: a produtora audiovisual Zoom - Produção Gráfica & Vídeo; o KUGOMA - Fórum de Cinema Moçambique; a Semana de Cinema Africano Moçambique; a Associação Amigos do Museu do Cinema em Moçambique; a UPCycles - Residência Criativa Audiovisual; os Encontros do Património Audiovisual e a Rede de Cinema e Audiovisual PALOP+TL.<br/><br/>
+ 
+ 
+
+ 
+Diana Manhiça (b.1975, Lisbon) holds a Bachelor's degree in Visual Arts from the Faculty of Fine Arts of Lisbon and a Master's in Educational Communication and Digital Media from Universidade Aberta. She is a PhD student in Digital Media-Art and in Distance Education and eLearning.<br/>
+ 
+Since 2005, she has been involved in fiction and non-fiction film production in various capacities.<br/>
+She curates film festivals, develops educational proposals, curricula, mapping and networking initiatives, and manages the digital communication of cultural projects.<br/>
+She develops research on the history of cinema in Mozambique and access to audiovisual heritage, with reuse activities, advocacy, content and educational contexts assisted by technology.<br/>
+ 
+She is associated with the creation and production of: the audiovisual production company Zoom - Produção Gráfica & Vídeo; the KUGOMA  - Mozambique Film Forum; the Mozambique African Film Week; the Friends of the Cinema Museum Association in Mozambique; UPCycles - Audiovisual Creative Residence; The Film Heritage Meetings, and the PALOP+TL Film and Audiovisual Network.
+`,
   },
   {
-    name: "António Maxihaleie",
+    name: "António Maxhaleie",
     role: "Assessoria de coordenação-geral",
     location: "Moçambique",
     imageUrl: "/assets/team/antonio.jpeg",
-    bioHeading: defaultBioHeading,
-    bio: defaultBio,
+    bio: "",
   },
-  {
-    name: "Fábio Ribeiro",
-    role: "Assessoria do estudo sobre Film Commissions",
-    location: "Moçambique",
-    imageUrl: "/assets/team/fabio.png",
-    bioHeading: defaultBioHeading,
-    bio: defaultBio,
-  },
+
   {
     name: "Telma Costa",
     role: "Gestão de projetos e subvenções",
     location: "Moçambique",
     imageUrl: "/assets/team/telma.png",
-    bioHeading: defaultBioHeading,
-    bio: defaultBio,
+    bio: `Socióloga moçambicana com 20 anos de experiência em elaboração, gestão e avaliação de projetos. Experiência com projectos de Cooperação para o Desenvolvimento, Acção Humanitária e Investigação em países como Moçambique, São Tomé e Príncipe, Guiné-Bissau, Brasil, Haiti e Portugal. Responsável pela gestão de projectos e fundos de financiadores como UE, USAID, ONU, Camões I.P., AECID, EDCTP e BMGF. Consultora para o desenvolvimento e implementação de procedimentos e ferramentas de gestão de ONG e recrutamento e seleção de Recursos Humanos.`,
+  },
+  {
+    name: "Katya Aragão",
+    role: "Coordenação local",
+    location: "São Tomé e Príncipe",
+    imageUrl: "/assets/team/katya.png",
+    bio: "",
   },
   {
     name: "Emília Wojciechowska",
     role: "Coordenação local e curadoria",
     location: "Cabo Verde",
     imageUrl: "/assets/team/emilia.jpeg",
-    bioHeading: defaultBioHeading,
-    bio: defaultBio,
+    bio: `Cineasta e produtora de origem polaca, reside e trabalha em Cabo Verde. Promotora da iniciativa Filmes na Mochila, dedicada a exibições itinerantes, e colabora como curadora na circulação internacional de cinema africano. Assistente de Abderrahmane Sissako no filme Black Tea, produtora do premiado filme Pirinha, de Natasha Craveiro.<br/>
+Em 2022, realizou a sua primeira curta-metragem Sonho d’Narrador. Tem também trabalhado como mentora no São Tomé e Príncipe Film Lab (2022), no Klaket (2025) e no Filma Kabu Verdi (2026), entre outros. É cofundadora do Kuletivu Nhanha, do Kafuka African Film Festival e Cineclub Mankara.
+`,
   },
   {
     name: "Samira Vera-Cruz",
     role: "Coordenação local, formação e parcerias",
     location: "Cabo Verde",
-    imageUrl: "/assets/team/samira.jpeg",
-    bioHeading: defaultBioHeading,
-    bio: defaultBio,
+    imageUrl: "/assets/team/samira.png",
+    bio: "",
   },
   {
-    name: "Katya Aragão",
-    role: "Coordenação local",
-    location: "São Tomé e Príncipe",
-    imageUrl: "/assets/team/katya.jpeg",
-    bioHeading: defaultBioHeading,
-    bio: defaultBio,
+    name: "Fábio Ribeiro",
+    role: "Assessoria do estudo sobre Film Commissions",
+    location: "Moçambique",
+    imageUrl: "/assets/team/fabio.png",
+    bio: `Fábio Ribeiro é realizador, director de fotografia e produtor, com particular foco em documentário e animação, tendo nos seus filmes autorais um interesse particular pela identidade, memória e pelos arquivos pessoais da (des)colonização, e num plano mais abrangente, o desenvolvimento de pensamento crítico através do processo de criação, exibição e diálogo com o cinema. É coordenador do departamento de audiovisual do coletivo moçambicano ANIMA Estúdio Criativo e membro da REDE de Cinema e Audiovisual dos PALOP-TL, tendo tido ao longo da sua carreira profissional, a oportunidade de filmar um pouco por todo mundo, com particular foco no continente africano e nos países de língua portuguesa. É licenciado em Cinematografia pela Escola Superior de Teatro e Cinema de Lisboa e mestre em Antropologia Visual e dos Media pela Freie Universität de Berlim.`,
   },
   {
     name: "Kay Seran Limak",
     role: "Ponto focal",
     location: "Timor-Leste",
     imageUrl: "/assets/team/kay.jpeg",
-    bioHeading: defaultBioHeading,
-    bio: defaultBio,
+    bio: "",
   },
   {
     name: "Welket Bungué",
     role: "Ponto focal",
     location: "Guiné-Bissau",
     imageUrl: "/assets/team/welket.jpeg",
-    bioHeading: defaultBioHeading,
-    bio: defaultBio,
+    bio: "",
   },
 ];
 
@@ -99,15 +104,16 @@ type TeamMemberModalProps = {
   onClose: () => void;
 };
 
+
 const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ member, onClose }) => {
   return (
     <Modal
       open={Boolean(member)}
       onClose={onClose}
-      className="items-start justify-end bg-[#f4f4f4]/95 p-4 sm:px-13 sm:py-10"
+      className="items-start justify-end bg-rede-surface/70 p-4 sm:px-13 sm:py-10"
       wrapperClassName="h-full w-full max-w-[680px] motion-safe:animate-[teamModalSlideIn_280ms_cubic-bezier(0.22,1,0.36,1)]"
       panelClassName="h-full max-h-[calc(100vh-2rem)] w-full max-w-[680px] overflow-y-auto rounded-none border-[1.3px] border-white/90 bg-rede-surface p-0 sm:max-h-[calc(100vh-5rem)]"
-      closeButtonClassName="!left-auto !right-4 !top-4 !ml-0 !border-0 !bg-rede-surface !text-rede-white hover:!bg-rede-white hover:!text-rede-surface sm:!right-full sm:!top-0"
+      closeButtonClassName="!left-auto !right-4 !top-4 !ml-0 !border-0 !bg-rede-surface !text-rede-white hover:!bg-rede-white hover:!text-rede-surface sm:!right-full sm:!top-6"
     >
       {member && (
         <div className="relative min-h-full bg-rede-surface px-5 pb-18 pt-18 text-rede-white sm:grid sm:grid-cols-[250px_minmax(0,1fr)] sm:gap-8 sm:px-5 sm:pb-24 sm:pt-5">
@@ -139,12 +145,7 @@ const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ member, onClose }) =>
             </div>
 
             <div className="mt-7 max-w-[315px] text-rede-white">
-              <p className="text-[20px] font-semibold leading-7">
-                {member.bioHeading}
-              </p>
-              <p className="mt-8 text-[20px] font-medium leading-7">
-                {member.bio}
-              </p>
+              <Text className="mt-8 text-[20px] font-medium leading-7" dangerouslySetInnerHTML={{ __html: member.bio }} />
             </div>
           </div>
         </div>
@@ -209,10 +210,10 @@ export const TeamSection: React.FC = () => {
         </div>
       </div>
 
-      {/* <TeamMemberModal
+      <TeamMemberModal
         member={selectedMember}
         onClose={() => setSelectedMember(null)}
-      /> */}
+      />
     </section>
   );
 };

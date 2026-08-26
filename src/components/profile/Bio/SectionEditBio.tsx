@@ -70,7 +70,7 @@ export const SectionEditBio: React.FC<SectionEditBioProps> = ({
           onChange={(e) => setDraftBio(e.target.value)}
         />
       ) : (
-        bio.trim() ? <Text className="font-medium">{bio}</Text> : <Text>Ainda não existe biografia.</Text>
+        bio.trim() ? <Text className="w-[94%] text-[14px] leading-relaxed font-medium">{bio}</Text> : <Text className="text-[14px] leading-relaxed font-medium">Ainda não existe biografia.</Text>
       )}
     </div>
   );

@@ -19,14 +19,14 @@ export const ProjectSection: React.FC = () => {
 
         <div className="flex flex-col gap-10 lg:flex-row lg:gap-0">
           <div className="h-auto w-full lg:w-1/2 lg:px-4">
-            <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+            <Text className="text-[14px] leading-relaxed font-medium">
               Inicialmente constituída por profissionais de Angola, Cabo Verde,
               Moçambique e São Tomé e Príncipe, e contando atualmente com pontos
               focais na Guiné-Bissau e em Timor-Leste, a REDE desenvolve
               atividades com foco nas seguintes áreas:
             </Text>
 
-            <ul className="ml-5 mt-3 list-disc space-y-1 text-[17px] font-medium leading-7 sm:text-[18px] lg:mt-2 lg:space-y-0 lg:text-[20px]">
+            <ul className="ml-5 mt-3 list-disc space-y-1 text-[14px] leading-relaxed font-medium">
               <li className="pl-1 lg:indent-2.5">
                 Atualização e comunicação de dados sobre o setor;
               </li>
@@ -57,7 +57,7 @@ export const ProjectSection: React.FC = () => {
           </div>
 
           <div className="h-auto w-full lg:w-1/2 lg:px-4">
-            <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+            <Text className="text-[14px] leading-relaxed font-medium">
               Esta plataforma faz parte da nossa estratégia para promover a
               colaboração e a divulgação de profissionais e empresas, bem como
               dos produtos e serviços que disponibilizam e desenvolvem.

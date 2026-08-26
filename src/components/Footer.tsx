@@ -30,8 +30,8 @@ const contactItems = [
     href: "mailto:info@redecinemapaloptl.org",
   },
   {
-    label: "+258 84 000 0000",
-    href: "tel:+258840000000",
+    label: "+258 849517611",
+    href: "tel:+258849517611",
   },
   {
     label: "Termos de utilização",
@@ -129,6 +129,7 @@ export const Footer: React.FC<FooterProps> = ({
                   <li key={item.href} className="mb-2.5">
                     <Link
                       href={item.href}
+                      target="_blank"
                       className="break-words transition-colors hover:text-rede-yellow focus-visible:text-rede-yellow focus-visible:outline-none"
                     >
                       {item.label}

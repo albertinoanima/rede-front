@@ -18,7 +18,7 @@ export const About: React.FC = () => {
 
         <div className="flex flex-col gap-8 lg:flex-row lg:gap-0">
           <div className="h-auto w-full lg:w-1/2 lg:px-4">
-            <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+            <Text className="text-[14px] leading-relaxed font-medium">
               A equipa é formada por Diana Manhiça — coordenadora-geral e de
               comunicação — e António Maxlhaieie — assessor de coordenação e
               diretor de produção do FilmLab —, que representam Moçambique
@@ -35,7 +35,7 @@ export const About: React.FC = () => {
           </div>
 
           <div className="h-auto w-full lg:w-1/2 lg:px-4">
-            <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+            <Text className="text-[14px] leading-relaxed font-medium">
               Em São Tomé e Príncipe, a equipa é representada pela realizadora
               e produtora Katya Aragão, diretora do São Tomé FilmLab, na
               qualidade de coordenadora local.

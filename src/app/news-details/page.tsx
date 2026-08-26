@@ -35,10 +35,13 @@ export default async function NewsDetailsPage({
   return (
     <main className="bg-rede-bg">
       <TopBar />
-      <Hero />
+      <Hero imageUrl={theNews.imageUrl} />
       <SectionViewNews selectedNews={theNews} />
       <SimilarNews similarNews={similarNews} />
       <Footer />
     </main>
   );
+
+
 }
+

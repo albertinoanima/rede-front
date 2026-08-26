@@ -8,11 +8,32 @@ import { Select } from '../ui/select'
 import { opportunityCategories } from './data'
 import { countriesList, SelectItemType } from '../network/filters'
 import { OpportunityFilters } from './actions'
+import { newsSubCategories } from '../news/data'
+import { normalizeNewsValue } from '../news/actions'
 
 const categories: SelectItemType[] = opportunityCategories.map((category) => ({
-  label: category,
-  value: category.toLowerCase(),
+  label: category.label,
+  value: category.value,
 }))
+
+type NewsSubCategoryKey = keyof typeof newsSubCategories
+
+const toSubCategoryOption = (label: string): SelectItemType => ({
+  label,
+  value: normalizeNewsValue(label),
+})
+
+const getSubCategoryOptions = (
+  selectedCategory: string,
+): SelectItemType[] => {
+  if (!selectedCategory) return []
+
+  return (
+    newsSubCategories[selectedCategory as NewsSubCategoryKey]?.map(
+      toSubCategoryOption,
+    ) ?? []
+  )
+}
 
 type FilterSidebarProps = {
   filters: OpportunityFilters
@@ -29,7 +50,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     search,
     country: selectedCountry,
     category: selectedCategory,
+    subCategory: selectedSubCategory,
   } = filters
+
+  const subCategoryOptions = getSubCategoryOptions(selectedCategory)
 
   const handleSearchChange = (value: string) => {
     onFiltersChange({
@@ -49,6 +73,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     onFiltersChange({
       ...filters,
       category: value,
+      subCategory: '',
+    })
+  }
+
+  const handleSubCategoryChange = (value: string) => {
+    onFiltersChange({
+      ...filters,
+      subCategory: value,
     })
   }
 
@@ -107,6 +139,30 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               popoverClassName={selectPopoverClassName}
               satelliteClassName="border-[1.3px] border-white"
               onChange={handleCategoryChange}
+            />
+          </div>
+        </div>
+
+        <div className="flex min-w-0 flex-col gap-2">
+          <Heading className="text-lg font-medium leading-7 text-rede-white sm:text-[20px]">
+            Sub-Categoria
+          </Heading>
+
+          <div className="flex w-full min-w-0 items-center">
+            <Select
+              variant="primary"
+              value={selectedSubCategory}
+              placeholder={
+                selectedCategory
+                  ? 'Selecione a subcategoria'
+                  : 'Selecione primeiro a categoria'
+              }
+              options={subCategoryOptions}
+              disabled={!selectedCategory}
+              triggerClassName={selectTriggerClassName}
+              popoverClassName={selectPopoverClassName}
+              satelliteClassName="border-[1.3px] border-white"
+              onChange={handleSubCategoryChange}
             />
           </div>
         </div>

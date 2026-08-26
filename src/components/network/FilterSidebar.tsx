@@ -139,6 +139,7 @@ const findCityParent = (cityValue: string) => {
   return null
 }
 
+
 const getCategoryOptions = (selectedType: string) => {
   if (selectedType === 'profissionais') return categoriesList
   if (selectedType === 'empresa') return companiesCategoryList
@@ -639,7 +640,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
         <div className="flex min-w-0 flex-col gap-2">
           <Heading className="text-lg font-medium leading-7 text-rede-white sm:text-[20px]">
-            Subcategoria
+            Sub-categoria
           </Heading>
 
           <Select

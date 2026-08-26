@@ -54,11 +54,34 @@ export const SectionViewNews: React.FC<{ selectedNews: NewsType }> = ({ selected
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
     };
 
+
+
+    const formatNewsDescription = (description: string): string => {
+        const paragraphs = description
+            .trim()
+            .split(/(?:<br\s*\/?>\s*){2,}/gi)
+            .map((paragraph) => paragraph.trim())
+            .filter(Boolean);
+
+        return paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("");
+    };
+
+
     return (
         <div className="w-full max-w-350 h-auto mr-auto ml-auto pt-16 pb-16 bg-rede-bg">
-            <div className="w-full flex items-center gap-2.5 border-b-[1.3px] border-rede-white pb-12.5">
-                <Tag href={"/news?tag=" + selectedNews?.location} label={selectedNews?.location} />
-                <Text className="text-[12px] leading-[16px]">{selectedNews?.date}</Text>
+            <div className="w-full flex flex-col gap-2 border-b-[1.3px] border-rede-white pb-6">
+                <div className="flex items-center gap-2">
+                    <Tag href={"/news?tag=" + selectedNews?.location} label={selectedNews?.location} />
+                    <Text className="text-[12px] leading-[16px]">{selectedNews?.date}</Text>
+                </div>
+
+                <div className="flex gap-2">
+                    {
+                        selectedNews.themes?.map((theme: string, index) => (
+                            <Tag href={"/news?subcategory=" + theme} label={theme} key={theme + index} />
+                        ))
+                    }
+                </div>
             </div>
 
             <div className="w-full h-auto flex flex-col gap-4 mt-28 pb-10">
@@ -69,20 +92,28 @@ export const SectionViewNews: React.FC<{ selectedNews: NewsType }> = ({ selected
                 <div
                     className="
     w-full
-    columns-1 md:columns-2
+    columns-1
     gap-8
     text-[14px]
-    leading-relaxed
     font-medium
+    leading-relaxed
     text-rede-white
-    [&_p]:mb-4
+
+    md:columns-2
+
+    [&_p]:m-0
+    [&_p]:break-inside-auto
+    [&_p:not(:last-child)]:mb-4
+
+    [&_a]:font-semibold
     [&_a]:text-rede-red
     [&_a]:underline
-    [&_a]:font-semibold
     hover:[&_a]:opacity-80
   "
                     dangerouslySetInnerHTML={{
-                        __html: linkify(selectedNews?.description ?? ""),
+                        __html: linkify(
+                            formatNewsDescription(selectedNews?.description ?? ""),
+                        ),
                     }}
                 />
             </div>

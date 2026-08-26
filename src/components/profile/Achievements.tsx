@@ -242,7 +242,7 @@ export const Achievements: React.FC<AchievementsProps> = ({
                     ))}
                   </div>
                 ) : (
-                  <Text>
+                  <Text className="text-[14px] leading-relaxed font-medium">
                     Ainda não existem festivais, prémios ou exibições.
                   </Text>
                 )}

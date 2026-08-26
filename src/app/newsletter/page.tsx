@@ -8,7 +8,7 @@ export default function NewsletterPage() {
     return (
         <main className="bg-rede-bg">
             <TopBar />
-            <Hero title="Newsletters" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Acesse as edições anteriores da nossa newsletter mensal." />
+            <Hero title="Newsletters" description="Acesse as edições anteriores da nossa newsletter mensal." />
             <SectionNewsletters/>
             <Footer />
         </main>

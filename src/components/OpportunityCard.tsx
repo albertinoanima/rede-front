@@ -17,6 +17,7 @@ export type OpportunityType = {
   endDate: string;
   type: string;
   eligibility: Array<string>,
+  themes?: string[];
   country: string;
   cover: string;
 }

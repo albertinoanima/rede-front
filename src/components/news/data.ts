@@ -5,6 +5,7 @@ export type NewsType = {
     date: string;
     location: string;
     countries: string[];
+    themes?: string[]
     category: string;
     imageUrl?: string;
 }
@@ -22,6 +23,12 @@ Esta é uma oportunidade de estágio profissional criada pela REDE, sendo que a 
         date: "Agosto, 2026",
         location: "Cabo Verde",
         countries: ["cabo-verde"],
+        themes: [
+            "Estágios",
+            "Mapeamento",
+            "Dados do Setor",
+            "Estatísticas"
+        ],
         category: "oportunidades",
         imageUrl: "/assets/news/news-7.jpg"
     },
@@ -42,6 +49,16 @@ A REDE e o INICC comprometeram-se a realizar mais encontros desta natureza, para
         date: "Agosto, 2026",
         location: "Moçambique",
         countries: ["mocambique"],
+        themes: [
+            "Mapeamento",
+            "Agência de Curtas",
+            "Dados do Setor",
+            "Green Filming",
+            "Regulamentação",
+            "Estratégias",
+            "Nacionais",
+            "Debates"
+        ],
         category: "projetos-da-rede",
         imageUrl: "/assets/news/news-6.jpg"
     },
@@ -62,6 +79,16 @@ A REDE de Cinema e Audiovisual PALOP+TL propõe-se assim, contribuir para a capa
         date: "Julho, 2026",
         location: "Moçambique, Cabo Verde, Angola, São Tomé e Príncipe",
         countries: ["mocambique", "cabo-verde", "angola", "sao-tome-e-principe"],
+        themes: [
+            "Workshops",
+            "Género",
+            "Juventude",
+            "Green Filming",
+            "Pitch",
+            "Distribuição",
+            "Financiamento",
+            "Formação"
+        ],
         category: "formacao",
         imageUrl: "/assets/news/news-3.jpg"
     },
@@ -79,6 +106,16 @@ Adicionalmente, serão também elaboradas as bases para a realização de um est
         date: "Julho, 2026",
         location: "Angola, Cabo Verde, Guiné-Bissau, Moçambique, São Tomé e Príncipe, Timor-Leste",
         countries: ["angola", "cabo-verde", "guine-bissau", "mocambique", "sao-tome-e-principe", "timor-leste"],
+        themes: [
+            "Film Commisssions",
+            "Estudo",
+            "Investimento",
+            "Quadro Legal",
+            "Coprodução",
+            "Incentivos",
+            "Fiscais",
+            "Regulamentação"
+        ],
         category: "investigacao",
         imageUrl: "/assets/news/news-4.jpg"
     },
@@ -95,6 +132,12 @@ A nossa expectativa, em Timor-Leste, é recolher e verificar dados de profission
         date: "Junho, 2026",
         location: "Timor-Leste",
         countries: ["timor-leste"],
+        themes: [
+            "Encontros",
+            "Agência de Curtas",
+            "Mapeamento",
+            "Dados do Setor"
+        ],
         category: "projetos-da-rede",
         imageUrl: "/assets/news/news-5.jpg"
     },
@@ -114,6 +157,13 @@ Obrigadu barak!
         date: "Junho, 2026",
         location: "Timor-Leste",
         countries: ["timor-leste"],
+        themes: [
+            "Mostra",
+            "Ficção",
+            "Documentário",
+            "Exibição",
+            "Audiências"
+        ],
         category: "festivais-e-eventos",
         imageUrl: "/assets/news/news-2.jpg"
     },
@@ -128,27 +178,233 @@ Para mais informações, podem contactar a equipa local, juntando-se ao grupo de
         date: "Maio, 2026",
         location: "Timor-Leste",
         countries: ["timor-leste"],
+        themes: [
+            "Mapeamento",
+            "Agência de Curtas",
+            "Dados do Setor"
+        ],
         category: "projetos-da-rede",
         imageUrl: "/assets/news/news-1.jpg"
     }
 ]
 
 
-export const categories = [
-  { label: "Cinema", value: "cinema" },
-  { label: "Televisão e Média", value: "televisao-e-media" },
-  { label: "Produção Audiovisual", value: "producao-audiovisual" },
-  { label: "Formação", value: "formacao" },
-  { label: "Financiamento", value: "financiamento" },
-  { label: "Festivais e Eventos", value: "festivais-e-eventos" },
-  { label: "Políticas Públicas", value: "politicas-publicas" },
-  { label: "Investigação", value: "investigacao" },
-  { label: "Tecnologia", value: "tecnologia" },
-  { label: "Diversidade", value: "diversidade" },
-  { label: "Sustentabilidade", value: "sustentabilidade" },
-  { label: "Mercado", value: "mercado" },
-  { label: "Cooperação", value: "cooperacao" },
-  { label: "Oportunidades", value: "oportunidades" },
-  { label: "Prémios", value: "premios" },
-  { label: "Projetos da REDE", value: "projetos-da-rede" },
+export const newsCategories = [
+    {
+        label: "Cinema",
+        value: "cinema",
+    },
+    {
+        label: "Cooperação",
+        value: "cooperacao",
+    },
+    {
+        label: "Diversidade",
+        value: "diversidade",
+    },
+    {
+        label: "Festivais e Eventos",
+        value: "festivais-e-eventos",
+    },
+    {
+        label: "Financiamento",
+        value: "financiamento",
+    },
+    {
+        label: "Formação",
+        value: "formacao",
+    },
+    {
+        label: "Investigação",
+        value: "investigacao",
+    },
+    {
+        label: "Mercado",
+        value: "mercado",
+    },
+    {
+        label: "Oportunidades",
+        value: "oportunidades",
+    },
+    {
+        label: "Países e Regiões",
+        value: "paises-e-regioes",
+    },
+    {
+        label: "Políticas Públicas",
+        value: "politicas-publicas",
+    },
+    {
+        label: "Prémios",
+        value: "premios",
+    },
+    {
+        label: "Produção Audiovisual",
+        value: "producao-audiovisual",
+    },
+    {
+        label: "Projetos da REDE",
+        value: "projetos-da-rede",
+    },
+    {
+        label: "Sustentabilidade",
+        value: "sustentabilidade",
+    },
+    {
+        label: "Tecnologia",
+        value: "tecnologia",
+    },
+    {
+        label: "Televisão e Média",
+        value: "televisao-e-media",
+    },
 ];
+
+
+export const newsSubCategories = {
+  cinema: [
+    "Animação",
+    "Curta-metragem",
+    "Documentário",
+    "Experimental",
+    "Ficção",
+    "Longa-metragem",
+  ],
+
+  cooperacao: [
+    "Camões, I.P.",
+    "CPLP",
+    "Cultiv’Arte",
+    "EUNIC",
+    "PALOP+TL",
+    "UNESCO",
+    "União Europeia",
+  ],
+
+  diversidade: [
+    "Acessibilidade",
+    "Género",
+    "Inclusão",
+    "Juventude",
+    "Línguas Africanas",
+  ],
+
+  "festivais-e-eventos": [
+    "Conferência",
+    "Festival",
+    "Fórum",
+    "Mercado",
+    "Mostra",
+    "Pitch",
+  ],
+
+  financiamento: [
+    "Concursos",
+    "Coprodução",
+    "Fundos",
+    "Investimento",
+    "Mecenato",
+    "Pitching",
+  ],
+
+  formacao: [
+    "Bolsas",
+    "Capacitação",
+    "Masterclasses",
+    "Residências Artísticas",
+    "Workshops",
+  ],
+
+  investigacao: [
+    "Dados do Setor",
+    "Estatísticas",
+    "Estudos",
+    "Mapeamento",
+    "Publicações",
+  ],
+
+  mercado: [
+    "Audiências",
+    "Distribuição",
+    "Exibição",
+    "Plataformas",
+    "Salas de Cinema",
+  ],
+
+  oportunidades: [
+    "Bolsa",
+    "Casting",
+    "Convocatória",
+    "Emprego",
+    "Estágio",
+  ],
+
+  "paises-e-regioes": [
+    "Angola",
+    "Cabo Verde",
+    "Diáspora",
+    "Guiné-Bissau",
+    "Moçambique",
+    "Portugal",
+    "São Tomé e Príncipe",
+    "Timor-Leste",
+  ],
+
+  "politicas-publicas": [
+    "Debates",
+    "Direitos de Autor",
+    "Estratégias Nacionais",
+    "Film Commission",
+    "Incentivos Fiscais",
+    "Leis",
+    "Regulamentação",
+  ],
+
+  premios: [
+    "Nomeações",
+    "Prémios",
+    "Seleção Oficial",
+  ],
+
+  "producao-audiovisual": [
+    "Argumento",
+    "Fotografia",
+    "Montagem",
+    "Pós-produção",
+    "Produção",
+    "Realização",
+    "Som",
+    "VFX",
+  ],
+
+  "projetos-da-rede": [
+    "Agência de Curtas",
+    "Formação Regional",
+    "Mapeamento",
+    "Observatório",
+    "REDE PALOP+TL",
+  ],
+
+  sustentabilidade: [
+    "Alterações Climáticas",
+    "Ambiente",
+    "Economia Circular",
+    "Green Filming",
+  ],
+
+  tecnologia: [
+    "Arquivo Digital",
+    "Drones",
+    "Inteligência Artificial",
+    "Realidade Virtual",
+    "XR",
+  ],
+
+  "televisao-e-media": [
+    "Podcast",
+    "Rádio Comunitária",
+    "Streaming",
+    "TV",
+    "Websérie",
+  ],
+};

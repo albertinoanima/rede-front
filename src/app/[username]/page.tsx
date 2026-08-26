@@ -74,6 +74,9 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
     notFound();
   }
 
+  //text-[14px] leading-relaxed font-medium
+
+  
   return (
     <main className="bg-rede-surface">
       <ScrollToTop scrollKey={normalizedUsername} />

@@ -174,7 +174,7 @@ export const SectionEditSkills: React.FC<SectionEditSkillsProps> = ({
                             )}
                         </Tag>
                     )) :
-                        <Text>
+                        <Text className="text-[14px] leading-relaxed font-medium">
                             Ainda não existem competências.
                         </Text>
                     }

@@ -22,8 +22,7 @@ export const Hero: React.FC = () => {
           </Heading>
 
           <Text className="max-w-[560px] text-sm font-semibold leading-relaxed text-rede-white sm:text-base lg:max-w-2xl">
-            Faz o teu trabalho chegar mais longe, junto de quem o pode projetar
-            e partilhar — AQUI.
+            A Agência de Curta-metragem PALOP + TL apoia a nova geração do audiovisual, promovendo filmes, criadores e oportunidades que reforçam a colaboração, a mobilidade cultural e a presença internacional das nossas cinematografias.
           </Text>
         </div>
       </div>

@@ -1,15 +1,40 @@
 import { OpportunityType } from '../OpportunityCard'
+import { newsSubCategories } from '../news/data'
+import { normalizeNewsValue } from '../news/actions'
 
 export type OpportunityFilters = {
   search: string
   country: string
   category: string
+  subCategory: string
 }
 
 export const defaultOpportunityFilters: OpportunityFilters = {
   search: '',
   country: '',
   category: '',
+  subCategory: '',
+}
+
+const normalizedThemes = (opportunity: OpportunityType) =>
+  opportunity.themes?.map(normalizeNewsValue) ?? []
+
+const opportunityMatchesCategory = (
+  opportunity: OpportunityType,
+  category: string,
+) => {
+  const normalizedCategory = normalizeNewsValue(category)
+  const themes = normalizedThemes(opportunity)
+  const categorySubCategories =
+    newsSubCategories[category as keyof typeof newsSubCategories]?.map(
+      normalizeNewsValue,
+    ) ?? []
+
+  return (
+    normalizeNewsValue(opportunity.type) === normalizedCategory ||
+    themes.includes(normalizedCategory) ||
+    categorySubCategories.some((subCategory) => themes.includes(subCategory))
+  )
 }
 
 // Local, static-data implementation of the opportunities search. Keeps the
@@ -24,16 +49,40 @@ export function filterOpportunities(
 
   return opportunities.filter((opportunity) => {
     if (search) {
-      const haystack = [opportunity.title, opportunity.description, opportunity.type, ...opportunity.eligibility]
+      const haystack = [
+        opportunity.title,
+        opportunity.description,
+        opportunity.type,
+        ...opportunity.eligibility,
+        ...(opportunity.themes ?? []),
+      ]
         .join(' ')
         .toLowerCase()
       if (!haystack.includes(search)) return false
     }
 
-    if (filters.country && opportunity.country !== filters.country) return false
-
-    if (filters.category && opportunity.type.toLowerCase() !== filters.category.toLowerCase())
+    if (
+      filters.country &&
+      normalizeNewsValue(opportunity.country) !== normalizeNewsValue(filters.country)
+    ) {
       return false
+    }
+
+    if (
+      filters.category &&
+      !opportunityMatchesCategory(opportunity, filters.category)
+    ) {
+      return false
+    }
+
+    if (
+      filters.subCategory &&
+      normalizeNewsValue(opportunity.type) !==
+        normalizeNewsValue(filters.subCategory) &&
+      !normalizedThemes(opportunity).includes(normalizeNewsValue(filters.subCategory))
+    ) {
+      return false
+    }
 
     return true
   })

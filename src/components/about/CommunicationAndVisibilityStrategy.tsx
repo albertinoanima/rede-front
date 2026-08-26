@@ -4,6 +4,7 @@ import { customBlur } from "@/app/fonts";
 import { Text } from "../ui/text";
 import { Heading } from "../ui/heading";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export const CommunicationAndVisibilityStrategy: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ export const CommunicationAndVisibilityStrategy: React.FC = () => {
             Estratégia de Comunicação e Visibilidade
           </Heading>
 
-          <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+          <Text className="text-[14px] leading-relaxed font-medium">
             A REDE de Cinema e Audiovisual PALOP+TL surge como uma plataforma
             estratégica de cooperação cultural e profissional, dedicada à
             valorização, à circulação e à internacionalização do cinema e do
@@ -27,21 +28,25 @@ export const CommunicationAndVisibilityStrategy: React.FC = () => {
             visibilidade internacional.
           </Text>
 
-          <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+          <Text className="text-[14px] leading-relaxed font-medium">
             Nesse sentido, a nossa Estratégia de Comunicação define o caminho
             para fortalecer a identidade, a visibilidade e a capacidade do
             cinema dos PALOP e de Timor-Leste, posicionando a REDE como uma
             plataforma unificadora e representativa do cinema destes países.
           </Text>
 
-          <Button
-            className="w-full sm:max-w-[200px]"
-            variant="primary"
-            icon={<Eye width={12} height={12} aria-hidden="true" />}
-            iconPosition="left"
-          >
-            Ler documento
-          </Button>
+
+          <Link href={"/assets/Estratégia_C&V_Rede_PALOP+TL Light.pdf"} target="_blank">
+            <Button
+              className="w-full sm:max-w-[200px]"
+              variant="primary"
+              icon={<Eye width={12} height={12} aria-hidden="true" />}
+              iconPosition="left"
+            >
+              Ler documento
+            </Button>
+          </Link>
+
         </div>
 
         <div className="h-auto w-full lg:w-1/2">

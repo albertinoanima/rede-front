@@ -7,16 +7,17 @@ import { Text } from '@/components/ui/text'
 type HeroProps = {
   title?: string
   description?: string
+  imageUrl?: string
 }
 
-export const Hero: React.FC<HeroProps> = ({ title, description }) => {
+export const Hero: React.FC<HeroProps> = ({ title, description, imageUrl }) => {
   const hasContent = Boolean(title || description)
 
   return (
     <section className="h-auto w-full pt-17">
       <div className="relative mx-auto h-[420px] w-full max-w-[1920px] overflow-hidden sm:h-[450px] lg:h-124.25">
         <img
-          src="/assets/news/hero.jpg"
+          src={imageUrl || "/assets/news/hero.jpg"}
           alt="Imagem de destaque das notícias"
           className="h-full w-full object-cover"
         />

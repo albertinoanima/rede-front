@@ -43,7 +43,7 @@ export const ObjectivesSection: React.FC = () => {
             </div>
 
             <div className="w-full lg:w-1/2">
-              <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px] lg:leading-[28px]">
+              <Text className="text-[14px] leading-relaxed font-medium">
                 Divulgar e promover, regional e internacionalmente, a produção
                 e os profissionais do audiovisual dos PALOP e de Timor-Leste,
                 através da reativação do trabalho em rede, contribuindo para a
@@ -67,7 +67,7 @@ export const ObjectivesSection: React.FC = () => {
             </div>
 
             <div className="w-full lg:w-1/2">
-              <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px] lg:leading-[28px]">
+              <Text className="text-[14px] leading-relaxed font-medium">
                 Contribuir para a capacitação técnica e artística de jovens,
                 mulheres produtoras e realizadoras dos PALOP e de Timor-Leste,
                 bem como para a promoção internacional dos seus trabalhos,

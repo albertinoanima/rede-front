@@ -33,10 +33,12 @@ export const ProfileCard: React.FC<{ profileData: ProfileType }> = ({ profileDat
         src={profileData.cover}
         className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
       footer={
-        <div className="w-full h-12 flex items-center justify-between gap-4 mt-2">
+        <div className="w-full h-12 flex items-center justify-end gap-4 mt-2">
+          {/* 
           <Text className="text-[14px] leading-relaxed font-medium line-clamp-2">
             {profileData.bio}
-          </Text>
+          </Text> 
+          */}
 
           <Button
             showMainButton={false}

@@ -7,6 +7,7 @@ import { Camera, Edit2, GlobeIcon, Mail, MapPin, PhoneIcon, Plus } from "lucide-
 import { customBlur } from "@/app/fonts"
 import { Modal } from "@/components/ui/modal"
 import { ImageCropUploader } from "@/components/ImageCropUploader"
+import Link from "next/link"
 
 type ProfileData = User["profileData"];
 
@@ -106,9 +107,8 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
           )}
         </div>
 
-        <Text className={`text-[20px] leading-5 font-medium mt-2.5 ${
-          !coreSkillsLabel ? 'text-rede-white/70' : ''}`
-          }>{coreSkillsLabel || "Competências principais"}</Text>
+        <Text className={`text-[20px] leading-5 font-medium mt-2.5 ${!coreSkillsLabel ? 'text-rede-white/70' : ''}`
+        }>{coreSkillsLabel || "Competências principais"}</Text>
         {profileData.username && <Text className='text-[14px] leading-5 text-rede-white/70 mt-1'>@{profileData.username}</Text>}
 
         <div className='w-full flex flex-wrap gap-5 mt-5'>
@@ -129,9 +129,11 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
                 {profileData.professionalEmail}
               </Button>
             ) : (
-              <StaticContactChip icon={<Mail width={12} height={12} />}>
-                {profileData.professionalEmail}
-              </StaticContactChip>
+              <Link href={"mailto:" + profileData.professionalEmail} target="_blank">
+                <StaticContactChip icon={<Mail width={12} height={12} />}>
+                  {profileData.professionalEmail}
+                </StaticContactChip>
+              </Link>
             )
           )}
           {website && (
@@ -140,9 +142,11 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
                 {website.replace(/^https?:\/\//, "")}
               </Button>
             ) : (
-              <StaticContactChip icon={<GlobeIcon width={12} height={12} />}>
-                {website.replace(/^https?:\/\//, "")}
-              </StaticContactChip>
+              <Link href={website} target="_blank">
+                <StaticContactChip icon={<GlobeIcon width={12} height={12} />}>
+                  {website.replace(/^https?:\/\//, "")}
+                </StaticContactChip>
+              </Link>
             )
           )}
 
@@ -160,9 +164,11 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
                 Contactar
               </Button>
             ) : (
-              <StaticContactChip icon={<PhoneIcon width={12} height={12} />} variant="primary">
-                {profileData.professionalPhone}
-              </StaticContactChip>
+              <Link href={"tel:" + profileData.professionalPhone} target="_blank">
+                <StaticContactChip icon={<PhoneIcon width={12} height={12} />} variant="primary">
+                  {profileData.professionalPhone}
+                </StaticContactChip>
+              </Link>
             )
           )}
 

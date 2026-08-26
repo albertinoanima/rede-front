@@ -69,8 +69,8 @@ export const packages = [
 export const films: FilmType[] = [
   {
     id: 'uma-historia-de-angola',
-    title: 'Uma História de Angola',
-    director: 'Ferdinando Silmingo',
+    title: 'Título',
+    director: 'Realizador',
     duration: '28\'32"',
     year: '2025',
     tags: [{ label: 'Angola' }, { label: 'Ficção' }, { label: 'Direitos Humanos' }],
@@ -80,8 +80,8 @@ export const films: FilmType[] = [
   },
   {
     id: 'vozes-do-atlantico',
-    title: 'Vozes do Atlântico',
-    director: 'Ferdinando Silmingo',
+    title: 'Título',
+    director: 'Realizador',
     duration: '32\'15"',
     year: '2025',
     tags: [{ label: 'Moçambique' }, { label: 'Ficção' }, { label: 'Género' }, { label: 'Animação' }],
@@ -91,8 +91,8 @@ export const films: FilmType[] = [
   },
   {
     id: 'ilhas-do-atlantico',
-    title: 'Ilhas do Atlântico',
-    director: 'Ferdinando Silmingo',
+    title: 'Título',
+    director: 'Realizador',
     duration: '28\'20"',
     year: '2024',
     tags: [{ label: 'Cabo Verde' }, { label: 'Experimental' }, { label: 'Ambiente' }],
@@ -102,8 +102,8 @@ export const films: FilmType[] = [
   },
   {
     id: 'sao-tome-terra-e-mar',
-    title: 'São Tomé: Terra e Mar',
-    director: 'Ferdinando Silmingo',
+    title: 'Título',
+    director: 'Realizador',
     duration: '28\'20"',
     year: '2024',
     tags: [{ label: 'São Tomé' }, { label: 'Experimental' }, { label: 'Ambiente' }],
@@ -113,8 +113,8 @@ export const films: FilmType[] = [
   },
   {
     id: 'caminhos-da-guine',
-    title: 'Caminhos da Guiné',
-    director: 'Ferdinando Silmingo',
+    title: 'Título',
+    director: 'Realizador',
     duration: '28\'20"',
     year: '2023',
     tags: [{ label: 'Guiné-Bissau' }, { label: 'Animação' }, { label: 'Direitos Humanos' }],
@@ -124,8 +124,8 @@ export const films: FilmType[] = [
   },
   {
     id: 'timor-entre-mundos',
-    title: 'Timor: Entre Mundos',
-    director: 'Ferdinando Silmingo',
+    title: 'Título',
+    director: 'Realizador',
     duration: '28\'20"',
     year: '2023',
     tags: [{ label: 'Timor-Leste' }, { label: 'Documentário' }, { label: 'Direitos Humanos' }],

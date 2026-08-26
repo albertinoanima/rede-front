@@ -4,6 +4,7 @@ import { customBlur } from "@/app/fonts";
 import { Text } from "../ui/text";
 import { Heading } from "../ui/heading";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export const GovernanceFrameworkSection: React.FC = () => {
   return (
@@ -28,7 +29,7 @@ export const GovernanceFrameworkSection: React.FC = () => {
             Quadro de Governação Digital
           </Heading>
 
-          <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+          <Text className="text-[14px] leading-relaxed font-medium">
             A REDE de Cinema e Audiovisual PALOP+TL é uma plataforma regional
             dedicada ao fortalecimento, à valorização e à promoção dos
             ecossistemas cinematográficos e audiovisuais dos países
@@ -38,7 +39,7 @@ export const GovernanceFrameworkSection: React.FC = () => {
             parceiros, promovendo:
           </Text>
 
-          <ul className="ml-6 mt-2 list-disc space-y-1 text-[17px] font-medium leading-7 sm:ml-10 sm:text-[18px] lg:text-[20px]">
+          <ul className="ml-6 mt-2 list-disc space-y-1 text-[14px] leading-relaxed font-medium">
             <li className="pl-1 lg:indent-2.5">
               A circulação de conhecimento;
             </li>
@@ -53,7 +54,7 @@ export const GovernanceFrameworkSection: React.FC = () => {
             </li>
           </ul>
 
-          <Text className="text-[17px] font-medium leading-7 sm:text-[18px] lg:text-[20px]">
+          <Text className="text-[14px] leading-relaxed font-medium">
             A dimensão digital da REDE não é entendida apenas como uma
             ferramenta tecnológica, mas também como uma infraestrutura de
             colaboração, documentação e construção de conhecimento coletivo.
@@ -62,14 +63,16 @@ export const GovernanceFrameworkSection: React.FC = () => {
             orientam a sua presença digital.
           </Text>
 
-          <Button
-            className="w-full sm:max-w-[200px]"
-            variant="primary"
-            icon={<Eye width={12} height={12} aria-hidden="true" />}
-            iconPosition="left"
-          >
-            Ler documento
-          </Button>
+          <Link href={"/assets/governação_digital_V0_19-07-26_terms.pdf"} target="_blank">
+            <Button
+              className="w-full sm:max-w-[200px]"
+              variant="primary"
+              icon={<Eye width={12} height={12} aria-hidden="true" />}
+              iconPosition="left"
+            >
+              Ler documento
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

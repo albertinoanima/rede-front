@@ -13,6 +13,7 @@ import {
   Geography,
   Marker,
 } from "react-simple-maps";
+import { Text } from "../ui/text";
 
 const GEO_URL =
   "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
@@ -164,20 +165,19 @@ const StatRow: React.FC<{
   </div>
 );
 
-const InfoCard: React.FC<{ country: CountryData }> = ({
-  country,
-}) => (
-  <div className="relative z-10 mx-auto w-[calc(100%-2rem)] min-w-0 max-w-sm animate-[fadeIn_0.3s_ease] rounded-2xl bg-[#f5c518] px-6 py-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)] lg:absolute lg:top-[300px] lg:left-1/2 lg:w-auto lg:min-w-[220px] lg:max-w-none lg:-translate-x-1/2 lg:px-8">
-    <h2 className="mb-4 pr-5 text-[22px] font-normal text-[#1a1a1a]">
+const InfoCard: React.FC<{ country: CountryData }> = ({ country }) => (
+  <div className="absolute top-20 right-4 z-20 w-[190px] animate-[fadeIn_0.3s_ease] rounded-xl bg-[#f5c518] px-4 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)] sm:top-25 sm:right-6 sm:w-[220px] sm:rounded-2xl sm:px-6 sm:py-5 lg:top-[300px] lg:right-auto 
+  lg:left-[calc(50%+150px)] lg:w-auto lg:min-w-[220px] lg:-translate-x-1/2 lg:px-8 lg:py-6">
+    <h2 className="mb-3 pr-4 text-base leading-tight font-medium text-[#1a1a1a] sm:mb-4 sm:text-xl lg:text-[22px]">
       {country.name}
     </h2>
 
     <div
       aria-hidden="true"
-      className="absolute top-6 right-4 h-[calc(100%-3rem)] w-[3px] rounded-sm bg-[#1a1a1a]"
+      className="absolute top-4 right-3 h-[calc(100%-2rem)] w-0.5 rounded-full bg-[#1a1a1a] sm:top-5 sm:right-4 sm:h-[calc(100%-2.5rem)] sm:w-[3px] lg:top-6 lg:h-[calc(100%-3rem)]"
     />
 
-    <div className="flex flex-col gap-2.5">
+    <div className="flex flex-col gap-1.5 pr-3 sm:gap-2.5 sm:pr-4">
       <StatRow
         value={country.professionals}
         label="Profissionais"
@@ -502,11 +502,11 @@ const PalopMapSection: React.FC = () => {
       </div>
 
       <div className="mx-auto flex w-full max-w-lg flex-col gap-6 px-4 py-8 lg:contents">
-        <div className="text-center text-base leading-relaxed text-[#e0e0e0] opacity-90 sm:text-lg lg:absolute lg:bottom-[450px] lg:left-1/2 lg:w-full lg:max-w-[500px] lg:-translate-x-1/2 lg:px-0 lg:text-xl lg:leading-[1.6]">
-          Conecta-te a realizadores, produtores, técnicos e criativos dos PALOP + Timor-Leste, fortalece a 
+        <Text className="text-sm text-center font-semibold leading-6">
+          Conecta-te a realizadores, produtores, técnicos e criativos dos PALOP + Timor-Leste, fortalece a <br/>
           tua rede profissional e descobre novas oportunidades de colaboração, circulação e desenvolvimento 
           no setor audiovisual.
-        </div>
+        </Text>
 
         <InfoCard country={selectedCountry} />
       </div>

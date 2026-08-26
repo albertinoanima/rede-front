@@ -197,9 +197,7 @@ export const OutsideAgency: React.FC<OutsideAgencyProps> = ({
         <div className="h-auto w-full max-w-360 px-4 py-14 sm:px-6 sm:py-16 lg:px-0 lg:pb-20 lg:pt-20">
           <div className="mb-6 flex flex-col gap-4 border-b border-rede-white/20 pb-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex min-w-0 items-center gap-4">
-              <Heading
-                className={`${customBlur.className} min-w-0 text-[32px] leading-9`}
-              >
+              <Heading className={`${customBlur.className} text-[48px] leading-12`}>
                 Fora da agência
               </Heading>
 
@@ -249,7 +247,7 @@ export const OutsideAgency: React.FC<OutsideAgencyProps> = ({
                   />
                 ))
               : !isEditing && (
-                  <Text className="md:col-span-2 xl:col-span-3">
+                  <Text className="text-[14px] leading-relaxed font-medium">
                     Ainda não existem filmes fora da agência.
                   </Text>
                 )}
