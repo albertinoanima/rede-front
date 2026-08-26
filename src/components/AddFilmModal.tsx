@@ -84,6 +84,7 @@ type FilmFormModalProps = {
   onClose: () => void;
   onSubmit: (data: FilmFormData) => void | Promise<void>;
   initialData?: Partial<FilmFormData>;
+  defaultCover?: string;
 };
 
 export const AddFilmModal: React.FC<FilmFormModalProps> = ({
@@ -91,6 +92,7 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
   onClose,
   onSubmit,
   initialData,
+  defaultCover,
 }) => {
   const [form, setForm] = useState<FilmFormData>({ ...EMPTY_FORM, ...initialData });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -101,7 +103,10 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
 
   const handleSubmit = async () => {
     setError("");
-    const payload = normalizeFormData(form);
+    const payload = normalizeFormData({
+      ...form,
+      cover: form.cover || defaultCover || "",
+    });
 
     if (requiredFields.some((field) => !payload[field])) {
       setError("Preencha todos os campos obrigatórios do filme.");

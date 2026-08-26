@@ -2,10 +2,10 @@ import { SelectItemType } from '../network/filters'
 import { FilmType } from './Films'
 
 export const filmGenres: SelectItemType[] = [
-  { label: 'Ficção', value: 'ficcao' },
-  { label: 'Documentário', value: 'documentario' },
   { label: 'Animação', value: 'animacao' },
+  { label: 'Documentário', value: 'documentario' },
   { label: 'Experimental', value: 'experimental' },
+  { label: 'Ficção', value: 'ficcao' }
 ]
 
 

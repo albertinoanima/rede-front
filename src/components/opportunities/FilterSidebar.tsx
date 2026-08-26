@@ -4,36 +4,19 @@ import { SearchIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '../ui/heading'
 import { Input } from '../ui/Input'
-import { Select } from '../ui/select'
+import { Select, withClearOption } from '../ui/select'
 import { opportunityCategories } from './data'
 import { countriesList, SelectItemType } from '../network/filters'
 import { OpportunityFilters } from './actions'
-import { newsSubCategories } from '../news/data'
-import { normalizeNewsValue } from '../news/actions'
+import {
+  getNewsCategoryForSubCategory,
+  getNewsSubCategoryOptions,
+} from '../news/categories'
 
 const categories: SelectItemType[] = opportunityCategories.map((category) => ({
   label: category.label,
   value: category.value,
 }))
-
-type NewsSubCategoryKey = keyof typeof newsSubCategories
-
-const toSubCategoryOption = (label: string): SelectItemType => ({
-  label,
-  value: normalizeNewsValue(label),
-})
-
-const getSubCategoryOptions = (
-  selectedCategory: string,
-): SelectItemType[] => {
-  if (!selectedCategory) return []
-
-  return (
-    newsSubCategories[selectedCategory as NewsSubCategoryKey]?.map(
-      toSubCategoryOption,
-    ) ?? []
-  )
-}
 
 type FilterSidebarProps = {
   filters: OpportunityFilters
@@ -53,7 +36,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     subCategory: selectedSubCategory,
   } = filters
 
-  const subCategoryOptions = getSubCategoryOptions(selectedCategory)
+  const subCategoryOptions = getNewsSubCategoryOptions(selectedCategory)
 
   const handleSearchChange = (value: string) => {
     onFiltersChange({
@@ -69,17 +52,25 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     })
   }
 
+  // A sub-categoria só é descartada se deixar de pertencer à nova categoria.
+  // Limpar a categoria limpa também a sub-categoria, que é filha dela.
   const handleCategoryChange = (value: string) => {
+    const keepsSubCategory =
+      value !== '' &&
+      getNewsCategoryForSubCategory(selectedSubCategory, value) === value
+
     onFiltersChange({
       ...filters,
       category: value,
-      subCategory: '',
+      subCategory: keepsSubCategory ? selectedSubCategory : '',
     })
   }
 
+  // Escolher a sub-categoria preenche a categoria sozinho.
   const handleSubCategoryChange = (value: string) => {
     onFiltersChange({
       ...filters,
+      category: getNewsCategoryForSubCategory(value, selectedCategory),
       subCategory: value,
     })
   }
@@ -115,7 +106,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               variant="primary"
               value={selectedCountry}
               placeholder="Selecione o país"
-              options={countriesList}
+              options={withClearOption(
+                countriesList,
+                selectedCountry,
+                'Todos os países',
+              )}
               triggerClassName={selectTriggerClassName}
               popoverClassName={selectPopoverClassName}
               satelliteClassName="border-[1.3px] border-white"
@@ -134,7 +129,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               variant="primary"
               value={selectedCategory}
               placeholder="Selecione a categoria"
-              options={categories}
+              options={withClearOption(
+                categories,
+                selectedCategory,
+                'Todas as categorias',
+              )}
               triggerClassName={selectTriggerClassName}
               popoverClassName={selectPopoverClassName}
               satelliteClassName="border-[1.3px] border-white"
@@ -152,13 +151,12 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             <Select
               variant="primary"
               value={selectedSubCategory}
-              placeholder={
-                selectedCategory
-                  ? 'Selecione a subcategoria'
-                  : 'Selecione primeiro a categoria'
-              }
-              options={subCategoryOptions}
-              disabled={!selectedCategory}
+              placeholder="Selecione a sub-categoria"
+              options={withClearOption(
+                subCategoryOptions,
+                selectedSubCategory,
+                'Todas as sub-categorias',
+              )}
               triggerClassName={selectTriggerClassName}
               popoverClassName={selectPopoverClassName}
               satelliteClassName="border-[1.3px] border-white"

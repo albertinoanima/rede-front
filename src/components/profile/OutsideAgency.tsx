@@ -10,6 +10,8 @@ import { Button } from "../ui/button";
 import { FilmCard, FilmCardType } from "../FilmCard";
 import { AddFilmModal, FilmFormData } from "../AddFilmModal";
 
+const FILM_PLACEHOLDER_COVER = "/assets/placeholder-img.jpg";
+
 type LocalFilmCardProps = {
   film: FilmCardType;
   isEditing: boolean;
@@ -131,7 +133,7 @@ export const OutsideAgency: React.FC<OutsideAgencyProps> = ({
       type: [formData.genre, formData.theme].filter(Boolean),
       year: Number(formData.year) || new Date().getFullYear(),
       countries: [formData.country].filter(Boolean),
-      cover: formData.cover,
+      cover: formData.cover || FILM_PLACEHOLDER_COVER,
       duration: formData.duration,
       link: formData.link,
     };
@@ -263,6 +265,7 @@ export const OutsideAgency: React.FC<OutsideAgencyProps> = ({
         onClose={handleCloseForm}
         onSubmit={handleFormSubmit}
         initialData={initialFormData}
+        defaultCover={FILM_PLACEHOLDER_COVER}
       />
     </section>
   );

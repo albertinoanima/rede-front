@@ -111,6 +111,7 @@ export const Hero: React.FC<HeroProps> = ({
               isSaving={isSaving}
               setIsEditing={setIsEditing}
               onSave={handleSave}
+              onSaveProfileData={onSaveProfileData}
             />
           ) : (
             <ShowProfile

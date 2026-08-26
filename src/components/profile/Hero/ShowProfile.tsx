@@ -3,7 +3,7 @@ import { Text } from "../../ui/text"
 import { Button } from "../../ui/button"
 import { Dispatch, ReactNode, SetStateAction, useState } from "react"
 import { User } from "@/types/User"
-import { Camera, Edit2, GlobeIcon, Mail, MapPin, PhoneIcon, Plus } from "lucide-react"
+import { Camera, Edit2, GlobeIcon, Mail, MapPin, PhoneIcon } from "lucide-react"
 import { customBlur } from "@/app/fonts"
 import { Modal } from "@/components/ui/modal"
 import { ImageCropUploader } from "@/components/ImageCropUploader"
@@ -67,6 +67,7 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
   const website = profileData.socialLinks?.website;
   const coreSkills = profileData.coreSkills ?? [];
   const coreSkillsLabel = coreSkills.join(" | ");
+  const hasContacts = Boolean(location || profileData.professionalEmail || website);
 
   const handleAvatarUploaded = async (url: string) => {
     const saved = await onSaveProfileData?.({ imageUrl: url });
@@ -111,7 +112,8 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
         }>{coreSkillsLabel || "Competências principais"}</Text>
         {profileData.username && <Text className='text-[14px] leading-5 text-rede-white/70 mt-1'>@{profileData.username}</Text>}
 
-        <div className='w-full flex flex-wrap gap-5 mt-5'>
+        {hasContacts && (
+          <div className='w-full flex flex-wrap gap-5 mt-5'>
           {location && (
             isAuthenticated ? (
               <Button variant={"secondary"} icon={<MapPin width={12} height={12} />} iconPosition='left'>
@@ -149,17 +151,12 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
               </Link>
             )
           )}
+          </div>
+        )}
 
-          {isAuthenticated && (
-            <Button variant={"secondary"} icon={<Plus width={12} height={12} />} iconPosition='left' className='border-rede-gray border-dashed' iconButtonClassName='border-rede-gray border-dashed'>
-              Adicionar contacto
-            </Button>
-          )}
-        </div>
-
-        <div className='w-full flex flex-wrap gap-5 mt-5'>
-          {profileData.professionalPhone && (
-            isAuthenticated ? (
+        {profileData.professionalPhone && (
+          <div className='w-full flex flex-wrap gap-5 mt-5'>
+            {isAuthenticated ? (
               <Button icon={<PhoneIcon width={12} height={12} color='black' />} iconPosition='left' className='bg-rede-yellow border-none text-rede-surface' iconButtonClassName="border-none">
                 Contactar
               </Button>
@@ -169,15 +166,9 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
                   {profileData.professionalPhone}
                 </StaticContactChip>
               </Link>
-            )
-          )}
-
-          {isAuthenticated && (
-            <Button variant={"secondary"} icon={<Plus width={12} height={12} />} iconPosition='left' className='border-rede-gray border-dashed' iconButtonClassName='border-rede-gray border-dashed'>
-              Adicionar contacto
-            </Button>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
 
       <Modal open={isAvatarCropOpen} onClose={() => setIsAvatarCropOpen(false)} panelClassName="flex justify-center rounded-none border-[1.3px] border-rede-white/20">

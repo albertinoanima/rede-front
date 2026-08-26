@@ -56,10 +56,10 @@ export const PublicProfile: React.FC<PublicProfileProps> = ({ profile }) => {
         isAuthenticated={false}
         films={profileData.filmography}
       />
-      <OutsideAgency
+      {/* <OutsideAgency
         isAuthenticated={false}
         films={profileData.outsideAgency}
-      />
+      /> */}
     </>
   );
 };

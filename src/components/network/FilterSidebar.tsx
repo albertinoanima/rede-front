@@ -1,18 +1,16 @@
 'use client'
 
+
 import { SearchIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '../ui/heading'
 import { Input } from '../ui/Input'
-import { Select } from '../ui/select'
+import { Select, withClearOption } from '../ui/select'
 import { countriesList, SelectItemType } from './filters'
 import {
-  categoriesList,
+  categoriesByType,
   citiesByCountryAndProvince,
-  companiesCategoryList,
   CountryCode,
-  festivalsCategoryList,
-  institutionsCategoryList,
   profileTypesList,
   provincesByCountry,
   subCategoriesByType,
@@ -140,41 +138,31 @@ const findCityParent = (cityValue: string) => {
 }
 
 
-const getCategoryOptions = (selectedType: string) => {
-  if (selectedType === 'profissionais') return categoriesList
-  if (selectedType === 'empresa') return companiesCategoryList
-  if (selectedType === 'festival') return festivalsCategoryList
-  if (selectedType === 'instituicao') return institutionsCategoryList
+const profileTypeValues = profileTypesList.map((item) => item.value)
 
-  return uniqueOptions([
-    ...categoriesList,
-    ...companiesCategoryList,
-    ...festivalsCategoryList,
-    ...institutionsCategoryList,
-  ])
-}
+// Ordena os tipos a percorrer pondo o tipo já escolhido em primeiro, para que
+// um valor que exista em dois tipos (por exemplo "VFX", que é categoria de
+// Empresa e de Profissionais) não faça saltar a escolha do utilizador.
+const typesToSearch = (preferredType?: string) =>
+  preferredType
+    ? [
+        preferredType,
+        ...profileTypeValues.filter((type) => type !== preferredType),
+      ]
+    : profileTypeValues
+
+const getCategoryOptions = (selectedType: string) =>
+  categoriesByType[selectedType] ??
+  uniqueOptions(
+    profileTypeValues.flatMap((type) => categoriesByType[type] ?? []),
+  )
 
 const findCategoryParent = (
   categoryValue: string,
   preferredType?: string,
 ) => {
-  const preferredOptions = preferredType
-    ? getCategoryOptions(preferredType)
-    : []
-
-  const preferredCategory = preferredOptions.find((category) =>
-    optionMatches(category, categoryValue),
-  )
-
-  if (preferredType && preferredCategory) {
-    return {
-      type: preferredType,
-      category: preferredCategory.value,
-    }
-  }
-
-  for (const type of profileTypesList.map((item) => item.value)) {
-    const category = getCategoryOptions(type).find((item) =>
+  for (const type of typesToSearch(preferredType)) {
+    const category = (categoriesByType[type] ?? []).find((item) =>
       optionMatches(item, categoryValue),
     )
 
@@ -204,42 +192,37 @@ const getSubCategoryOptions = (
   }
 
   return uniqueOptions(
-    Object.values(subCategoriesByType).flatMap((categoryMap) =>
-      Object.values(categoryMap).flat(),
+    profileTypeValues.flatMap((type) =>
+      Object.values(subCategoriesByType[type] ?? {}).flat(),
     ),
   )
 }
 
+// Vai do mais específico para o mais genérico: primeiro dentro do par
+// tipo/categoria já escolhido, depois dentro do tipo, e só então em tudo.
 const findSubCategoryParent = (
   subCategoryValue: string,
   preferredType?: string,
   preferredCategory?: string,
 ) => {
-  const preferredOptions = getSubCategoryOptions(
-    preferredType ?? '',
-    preferredCategory ?? '',
-  )
+  if (preferredType && preferredCategory) {
+    const subCategory = (
+      subCategoriesByType[preferredType]?.[preferredCategory] ?? []
+    ).find((item) => optionMatches(item, subCategoryValue))
 
-  const preferredSubCategory = preferredOptions.find((subCategory) =>
-    optionMatches(subCategory, subCategoryValue),
-  )
-
-  if (preferredType && preferredCategory && preferredSubCategory) {
-    return {
-      type: preferredType,
-      category: preferredCategory,
-      subCategory: preferredSubCategory.value,
+    if (subCategory) {
+      return {
+        type: preferredType,
+        category: preferredCategory,
+        subCategory: subCategory.value,
+      }
     }
   }
 
-  const types = preferredType
-    ? [preferredType]
-    : profileTypesList.map((item) => item.value)
+  for (const type of typesToSearch(preferredType)) {
+    const categoryMap = subCategoriesByType[type] ?? {}
 
-  for (const type of types) {
-    const categoriesByType = subCategoriesByType[type] ?? {}
-
-    for (const [category, subCategories] of Object.entries(categoriesByType)) {
+    for (const [category, subCategories] of Object.entries(categoryMap)) {
       const subCategory = subCategories.find((item) =>
         optionMatches(item, subCategoryValue),
       )
@@ -451,6 +434,19 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     selectedCategory,
   )
 
+  const hasSubCategories = subCategoryOptions.length > 0
+
+  const categoryPlaceholder =
+    selectedType === 'profissionais'
+      ? 'Selecione a profissão'
+      : 'Selecione a categoria'
+
+  const subCategoryPlaceholder = hasSubCategories
+    ? 'Selecione a sub-categoria'
+    : selectedCategory
+      ? 'Esta categoria não tem sub-categorias'
+      : 'Este tipo não tem sub-categorias'
+
   const handleSearchChange = (value: string) => {
     onFiltersChange({
       ...filters,
@@ -554,7 +550,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             variant="primary"
             value={selectedCountry}
             placeholder="Selecione o país"
-            options={countriesList}
+            options={withClearOption(
+              countriesList,
+              selectedCountry,
+              'Todos os países',
+            )}
             triggerClassName={selectTriggerClassName}
             popoverClassName={selectPopoverClassName}
             satelliteClassName="border-[1.3px] border-white"
@@ -570,12 +570,12 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <Select
             variant="primary"
             value={selectedProvince}
-            placeholder={
-              selectedCountry
-                ? 'Selecione a província'
-                : 'Selecione primeiro o país'
-            }
-            options={provinceOptions}
+            placeholder="Selecione a província"
+            options={withClearOption(
+              provinceOptions,
+              selectedProvince,
+              'Todas as províncias',
+            )}
             triggerClassName={selectTriggerClassName}
             popoverClassName={selectPopoverClassName}
             satelliteClassName="border-[1.3px] border-white"
@@ -591,12 +591,12 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <Select
             variant="primary"
             value={selectedCity}
-            placeholder={
-              selectedProvince
-                ? 'Selecione a localidade'
-                : 'Selecione primeiro a província'
-            }
-            options={cityOptions}
+            placeholder="Selecione a localidade"
+            options={withClearOption(
+              cityOptions,
+              selectedCity,
+              'Todas as localidades',
+            )}
             triggerClassName={selectTriggerClassName}
             popoverClassName={selectPopoverClassName}
             satelliteClassName="border-[1.3px] border-white"
@@ -613,7 +613,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             variant="primary"
             value={selectedType}
             placeholder="Selecione o tipo"
-            options={profileTypesList}
+            options={withClearOption(
+              profileTypesList,
+              selectedType,
+              'Todos os tipos',
+            )}
             triggerClassName={selectTriggerClassName}
             popoverClassName={selectPopoverClassName}
             satelliteClassName="border-[1.3px] border-white"
@@ -629,8 +633,12 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <Select
             variant="primary"
             value={selectedCategory}
-            placeholder="Selecione a profissão"
-            options={categoryOptions}
+            placeholder={categoryPlaceholder}
+            options={withClearOption(
+              categoryOptions,
+              selectedCategory,
+              'Todas as categorias',
+            )}
             triggerClassName={selectTriggerClassName}
             popoverClassName={selectPopoverClassName}
             satelliteClassName="border-[1.3px] border-white"
@@ -646,8 +654,13 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <Select
             variant="primary"
             value={selectedSubCategory}
-            placeholder="Selecione a subcategoria"
-            options={subCategoryOptions}
+            placeholder={subCategoryPlaceholder}
+            disabled={!hasSubCategories}
+            options={withClearOption(
+              subCategoryOptions,
+              selectedSubCategory,
+              'Todas as sub-categorias',
+            )}
             triggerClassName={selectTriggerClassName}
             popoverClassName={selectPopoverClassName}
             satelliteClassName="border-[1.3px] border-white"

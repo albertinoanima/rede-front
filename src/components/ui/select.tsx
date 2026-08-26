@@ -64,6 +64,17 @@ export interface SelectOption {
   label: string
 }
 
+// Os selects não têm botão próprio para desmarcar, por isso a opção de repor
+// entra no topo da lista — mas só quando já existe algo escolhido, para que o
+// placeholder continue visível e a lista original fique intacta enquanto o
+// filtro está vazio. Devolve sempre um array novo: nunca altera o original.
+export const withClearOption = (
+  options: SelectOption[],
+  selectedValue: string,
+  label: string,
+): SelectOption[] =>
+  selectedValue ? [{ label, value: '' }, ...options] : options
+
 export interface SelectProps {
   options: SelectOption[]
   value?: string

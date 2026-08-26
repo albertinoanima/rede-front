@@ -106,8 +106,6 @@ export const profiles: ProfileType[] = [
 
 
 
-
-
 export type CountryCode =
   | 'angola'
   | 'cabo-verde'
@@ -147,7 +145,266 @@ export const profileTypesList: SelectItemType[] = [
   { label: 'Profissionais', value: 'profissionais' },
 ].sort(sortByLabel)
 
-export const categoriesList: SelectItemType[] = [
+
+// Categoria Empresa
+export const companiesCategoryList: SelectItemType[] = [
+  { label: 'Desenvolvimento de Projetos', value: 'desenvolvimento-de-projetos' },
+  { label: 'Escrita', value: 'escrita' },
+  { label: 'Produção Audiovisual', value: 'producao-audiovisual' },
+  { label: 'Gestão de Produção', value: 'gestao-de-producao' },
+  { label: 'Aluguer de Equipamentos', value: 'aluguer-de-equipamentos' },
+  { label: 'Infraestruturas', value: 'infraestruturas' },
+  { label: 'Apoio à Produção', value: 'apoio-a-producao' },
+  { label: 'Captação de Imagem', value: 'captacao-de-imagem' },
+  { label: 'Direção Artística', value: 'direcao-artistica' },
+  { label: 'Casting e Locações', value: 'casting-e-locacoes' },
+  { label: 'Captação de Som', value: 'captacao-de-som' },
+  { label: 'Pós-Produção de Som', value: 'pos-producao-de-som' },
+  { label: 'Linguagem', value: 'linguagem' },
+  { label: 'Pós-produção de Imagem', value: 'pos-producao-de-imagem' },
+  { label: 'Pós-Produção Técnica', value: 'pos-producao-tecnica' },
+  { label: 'Animação', value: 'animacao' },
+  { label: 'VFX', value: 'vfx' },
+  { label: 'Tecnologias Imersivas', value: 'tecnologias-imersivas' },
+  { label: 'Distribuição', value: 'distribuicao' },
+  { label: 'Exibição', value: 'exibicao' },
+].sort(sortByLabel)
+
+// Uma sub-categoria conhece sempre a categoria a que pertence, e o tipo de
+// perfil é dado pela lista onde ela vive. É isso que permite, ao escolher uma
+// sub-categoria, preencher automaticamente a categoria e o tipo.
+export type SelectItemWithCategory = SelectItemType & { category: string }
+
+// Sub-categorias Empresa
+export const companiesSubcategoriesList: SelectItemWithCategory[] = [
+  { label: 'Adaptação literária', value: 'adaptacao-literaria', category: 'escrita' },
+  { label: 'ADR', value: 'adr', category: 'pos-producao-de-som' },
+  { label: 'Adereços', value: 'aderecos', category: 'direcao-artistica' },
+  { label: 'Agenciamento de filmes', value: 'agenciamento-de-filmes', category: 'distribuicao' },
+  { label: 'Agregação de Conteúdos', value: 'agregacao-de-conteudos', category: 'distribuicao' },
+  { label: 'Alojamento', value: 'alojamento', category: 'apoio-a-producao' },
+  { label: 'Animação 2D', value: 'animacao-2d', category: 'animacao' },
+  { label: 'Animação 3D', value: 'animacao-3d', category: 'animacao' },
+  { label: 'Argumento / Escrita de Guião', value: 'argumento-escrita-de-guiao', category: 'escrita' },
+  { label: 'Arquivo digital', value: 'arquivo-digital', category: 'pos-producao-tecnica' },
+  { label: 'Audiodescrição', value: 'audiodescricao', category: 'linguagem' },
+  { label: 'Bíblia de Série', value: 'biblia-de-serie', category: 'escrita' },
+  { label: 'Câmaras', value: 'camaras', category: 'aluguer-de-equipamentos' },
+  { label: 'Captação de Som', value: 'captacao-de-som', category: 'captacao-de-som' },
+  { label: 'Caracterização', value: 'caracterizacao', category: 'direcao-artistica' },
+  { label: 'Casting', value: 'casting', category: 'casting-e-locacoes' },
+  { label: 'Catering', value: 'catering', category: 'apoio-a-producao' },
+  { label: 'Cenografia', value: 'cenografia', category: 'direcao-artistica' },
+  { label: 'CGI', value: 'cgi', category: 'vfx' },
+  { label: 'Cineclubes', value: 'cineclubes', category: 'exibicao' },
+  { label: 'Cinema Móvel', value: 'cinema-movel', category: 'exibicao' },
+  { label: 'Compressão', value: 'compressao', category: 'pos-producao-tecnica' },
+  { label: 'Composição Digital', value: 'composicao-digital', category: 'vfx' },
+  { label: 'Conformação', value: 'conformacao', category: 'pos-producao-de-imagem' },
+  { label: 'Consultoria de desenvolvimento', value: 'consultoria-de-desenvolvimento', category: 'desenvolvimento-de-projetos' },
+  { label: 'Conteúdos Imersivos', value: 'conteudos-imersivos', category: 'tecnologias-imersivas' },
+  { label: 'Controlo de Qualidade (QC)', value: 'controlo-de-qualidade-qc', category: 'pos-producao-tecnica' },
+  { label: 'Coordenação de produção', value: 'coordenacao-de-producao', category: 'gestao-de-producao' },
+  { label: 'Correção de Cor (Color Grading)', value: 'correcao-de-cor-color-grading', category: 'pos-producao-de-imagem' },
+  { label: 'Design de Som', value: 'design-de-som', category: 'pos-producao-de-som' },
+  { label: 'Desenvolvimento de coproduções', value: 'desenvolvimento-de-coproducoes', category: 'desenvolvimento-de-projetos' },
+  { label: 'Desenvolvimento de dossiers', value: 'desenvolvimento-de-dossiers', category: 'desenvolvimento-de-projetos' },
+  { label: 'Desenvolvimento de projetos', value: 'desenvolvimento-de-projetos', category: 'desenvolvimento-de-projetos' },
+  { label: 'Direção de Arte', value: 'direcao-de-arte', category: 'direcao-artistica' },
+  { label: 'Direção de atores', value: 'direcao-de-atores', category: 'casting-e-locacoes' },
+  { label: 'Direção de Fotografia', value: 'direcao-de-fotografia', category: 'captacao-de-imagem' },
+  { label: 'Distribuição Cinematográfica', value: 'distribuicao-cinematografica', category: 'distribuicao' },
+  { label: 'Distribuição Digital', value: 'distribuicao-digital', category: 'distribuicao' },
+  { label: 'Dobragem', value: 'dobragem', category: 'linguagem' },
+  { label: 'Drones', value: 'drones', category: 'aluguer-de-equipamentos' },
+  { label: 'Efeitos Visuais', value: 'efeitos-visuais', category: 'vfx' },
+  { label: 'Encoding', value: 'encoding', category: 'pos-producao-tecnica' },
+  { label: 'Entrega (Delivery)', value: 'entrega-delivery', category: 'pos-producao-de-imagem' },
+  { label: 'Equipamentos de som', value: 'equipamentos-de-som', category: 'aluguer-de-equipamentos' },
+  { label: 'Equipamentos de transmissão', value: 'equipamentos-de-transmissao', category: 'aluguer-de-equipamentos' },
+  { label: 'Escrita para plataformas digitais', value: 'escrita-para-plataformas-digitais', category: 'escrita' },
+  { label: 'Escrita para televisão', value: 'escrita-para-televisao', category: 'escrita' },
+  { label: 'Estúdios de filmagem', value: 'estudios-de-filmagem', category: 'infraestruturas' },
+  { label: 'Estúdios de fotografia', value: 'estudios-de-fotografia', category: 'infraestruturas' },
+  { label: 'Estúdios de som', value: 'estudios-de-som', category: 'infraestruturas' },
+  { label: 'Estúdios de televisão', value: 'estudios-de-televisao', category: 'infraestruturas' },
+  { label: 'Exibição Cinematográfica', value: 'exibicao-cinematografica', category: 'exibicao' },
+  { label: 'Filmagem aérea', value: 'filmagem-aerea', category: 'captacao-de-imagem' },
+  { label: 'Figurinos', value: 'figurinos', category: 'direcao-artistica' },
+  { label: 'Foley', value: 'foley', category: 'pos-producao-de-som' },
+  { label: 'Fotografia de Cena', value: 'fotografia-de-cena', category: 'captacao-de-imagem' },
+  { label: 'Fotografia promocional', value: 'fotografia-promocional', category: 'captacao-de-imagem' },
+  { label: 'Fotogrametria', value: 'fotogrametria', category: 'tecnologias-imersivas' },
+  { label: 'Gémeos Digitais (Digital Twins)', value: 'gemeos-digitais-digital-twins', category: 'tecnologias-imersivas' },
+  { label: 'Geradores', value: 'geradores', category: 'aluguer-de-equipamentos' },
+  { label: 'Gestão administrativa', value: 'gestao-administrativa', category: 'gestao-de-producao' },
+  { label: 'Gestão de coproduções internacionais', value: 'gestao-de-coproducoes-internacionais', category: 'gestao-de-producao' },
+  { label: 'Gestão de direitos', value: 'gestao-de-direitos', category: 'gestao-de-producao' },
+  { label: 'Gestão orçamental', value: 'gestao-orcamental', category: 'gestao-de-producao' },
+  { label: 'Gravação Musical', value: 'gravacao-musical', category: 'captacao-de-som' },
+  { label: 'Grip', value: 'grip', category: 'aluguer-de-equipamentos' },
+  { label: 'Guarda-roupa', value: 'guarda-roupa', category: 'direcao-artistica' },
+  { label: 'Iluminação', value: 'iluminacao', category: 'aluguer-de-equipamentos' },
+  { label: 'Inteligência Artificial aplicada ao Audiovisual', value: 'inteligencia-artificial-aplicada-ao-audiovisual', category: 'tecnologias-imersivas' },
+  { label: 'Laboratórios audiovisuais', value: 'laboratorios-audiovisuais', category: 'infraestruturas' },
+  { label: 'Legendagem', value: 'legendagem', category: 'linguagem' },
+  { label: 'Legendagem para surdos', value: 'legendagem-para-surdos', category: 'linguagem' },
+  { label: 'Logística', value: 'logistica', category: 'apoio-a-producao' },
+  { label: 'Maquilhagem', value: 'maquilhagem', category: 'direcao-artistica' },
+  { label: 'Masterização', value: 'masterizacao', category: 'pos-producao-de-imagem' },
+  { label: 'Masterização Áudio', value: 'masterizacao-audio', category: 'pos-producao-de-som' },
+  { label: 'Mistura de Som', value: 'mistura-de-som', category: 'pos-producao-de-som' },
+  { label: 'Monitores', value: 'monitores', category: 'aluguer-de-equipamentos' },
+  { label: 'Montagem', value: 'montagem', category: 'pos-producao-de-imagem' },
+  { label: 'Motion Capture', value: 'motion-capture', category: 'animacao' },
+  { label: 'Motion Graphics', value: 'motion-graphics', category: 'animacao' },
+  { label: 'Objetivas', value: 'objetivas', category: 'aluguer-de-equipamentos' },
+  { label: 'Operação de Câmara', value: 'operacao-de-camara', category: 'captacao-de-imagem' },
+  { label: 'Operação de Drone', value: 'operacao-de-drone', category: 'captacao-de-imagem' },
+  { label: 'Pesquisa de Locações (Location Scouting)', value: 'pesquisa-de-locacoes-location-scouting', category: 'casting-e-locacoes' },
+  { label: 'Pesquisa para projetos', value: 'pesquisa-para-projetos', category: 'desenvolvimento-de-projetos' },
+  { label: 'Pitching', value: 'pitching', category: 'desenvolvimento-de-projetos' },
+  { label: 'Plataformas OTT', value: 'plataformas-ott', category: 'exibicao' },
+  { label: 'Produção cinematográfica', value: 'producao-cinematografica', category: 'producao-audiovisual' },
+  { label: 'Produção de animação', value: 'producao-de-animacao', category: 'producao-audiovisual' },
+  { label: 'Produção de conteúdos digitais', value: 'producao-de-conteudos-digitais', category: 'producao-audiovisual' },
+  { label: 'Produção de documentários', value: 'producao-de-documentarios', category: 'producao-audiovisual' },
+  { label: 'Produção de ficção', value: 'producao-de-ficcao', category: 'producao-audiovisual' },
+  { label: 'Produção de linha', value: 'producao-de-linha', category: 'gestao-de-producao' },
+  { label: 'Produção de livestreams', value: 'producao-de-livestreams', category: 'producao-audiovisual' },
+  { label: 'Produção de podcasts', value: 'producao-de-podcasts', category: 'producao-audiovisual' },
+  { label: 'Produção de videoclipes', value: 'producao-de-videoclipes', category: 'producao-audiovisual' },
+  { label: 'Produção executiva', value: 'producao-executiva', category: 'gestao-de-producao' },
+  { label: 'Produção para redes sociais', value: 'producao-para-redes-sociais', category: 'producao-audiovisual' },
+  { label: 'Produção publicitária', value: 'producao-publicitaria', category: 'producao-audiovisual' },
+  { label: 'Produção sustentável (Green Production)', value: 'producao-sustentavel-green-production', category: 'gestao-de-producao' },
+  { label: 'Produção televisiva', value: 'producao-televisiva', category: 'producao-audiovisual' },
+  { label: 'Produção Virtual (LED Volume)', value: 'producao-virtual-led-volume', category: 'tecnologias-imersivas' },
+  { label: 'Programação de salas', value: 'programacao-de-salas', category: 'exibicao' },
+  { label: 'Realidade Aumentada', value: 'realidade-aumentada', category: 'tecnologias-imersivas' },
+  { label: 'Realidade Mista', value: 'realidade-mista', category: 'tecnologias-imersivas' },
+  { label: 'Realidade Virtual', value: 'realidade-virtual', category: 'tecnologias-imersivas' },
+  { label: 'Salas de mistura', value: 'salas-de-mistura', category: 'infraestruturas' },
+  { label: 'Salas de montagem', value: 'salas-de-montagem', category: 'infraestruturas' },
+  { label: 'Script Doctoring', value: 'script-doctoring', category: 'escrita' },
+  { label: 'Segurança', value: 'seguranca', category: 'apoio-a-producao' },
+  { label: 'Seguros de produção', value: 'seguros-de-producao', category: 'apoio-a-producao' },
+  { label: 'Serviços de Fixer', value: 'servicos-de-fixer', category: 'casting-e-locacoes' },
+  { label: 'Som Direto', value: 'som-direto', category: 'captacao-de-som' },
+  { label: 'Stop Motion', value: 'stop-motion', category: 'animacao' },
+  { label: 'Storyboard', value: 'storyboard', category: 'escrita' },
+  { label: 'Telepontos', value: 'telepontos', category: 'aluguer-de-equipamentos' },
+  { label: 'Time-lapse', value: 'time-lapse', category: 'captacao-de-imagem' },
+  { label: 'Transcoding', value: 'transcoding', category: 'pos-producao-tecnica' },
+  { label: 'Transporte', value: 'transporte', category: 'apoio-a-producao' },
+  { label: 'Tradução Audiovisual', value: 'traducao-audiovisual', category: 'linguagem' },
+  { label: 'Vendas Internacionais', value: 'vendas-internacionais', category: 'distribuicao' },
+  { label: 'Video Mapping', value: 'video-mapping', category: 'tecnologias-imersivas' },
+  { label: 'Viaturas de produção', value: 'viaturas-de-producao', category: 'aluguer-de-equipamentos' },
+  { label: 'XR', value: 'xr', category: 'tecnologias-imersivas' },
+].sort(sortByLabel)
+
+
+
+// Categoria Festival
+export const festivalsCategoryList: SelectItemType[] = [
+  { label: 'Comunicação', value: 'comunicacao' },
+  { label: 'Património Audiovisual - Preservação', value: 'patrimonio-audiovisual-preservacao' },
+  { label: 'Património Audiovisual - Documentação', value: 'patrimonio-audiovisual-documentacao' },
+  { label: 'Investigação Histórica', value: 'investigacao-historica' },
+  { label: 'Formação e Capacitação', value: 'formacao-e-capacitacao' },
+  { label: 'Educação', value: 'educacao' },
+  { label: 'Investigação e Consultoria', value: 'investigacao-e-consultoria' },
+  { label: 'Feiras, Mostras e Eventos', value: 'feiras-mostras-e-eventos' },
+  { label: 'Curadoria', value: 'curadoria' },
+  { label: 'Desenvolvimento da Indústria', value: 'desenvolvimento-da-industria' },
+].sort(sortByLabel)
+
+// Sub-categorias de Festival
+export const festivalsSubCategoriesList: SelectItemWithCategory[] = [
+  { label: 'Assessoria de imprensa', value: 'assessoria-de-imprensa', category: 'comunicacao' },
+  { label: 'Avaliação de Impacto', value: 'avaliacao-de-impacto', category: 'investigacao-e-consultoria' },
+  { label: 'Catalogação', value: 'catalogacao', category: 'patrimonio-audiovisual-documentacao' },
+  { label: 'Comunicação institucional', value: 'comunicacao-institucional', category: 'comunicacao' },
+  { label: 'Conferências', value: 'conferencias', category: 'feiras-mostras-e-eventos' },
+  { label: 'Conservação preventiva', value: 'conservacao-preventiva', category: 'patrimonio-audiovisual-preservacao' },
+  { label: 'Consultoria Audiovisual', value: 'consultoria-audiovisual', category: 'investigacao-e-consultoria' },
+  { label: 'Consultoria em Coprodução', value: 'consultoria-em-coproducao', category: 'investigacao-e-consultoria' },
+  { label: 'Consultoria em Financiamento', value: 'consultoria-em-financiamento', category: 'investigacao-e-consultoria' },
+  { label: 'Consultoria em Políticas Públicas', value: 'consultoria-em-politicas-publicas', category: 'investigacao-e-consultoria' },
+  { label: 'Consultoria em Sustentabilidade', value: 'consultoria-em-sustentabilidade', category: 'investigacao-e-consultoria' },
+  { label: 'Consultoria para Film Commissions', value: 'consultoria-para-film-commissions', category: 'investigacao-e-consultoria' },
+  { label: 'Curadoria', value: 'curadoria', category: 'curadoria' },
+  { label: 'Curadoria de Arquivos', value: 'curadoria-de-arquivos', category: 'patrimonio-audiovisual-documentacao' },
+  { label: 'Design gráfico', value: 'design-grafico', category: 'comunicacao' },
+  { label: 'Digitalização', value: 'digitalizacao', category: 'patrimonio-audiovisual-preservacao' },
+  { label: 'Educação para o Cinema', value: 'educacao-para-o-cinema', category: 'educacao' },
+  { label: 'Encontros Profissionais', value: 'encontros-profissionais', category: 'feiras-mostras-e-eventos' },
+  { label: 'Estudos de Mercado', value: 'estudos-de-mercado', category: 'investigacao-e-consultoria' },
+  { label: 'Estudos de Públicos', value: 'estudos-de-publicos', category: 'investigacao-e-consultoria' },
+  { label: 'Formação em Arquivos', value: 'formacao-em-arquivos', category: 'educacao' },
+  { label: 'Formação em IA', value: 'formacao-em-ia', category: 'educacao' },
+  { label: 'Formação Online', value: 'formacao-online', category: 'educacao' },
+  { label: 'Formação Profissional', value: 'formacao-profissional', category: 'educacao' },
+  { label: 'Formação Superior', value: 'formacao-superior', category: 'educacao' },
+  { label: 'Formação Técnica', value: 'formacao-tecnica', category: 'formacao-e-capacitacao' },
+  { label: 'Gestão de Arquivos Audiovisuais', value: 'gestao-de-arquivos-audiovisuais', category: 'patrimonio-audiovisual-preservacao' },
+  { label: 'Gestão de Catálogos', value: 'gestao-de-catalogos', category: 'curadoria' },
+  { label: 'Gestão de Metadados', value: 'gestao-de-metadados', category: 'patrimonio-audiovisual-documentacao' },
+  { label: 'Gestão de Redes Sociais', value: 'gestao-de-redes-sociais', category: 'comunicacao' },
+  { label: 'História Oral', value: 'historia-oral', category: 'investigacao-historica' },
+  { label: 'Humanidades Digitais', value: 'humanidades-digitais', category: 'investigacao-historica' },
+  { label: 'Incubação', value: 'incubacao', category: 'desenvolvimento-da-industria' },
+  { label: 'Indexação', value: 'indexacao', category: 'patrimonio-audiovisual-documentacao' },
+  { label: 'Internacionalização', value: 'internacionalizacao', category: 'desenvolvimento-da-industria' },
+  { label: 'Inventário', value: 'inventario', category: 'patrimonio-audiovisual-documentacao' },
+  { label: 'Investigação e Desenvolvimento', value: 'investigacao-e-desenvolvimento', category: 'investigacao-e-consultoria' },
+  { label: 'Investigação Histórica', value: 'investigacao-historica', category: 'investigacao-historica' },
+  { label: 'Laboratórios Criativos', value: 'laboratorios-criativos', category: 'formacao-e-capacitacao' },
+  { label: 'Literacia Mediática', value: 'literacia-mediatica', category: 'educacao' },
+  { label: 'Mapeamento do Setor', value: 'mapeamento-do-setor', category: 'investigacao-e-consultoria' },
+  { label: 'Marketing Cinematográfico', value: 'marketing-cinematografico', category: 'comunicacao' },
+  { label: 'Masterclasses', value: 'masterclasses', category: 'formacao-e-capacitacao' },
+  { label: 'Matchmaking', value: 'matchmaking', category: 'desenvolvimento-da-industria' },
+  { label: 'Mentoria', value: 'mentoria', category: 'formacao-e-capacitacao' },
+  { label: 'Mercados Audiovisuais', value: 'mercados-audiovisuais', category: 'feiras-mostras-e-eventos' },
+  { label: 'Museologia Audiovisual', value: 'museologia-audiovisual', category: 'investigacao-historica' },
+  { label: 'Networking', value: 'networking', category: 'desenvolvimento-da-industria' },
+  { label: 'Organização de Festivais', value: 'organizacao-de-festivais', category: 'feiras-mostras-e-eventos' },
+  { label: 'Organização de Mostras', value: 'organizacao-de-mostras', category: 'feiras-mostras-e-eventos' },
+  { label: 'Preservação Digital', value: 'preservacao-digital', category: 'patrimonio-audiovisual-preservacao' },
+  { label: 'Produção de Trailers', value: 'producao-de-trailers', category: 'comunicacao' },
+  { label: 'Programação', value: 'programacao', category: 'curadoria' },
+  { label: 'Promoção Comercial', value: 'promocao-comercial', category: 'desenvolvimento-da-industria' },
+  { label: 'Residências Artísticas', value: 'residencias-artisticas', category: 'formacao-e-capacitacao' },
+  { label: 'Restauro', value: 'restauro', category: 'patrimonio-audiovisual-preservacao' },
+  { label: 'Seleção de Filmes', value: 'selecao-de-filmes', category: 'curadoria' },
+  { label: 'Workshops', value: 'workshops', category: 'formacao-e-capacitacao' },
+].sort(sortByLabel)
+
+
+
+// Categoria Instituição
+export const institucionalCategoriesList: SelectItemType[] = [
+  { label: 'Associações e Coletivos', value: 'associacoes-e-coletivos' },
+  { label: 'Entidades Públicas', value: 'entidades-publicas' },
+].sort(sortByLabel)
+
+export const institucionalSubCategoriesList: SelectItemWithCategory[] = [
+  { label: 'Associação Cultural', value: 'associacao-cultural', category: 'associacoes-e-coletivos' },
+  { label: 'Associação Profissional', value: 'associacao-profissional', category: 'associacoes-e-coletivos' },
+  { label: 'Coletivo Informal', value: 'coletivo-informal', category: 'associacoes-e-coletivos' },
+  { label: 'Conservação preventiva', value: 'conservacao-preventiva', category: 'entidades-publicas' },
+  { label: 'Empresa Pública', value: 'empresa-publica', category: 'entidades-publicas' },
+  { label: 'Instituto Público', value: 'instituto-publico', category: 'entidades-publicas' },
+  { label: 'Preservação Digital', value: 'preservacao-digital', category: 'entidades-publicas' },
+  { label: 'Sindicato', value: 'sindicato', category: 'associacoes-e-coletivos' },
+  { label: 'Televisão Pública', value: 'televisao-publica', category: 'entidades-publicas' },
+].sort(sortByLabel)
+
+
+//Categoria de Profissionais
+export const professionalCategoriesList: SelectItemType[] = [
   { label: 'Aderecistas', value: 'aderecistas' },
   { label: 'Animadorxs', value: 'animadorxs' },
   { label: 'Anotadorxs', value: 'anotadorxs' },
@@ -189,287 +446,45 @@ export const categoriesList: SelectItemType[] = [
   { label: 'Outros', value: 'outros' },
 ].sort(sortByLabel)
 
-export const companiesCategoryList: SelectItemType[] = [
-  { label: 'Desenvolvimento de Projetos', value: 'desenvolvimento-de-projetos' },
-  { label: 'Escrita', value: 'escrita' },
-  { label: 'Produção Audiovisual', value: 'producao-audiovisual' },
-  { label: 'Gestão de Produção', value: 'gestao-de-producao' },
-  { label: 'Aluguer de Equipamentos', value: 'aluguer-de-equipamentos' },
-  { label: 'Infraestruturas', value: 'infraestruturas' },
-  { label: 'Apoio à Produção', value: 'apoio-a-producao' },
-  { label: 'Captação de Imagem', value: 'captacao-de-imagem' },
-  { label: 'Direção Artística', value: 'direcao-artistica' },
-  { label: 'Casting e Locações', value: 'casting-e-locacoes' },
-  { label: 'Captação de Som', value: 'captacao-de-som' },
-  { label: 'Pós-Produção de Som', value: 'pos-producao-de-som' },
-  { label: 'Curadoria', value: 'curadoria' },
-  { label: 'Linguagem', value: 'linguagem' },
-  { label: 'Pós-produção de Imagem', value: 'pos-producao-de-imagem' },
-  { label: 'Pós-Produção Técnica', value: 'pos-producao-tecnica' },
-  { label: 'Animação', value: 'animacao' },
-  { label: 'VFX', value: 'vfx' },
-  { label: 'Tecnologias Imersivas', value: 'tecnologias-imersivas' },
-  { label: 'Distribuição', value: 'distribuicao' },
-  { label: 'Exibição', value: 'exibicao' },
-].sort(sortByLabel)
 
-export const festivalsCategoryList: SelectItemType[] = [
-  { label: 'Comunicação', value: 'comunicacao' },
-  { label: 'Património Audiovisual - Preservação', value: 'patrimonio-audiovisual-preservacao' },
-  { label: 'Património Audiovisual - Documentação', value: 'patrimonio-audiovisual-documentacao' },
-  { label: 'Investigação Histórica', value: 'investigacao-historica' },
-  { label: 'Formação e Capacitação', value: 'formacao-e-capacitacao' },
-  { label: 'Educação', value: 'educacao' },
-  { label: 'Investigação e Consultoria', value: 'investigacao-e-consultoria' },
-  { label: 'Festivais, Mostras e Eventos', value: 'festivais-mostras-e-eventos' },
-  { label: 'Curadoria', value: 'curadoria' },
-  { label: 'Desenvolvimento da Indústria', value: 'desenvolvimento-da-industria' },
-].sort(sortByLabel)
+// Mapas derivados das listas acima. As listas continuam a ser a única fonte de
+// verdade: quem quiser acrescentar uma categoria ou sub-categoria mexe só nelas.
+export type ProfileTypeCode =
+  | 'empresa'
+  | 'festival'
+  | 'instituicao'
+  | 'profissionais'
 
-export const institutionsCategoryList: SelectItemType[] = [
-  { label: 'Associações e Coletivos', value: 'associacoes-e-coletivos' },
-  { label: 'Entidades Públicas', value: 'entidades-publicas' },
-].sort(sortByLabel)
+export const categoriesByType: Record<string, SelectItemType[]> = {
+  empresa: companiesCategoryList,
+  festival: festivalsCategoryList,
+  instituicao: institucionalCategoriesList,
+  profissionais: professionalCategoriesList,
+}
 
+const groupByCategory = (
+  subCategories: SelectItemWithCategory[],
+): Record<string, SelectItemType[]> =>
+  subCategories.reduce<Record<string, SelectItemType[]>>(
+    (grouped, { label, value, category }) => {
+      const group = (grouped[category] ??= [])
+
+      if (!group.some((item) => item.value === value)) {
+        group.push({ label, value })
+      }
+
+      return grouped
+    },
+    {},
+  )
+
+// Profissionais não têm sub-categorias: a profissão já é a folha da árvore.
 export const subCategoriesByType: Record<
   string,
   Record<string, SelectItemType[]>
 > = {
-  empresa: {
-    'desenvolvimento-de-projetos': [
-      { label: 'Longa-metragem', value: 'longa-metragem' },
-      { label: 'Curta-metragem', value: 'curta-metragem' },
-      { label: 'Série', value: 'serie' },
-      { label: 'Documentário', value: 'documentario' },
-    ].sort(sortByLabel),
-
-    escrita: [
-      { label: 'Argumento', value: 'argumento' },
-      { label: 'Guião', value: 'guiao' },
-      { label: 'Adaptação', value: 'adaptacao' },
-    ].sort(sortByLabel),
-
-    'producao-audiovisual': [
-      { label: 'Cinema', value: 'cinema' },
-      { label: 'Televisão', value: 'televisao' },
-      { label: 'Publicidade', value: 'publicidade' },
-      { label: 'Conteúdo Digital', value: 'conteudo-digital' },
-    ].sort(sortByLabel),
-
-    'gestao-de-producao': [
-      { label: 'Produção Executiva', value: 'producao-executiva' },
-      { label: 'Produção', value: 'producao' },
-      { label: 'Coordenação', value: 'coordenacao' },
-    ].sort(sortByLabel),
-
-    'aluguer-de-equipamentos': [
-      { label: 'Câmara', value: 'camera' },
-      { label: 'Som', value: 'som' },
-      { label: 'Iluminação', value: 'iluminacao' },
-      { label: 'Grip', value: 'grip' },
-    ].sort(sortByLabel),
-
-    infraestruturas: [
-      { label: 'Estúdios', value: 'estudios' },
-      { label: 'Salas de Edição', value: 'salas-de-edicao' },
-      { label: 'Salas de Som', value: 'salas-de-som' },
-    ].sort(sortByLabel),
-
-    'apoio-a-producao': [
-      { label: 'Logística', value: 'logistica' },
-      { label: 'Transportes', value: 'transportes' },
-      { label: 'Catering', value: 'catering' },
-    ].sort(sortByLabel),
-
-    'captacao-de-imagem': [
-      { label: 'Câmara', value: 'camera' },
-      { label: 'Fotografia', value: 'fotografia' },
-      { label: 'Drone', value: 'drone' },
-    ].sort(sortByLabel),
-
-    'direcao-artistica': [
-      { label: 'Cenografia', value: 'cenografia' },
-      { label: 'Decoração', value: 'decoracao' },
-      { label: 'Figurino', value: 'figurino' },
-    ].sort(sortByLabel),
-
-    'casting-e-locacoes': [
-      { label: 'Casting', value: 'casting' },
-      { label: 'Localizações', value: 'localizacoes' },
-    ].sort(sortByLabel),
-
-    'captacao-de-som': [
-      { label: 'Som Direto', value: 'som-direto' },
-      { label: 'Gravação', value: 'gravacao' },
-    ].sort(sortByLabel),
-
-    'pos-producao-de-som': [
-      { label: 'Edição de Som', value: 'edicao-de-som' },
-      { label: 'Mixagem', value: 'mixagem' },
-      { label: 'Design de Som', value: 'design-de-som' },
-    ].sort(sortByLabel),
-
-    curadoria: [
-      { label: 'Cinema', value: 'cinema' },
-      { label: 'Festivais', value: 'festivais' },
-      { label: 'Programação', value: 'programacao' },
-    ].sort(sortByLabel),
-
-    linguagem: [
-      { label: 'Tradução', value: 'traducao' },
-      { label: 'Legendagem', value: 'legendagem' },
-      { label: 'Dobragem', value: 'dobragem' },
-    ].sort(sortByLabel),
-
-    'pos-producao-de-imagem': [
-      { label: 'Montagem', value: 'montagem' },
-      { label: 'Color Grading', value: 'color-grading' },
-      { label: 'Composição', value: 'composicao' },
-    ].sort(sortByLabel),
-
-    'pos-producao-tecnica': [
-      { label: 'Masterização', value: 'masterizacao' },
-      { label: 'DCP', value: 'dcp' },
-      { label: 'Conformação', value: 'conformacao' },
-    ].sort(sortByLabel),
-
-    animacao: [
-      { label: '2D', value: '2d' },
-      { label: '3D', value: '3d' },
-      { label: 'Stop Motion', value: 'stop-motion' },
-    ].sort(sortByLabel),
-
-    vfx: [
-      { label: 'Composição', value: 'composicao' },
-      { label: 'CGI', value: 'cgi' },
-      { label: 'Motion Graphics', value: 'motion-graphics' },
-    ].sort(sortByLabel),
-
-    'tecnologias-imersivas': [
-      { label: 'Realidade Virtual', value: 'realidade-virtual' },
-      { label: 'Realidade Aumentada', value: 'realidade-aumentada' },
-      { label: 'Realidade Mista', value: 'realidade-mista' },
-    ].sort(sortByLabel),
-
-    distribuicao: [
-      { label: 'Cinema', value: 'cinema' },
-      { label: 'Televisão', value: 'televisao' },
-      { label: 'Streaming', value: 'streaming' },
-    ].sort(sortByLabel),
-
-    exibicao: [
-      { label: 'Salas de Cinema', value: 'salas-de-cinema' },
-      { label: 'Festivais', value: 'festivais' },
-      { label: 'Televisão', value: 'televisao' },
-      { label: 'Streaming', value: 'streaming' },
-    ].sort(sortByLabel),
-  },
-
-  festival: {
-    comunicacao: [
-      { label: 'Marketing Cinematográfico', value: 'marketing-cinematografico' },
-      { label: 'Gestão de Redes Sociais', value: 'gestao-de-redes-sociais' },
-      { label: 'Produção de Trailers', value: 'producao-de-trailers' },
-      { label: 'Design gráfico', value: 'design-grafico' },
-      { label: 'Comunicação institucional', value: 'comunicacao-institucional' },
-      { label: 'Assessoria de imprensa', value: 'assessoria-de-imprensa' },
-    ].sort(sortByLabel),
-
-    'patrimonio-audiovisual-preservacao': [
-      { label: 'Gestão de Arquivos Audiovisuais', value: 'gestao-de-arquivos-audiovisuais' },
-      { label: 'Digitalização', value: 'digitalizacao' },
-      { label: 'Restauro', value: 'restauro' },
-      { label: 'Preservação Digital', value: 'preservacao-digital' },
-      { label: 'Conservação preventiva', value: 'conservacao-preventiva' },
-    ].sort(sortByLabel),
-
-    'patrimonio-audiovisual-documentacao': [
-      { label: 'Catalogação', value: 'catalogacao' },
-      { label: 'Inventário', value: 'inventario' },
-      { label: 'Indexação', value: 'indexacao' },
-      { label: 'Curadoria de Arquivos', value: 'curadoria-de-arquivos' },
-      { label: 'Gestão de Metadados', value: 'gestao-de-metadados' },
-    ].sort(sortByLabel),
-
-    'investigacao-historica': [
-      { label: 'História Oral', value: 'historia-oral' },
-      { label: 'Investigação Histórica', value: 'investigacao-historica' },
-      { label: 'Museologia Audiovisual', value: 'museologia-audiovisual' },
-      { label: 'Humanidades Digitais', value: 'humanidades-digitais' },
-    ].sort(sortByLabel),
-
-    'formacao-e-capacitacao': [
-      { label: 'Formação Técnica', value: 'formacao-tecnica' },
-      { label: 'Workshops', value: 'workshops' },
-      { label: 'Masterclasses', value: 'masterclasses' },
-      { label: 'Mentoria', value: 'mentoria' },
-      { label: 'Residências Artísticas', value: 'residencias-artisticas' },
-      { label: 'Laboratórios Criativos', value: 'laboratorios-criativos' },
-    ].sort(sortByLabel),
-
-    educacao: [
-      { label: 'Educação para o Cinema', value: 'educacao-para-o-cinema' },
-      { label: 'Literacia Mediática', value: 'literacia-mediatica' },
-      { label: 'Formação Online', value: 'formacao-online' },
-      { label: 'Formação em IA', value: 'formacao-em-ia' },
-      { label: 'Formação em Arquivos', value: 'formacao-em-arquivos' },
-      { label: 'Formação Superior', value: 'formacao-superior' },
-      { label: 'Formação Profissional', value: 'formacao-profissional' },
-    ].sort(sortByLabel),
-
-    'investigacao-e-consultoria': [
-      { label: 'Investigação e Desenvolvimento', value: 'investigacao-e-desenvolvimento' },
-      { label: 'Estudos de Mercado', value: 'estudos-de-mercado' },
-      { label: 'Estudos de Públicos', value: 'estudos-de-publicos' },
-      { label: 'Avaliação de Impacto', value: 'avaliacao-de-impacto' },
-      { label: 'Mapeamento do Setor', value: 'mapeamento-do-setor' },
-      { label: 'Consultoria Audiovisual', value: 'consultoria-audiovisual' },
-      { label: 'Consultoria para Film Commissions', value: 'consultoria-para-film-commissions' },
-      { label: 'Consultoria em Políticas Públicas', value: 'consultoria-em-politicas-publicas' },
-      { label: 'Consultoria em Coprodução', value: 'consultoria-em-coproducao' },
-      { label: 'Consultoria em Financiamento', value: 'consultoria-em-financiamento' },
-      { label: 'Consultoria em Sustentabilidade', value: 'consultoria-em-sustentabilidade' },
-    ].sort(sortByLabel),
-
-    'festivais-mostras-e-eventos': [
-      { label: 'Organização de Festivais', value: 'organizacao-de-festivais' },
-      { label: 'Organização de Mostras', value: 'organizacao-de-mostras' },
-      { label: 'Mercados Audiovisuais', value: 'mercados-audiovisuais' },
-      { label: 'Conferências', value: 'conferencias' },
-      { label: 'Encontros Profissionais', value: 'encontros-profissionais' },
-    ].sort(sortByLabel),
-
-    curadoria: [
-      { label: 'Programação', value: 'programacao' },
-      { label: 'Curadoria', value: 'curadoria' },
-      { label: 'Seleção de Filmes', value: 'selecao-de-filmes' },
-      { label: 'Gestão de Catálogos', value: 'gestao-de-catalogos' },
-    ].sort(sortByLabel),
-
-    'desenvolvimento-da-industria': [
-      { label: 'Networking', value: 'networking' },
-      { label: 'Matchmaking', value: 'matchmaking' },
-      { label: 'Incubação', value: 'incubacao' },
-      { label: 'Internacionalização', value: 'internacionalizacao' },
-      { label: 'Promoção Comercial', value: 'promocao-comercial' },
-    ].sort(sortByLabel),
-  },
-
-  instituicao: {
-    'associacoes-e-coletivos': [
-      { label: 'Associação Cultural', value: 'associacao-cultural' },
-      { label: 'Associação Profissional', value: 'associacao-profissional' },
-      { label: 'Coletivo Informal', value: 'coletivo-informal' },
-      { label: 'Sindicato', value: 'sindicato' },
-    ].sort(sortByLabel),
-
-    'entidades-publicas': [
-      { label: 'Instituto Público', value: 'instituto-publico' },
-      { label: 'Empresa Pública', value: 'empresa-publica' },
-      { label: 'Televisão Pública', value: 'televisao-publica' },
-      { label: 'Preservação Digital', value: 'preservacao-digital' },
-      { label: 'Conservação preventiva', value: 'conservacao-preventiva' },
-    ].sort(sortByLabel),
-  },
+  empresa: groupByCategory(companiesSubcategoriesList),
+  festival: groupByCategory(festivalsSubCategoriesList),
+  instituicao: groupByCategory(institucionalSubCategoriesList),
   profissionais: {},
 }

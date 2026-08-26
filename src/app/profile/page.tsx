@@ -136,12 +136,12 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
                 isSaving={isSaving}
                 onSaveFilms={(filmography) => saveProfileData({ filmography })}
             />
-            <OutsideAgency
+            {/* <OutsideAgency
                 isAuthenticated={isAuthenticated}
                 films={profileData.outsideAgency}
                 isSaving={isSaving}
                 onSaveFilms={(outsideAgency) => saveProfileData({ outsideAgency })}
-            />
+            /> */}
         </>
     );
 };

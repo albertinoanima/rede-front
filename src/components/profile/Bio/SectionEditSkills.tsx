@@ -4,10 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Select, SelectOption } from "@/components/ui/select";
 import {
-    categoriesList,
-    companiesCategoryList,
-    festivalsCategoryList,
-    institutionsCategoryList,
+    categoriesByType,
     subCategoriesByType,
 } from "@/components/network/data";
 import { User } from "@/types/User";
@@ -39,13 +36,7 @@ const getProfileType = (profileData?: ProfileData): NetworkProfileType => {
 };
 
 const getCategoryOptions = (selectedType: NetworkProfileType): SelectOption[] =>
-    selectedType === "profissionais"
-        ? categoriesList
-        : selectedType === "empresa"
-            ? companiesCategoryList
-            : selectedType === "festival"
-                ? festivalsCategoryList
-                : institutionsCategoryList;
+    categoriesByType[selectedType] ?? [];
 
 const uniqueOptions = (options: SelectOption[]): SelectOption[] => {
     const seen = new Set<string>();
