@@ -39,7 +39,7 @@ She is associated with the creation and production of: the audiovisual productio
 `,
   },
   {
-    name: "António Maxhaleie",
+    name: "António Maxlhaieie",
     role: "Assessoria de coordenação-geral",
     location: "Moçambique",
     imageUrl: "/assets/team/antonio.jpeg",
@@ -58,7 +58,7 @@ She is associated with the creation and production of: the audiovisual productio
     role: "Coordenação local",
     location: "São Tomé e Príncipe",
     imageUrl: "/assets/team/katya.png",
-    bio: "",
+    bio: `Katya Aragão é guionista, realizadora e produtora. É também membro fundadora da Rede de Cinema e Audiovisual PALOP-TL e Diretora do São Tomé Film Lab. Licenciada em Ciências da Comunicação e Cultura pela Universidade Lusófona (ULHT), descobriu o fascínio pelo cinema ainda em criança em São Tomé, inspirada pelas histórias do pai e pelo encantamento dos filmes da Disney. Após mais de 10 anos como jornalista e produtora de televisão, estreou-se na realização em 2017. Em 2022 foi uma das 20 cineastas selecionadas para o concurso “African Folktales, Reimagined” da Netflix & UNESCO. A sua filmografia inclui Ximidô (2026), Mais do que Sobreviver (2025), A Batalha dos Gigantes (2023), Agora Podemos (2021), Nas Nossas Mãos (2019) e Mina Kiá (2017).`,
   },
   {
     name: "Emília Wojciechowska",
@@ -145,7 +145,7 @@ const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ member, onClose }) =>
             </div>
 
             <div className="mt-7 max-w-[315px] text-rede-white">
-              <Text className="mt-8 text-[20px] font-medium leading-7" dangerouslySetInnerHTML={{ __html: member.bio }} />
+              <Text className="mt-8 text-[14px] leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: member.bio }} />
             </div>
           </div>
         </div>
