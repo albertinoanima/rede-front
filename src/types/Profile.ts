@@ -6,6 +6,7 @@ export type SocialNetwork =
     | 'youtube'
     | 'linkedin'
     | 'tiktok'
+    | 'imdb'
     | 'website';
 
 export type SocialLinks = Partial<Record<SocialNetwork, string>>;

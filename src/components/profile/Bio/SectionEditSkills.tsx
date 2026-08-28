@@ -2,13 +2,12 @@ import { customBlur } from "@/app/fonts";
 import { Tag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import { SelectOption } from "@/components/ui/select";
+import { Select, SelectOption } from "@/components/ui/select";
 import { getCategoriesByAccountType } from "@/components/network/data";
 import { User } from "@/types/User";
 import { Edit2, X } from "lucide-react";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { Text } from "@/components/ui/text";
-import { InputSelect } from "@/components/ui/input-select";
 
 type ProfileData = User["profileData"];
 
@@ -122,12 +121,12 @@ export const SectionEditSkills: React.FC<SectionEditSkillsProps> = ({
                     }
                 </div>
 
+
                 {isEditingSkils && (
-                    <InputSelect
+                    <Select
                         variant="secondary"
                         value=""
-                        allowFreeText={false}
-                        placeholder="Digite ou selecione a competência"
+                        placeholder="Selecionar competência"
                         options={skillOptions}
                         triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
                         popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"

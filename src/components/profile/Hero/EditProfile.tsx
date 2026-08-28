@@ -14,7 +14,7 @@ import { Tag } from "@/components/Tag"
 import { customBlur } from "@/app/fonts"
 import { socialFields } from "@/components/Auth/data"
 import { getSkillOptions } from "../Bio/SectionEditSkills"
-import { GlobeIcon, Mail, MonitorPlay, Music2, PhoneIcon, X } from "lucide-react"
+import { Film, GlobeIcon, Mail, MonitorPlay, Music2, PhoneIcon, X } from "lucide-react"
 import Facebook from "@/icons/Facebook"
 import Instagram from "@/icons/Instagram"
 import Linkedin from "@/icons/Linkedin"
@@ -44,8 +44,8 @@ type ContactsDraft = {
 };
 
 // A lucide 1.x já não traz ícones de marca, por isso os das redes vêm de
-// src/icons; o YouTube e o TikTok não existem em nenhum dos dois e ficam com
-// um ícone neutro do mesmo traço.
+// src/icons; o YouTube, o TikTok e o IMDb não existem em nenhum dos dois e
+// ficam com um ícone neutro do mesmo traço.
 const socialIcons: Record<SocialNetwork, ReactNode> = {
   website: <GlobeIcon width={16} height={16} />,
   facebook: <Facebook size={16} />,
@@ -53,6 +53,7 @@ const socialIcons: Record<SocialNetwork, ReactNode> = {
   linkedin: <Linkedin size={16} />,
   youtube: <MonitorPlay width={16} height={16} />,
   tiktok: <Music2 width={16} height={16} />,
+  imdb: <Film width={16} height={16} />,
 };
 
 // O website é o único destes links que aparece no topo do perfil, por isso
@@ -80,6 +81,7 @@ const socialDomains: Record<SocialNetwork, string> = {
   linkedin: "linkedin.com/in",
   youtube: "youtube.com",
   tiktok: "tiktok.com",
+  imdb: "imdb.com/name",
 };
 
 // O YouTube e o TikTok mantêm o @ no endereço (youtube.com/@canal); as outras

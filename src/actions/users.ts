@@ -85,8 +85,8 @@ export const getUsers = async (): Promise<GetUsersResponseType> => {
             : data.error || "Erro desconhecido",
         message:
           Array.isArray(data)
-            ? "N\u00e3o foi poss\u00edvel carregar os usu\u00e1rios."
-            : data.message || "N\u00e3o foi poss\u00edvel carregar os usu\u00e1rios.",
+            ? "Não foi possível carregar os Usuários."
+            : data.message || "Não foi possível carregar os Usuários.",
       };
     }
 
@@ -104,7 +104,7 @@ export const getUsers = async (): Promise<GetUsersResponseType> => {
         "Erro desconhecido",
       message:
         apiError.response?.data?.message ||
-        "N\u00e3o foi poss\u00edvel carregar os usu\u00e1rios.",
+        "Não foi possível carregar os Usuários.",
     };
   }
 };
@@ -137,7 +137,7 @@ export const updateLoggedUser = async (
         "Erro desconhecido",
       message:
         apiError.response?.data?.message ||
-        "N\u00e3o foi poss\u00edvel atualizar os dados.",
+        "Não foi possível atualizar os dados.",
     };
   }
 };
@@ -151,7 +151,7 @@ export const deleteLoggedUser = async (): Promise<DeleteUserResponseType> => {
     return {
       message:
         responseData.data?.message ||
-        "Usu\u00e1rio apagado com sucesso.",
+        "Usuário apagado com sucesso.",
     };
   } catch (err: unknown) {
     const apiError = getApiError(err);
@@ -162,7 +162,7 @@ export const deleteLoggedUser = async (): Promise<DeleteUserResponseType> => {
         "Erro desconhecido",
       message:
         apiError.response?.data?.message ||
-        "N\u00e3o foi poss\u00edvel apagar o usu\u00e1rio.",
+        "Não foi possível apagar o Usuário.",
     };
   }
 };

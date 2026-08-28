@@ -16,7 +16,6 @@ import {
   getFilmTagLabel,
 } from "./network/data";
 import { AccountType } from "@/types/User";
-import { InputSelect } from "./ui/input-select";
 import { Tag } from "./Tag";
 import { X } from "lucide-react";
 
@@ -256,10 +255,10 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
             </div>
           )}
 
-          <InputSelect
-            placeholder="Digite ou selecione a função"
+
+          <Select
+            placeholder="Selecionar função"
             variant="secondary"
-            allowFreeText={false}
             value=""
             options={availableRoleOptions}
             disabled={form.roles.length >= MAX_ROLES}
