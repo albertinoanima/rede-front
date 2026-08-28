@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import Card from "./ui/card";
 import Link from "next/link";
 import { Tag } from "./Tag";
+import { toLocationLabels } from "./news/actions";
 
 
 type ArticleCardType = {
@@ -16,7 +17,7 @@ type ArticleCardType = {
         title?: string;
         description?: string;
         date?: string;
-        location?: string;
+        location?: string[] | string;
     }
 }
 
@@ -39,13 +40,9 @@ export const ArticleCard: React.FC<ArticleCardType> = ({ newsData }) => {
 
             <div className="w-full h-auto flex flex-col gap-2">
                 <div className="w-full h-auto flex flex-wrap gap-2 text-xs font-medium">
-                    {newsData?.location
-                        ?.split(",")
-                        .map((loc) => loc.trim())
-                        .filter(Boolean)
-                        .map((loc) => (
-                            <Tag key={loc} label={loc} href={`/news?tag=${encodeURIComponent(loc)}`} />
-                        ))}
+                    {toLocationLabels(newsData?.location).map((loc) => (
+                        <Tag key={loc} label={loc} href={`/news?tag=${encodeURIComponent(loc)}`} />
+                    ))}
                 </div>
 
                 <div className="w-full h-auto">

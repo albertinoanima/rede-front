@@ -105,8 +105,6 @@ export const profiles: ProfileType[] = [
     }
 ];
 
-
-
 export type CountryCode =
   | 'angola'
   | 'cabo-verde'
@@ -115,7 +113,7 @@ export type CountryCode =
   | 'sao-tome-e-principe'
   | 'timor-leste'
 
-const sortByLabel = (a: SelectItemType, b: SelectItemType) =>
+export const sortByLabel = (a: SelectItemType, b: SelectItemType) =>
   a.label.localeCompare(b.label, 'pt')
 
 export const provincesByCountry: Record<CountryCode, SelectItemType[]> = {
@@ -478,7 +476,7 @@ export const filmThemeOptions: SelectItemType[] = [
   { label: 'Identidade', value: 'identidade' },
   { label: 'Juventude', value: 'juventude' },
   { label: 'Migração', value: 'migracao' },
-]
+].sort(sortByLabel)
 
 export const filmGenreOptions: SelectItemType[] = [
   { label: 'Animação', value: 'animacao' },
@@ -492,7 +490,7 @@ export const filmGenreOptions: SelectItemType[] = [
   { label: 'Série', value: 'serie' },
   { label: 'Short film', value: 'short-film' },
   { label: 'Videoclipe', value: 'videoclipe' },
-]
+].sort(sortByLabel)
 
 // Guarda-se sempre o value (ex.: 'mocambique'), mas nos cartoes mostra-se o
 // label ('Moçambique'). O indice e construido uma vez, cobre todas as listas

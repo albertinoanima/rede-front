@@ -5,6 +5,12 @@ export type SelectItemType = {
   value: string
 }
 
+// Todas as listas saem ordenadas por label: com dezenas de localidades cada,
+// só a ordem alfabética torna a procura à vista viável. O 'pt' mantém os
+// acentos junto das letras respetivas em vez de os atirar para o fim.
+const sortByLabel = (a: SelectItemType, b: SelectItemType) =>
+  a.label.localeCompare(b.label, 'pt')
+
 export const countriesList: SelectItemType[] = [
   {
     label: "Angola",
@@ -30,7 +36,7 @@ export const countriesList: SelectItemType[] = [
     label: "Timor-Leste",
     value: "timor-leste",
   },
-];
+].sort(sortByLabel);
 
 
 
@@ -70,6 +76,7 @@ const countryLabels = buildLabelIndex(countriesList)
 export const getCountryLabel = (value?: string): string =>
   getLabelFromIndex(countryLabels, value)
 
+
 export const angolaProvincesList: SelectItemType[] = [
   { label: "Bengo", value: "bengo" },
   { label: "Benguela", value: "benguela" },
@@ -92,7 +99,7 @@ export const angolaProvincesList: SelectItemType[] = [
   { label: "Namibe", value: "namibe" },
   { label: "Uíge", value: "uige" },
   { label: "Zaire", value: "zaire" },
-];
+].sort(sortByLabel);
 
 export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
   bengo: [
@@ -108,7 +115,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Quibaxe", value: "quibaxe" },
     { label: "Quicunzo", value: "quicunzo" },
     { label: "Úcua", value: "ucua" },
-  ],
+  ].sort(sortByLabel),
 
   benguela: [
     { label: "Babaera", value: "babaera" },
@@ -134,7 +141,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Iambala", value: "iambala" },
     { label: "Lobito", value: "lobito" },
     { label: "Navegantes", value: "navegantes" },
-  ],
+  ].sort(sortByLabel),
 
   bie: [
     { label: "Andulo", value: "andulo" },
@@ -156,14 +163,14 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Nharêa", value: "nharea" },
     { label: "Ringoma", value: "ringoma" },
     { label: "Umpulo", value: "umpulo" },
-  ],
+  ].sort(sortByLabel),
 
   cabinda: [
     { label: "Belize", value: "belize" },
     { label: "Buco-Zau", value: "buco-zau" },
     { label: "Cabinda", value: "cabinda" },
     { label: "Cacongo", value: "cacongo" },
-  ],
+  ].sort(sortByLabel),
 
   cuando: [
     { label: "Calai", value: "calai" },
@@ -173,7 +180,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Luiana", value: "luiana" },
     { label: "Nancova", value: "nancova" },
     { label: "Rivungo", value: "rivungo" },
-  ],
+  ].sort(sortByLabel),
 
   cubango: [
     { label: "Cuchi", value: "cuchi" },
@@ -182,7 +189,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Menongue", value: "menongue" },
     { label: "Longa", value: "longa" },
     { label: "Cuito Cuanavale", value: "cuito-cuanavale" },
-  ],
+  ].sort(sortByLabel),
 
   "cuanza-norte": [
     { label: "Ambaca", value: "ambaca" },
@@ -195,7 +202,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Lucala", value: "lucala" },
     { label: "Quiculungo", value: "quiculungo" },
     { label: "Samba Cajú", value: "samba-caju" },
-  ],
+  ].sort(sortByLabel),
 
   "cuanza-sul": [
     { label: "Amboim", value: "amboim" },
@@ -210,7 +217,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Quilenda", value: "quilenda" },
     { label: "Seles", value: "seles" },
     { label: "Sumbe", value: "sumbe" },
-  ],
+  ].sort(sortByLabel),
 
   cunene: [
     { label: "Cahama", value: "cahama" },
@@ -219,7 +226,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Cuvelai", value: "cuvelai" },
     { label: "Namacunde", value: "namacunde" },
     { label: "Ombadja", value: "ombadja" },
-  ],
+  ].sort(sortByLabel),
 
   huambo: [
     { label: "Bailundo", value: "bailundo" },
@@ -233,7 +240,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Tchicala-Tcholoanga", value: "tchicala-tcholoanga" },
     { label: "Tchindjenje", value: "tchindjenje" },
     { label: "Ucuma", value: "ucuma" },
-  ],
+  ].sort(sortByLabel),
 
   huila: [
     { label: "Caconda", value: "caconda" },
@@ -250,7 +257,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Matala", value: "matala" },
     { label: "Quilengues", value: "quilengues" },
     { label: "Quipungo", value: "quipungo" },
-  ],
+  ].sort(sortByLabel),
 
   "icolo-e-bengo": [
     { label: "Catete", value: "catete" },
@@ -260,7 +267,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Quiçama", value: "quicama" },
     { label: "Cabiri", value: "cabiri" },
     { label: "Mussulo", value: "mussulo" },
-  ],
+  ].sort(sortByLabel),
 
   luanda: [
     { label: "Luanda", value: "luanda" },
@@ -279,7 +286,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Kilamba", value: "kilamba" },
     { label: "Camama", value: "camama" },
     { label: "Mulenvos", value: "mulenvos" },
-  ],
+  ].sort(sortByLabel),
 
   "lunda-norte": [
     { label: "Cambulo", value: "cambulo" },
@@ -292,14 +299,14 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Lubalo", value: "lubalo" },
     { label: "Lucapa", value: "lucapa" },
     { label: "Xá-Muteba", value: "xa-muteba" },
-  ],
+  ].sort(sortByLabel),
 
   "lunda-sul": [
     { label: "Cacolo", value: "cacolo" },
     { label: "Dala", value: "dala" },
     { label: "Muconda", value: "muconda" },
     { label: "Saurimo", value: "saurimo" },
-  ],
+  ].sort(sortByLabel),
 
   malanje: [
     { label: "Cacuso", value: "cacuso" },
@@ -316,7 +323,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Mucari", value: "mucari" },
     { label: "Quela", value: "quela" },
     { label: "Quirima", value: "quirima" },
-  ],
+  ].sort(sortByLabel),
 
   moxico: [
     { label: "Alto Zambeze", value: "alto-zambeze" },
@@ -328,7 +335,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Luacano", value: "luacano" },
     { label: "Lumbala Nguimbo", value: "lumbala-nguimbo" },
     { label: "Luchazes", value: "luchazes" },
-  ],
+  ].sort(sortByLabel),
 
   "moxico-leste": [
     { label: "Cazombo", value: "cazombo" },
@@ -340,7 +347,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Caianda", value: "caianda" },
     { label: "Lóvua do Zambeze", value: "lovua-do-zambeze" },
     { label: "Lago Dilolo", value: "lago-dilolo" },
-  ],
+  ].sort(sortByLabel),
 
   namibe: [
     { label: "Bibala", value: "bibala" },
@@ -348,7 +355,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Moçâmedes", value: "mocamedes" },
     { label: "Tômbua", value: "tombua" },
     { label: "Virei", value: "virei" },
-  ],
+  ].sort(sortByLabel),
 
   uige: [
     { label: "Ambuila", value: "ambuila" },
@@ -367,7 +374,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "Songo", value: "songo" },
     { label: "Uíge", value: "uige" },
     { label: "Maquela do Zombo", value: "maquela-do-zombo" },
-  ],
+  ].sort(sortByLabel),
 
   zaire: [
     { label: "Cuimba", value: "cuimba" },
@@ -376,7 +383,7 @@ export const angolaCitiesByProvince: Record<string, SelectItemType[]> = {
     { label: "N'Zeto", value: "nzeto" },
     { label: "Soyo", value: "soyo" },
     { label: "Tomboco", value: "tomboco" },
-  ],
+  ].sort(sortByLabel),
 };
 
 
@@ -390,22 +397,19 @@ export const caboVerdeIslandsList: SelectItemType[] = [
   { label: "Santiago", value: "santiago" },
   { label: "Fogo", value: "fogo" },
   { label: "Brava", value: "brava" },
-];
+].sort(sortByLabel);
 
 
-export const caboVerdeMunicipalitiesByIsland: Record<
-  string,
-  SelectItemType[]
-> = {
+export const caboVerdeMunicipalitiesByIsland: Record<string, SelectItemType[]> = {
   "santo-antao": [
     { label: "Ribeira Grande", value: "ribeira-grande" },
     { label: "Paul", value: "paul" },
     { label: "Porto Novo", value: "porto-novo" },
-  ],
+  ].sort(sortByLabel),
 
   "sao-vicente": [
     { label: "São Vicente", value: "sao-vicente" },
-  ],
+  ].sort(sortByLabel),
 
   "sao-nicolau": [
     { label: "Ribeira Brava", value: "ribeira-brava" },
@@ -413,19 +417,19 @@ export const caboVerdeMunicipalitiesByIsland: Record<
       label: "Tarrafal de São Nicolau",
       value: "tarrafal-de-sao-nicolau",
     },
-  ],
+  ].sort(sortByLabel),
 
   sal: [
     { label: "Sal", value: "sal" },
-  ],
+  ].sort(sortByLabel),
 
   "boa-vista": [
     { label: "Boa Vista", value: "boa-vista" },
-  ],
+  ].sort(sortByLabel),
 
   maio: [
     { label: "Maio", value: "maio" },
-  ],
+  ].sort(sortByLabel),
 
   santiago: [
     { label: "Tarrafal", value: "tarrafal" },
@@ -446,7 +450,7 @@ export const caboVerdeMunicipalitiesByIsland: Record<
       label: "Ribeira Grande de Santiago",
       value: "ribeira-grande-de-santiago",
     },
-  ],
+  ].sort(sortByLabel),
 
   fogo: [
     { label: "Mosteiros", value: "mosteiros" },
@@ -455,11 +459,11 @@ export const caboVerdeMunicipalitiesByIsland: Record<
       label: "Santa Catarina do Fogo",
       value: "santa-catarina-do-fogo",
     },
-  ],
+  ].sort(sortByLabel),
 
   brava: [
     { label: "Brava", value: "brava" },
-  ],
+  ].sort(sortByLabel),
 };
 
 
@@ -475,12 +479,9 @@ export const guineaBissauRegionsList: SelectItemType[] = [
   { label: "Tombali", value: "tombali" },
   { label: "Bolama-Bijagós", value: "bolama-bijagos" },
   { label: "Sector Autónomo de Bissau", value: "sector-autonomo-de-bissau" },
-];
+].sort(sortByLabel);
 
-export const guineaBissauSectorsByRegion: Record<
-  string,
-  SelectItemType[]
-> = {
+export const guineaBissauSectorsByRegion: Record<string, SelectItemType[]> = {
   bafata: [
     { label: "Bafatá", value: "bafata" },
     { label: "Bambadinca", value: "bambadinca" },
@@ -489,20 +490,20 @@ export const guineaBissauSectorsByRegion: Record<
     { label: "Galomaro", value: "galomaro" },
     { label: "Ganadu", value: "ganadu" },
     { label: "Xitole", value: "xitole" },
-  ],
+  ].sort(sortByLabel),
 
   biombo: [
     { label: "Safim", value: "safim" },
     { label: "Quinhamel", value: "quinhamel" },
     { label: "Prábis", value: "prabis" },
-  ],
+  ].sort(sortByLabel),
 
   bolama: [
     { label: "Bolama", value: "bolama" },
     { label: "Bubaque", value: "bubaque" },
     { label: "Caravela", value: "caravela" },
     { label: "Uno", value: "uno" },
-  ],
+  ].sort(sortByLabel),
 
   cacheu: [
     { label: "Cacheu", value: "cacheu" },
@@ -511,7 +512,7 @@ export const guineaBissauSectorsByRegion: Record<
     { label: "Bula", value: "bula" },
     { label: "Canchungo", value: "canchungo" },
     { label: "São Domingos", value: "sao-domingos" },
-  ],
+  ].sort(sortByLabel),
 
   gabu: [
     { label: "Gabú", value: "gabu" },
@@ -519,7 +520,7 @@ export const guineaBissauSectorsByRegion: Record<
     { label: "Pirada", value: "pirada" },
     { label: "Pitche", value: "pitche" },
     { label: "Sonaco", value: "sonaco" },
-  ],
+  ].sort(sortByLabel),
 
   oio: [
     { label: "Bissorã", value: "bissora" },
@@ -527,25 +528,25 @@ export const guineaBissauSectorsByRegion: Record<
     { label: "Mansabá", value: "mansaba" },
     { label: "Mansoa", value: "mansoa" },
     { label: "Nhacra", value: "nhacra" },
-  ],
+  ].sort(sortByLabel),
 
   quinara: [
     { label: "Buba", value: "buba" },
     { label: "Empada", value: "empada" },
     { label: "Fulacunda", value: "fulacunda" },
     { label: "Tite", value: "tite" },
-  ],
+  ].sort(sortByLabel),
 
   tombali: [
     { label: "Catió", value: "catio" },
     { label: "Bedanda", value: "bedanda" },
     { label: "Cacine", value: "cacine" },
     { label: "Quebo", value: "quebo" },
-  ],
+  ].sort(sortByLabel),
 
   "sector-autonomo-de-bissau": [
     { label: "Bissau", value: "bissau" },
-  ],
+  ].sort(sortByLabel),
 };
 
 
@@ -562,13 +563,10 @@ export const mozambiqueProvincesList: SelectItemType[] = [
   { label: "Sofala", value: "sofala" },
   { label: "Tete", value: "tete" },
   { label: "Zambézia", value: "zambezia" },
-];
+].sort(sortByLabel);
 
 
-export const mozambiqueDistrictsByProvince: Record<
-  string,
-  SelectItemType[]
-> = {
+export const mozambiqueDistrictsByProvince: Record<string, SelectItemType[]> = {
   "cabo-delgado": [
     { label: "Ancuabe", value: "ancuabe" },
     { label: "Balama", value: "balama" },
@@ -587,7 +585,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "Palma", value: "palma" },
     { label: "Pemba", value: "pemba" },
     { label: "Quissanga", value: "quissanga" },
-  ],
+  ].sort(sortByLabel),
 
   gaza: [
     { label: "Bilene", value: "bilene" },
@@ -601,7 +599,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "Massangena", value: "massangena" },
     { label: "Massingir", value: "massingir" },
     { label: "Xai-Xai", value: "xai-xai" },
-  ],
+  ].sort(sortByLabel),
 
   inhambane: [
     { label: "Funhalouro", value: "funhalouro" },
@@ -618,7 +616,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "Vilankulo", value: "vilankulo" },
     { label: "Zavala", value: "zavala" },
     { label: "Inhambane", value: "inhambane" },
-  ],
+  ].sort(sortByLabel),
 
   manica: [
     { label: "Bárue", value: "barue" },
@@ -632,7 +630,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "Sussundenga", value: "sussundenga" },
     { label: "Tambara", value: "tambara" },
     { label: "Vanduzi", value: "vanduzi" },
-  ],
+  ].sort(sortByLabel),
 
   maputo: [
     { label: "Boane", value: "boane" },
@@ -642,7 +640,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "Matutuíne", value: "matutuine" },
     { label: "Moamba", value: "moamba" },
     { label: "Namaacha", value: "namaacha" },
-  ],
+  ].sort(sortByLabel),
 
   "maputo-cidade": [
     { label: "KaMpfumo", value: "kam pfumo" },
@@ -652,7 +650,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "KaMubukwana", value: "kamubukwana" },
     { label: "KaTembe", value: "katembe" },
     { label: "KaNyaka", value: "kanyaka" },
-  ],
+  ].sort(sortByLabel),
 
   nampula: [
     { label: "Angoche", value: "angoche" },
@@ -674,7 +672,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "Nacarôa", value: "nacaroa" },
     { label: "Nampula", value: "nampula" },
     { label: "Ribáuè", value: "ribaue" },
-  ],
+  ].sort(sortByLabel),
 
   niassa: [
     { label: "Chimbonila", value: "chimbonila" },
@@ -693,7 +691,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "N'gauma", value: "ngauma" },
     { label: "Nipepe", value: "nipepe" },
     { label: "Sanga", value: "sanga" },
-  ],
+  ].sort(sortByLabel),
 
   sofala: [
     { label: "Beira", value: "beira" },
@@ -709,7 +707,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "Marromeu", value: "marromeu" },
     { label: "Muanza", value: "muanza" },
     { label: "Nhamatanda", value: "nhamatanda" },
-  ],
+  ].sort(sortByLabel),
 
   tete: [
     { label: "Angónia", value: "angonia" },
@@ -726,7 +724,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "Mutarara", value: "mutarara" },
     { label: "Tsangano", value: "tsangano" },
     { label: "Zumbo", value: "zumbo" },
-  ],
+  ].sort(sortByLabel),
 
   zambezia: [
     { label: "Alto Molócuè", value: "alto-molocue" },
@@ -747,7 +745,7 @@ export const mozambiqueDistrictsByProvince: Record<
     { label: "Nicoadala", value: "nicoadala" },
     { label: "Pebane", value: "pebane" },
     { label: "Quelimane", value: "quelimane" },
-  ],
+  ].sort(sortByLabel),
 };
 
 
@@ -760,46 +758,43 @@ export const saoTomePrincipeRegionsList: SelectItemType[] = [
   { label: "Lobata", value: "lobata" },
   { label: "Mé-Zóchi", value: "me-zóchi" },
   { label: "Região Autónoma do Príncipe", value: "regiao-autonoma-do-principe" },
-];
+].sort(sortByLabel);
 
 
-export const saoTomePrincipeCitiesByRegion: Record<
-  string,
-  SelectItemType[]
-> = {
+export const saoTomePrincipeCitiesByRegion: Record<string, SelectItemType[]> = {
   "agua-grande": [
     { label: "São Tomé", value: "sao-tome" },
     { label: "Pantufo", value: "pantufo" },
     { label: "Riboque", value: "riboque" },
     { label: "Trindade", value: "trindade" },
-  ],
+  ].sort(sortByLabel),
 
   cantagalo: [
     { label: "Santana", value: "santana" },
     { label: "Agostinho Neto", value: "agostinho-neto" },
     { label: "Água Izé", value: "agua-ize" },
     { label: "Ribeira Afonso", value: "ribeira-afonso" },
-  ],
+  ].sort(sortByLabel),
 
   caue: [
     { label: "São João dos Angolares", value: "sao-joao-dos-angolares" },
     { label: "Porto Alegre", value: "porto-alegre" },
     { label: "Santa Catarina", value: "santa-catarina" },
-  ],
+  ].sort(sortByLabel),
 
   lemba: [
     { label: "Neves", value: "neves" },
     { label: "Santa Catarina", value: "santa-catarina" },
     { label: "Ponta Figo", value: "ponta-figo" },
     { label: "Ribeira Funda", value: "ribeira-funda" },
-  ],
+  ].sort(sortByLabel),
 
   lobata: [
     { label: "Guadalupe", value: "guadalupe" },
     { label: "Santo António", value: "santo-antonio" },
     { label: "Micoló", value: "micolo" },
     { label: "Morés", value: "mores" },
-  ],
+  ].sort(sortByLabel),
 
   "me-zóchi": [
     { label: "Trindade", value: "trindade" },
@@ -808,7 +803,7 @@ export const saoTomePrincipeCitiesByRegion: Record<
     { label: "Monte Café", value: "monte-cafe" },
     { label: "São Carlos", value: "sao-carlos" },
     { label: "Piedade", value: "piedade" },
-  ],
+  ].sort(sortByLabel),
 
   "regiao-autonoma-do-principe": [
     { label: "Santo António", value: "santo-antonio" },
@@ -817,7 +812,7 @@ export const saoTomePrincipeCitiesByRegion: Record<
     { label: "Sundy", value: "sundy" },
     { label: "Praia Abade", value: "praia-abade" },
     { label: "Infante Dom Henrique", value: "infante-dom-henrique" },
-  ],
+  ].sort(sortByLabel),
 };
 
 
@@ -836,26 +831,23 @@ export const timorLesteMunicipalitiesList: SelectItemType[] = [
   { label: "Manufahi", value: "manufahi" },
   { label: "Oe-Cusse Ambeno", value: "oe-cusse-ambeno" },
   { label: "Viqueque", value: "viqueque" },
-];
+].sort(sortByLabel);
 
 
-export const timorLesteAdministrativePostsByMunicipality: Record<
-  string,
-  SelectItemType[]
-> = {
+export const timorLesteAdministrativePostsByMunicipality: Record<string, SelectItemType[]> = {
   aileu: [
     { label: "Aileu", value: "aileu" },
     { label: "Laulara", value: "laulara" },
     { label: "Lequidoe", value: "lequidoe" },
     { label: "Remexio", value: "remexio" },
-  ],
+  ].sort(sortByLabel),
 
   ainaro: [
     { label: "Ainaro", value: "ainaro" },
     { label: "Hato-Udo", value: "hato-udo" },
     { label: "Hatu-Builico", value: "hatu-builico" },
     { label: "Maubisse", value: "maubisse" },
-  ],
+  ].sort(sortByLabel),
 
   baucau: [
     { label: "Baguia", value: "baguia" },
@@ -863,7 +855,7 @@ export const timorLesteAdministrativePostsByMunicipality: Record<
     { label: "Laga", value: "laga" },
     { label: "Quelicai", value: "quelicai" },
     { label: "Vemasse", value: "vemasse" },
-  ],
+  ].sort(sortByLabel),
 
   bobonaro: [
     { label: "Atabae", value: "atabae" },
@@ -872,7 +864,7 @@ export const timorLesteAdministrativePostsByMunicipality: Record<
     { label: "Cailaco", value: "cailaco" },
     { label: "Lolotoe", value: "lolotoe" },
     { label: "Maliana", value: "maliana" },
-  ],
+  ].sort(sortByLabel),
 
   covalima: [
     { label: "Fatumean", value: "fatumean" },
@@ -881,7 +873,7 @@ export const timorLesteAdministrativePostsByMunicipality: Record<
     { label: "Maucatar", value: "maucatar" },
     { label: "Suai", value: "suai" },
     { label: "Tilomar", value: "tilomar" },
-  ],
+  ].sort(sortByLabel),
 
   dili: [
     { label: "Atauro", value: "atauro" },
@@ -890,7 +882,7 @@ export const timorLesteAdministrativePostsByMunicipality: Record<
     { label: "Naimeco", value: "naimeco" },
     { label: "Metinaro", value: "metinaro" },
     { label: "Vera Cruz", value: "vera-cruz" },
-  ],
+  ].sort(sortByLabel),
 
   ermera: [
     { label: "Atsabe", value: "atsabe" },
@@ -899,7 +891,7 @@ export const timorLesteAdministrativePostsByMunicipality: Record<
     { label: "Hatulia B", value: "hatulia-b" },
     { label: "Letefoho", value: "letefoho" },
     { label: "Railaco", value: "railaco" },
-  ],
+  ].sort(sortByLabel),
 
   lautem: [
     { label: "Iliomar", value: "iliomar" },
@@ -907,13 +899,13 @@ export const timorLesteAdministrativePostsByMunicipality: Record<
     { label: "Lospalos", value: "lospalos" },
     { label: "Luro", value: "luro" },
     { label: "Tutuala", value: "tutuala" },
-  ],
+  ].sort(sortByLabel),
 
   liquica: [
     { label: "Bazartete", value: "bazartete" },
     { label: "Liquiçá", value: "liquica" },
     { label: "Maubara", value: "maubara" },
-  ],
+  ].sort(sortByLabel),
 
   manatuto: [
     { label: "Barique", value: "barique" },
@@ -921,21 +913,21 @@ export const timorLesteAdministrativePostsByMunicipality: Record<
     { label: "Lacluta", value: "lacluta" },
     { label: "Manatuto", value: "manatuto" },
     { label: "Soibada", value: "soibada" },
-  ],
+  ].sort(sortByLabel),
 
   manufahi: [
     { label: "Alas", value: "alas" },
     { label: "Fatuberlio", value: "fatuberlio" },
     { label: "Same", value: "same" },
     { label: "Turiscai", value: "turiscai" },
-  ],
+  ].sort(sortByLabel),
 
   "oe-cusse-ambeno": [
     { label: "Citrana", value: "citrana" },
     { label: "Nitibe", value: "nitibe" },
     { label: "Oesilo", value: "oesilo" },
     { label: "Pante Macassar", value: "pante-macassar" },
-  ],
+  ].sort(sortByLabel),
 
   viqueque: [
     { label: "Lacluta", value: "lacluta" },
@@ -943,5 +935,7 @@ export const timorLesteAdministrativePostsByMunicipality: Record<
     { label: "Uatucarbau", value: "uatucarbau" },
     { label: "Uatolari", value: "uatolari" },
     { label: "Viqueque", value: "viqueque" },
-  ],
+  ].sort(sortByLabel),
 };
+
+

@@ -3,7 +3,7 @@ export type NewsType = {
     title: string;
     description: string;
     date: string;
-    location: string;
+    location: string[] | string;
     countries: string[];
     themes?: string[]
     category: string;
@@ -55,8 +55,7 @@ A REDE e o INICC comprometeram-se a realizar mais encontros desta natureza, para
             "Dados do Setor",
             "Green Filming",
             "Regulamentação",
-            "Estratégias",
-            "Nacionais",
+            "Estratégias Nacionais",
             "Debates"
         ],
         category: "projetos-da-rede",
@@ -76,8 +75,8 @@ Quatro formadores principais e uma série de convidados integram a equipa que va
 Os Labs integram ainda três sessões híbridas abertas a outr@s interessados. Os temas Conservação e Ambiente; Representação e Género; e Cinema de Impacto, serão o foco destas sessões, cujas inscrições devem ser feitas através de um formulário online.<br/><br/>
 A REDE de Cinema e Audiovisual PALOP+TL propõe-se assim, contribuir para a capacitação de jovens emergentes sobre temáticas transversais.
 `,
-        date: "Julho, 2026",
-        location: "Moçambique, Cabo Verde, Angola, São Tomé e Príncipe",
+        date: "Julho, 2026", 
+        location: ["Moçambique", "Cabo Verde", "Angola", "São Tomé e Príncipe"],
         countries: ["mocambique", "cabo-verde", "angola", "sao-tome-e-principe"],
         themes: [
             "Workshops",
@@ -104,7 +103,7 @@ O documento final de recomendações será apresentado às instituições compet
 Adicionalmente, serão também elaboradas as bases para a realização de um estudo de caso, em Moçambique.
 `,
         date: "Julho, 2026",
-        location: "Angola, Cabo Verde, Guiné-Bissau, Moçambique, São Tomé e Príncipe, Timor-Leste",
+        location: ["Angola", "Cabo Verde", "Guiné-Bissau", "Moçambique", "São Tomé e Príncipe", "Timor-Leste"],
         countries: ["angola", "cabo-verde", "guine-bissau", "mocambique", "sao-tome-e-principe", "timor-leste"],
         themes: [
             "Film Commisssions",
@@ -112,8 +111,7 @@ Adicionalmente, serão também elaboradas as bases para a realização de um est
             "Investimento",
             "Quadro Legal",
             "Coprodução",
-            "Incentivos",
-            "Fiscais",
+            "Incentivos Fiscais",
             "Regulamentação"
         ],
         category: "investigacao",

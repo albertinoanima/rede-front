@@ -166,8 +166,9 @@ const StatRow: React.FC<{
 );
 
 const InfoCard: React.FC<{ country: CountryData }> = ({ country }) => (
-  <div className="absolute top-20 right-4 z-20 w-[190px] animate-[fadeIn_0.3s_ease] rounded-xl bg-[#f5c518] px-4 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)] sm:top-25 sm:right-6 sm:w-[220px] sm:rounded-2xl sm:px-6 sm:py-5 lg:top-[300px] lg:right-auto 
-  lg:left-[calc(50%+150px)] lg:w-auto lg:min-w-[220px] lg:-translate-x-1/2 lg:px-8 lg:py-6">
+  <div className="absolute top-[450px] right-4 z-20 w-[190px] animate-[fadeIn_0.3s_ease] rounded-xl bg-[#f5c518] px-4 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)] sm:top-[450px] sm:right-6 sm:w-[220px] sm:rounded-2xl sm:px-6 sm:py-5 
+  lg:top-[420px] lg:right-auto 
+  lg:left-[calc(50%+450px)] lg:w-auto lg:min-w-[220px] lg:-translate-x-1/2 lg:px-8 lg:py-6">
     <h2 className="mb-3 pr-4 text-base leading-tight font-medium text-[#1a1a1a] sm:mb-4 sm:text-xl lg:text-[22px]">
       {country.name}
     </h2>
@@ -503,8 +504,8 @@ const PalopMapSection: React.FC = () => {
 
       <div className="mx-auto flex w-full max-w-lg flex-col gap-6 px-4 py-8 lg:contents">
         <Text className="text-sm text-center font-semibold leading-6">
-          Conecta-te a realizadores, produtores, técnicos e criativos dos PALOP + Timor-Leste, fortalece a <br/>
-          tua rede profissional e descobre novas oportunidades de colaboração, circulação e desenvolvimento 
+          Conecta-te a realizadores, produtores, técnicos e criativos dos PALOP + Timor-Leste,<br/> fortalece a
+          tua rede profissional e descobre novas oportunidades de colaboração,<br/> circulação e desenvolvimento 
           no setor audiovisual.
         </Text>
 

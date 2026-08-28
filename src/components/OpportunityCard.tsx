@@ -31,7 +31,7 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
       footer={
         <div className="w-full h-12 flex items-center justify-between gap-4 mt-2">
           <Text className="text-[14px] leading-relaxed font-medium line-clamp-2">
-            {opportunityData.description}
+            {/* {opportunityData.description} */}
           </Text>
 
           <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} onClick={() => console.log("htddhdt")} />

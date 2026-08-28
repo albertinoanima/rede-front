@@ -71,30 +71,34 @@ export function getNewsYearOptions(news: NewsType[]): SelectItemType[] {
 
 
 
+// O location chega em tr\u00eas formatos: um s\u00edtio s\u00f3 ("Cabo Verde"), uma lista
+// (["Mo\u00e7ambique", "Angola"]) ou v\u00e1rios s\u00edtios num texto separados por v\u00edrgulas.
+// Reduzir sempre a um array evita tratar cada caso pelo caminho \u2014 e \u00e9 o que
+// faltava, porque um array n\u00e3o tem .normalize().
+export const toLocationLabels = (location?: NewsType['location']): string[] =>
+  (Array.isArray(location) ? location : String(location ?? '').split(','))
+    .map((place) => place.trim())
+    .filter(Boolean)
+
+const toLocationValues = (location: NewsType['location']): string[] =>
+  toLocationLabels(location).map(normalizeNewsValue).filter(Boolean)
+
+// Duas not\u00edcias s\u00e3o semelhantes quando partilham pelo menos um s\u00edtio: exigir a
+// lista inteira igual deixaria sem sugest\u00f5es as not\u00edcias de v\u00e1rios pa\u00edses.
 export function getSimilarNews(
   currentNews: NewsType,
   news: NewsType[],
   limit = 3,
 ): NewsType[] {
-  const currentLocation = currentNews.location
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim()
-    .toLowerCase();
+  const currentLocations = new Set(toLocationValues(currentNews.location))
 
   return news
-    .filter((item) => {
-      if (item.id === currentNews.id) {
-        return false;
-      }
-
-      const itemLocation = item.location
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .trim()
-        .toLowerCase();
-
-      return itemLocation === currentLocation;
-    })
-    .slice(0, limit);
+    .filter(
+      (item) =>
+        item.id !== currentNews.id &&
+        toLocationValues(item.location).some((location) =>
+          currentLocations.has(location),
+        ),
+    )
+    .slice(0, limit)
 }

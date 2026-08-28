@@ -101,14 +101,14 @@ export const TopBar: React.FC = () => {
         <Link
           href="/"
           aria-label="Ir para a página inicial"
-          className="h-16 w-32 shrink-0 sm:w-36"
+          className="h-16 w-32 shrink-0 sm:w-40"
         >
           <Image
             src="/assets/logo-small.png"
             alt="Logótipo da REDE"
-            width={144}
+            width={183}
             height={64}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain object-left"
             priority
           />
         </Link>

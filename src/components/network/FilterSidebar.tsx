@@ -13,6 +13,7 @@ import {
   CountryCode,
   profileTypesList,
   provincesByCountry,
+  sortByLabel,
   subCategoriesByType,
 } from './data'
 
@@ -53,15 +54,21 @@ export const normalizeNetworkValue = (value: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
 
+// Cada lista de origem já vem ordenada, mas juntar várias (todas as categorias,
+// todas as cidades) devolveria um bloco alfabético por lista em vez de uma
+// ordem só, por isso o resultado volta a ser ordenado aqui. O filter devolve um
+// array novo, portanto o sort não mexe nas listas originais.
 const uniqueOptions = (options: SelectItemType[]) => {
   const seen = new Set<string>()
 
-  return options.filter((option) => {
-    if (seen.has(option.value)) return false
+  return options
+    .filter((option) => {
+      if (seen.has(option.value)) return false
 
-    seen.add(option.value)
-    return true
-  })
+      seen.add(option.value)
+      return true
+    })
+    .sort(sortByLabel)
 }
 
 const optionMatches = (option: SelectItemType, value: string) => {

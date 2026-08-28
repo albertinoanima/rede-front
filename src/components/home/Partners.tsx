@@ -114,14 +114,19 @@ const PARTNER_ROWS: PartnerRow[] = [
           src: "/assets/partners/uniao-europeia.png",
           alt: "União Europeia",
         },
+        // Estes dois andam sempre juntos. Em ecrãs pequenos os LogoBox têm
+        // largura fixa e não cabem dois por linha, por isso o par passa a
+        // ocupar meia linha cada até ao lg, onde volta à largura normal. A
+        // margem negativa anula o gap e encosta um ao outro.
         {
           src: "/assets/partners/palop-tl.png",
           alt: "PALOP e Timor-Leste",
+          className: "!w-[calc(50%_-_2px)] basis-[calc(50%_-_2px)] lg:!w-[200px] lg:basis-auto",
         },
         {
           src: "/assets/partners/ue.png",
           alt: "União Europeia",
-          className: "lg:-ml-2",
+          className: "-ml-2 !w-[calc(50%_-_2px)] basis-[calc(50%_-_2px)] lg:!w-[200px] lg:basis-auto",
         },
       ],
     },

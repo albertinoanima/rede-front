@@ -71,7 +71,14 @@ export const SectionViewNews: React.FC<{ selectedNews: NewsType }> = ({ selected
         <div className="w-full max-w-350 h-auto mr-auto ml-auto pt-16 pb-16 bg-rede-bg">
             <div className="w-full flex flex-col gap-2 border-b-[1.3px] border-rede-white pb-6">
                 <div className="flex items-center gap-2">
-                    <Tag href={"/news?tag=" + selectedNews?.location} label={selectedNews?.location} />
+                    {
+                        Array.isArray(selectedNews?.location) ?
+                        selectedNews?.location?.map((location: string, index) => (
+                            <Tag href={"/news?tag=" + location} label={location} key={location + index} />
+                        )) :
+                        <Tag href={"/news?tag=" + selectedNews?.location} label={selectedNews?.location} />
+                    }
+
                     <Text className="text-[12px] leading-[16px]">{selectedNews?.date}</Text>
                 </div>
 
