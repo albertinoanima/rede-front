@@ -2,76 +2,22 @@ import { customBlur } from "@/app/fonts";
 import { Tag } from "@/components/Tag";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import { Select, SelectOption } from "@/components/ui/select";
-import {
-    categoriesByType,
-    subCategoriesByType,
-} from "@/components/network/data";
+import { SelectOption } from "@/components/ui/select";
+import { getCategoriesByAccountType } from "@/components/network/data";
 import { User } from "@/types/User";
 import { Edit2, X } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { Text } from "@/components/ui/text";
+import { InputSelect } from "@/components/ui/input-select";
 
 type ProfileData = User["profileData"];
-type NetworkProfileType = "profissionais" | "empresa" | "festival" | "instituicao";
 
+// As competencias disponiveis dependem apenas do tipo de conta: contas de
+// empresa escolhem entre as categorias de empresa, as restantes (individual)
+// entre as categorias de profissionais.
+export const getSkillOptions = (profileData?: ProfileData): SelectOption[] =>
+    getCategoriesByAccountType(profileData?.accountType);
 
-const getProfileType = (profileData?: ProfileData): NetworkProfileType => {
-    const legacyProfileData = profileData as (ProfileData & {
-        type?: string;
-        profileType?: string;
-    }) | undefined;
-    const legacyType = legacyProfileData?.type ?? legacyProfileData?.profileType;
-
-    if (
-        legacyType === "profissionais" ||
-        legacyType === "empresa" ||
-        legacyType === "festival" ||
-        legacyType === "instituicao"
-    ) {
-        return legacyType;
-    }
-
-    return profileData?.accountType === "company" ? "empresa" : "profissionais";
-};
-
-const getCategoryOptions = (selectedType: NetworkProfileType): SelectOption[] =>
-    categoriesByType[selectedType] ?? [];
-
-const uniqueOptions = (options: SelectOption[]): SelectOption[] => {
-    const seen = new Set<string>();
-
-    return options.filter((option) => {
-        if (seen.has(option.value)) return false;
-
-        seen.add(option.value);
-        return true;
-    });
-};
-
-export const getSkillOptions = (profileData?: ProfileData): SelectOption[] => {
-    const selectedType = getProfileType(profileData);
-    const categoriesByType = subCategoriesByType[selectedType] ?? {};
-    const categoryOptions = getCategoryOptions(selectedType);
-    const profession = profileData?.profession;
-    const selectedCategory = categoryOptions.find(
-        (option) => option.value === profession || option.label === profession,
-    )?.value;
-
-    if (selectedCategory && categoriesByType[selectedCategory]?.length) {
-        return categoriesByType[selectedCategory];
-    }
-
-    const typeOptions = Object.values(categoriesByType).flat();
-
-    if (typeOptions.length) {
-        return uniqueOptions(typeOptions);
-    }
-
-    return uniqueOptions(
-        Object.values(subCategoriesByType).flatMap((categoryMap) => Object.values(categoryMap).flat()),
-    );
-};
 type SectionEditSkillsProps = {
     isAuthenticated?: boolean;
     isEditingSkils?: boolean;
@@ -93,7 +39,12 @@ export const SectionEditSkills: React.FC<SectionEditSkillsProps> = ({
 }) => {
     const [draftSkills, setDraftSkills] = useState<string[]>(skills);
     const visibleSkills = isEditingSkils ? draftSkills : skills;
-    const skillOptions = getSkillOptions(profileData).filter((option) => !draftSkills.includes(option.label) && !draftSkills.includes(option.value));
+    const skillOptions = useMemo(
+        () => getSkillOptions(profileData).filter(
+            (option) => !draftSkills.includes(option.label) && !draftSkills.includes(option.value),
+        ),
+        [profileData, draftSkills],
+    );
 
     const startEditing = () => {
         setDraftSkills(skills);
@@ -171,12 +122,12 @@ export const SectionEditSkills: React.FC<SectionEditSkillsProps> = ({
                     }
                 </div>
 
-
                 {isEditingSkils && (
-                    <Select
+                    <InputSelect
                         variant="secondary"
                         value=""
-                        placeholder="Selecione a subcategoria"
+                        allowFreeText={false}
+                        placeholder="Digite ou selecione a competência"
                         options={skillOptions}
                         triggerClassName="border-[1.3px] border-white px-3 text-rede-white outline-none"
                         popoverClassName="rounded-[8px] border-[1.3px] border-white px-3 text-rede-white outline-none mt-[10px]"

@@ -8,6 +8,7 @@ import { customBlur } from "@/app/fonts"
 import { Modal } from "@/components/ui/modal"
 import { ImageCropUploader } from "@/components/ImageCropUploader"
 import Link from "next/link"
+import { getCountryLabel } from "@/components/network/filters"
 
 type ProfileData = User["profileData"];
 
@@ -63,7 +64,7 @@ export const ShowProfile: React.FC<ShowProfileType> = ({
 }) => {
   const [isAvatarCropOpen, setIsAvatarCropOpen] = useState(false);
   const displayName = profile?.name || profileData.artisticName || profileData.commercialName || "Perfil";
-  const location = [profileData.city, profileData.country].filter(Boolean).join(", ");
+  const location = [profileData.city, getCountryLabel(profileData.country)].filter(Boolean).join(", ");
   const website = profileData.socialLinks?.website;
   const coreSkills = profileData.coreSkills ?? [];
   const coreSkillsLabel = coreSkills.join(" | ");

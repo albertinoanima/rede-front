@@ -18,6 +18,16 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 
+// Em portugues escreve-se muitas vezes sem acento ao pesquisar: 'producao'
+// tem de encontrar 'Produção'. Serve para comparar textos, nunca para os
+// mostrar.
+export function normalizeText(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+}
+
 export function withCurrentColor(icon: ReactNode) {
   if (!isValidElement<{ className?: string }>(icon)) return icon
   return cloneElement(icon, {

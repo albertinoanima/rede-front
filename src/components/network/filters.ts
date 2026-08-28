@@ -1,3 +1,5 @@
+import { normalizeText } from '@/lib/utils'
+
 export type SelectItemType = {
   label: string;
   value: string
@@ -30,6 +32,43 @@ export const countriesList: SelectItemType[] = [
   },
 ];
 
+
+
+// O mesmo sitio pode chegar guardado de formas diferentes: o slug do
+// formulario ('mocambique'), o texto da API ('Moçambique') ou variantes sem
+// acento ('Guine-Bissau'). A chave normalizada faz com que todas cheguem ao
+// mesmo label.
+export const normalizeLabelKey = (value: string): string =>
+  normalizeText(value)
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+// Indexa cada opcao pelo value e pelo label, para que qualquer um deles
+// devolva o label canonico. A primeira lista a definir uma chave ganha.
+export const buildLabelIndex = (
+  ...lists: SelectItemType[][]
+): Map<string, string> =>
+  lists.flat().reduce((index, { label, value }) => {
+    for (const key of [value, label]) {
+      const normalizedKey = normalizeLabelKey(key)
+
+      if (normalizedKey && !index.has(normalizedKey)) index.set(normalizedKey, label)
+    }
+
+    return index
+  }, new Map<string, string>())
+
+// Um valor que nao esteja nas listas e devolvido tal e qual: dados antigos e
+// texto livre continuam a aparecer.
+export const getLabelFromIndex = (
+  index: Map<string, string>,
+  value?: string,
+): string => (value && index.get(normalizeLabelKey(value))) || value || ''
+
+const countryLabels = buildLabelIndex(countriesList)
+
+export const getCountryLabel = (value?: string): string =>
+  getLabelFromIndex(countryLabels, value)
 
 export const angolaProvincesList: SelectItemType[] = [
   { label: "Bengo", value: "bengo" },

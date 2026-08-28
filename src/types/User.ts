@@ -20,6 +20,7 @@ export type ProfileFilm = {
     cover: string;
     duration?: string;
     link?: string;
+    roles?: string[];
 };
 
 export interface User {

@@ -133,12 +133,14 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
             <Filmography
                 isAuthenticated={isAuthenticated}
                 films={profileData.filmography}
+                accountType={profileData.accountType}
                 isSaving={isSaving}
                 onSaveFilms={(filmography) => saveProfileData({ filmography })}
             />
             {/* <OutsideAgency
                 isAuthenticated={isAuthenticated}
                 films={profileData.outsideAgency}
+                accountType={profileData.accountType}
                 isSaving={isSaving}
                 onSaveFilms={(outsideAgency) => saveProfileData({ outsideAgency })}
             /> */}

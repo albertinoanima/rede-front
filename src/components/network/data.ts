@@ -1,7 +1,8 @@
 //
 
+import { AccountType } from "@/types/User";
 import { ProfileType } from "../ProfileCard";
-import { angolaCitiesByProvince, angolaProvincesList, caboVerdeIslandsList, caboVerdeMunicipalitiesByIsland, guineaBissauRegionsList, guineaBissauSectorsByRegion, mozambiqueDistrictsByProvince, mozambiqueProvincesList, saoTomePrincipeCitiesByRegion, saoTomePrincipeRegionsList, SelectItemType, timorLesteAdministrativePostsByMunicipality, timorLesteMunicipalitiesList } from "./filters";
+import { angolaCitiesByProvince, angolaProvincesList, buildLabelIndex, countriesList, getLabelFromIndex, caboVerdeIslandsList, caboVerdeMunicipalitiesByIsland, guineaBissauRegionsList, guineaBissauSectorsByRegion, mozambiqueDistrictsByProvince, mozambiqueProvincesList, saoTomePrincipeCitiesByRegion, saoTomePrincipeRegionsList, SelectItemType, timorLesteAdministrativePostsByMunicipality, timorLesteMunicipalitiesList } from "./filters";
 
 
 //Array de perfis
@@ -454,6 +455,59 @@ export type ProfileTypeCode =
   | 'festival'
   | 'instituicao'
   | 'profissionais'
+
+// As categorias que uma conta pode escolher dependem apenas do tipo de conta:
+// contas de empresa usam as categorias de empresa, individuais as de
+// profissionais. E a mesma regra em qualquer sitio onde se escolhe uma
+// categoria a partir do perfil autenticado.
+export const getCategoriesByAccountType = (
+  accountType?: AccountType,
+): SelectItemType[] =>
+  accountType === 'company' ? companiesCategoryList : professionalCategoriesList
+
+// Temas e generos dos filmes. Ficam aqui, ao lado das restantes listas, para
+// que tanto o formulario como os cartoes leiam a mesma fonte.
+export const filmThemeOptions: SelectItemType[] = [
+  { label: 'Ambiente', value: 'ambiente' },
+  { label: 'Cultura', value: 'cultura' },
+  { label: 'Direitos humanos', value: 'direitos-humanos' },
+  { label: 'Educação', value: 'educacao' },
+  { label: 'Família', value: 'familia' },
+  { label: 'Gênero e representação', value: 'genero-e-representacao' },
+  { label: 'História', value: 'historia' },
+  { label: 'Identidade', value: 'identidade' },
+  { label: 'Juventude', value: 'juventude' },
+  { label: 'Migração', value: 'migracao' },
+]
+
+export const filmGenreOptions: SelectItemType[] = [
+  { label: 'Animação', value: 'animacao' },
+  { label: 'Comédia', value: 'comedia' },
+  { label: 'Documentário', value: 'documentario' },
+  { label: 'Drama', value: 'drama' },
+  { label: 'Experimental', value: 'experimental' },
+  { label: 'Ficção', value: 'ficcao' },
+  { label: 'Híbrido', value: 'Hibrido' },
+  { label: 'Longa-metragem', value: 'longa-metragem' },
+  { label: 'Série', value: 'serie' },
+  { label: 'Short film', value: 'short-film' },
+  { label: 'Videoclipe', value: 'videoclipe' },
+]
+
+// Guarda-se sempre o value (ex.: 'mocambique'), mas nos cartoes mostra-se o
+// label ('Moçambique'). O indice e construido uma vez, cobre todas as listas
+// que alimentam o formulario do filme e cai para o proprio value quando nao
+// ha correspondencia.
+const filmLabels = buildLabelIndex(
+  countriesList,
+  filmGenreOptions,
+  filmThemeOptions,
+  professionalCategoriesList,
+  companiesCategoryList,
+)
+
+export const getFilmTagLabel = (value?: string): string =>
+  getLabelFromIndex(filmLabels, value)
 
 export const categoriesByType: Record<string, SelectItemType[]> = {
   empresa: companiesCategoryList,

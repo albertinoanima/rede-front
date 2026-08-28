@@ -1,7 +1,7 @@
 // components/ui/input-select.tsx
 import * as React from 'react'
 import { cva } from 'class-variance-authority'
-import { cn } from '@/lib/utils'
+import { cn, normalizeText } from '@/lib/utils'
 import { Check, ChevronDown } from 'lucide-react'
 
 import { createPortal } from 'react-dom'
@@ -122,29 +122,13 @@ export const InputSelect = ({
 
   const filteredOptions = React.useMemo(() => {
     if (!query) return options
-    const q = query.toLowerCase()
-    return options.filter((opt) => opt.label.toLowerCase().includes(q))
+    const q = normalizeText(query)
+    return options.filter((opt) => normalizeText(opt.label).includes(q))
   }, [options, query])
 
   React.useEffect(() => {
     setHighlightedIndex(0)
   }, [query, isOpen])
-
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
-        // se não for free text, reverte pro último valor válido ao perder foco
-        if (!allowFreeText) {
-          const selected = options.find((opt) => opt.value === value)
-          setQuery(selected ? selected.label : '')
-        }
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [allowFreeText, options, value])
-
 
   const selectOption = (option: InputSelectOption) => {
     setQuery(option.label)

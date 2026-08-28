@@ -1,14 +1,24 @@
 "use client";
 
 import { ensureHttps } from "@/actions";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Modal } from "./ui/modal";
 import { Input } from "./ui/Input";
 import { Button } from "./ui/button";
 import { Text } from "./ui/text";
-import { Select, SelectOption } from "./ui/select";
+import { Select } from "./ui/select";
 import { ImageCropUploader } from "./ImageCropUploader";
 import { countriesList } from "./network/filters";
+import {
+  filmGenreOptions,
+  filmThemeOptions,
+  getCategoriesByAccountType,
+  getFilmTagLabel,
+} from "./network/data";
+import { AccountType } from "@/types/User";
+import { InputSelect } from "./ui/input-select";
+import { Tag } from "./Tag";
+import { X } from "lucide-react";
 
 export type FilmFormData = {
   id?: string;
@@ -18,6 +28,7 @@ export type FilmFormData = {
   country: string;
   theme: string;
   genre: string;
+  roles: string[];
   link: string;
   cover: string;
 };
@@ -29,35 +40,14 @@ const EMPTY_FORM: FilmFormData = {
   country: "",
   theme: "",
   genre: "",
+  roles: [],
   link: "",
   cover: "",
 };
 
-const filmThemeOptions: SelectOption[] = [
-  { label: "Ambiente", value: "ambiente" },
-  { label: "Cultura", value: "cultura" },
-  { label: "Direitos humanos", value: "direitos-humanos" },
-  { label: "Educação", value: "educacao" },
-  { label: "Família", value: "familia" },
-  { label: "Gênero e representação", value: "genero-e-representacao" },
-  { label: "História", value: "historia" },
-  { label: "Identidade", value: "identidade" },
-  { label: "Juventude", value: "juventude" },
-  { label: "Migração", value: "migracao" },
-];
-
-const filmGenreOptions: SelectOption[] = [
-  { label: "Animação", value: "animacao" },
-  { label: "Comédia", value: "comedia" },
-  { label: "Documentário", value: "documentario" },
-  { label: "Drama", value: "drama" },
-  { label: "Experimental", value: "experimental" },
-  { label: "Ficção", value: "ficcao" },
-  { label: "Longa-metragem", value: "longa-metragem" },
-  { label: "Série", value: "serie" },
-  { label: "Short film", value: "short-film" },
-  { label: "Videoclipe", value: "videoclipe" },
-];
+// Mais do que tres funcoes deixam o cartao do filme ilegivel, por isso o
+// limite vive aqui e e aplicado tanto ao adicionar como ao normalizar.
+const MAX_ROLES = 3;
 
 const requiredFields: Array<keyof FilmFormData> = [
   "title",
@@ -76,6 +66,7 @@ const normalizeFormData = (form: FilmFormData): FilmFormData => ({
   country: form.country.trim(),
   theme: form.theme.trim(),
   genre: form.genre.trim(),
+  roles: Array.from(new Set(form.roles.map((role) => role.trim()).filter(Boolean))).slice(0, MAX_ROLES),
   link: form.link.trim() ? ensureHttps(form.link) : "",
 });
 
@@ -85,6 +76,7 @@ type FilmFormModalProps = {
   onSubmit: (data: FilmFormData) => void | Promise<void>;
   initialData?: Partial<FilmFormData>;
   defaultCover?: string;
+  accountType?: AccountType;
 };
 
 export const AddFilmModal: React.FC<FilmFormModalProps> = ({
@@ -93,10 +85,37 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
   onSubmit,
   initialData,
   defaultCover,
+  accountType,
 }) => {
   const [form, setForm] = useState<FilmFormData>({ ...EMPTY_FORM, ...initialData });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  // A funcao segue as mesmas categorias das competencias: empresa usa as
+  // categorias de empresa, individual as de profissionais. Uma pessoa pode
+  // desempenhar varias funcoes no mesmo filme, por isso a lista ja escolhida
+  // sai das opcoes disponiveis.
+  const roleOptions = getCategoriesByAccountType(accountType);
+  const availableRoleOptions = useMemo(
+    () => roleOptions.filter((option) => !form.roles.includes(option.value)),
+    [roleOptions, form.roles],
+  );
+
+  const addRole = (role: string) => {
+    if (!role) return;
+
+    setForm((prev) =>
+      prev.roles.includes(role) || prev.roles.length >= MAX_ROLES
+        ? prev
+        : { ...prev, roles: [...prev.roles, role] },
+    );
+  };
+
+  const removeRole = (role: string) =>
+    setForm((prev) => ({
+      ...prev,
+      roles: prev.roles.filter((item) => item !== role),
+    }));
 
   const update = <K extends keyof FilmFormData>(key: K, value: FilmFormData[K]) =>
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -186,6 +205,7 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
               options={countriesList}
               value={form.country}
               onChange={(value) => update("country", value)}
+              popoverClassName="[&>ul]:max-h-[250px]"
             />
           </div>
           <div className="w-full flex flex-col gap-2">
@@ -196,6 +216,7 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
               options={filmThemeOptions}
               value={form.theme}
               onChange={(value) => update("theme", value)}
+              popoverClassName="[&>ul]:max-h-[250px]"
             />
           </div>
           <div className="w-full flex flex-col gap-2">
@@ -206,9 +227,46 @@ export const AddFilmModal: React.FC<FilmFormModalProps> = ({
               options={filmGenreOptions}
               value={form.genre}
               onChange={(value) => update("genre", value)}
+              popoverClassName="[&>ul]:max-h-[250px]"
             />
           </div>
         </div>
+
+
+        <div className="flex flex-col gap-2">
+          <div className="flex items-baseline gap-1.5">
+            <Text className="text-[16px] font-medium">Função</Text>
+            <span className="text-xs text-rede-white/40">(até {MAX_ROLES})</span>
+          </div>
+
+          {form.roles.length > 0 && (
+            <div className="flex flex-wrap gap-2.5">
+              {form.roles.map((role) => (
+                <Tag key={role} className="flex gap-1 items-center">
+                  {getFilmTagLabel(role)}
+                  <X
+                    width={12}
+                    height={12}
+                    color="#ffffff"
+                    className="cursor-pointer"
+                    onClick={() => removeRole(role)}
+                  />
+                </Tag>
+              ))}
+            </div>
+          )}
+
+          <InputSelect
+            placeholder="Digite ou selecione a função"
+            variant="secondary"
+            allowFreeText={false}
+            value=""
+            options={availableRoleOptions}
+            disabled={form.roles.length >= MAX_ROLES}
+            onChange={addRole}
+          />
+        </div>
+
 
         <div className="flex flex-col gap-2">
           <div className="flex items-baseline gap-1.5">

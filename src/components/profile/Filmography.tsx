@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Edit2, Plus, Trash2 } from "lucide-react";
 import { customBlur } from "@/app/fonts";
-import { ProfileFilm } from "@/types/User";
+import { AccountType, ProfileFilm } from "@/types/User";
 import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ const FilmCardLocal: React.FC<LocalFilmCardProps> = ({
   onRemove,
 }) => (
   <div className="relative w-full">
-    <FilmCard filmData={film} v="v2" />
+    <FilmCard filmData={film} v="v1" />
 
     {isEditing && (
       <div className="absolute right-3 top-3 z-10 flex gap-2">
@@ -77,6 +77,7 @@ const AddFilmTile: React.FC<AddFilmTileProps> = ({ onAdd }) => (
 type FilmographyProps = {
   isAuthenticated?: boolean;
   films?: ProfileFilm[];
+  accountType?: AccountType;
   isSaving?: boolean;
   onSaveFilms?: (
     films: ProfileFilm[],
@@ -86,6 +87,7 @@ type FilmographyProps = {
 export const Filmography: React.FC<FilmographyProps> = ({
   isAuthenticated = false,
   films,
+  accountType,
   isSaving = false,
   onSaveFilms,
 }) => {
@@ -120,6 +122,7 @@ export const Filmography: React.FC<FilmographyProps> = ({
       theme: editingFilm.type[1] ?? "",
       genre: editingFilm.type[0] ?? "",
       link: editingFilm.link ?? "",
+      roles: editingFilm.roles ?? [],
       cover: editingFilm.cover,
     };
   }, [editingFilm]);
@@ -139,6 +142,7 @@ export const Filmography: React.FC<FilmographyProps> = ({
       cover: formData.cover || FILM_PLACEHOLDER_COVER,
       duration: formData.duration,
       link: formData.link,
+      roles: formData.roles.length ? formData.roles : undefined,
     };
 
     setDraft((currentDraft) =>
@@ -269,6 +273,7 @@ export const Filmography: React.FC<FilmographyProps> = ({
         onSubmit={handleFormSubmit}
         initialData={initialFormData}
         defaultCover={FILM_PLACEHOLDER_COVER}
+        accountType={accountType}
       />
     </section>
   );
