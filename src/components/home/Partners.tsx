@@ -121,12 +121,12 @@ const PARTNER_ROWS: PartnerRow[] = [
         {
           src: "/assets/partners/palop-tl.png",
           alt: "PALOP e Timor-Leste",
-          className: "!w-[calc(50%_-_2px)] basis-[calc(50%_-_2px)] lg:!w-[200px] lg:basis-auto",
+          className: "lg:!w-[200px]",
         },
         {
           src: "/assets/partners/ue.png",
           alt: "União Europeia",
-          className: "-ml-2 !w-[calc(50%_-_2px)] basis-[calc(50%_-_2px)] lg:!w-[200px] lg:basis-auto",
+          className: "lg:-ml-2 lg:!w-[200px]",
         },
       ],
     },
@@ -191,9 +191,34 @@ function PartnerGroup({
         className={`flex h-auto w-full flex-wrap gap-1 lg:h-37.5 lg:w-auto lg:flex-nowrap ${align === "right" ? "lg:justify-end" : "justify-start"
           }`}
       >
-        {logos.map((logo, index) => (
-          <LogoBox key={`${logo.src}-${index}`} {...logo} />
-        ))}
+        {logos.map((logo, index) => {
+          const nextLogo = logos[index + 1];
+          const previousLogo = logos[index - 1];
+          const isPalopTlPair =
+            logo.src === "/assets/partners/palop-tl.png" &&
+            nextLogo?.src === "/assets/partners/ue.png";
+          const isPairedUeLogo =
+            logo.src === "/assets/partners/ue.png" &&
+            previousLogo?.src === "/assets/partners/palop-tl.png";
+
+          if (isPalopTlPair) {
+            return (
+              <div
+                key={`${logo.src}-${nextLogo.src}`}
+                className="flex w-full max-w-[400px] shrink-0 flex-nowrap gap-0 lg:w-auto lg:max-w-none"
+              >
+                <LogoBox {...logo} className="!w-1/2 lg:!w-[200px]" />
+                <LogoBox {...nextLogo} className="-ml-2 !w-1/2 lg:!w-[200px] -ml-[45px]" />
+              </div>
+            );
+          }
+
+          if (isPairedUeLogo) {
+            return null;
+          }
+
+          return <LogoBox key={`${logo.src}-${index}`} {...logo} />;
+        })}
       </div>
     </div>
   );
@@ -225,7 +250,7 @@ export function Partners() {
         </Text>
 
         <Text className="text-[12px] text-rede-surface text-center">
-          Esta plataforma teve  apoio adicional do Cultiv'arte - financiado pela União Europeia, implementado pela Expertise France em parceria com o Ministério da Educação e Cultura de Moçambique. O seu conteúdo é da exclusiva responsabilidade do Beneficiário e não pode, de forma alguma, ser considerado como refletindo as opiniões da Expertise France e do Doador.
+          Esta plataforma teve  apoio adicional do Cultiv&apos;arte - financiado pela União Europeia, implementado pela Expertise France em parceria com o Ministério da Educação e Cultura de Moçambique. O seu conteúdo é da exclusiva responsabilidade do Beneficiário e não pode, de forma alguma, ser considerado como refletindo as opiniões da Expertise France e do Doador.
         </Text>
       </div>
     </section>
