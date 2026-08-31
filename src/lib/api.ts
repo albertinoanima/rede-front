@@ -2,7 +2,6 @@ import axios from "axios";
 
 const productionApiBaseUrl = "https://rede-back.vercel.app";
 const localApiBaseUrl = "http://localhost:4001";
-
 /**
  * Resolve o endereco da API conforme o ambiente.
  *
