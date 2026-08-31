@@ -43,7 +43,20 @@ She is associated with the creation and production of: the audiovisual productio
     role: "Assessoria de coordenação-geral",
     location: "Moçambique",
     imageUrl: "/assets/team/antonio.jpeg",
-    bio: "",
+    bio: `António Simão Maxlhaieie é um cineasta moçambicano, que tem atuado nas areas de realização, produtção, editor de imagem, caracterizador e gestor cultural. Com uma trajetória profissional iniciada em 2008, no âmbito do Teatro do Oprimido, Maxlhaieie construiu um percurso multidisciplinar que  estabelece pontes rigorosas entre a vertente técnica da produção e a investigação académica em  Artes Cénicas e Estudos Culturais. 
+A sua filosofia de trabalho fundamenta-se na concepção do cinema e das artes performativas  enquanto ferramentas fundamentais de salvaguarda da memória coletiva, transformação social e facilitação do diálogo intercultural. Atualmente, concilia a sua prática criativa e empresarial na Maxfilm Creative com a liderança de departamentos de produção de prestigiado forúm de cinema e produção de residencias criaticas e FilmLab.
+A sua preparação academica reflete um compromisso constante com a formação contínua e a investigação pedagógica e cultural:
+Mestrado em Artes Cénicas e Estudos Culturais: Universidade Pedagógica (em curso). 
+Licenciatura em Artes Cénicas (Especialização em Educação Musical): Universidade Pedagógica (concluída em 2025). 
+Licenciatura em Design: Instituto Superior de Artes e Cultura - ISArC (frequência até ao 2.º ano em 
+2015). 
+Curso Técnico em Audiovisual e Cinema: Instituto Superior de Artes e Cultura - ISArC (2013).  Formações Complementares: Formação em Género (2018), Formação em Direitos da Criança e Boa Governação pelo Centro de Teatro do Oprimido (2009), além de participação no programa internacional Traçando o Futuro Sustentável (Dinamarca, 2011).
+Iniciou a carreira televisiva em 2013 na Televisão Independente de Moçambique (TIM), onde desempenhou as funções de editor de imagem e coordenador de pós-produção. A sua capacidade técnica projetou-o para produções de grande escala internacional, tendo atuado como editor de vídeo no programa Big Brother Angola (2.ª Temporada), sob chancela do Endemol Shine Group. No âmbito da gestão e curadoria cultural, Maxlhaieie assumiu posições de relevo estruturante no sector moçambicano: 
+Fórum de Curtas-Metragens KUGOMA: Diretor de Produção 2020 e 2026. 
+Curadoria de Cinema: Curador oficial da secção de cinema no Mercado das Indústrias Culturais e 
+Criativas de Moçambique (MICMZ). 
+Projectos Patrimoniais e Associativos: Director de produção nos projectos da Associação dos Amigos do Museu do  Cinema de Moçambique (2020–2026);
+Comunicação e Formação: Assessor de Comunicação do projeto PROCERIS PALOP+TL e dinamizador de oficinas práticas de formação audiovisual, nomeadamente em animação stopmotion e técnica de câmara para jovens, Caracterização para cinema e televisão.`,
   },
 
   {
@@ -74,7 +87,9 @@ Em 2022, realizou a sua primeira curta-metragem Sonho d’Narrador. Tem também 
     role: "Coordenação local, formação e parcerias",
     location: "Cabo Verde",
     imageUrl: "/assets/team/samira.png",
-    bio: "",
+    bio: `Samira Vera-Cruz é uma cineasta cabo-verdiana multipremiada, comunicadora de ciência e diretora de fotografia subaquática. Formada em cinema pela American University of Paris, o seu trabalho explora as interseções entre ambiente, memória, identidade e histórias pós-coloniais através de uma narrativa poética centrada nas personagens. As suas curtas-metragens documentário, incluindo Sumara Maré (2023), foram exibidas e premiadas internacionalmente.
+Membro fundadora da Rede de Cinema e Audiovisual PALOP-TL, Samira é também mentora e júri em várias iniciativas cinematográficas internacionais. Encontra-se atualmente a desenvolver a sua primeira longa-metragem documentário híbrida, Plastic Atlantis, com o apoio da Generation Africa 2.0, Visions du Réel e NEWF. O projeto, atualmente em pós-produção, recebeu seis prémios de destaque no Durban FilmMart Finance & Pitch Forum 2025, incluindo o Sundance Documentary 
+Fund New Voices Award e o Sheffield DocFest Award, tendo posteriormente sido distinguido com o World Cinema Fund – TUI Care Foundation Award. `,
   },
   {
     name: "Fábio Ribeiro",
@@ -88,7 +103,13 @@ Em 2022, realizou a sua primeira curta-metragem Sonho d’Narrador. Tem também 
     role: "Ponto focal",
     location: "Timor-Leste",
     imageUrl: "/assets/team/kay.jpeg",
-    bio: "",
+    bio: `Kay Seran Limak é músico, compositor, produtor, multi-instrumentista, professor de música, investigador e agente cultural timorense. Natural de Díli, desenvolveu a sua formação e percurso profissional entre Timor-Leste, Portugal, Reino Unido e Áustria, com estudos em música contemporânea e jazz, Ciências Musicais, composição, improvisação e produção musical.
+A sua prática artística cruza jazz, improvisação, música contemporânea e tradições musicais timorenses. Multi-instrumentista, toca guitarra, teclado, baixo, bateria e diversos instrumentos tradicionais de Timor-Leste. Paralelamente à sua atividade artística, tem desempenhado um papel ativo na criação de plataformas dedicadas à promoção e desenvolvimento da música e das indústrias criativas timorenses.
+É fundador do Dili Jazz Festival, do Timor-Leste Blues Festival, do Timor-Leste Music Awards, do Garden Fest, da Timor-Leste Music Expo e do Festival Nacional de Música, iniciativas dedicadas à promoção da música timorense e da música produzida em Timor-Leste. É igualmente fundador do Youth Collective Timor-Leste, uma plataforma de promoção, capacitação e formação de jovens líderes no âmbito da Política Nacional da Juventude de Timor-Leste.
+Kay Seran Limak é também fundador do Projeto Beialafonia, uma iniciativa de investigação e criação dedicada ao estudo e desenvolvimento de um sistema musical timorense. O projeto inclui a proposta de uma orquestra de instrumentos tradicionais, o desenvolvimento de sistemas próprios de notação e grafia musical e a criação do Lafa-Lian, um instrumento de treze cordas inspirado nas práticas musicais, na simbologia e no património cultural de Timor-Leste. É autor de um tratado sobre o sistema musical timorense, desenvolvido no âmbito do Projeto Beialafonia.
+O Lafa-Lian e a investigação associada ao instrumento têm vindo a afirmar-se como uma proposta de diálogo entre património cultural imaterial, inovação criativa e desenvolvimento das indústrias culturais. Em 2025, Kay Seran Limak apresentou o Lafa-Lian 7.0 na República da Coreia, no âmbito de uma conferência internacional da UNESCO dedicada ao património cultural imaterial e à sua relação com a indústria criativa.
+É também autor de Timorcentrismo: Uma Nova Epistemologia de Timor, um ensaio que propõe uma reflexão sobre Timor como sujeito epistemológico e sobre a necessidade de pensar e produzir conhecimento a partir das suas próprias referências históricas, culturais e civilizacionais.
+Ao longo da sua carreira, Kay Seran Limak tem desenvolvido projetos de formação musical, investigação, produção artística, liderança juvenil e consultoria cultural, trabalhando com comunidades, jovens criadores, músicos, instituições culturais e entidades públicas. O seu trabalho procura contribuir para o desenvolvimento de uma expressão contemporânea enraizada nas referências culturais timorenses e para o fortalecimento do ecossistema musical, cultural e criativo de Timor-Leste.`,
   },
   {
     name: "Welket Bungué",

@@ -36,7 +36,7 @@ export const CommunicationAndVisibilityStrategy: React.FC = () => {
           </Text>
 
 
-          <Link href={"/assets/estratregia_c&v_rede_palot-tl-light.pdf"} target="_blank">
+          <Link href={"/assets/Estratégia_C&V_SITE.pdf"} target="_blank">
             <Button
               className="w-full sm:max-w-[200px]"
               variant="primary"
