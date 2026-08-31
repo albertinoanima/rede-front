@@ -1,13 +1,34 @@
 import axios from "axios";
 
-const apiPort = process.env.API_PORT ?? "4001";
-const apiHost = process.env.API_HOST ?? "http://localhost";
-const apiBaseUrl =
-  process.env.API_BASE_URL ?? `${apiHost}:${apiPort}`;
+const productionApiBaseUrl = "https://rede-back.vercel.app";
+const localApiBaseUrl = "http://localhost:4001";
+
+/**
+ * Resolve o endereco da API conforme o ambiente.
+ *
+ * Este ficheiro corre no browser, onde o Next so injecta variaveis com o
+ * prefixo NEXT_PUBLIC_. NODE_ENV e a excepcao: e substituido em build time
+ * tanto no servidor como no cliente, por isso serve para distinguir o ambiente
+ * sem ser preciso configurar nada.
+ *
+ * Definir NEXT_PUBLIC_API_BASE_URL sobrepoe-se sempre (util para apontar o
+ * local a um staging). Atencao: sendo NEXT_PUBLIC_, o valor fica gravado no
+ * bundle em build time — mudar na Vercel obriga a novo deploy.
+ */
+const resolveApiBaseUrl = () => {
+  const configured = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
+
+  if (configured) {
+    return configured.endsWith("/") ? configured.slice(0, -1) : configured;
+  }
+
+  return process.env.NODE_ENV === "development"
+    ? localApiBaseUrl
+    : productionApiBaseUrl;
+};
 
 export const api = axios.create({
-  //baseURL: apiBaseUrl,
-  baseURL: "https://rede-back.vercel.app",
+  baseURL: resolveApiBaseUrl(),
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

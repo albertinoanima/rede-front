@@ -18,6 +18,7 @@ import { filterProfiles } from "./actions";
 import {
   angolaCitiesByProvince,
   caboVerdeMunicipalitiesByIsland,
+  getCountryLabel,
   guineaBissauSectorsByRegion,
   mozambiqueDistrictsByProvince,
   saoTomePrincipeCitiesByRegion,
@@ -98,7 +99,9 @@ const buildTags = (user: NetworkUser): string[] => {
   const profileData = user.profileData;
 
   const tags = [
-    profileData?.country,
+    // O pais e guardado sem acentos ("Mocambique"); getCountryLabel devolve a
+    // forma correcta para mostrar ("Moçambique"), tal como no perfil.
+    getCountryLabel(profileData?.country),
     profileData?.city,
     ...(profileData?.services ?? []),
     ...(profileData?.coreSkills ?? []),

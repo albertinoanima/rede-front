@@ -1,12 +1,12 @@
-import { Hero } from "@/components/news/Hero";
+import { Hero } from "@/components/opportunities/Hero";
 import { Footer } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
-import { SectionViewNews } from "@/components/news/SectionViewNews";
-import { NEWS } from "@/components/news/data";
-import { SimilarNews } from "@/components/news/SimilarNews";
-import { getSimilarNews } from "@/components/news/actions";
+import { SectionViewOpportunity } from "@/components/opportunities/SectionViewOpportunity";
+import { opportunities } from "@/components/opportunities/data";
+import { SimilarOpportunities } from "@/components/opportunities/SimilarOpportunities";
+import { getSimilarOpportunities } from "@/components/opportunities/actions";
 
-interface NewsDetailsPageProps {
+interface OpportunityDetailsPageProps {
   searchParams: Promise<{
     [key: string]: string | string[] | undefined;
   }>;
@@ -14,34 +14,31 @@ interface NewsDetailsPageProps {
 
 export default async function OpportunityDetailsPage({
   searchParams,
-}: NewsDetailsPageProps) {
+}: OpportunityDetailsPageProps) {
   const resolvedSearchParams = await searchParams;
   const id = resolvedSearchParams?.id;
 
-  const theNews = NEWS.find(
-    (news) => news.id === String(id),
+  const theOpportunity = opportunities.find(
+    (opportunity) => opportunity.id === String(id),
   );
 
-  if (!theNews) {
+  if (!theOpportunity) {
     return null;
   }
 
-  const similarNews = getSimilarNews(
-    theNews,
-    NEWS,
+  const similarOpportunities = getSimilarOpportunities(
+    theOpportunity,
+    opportunities,
     3,
   );
 
   return (
     <main className="bg-rede-bg">
       <TopBar />
-      <Hero imageUrl={theNews.imageUrl} />
-      {/* <SectionViewNews selectedNews={theNews} />
-      <SimilarNews similarNews={similarNews} /> */}
+      <Hero imageUrl={theOpportunity.cover} />
+      <SectionViewOpportunity selectedOpportunity={theOpportunity} />
+      <SimilarOpportunities similarOpportunities={similarOpportunities} />
       <Footer />
     </main>
   );
-
-
 }
-

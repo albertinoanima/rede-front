@@ -1,6 +1,7 @@
 "use client"
 
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
 import { Text } from "./ui/text";
@@ -34,7 +35,9 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
             {/* {opportunityData.description} */}
           </Text>
 
-          <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} onClick={() => console.log("htddhdt")} />
+          <Link href={"/opportunity-details?id=" + opportunityData.id} className="cursor-pointer">
+            <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} />
+          </Link>
         </div>
       }>
 

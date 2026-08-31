@@ -17,10 +17,10 @@ export type AchievementEntry = ProfileAchievement & {
 };
 
 const entryTypeOptions = [
-  { label: "Festivais", value: "Festival" },
-  { label: "Prémios", value: "Premio" },
-  { label: "Exibições", value: "Exibicao" },
   { label: "Categorias", value: "Categoria" },
+  { label: "Exibições", value: "Exibicao" },
+  { label: "Festivais", value: "Festival" },
+  { label: "Prémios", value: "Premio" }
 ];
 
 const createEmptyEntry = (): AchievementEntry => ({

@@ -4,27 +4,41 @@ import { customBlur } from '@/app/fonts'
 import { Heading } from '@/components/ui/heading'
 import { Text } from '@/components/ui/text'
 
-export const Hero: React.FC = () => {
+type HeroProps = {
+  title?: string
+  description?: string
+  imageUrl?: string
+}
+
+export const Hero: React.FC<HeroProps> = ({ title, description, imageUrl }) => {
+  const hasContent = Boolean(title || description)
+
   return (
     <section className="h-auto w-full pt-17">
       <div className="relative mx-auto h-[420px] w-full max-w-[1920px] overflow-hidden sm:h-[450px] lg:h-124.25">
         <img
-          src="/assets/opportunities/hero.jpg"
+          src={imageUrl || "/assets/opportunities/hero.jpg"}
           alt="Imagem de destaque das oportunidades"
           className="h-full w-full object-cover"
         />
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/20 px-4 text-center sm:gap-4 sm:px-6 lg:bg-transparent">
-          <Heading
-            className={`${customBlur.className} max-w-full break-words text-[52px] font-medium leading-none text-rede-yellow sm:text-[82px] lg:text-[128px]`}
-          >
-            Oportunidades
-          </Heading>
+        {hasContent && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/20 px-4 text-center sm:gap-4 sm:px-6 lg:bg-transparent">
+            {title && (
+              <Heading
+                className={`${customBlur.className} max-w-full break-words text-[52px] font-medium leading-none text-rede-yellow sm:text-[82px] lg:text-[128px]`}
+              >
+                {title}
+              </Heading>
+            )}
 
-          <Text className="max-w-[560px] text-sm font-semibold leading-relaxed text-rede-white sm:text-base lg:max-w-2xl">
-            Oportunidades que transformam ideias em projetos sustentáveis.
-          </Text>
-        </div>
+            {description && (
+              <Text className="max-w-[560px] text-sm font-semibold leading-relaxed text-rede-white sm:text-base lg:max-w-2xl">
+                {description}
+              </Text>
+            )}
+          </div>
+        )}
       </div>
     </section>
   )

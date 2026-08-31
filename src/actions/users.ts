@@ -14,7 +14,16 @@ export type UpdateUserInput = {
   email?: string;
   imageUrl?: string | null;
   password?: string;
-  profileData?: User["profileData"] | null;
+  // Parcial: o servidor funde este patch com o perfil ja gravado.
+  profileData?: Partial<User["profileData"]> | null;
+};
+
+export type GetLoggedUserResponseType = {
+  error?: string;
+  message?: string;
+  data?: {
+    user?: User;
+  };
 };
 
 export type UpdateUserResponseType = {
@@ -105,6 +114,39 @@ export const getUsers = async (): Promise<GetUsersResponseType> => {
       message:
         apiError.response?.data?.message ||
         "Não foi possível carregar os Usuários.",
+    };
+  }
+};
+
+/**
+ * Le o perfil do utilizador autenticado directamente da API.
+ *
+ * E a fonte da verdade: o localStorage pode estar desactualizado (outro
+ * dispositivo, outro separador, sessao antiga) e nunca deve servir de base
+ * para gravar.
+ */
+export const getLoggedUser = async (): Promise<GetLoggedUserResponseType> => {
+  try {
+    const responseData = await api.get("/api/v1/users/me");
+
+    return {
+      data: responseData.data?.user
+        ? {
+          user: responseData.data.user,
+        }
+        : undefined,
+      message: responseData.data?.message,
+    };
+  } catch (err: unknown) {
+    const apiError = getApiError(err);
+
+    return {
+      error:
+        apiError.response?.data?.error ||
+        "Erro desconhecido",
+      message:
+        apiError.response?.data?.message ||
+        "Não foi possível carregar os dados do perfil.",
     };
   }
 };

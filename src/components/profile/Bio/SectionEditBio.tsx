@@ -2,9 +2,12 @@ import { Edit2 } from "lucide-react";
 import { customBlur } from "@/app/fonts";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, Fragment, SetStateAction, useMemo, useState } from "react";
 import { Heading } from "@/components/ui/heading";
 import { Textarea } from "@/components/ui/textarea";
+
+const BIO_MAX_LENGTH = 1300;
+const URL_REGEX = /(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
 
 type SectionEditBioProps = {
   isAuthenticated?: boolean;
@@ -15,6 +18,54 @@ type SectionEditBioProps = {
   onSaveBio?: (bio: string) => void | Promise<void>;
 }
 
+const getLinkHref = (url: string) => {
+  return url.startsWith("www.") ? `https://${url}` : url;
+};
+
+const renderBioWithLinks = (text: string) => {
+  const parts = [];
+  let lastIndex = 0;
+
+  for (const match of text.matchAll(URL_REGEX)) {
+    const url = match[0];
+    const index = match.index ?? 0;
+    const trailingPunctuation = url.match(/[.,!?;:)]+$/)?.[0] ?? "";
+    const cleanUrl = trailingPunctuation ? url.slice(0, -trailingPunctuation.length) : url;
+
+    if (index > lastIndex) {
+      parts.push(text.slice(lastIndex, index));
+    }
+
+    parts.push(
+      <a
+        key={`${cleanUrl}-${index}`}
+        className="underline underline-offset-2 hover:text-rede-yellow"
+        href={getLinkHref(cleanUrl)}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {cleanUrl}
+      </a>
+    );
+
+    if (trailingPunctuation) {
+      parts.push(trailingPunctuation);
+    }
+
+    lastIndex = index + url.length;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.map((part, index) => (
+    <Fragment key={typeof part === "string" ? `${part}-${index}` : part.key}>
+      {part}
+    </Fragment>
+  ));
+};
+
 export const SectionEditBio: React.FC<SectionEditBioProps> = ({
   isAuthenticated,
   isEditingBio = false,
@@ -24,11 +75,18 @@ export const SectionEditBio: React.FC<SectionEditBioProps> = ({
   onSaveBio,
 }) => {
   const [draftBio, setDraftBio] = useState(bio);
+  const remainingCharacters = BIO_MAX_LENGTH - draftBio.length;
+  const formattedBio = useMemo(() => renderBioWithLinks(bio), [bio]);
+
+  const handleStartEditing = () => {
+    setDraftBio(bio);
+    setIsEditingBio?.(true);
+  };
 
   const toggleEditing = () => setIsEditingBio?.((lastState) => !lastState);
 
   const handleSave = () => {
-    void onSaveBio?.(draftBio);
+    void onSaveBio?.(draftBio.slice(0, BIO_MAX_LENGTH));
   };
 
   const handleCancel = () => {
@@ -47,7 +105,7 @@ export const SectionEditBio: React.FC<SectionEditBioProps> = ({
           <Button
             variant="secondary"
             className="rounded-full p-0 shrink-0 aspect-square w-10 h-10 flex items-center justify-center"
-            onClick={toggleEditing}
+            onClick={handleStartEditing}
           >
             <Edit2 width={12} height={12} />
           </Button>
@@ -64,13 +122,26 @@ export const SectionEditBio: React.FC<SectionEditBioProps> = ({
       </div>
 
       {isEditingBio ? (
-        <Textarea
-          className="w-full min-h-37.5"
-          value={draftBio}
-          onChange={(e) => setDraftBio(e.target.value)}
-        />
+        <div className="w-full">
+          <Textarea
+            className="w-full min-h-37.5"
+            maxLength={BIO_MAX_LENGTH}
+            value={draftBio}
+            onChange={(e) => setDraftBio(e.target.value.slice(0, BIO_MAX_LENGTH))}
+          />
+
+          <Text className="mt-2 text-[12px] leading-none text-foreground/60" as="span">
+            {draftBio.length}/{BIO_MAX_LENGTH} caracteres usados - {remainingCharacters} restantes
+          </Text>
+        </div>
       ) : (
-        bio.trim() ? <Text className="w-[94%] text-[14px] leading-relaxed font-medium">{bio}</Text> : <Text className="text-[14px] leading-relaxed font-medium">Ainda não existe biografia.</Text>
+        bio.trim() ? (
+          <Text className="w-[94%] whitespace-pre-wrap break-words text-[14px] leading-relaxed font-medium">
+            {formattedBio}
+          </Text>
+        ) : (
+          <Text className="text-[14px] leading-relaxed font-medium">Ainda não existe biografia.</Text>
+        )
       )}
     </div>
   );

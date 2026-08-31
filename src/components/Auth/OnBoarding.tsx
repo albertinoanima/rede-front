@@ -17,7 +17,15 @@ import { useRouter } from "next/navigation";
 
 type ProfileData = User["profileData"];
 type OnboardingUser = Partial<Omit<User, "profileData">> & { profileData?: Partial<ProfileData> | null };
-type ApiCountry = "Angola" | "Cabo Verde" | "Guine-Bissau" | "Moçambique" | "São Tome e Principe";
+// Valores tal como a API os guarda (sem acentos). O que o utilizador ve e a
+// label de data.ts ("Moçambique"); isto e so o valor transmitido.
+type ApiCountry =
+    | "Angola"
+    | "Cabo Verde"
+    | "Guine-Bissau"
+    | "Mocambique"
+    | "Sao Tome e Principe"
+    | "Timor-Leste";
 type MiniStepKey = "identity" | "contact" | "association" | "services" | "social";
 type MiniStep = {
     key: MiniStepKey;
@@ -61,8 +69,9 @@ const apiCountryByFormValue: Record<string, ApiCountry> = {
     angola: "Angola",
     "cabo-verde": "Cabo Verde",
     "guine-bissau": "Guine-Bissau",
-    mocambique: "Moçambique",
-    "sao-tome-principe": "São Tome e Principe",
+    mocambique: "Mocambique",
+    "sao-tome-principe": "Sao Tome e Principe",
+    "timor-leste": "Timor-Leste",
 };
 const formCountryByApiValue = Object.entries(apiCountryByFormValue).reduce<Record<string, string>>(
     (countriesByApiValue, [formValue, apiValue]) => ({
