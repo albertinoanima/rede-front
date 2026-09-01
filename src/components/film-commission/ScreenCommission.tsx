@@ -3,7 +3,7 @@
 import { customBlur } from '@/app/fonts'
 import { Heading } from '@/components/ui/heading'
 import { Text } from '@/components/ui/text'
-import { Tag } from '../Tag'
+import { Tag } from '../ui/tag'
 
 const strategicEcosystems = [
   {
@@ -85,7 +85,7 @@ export const ScreenCommission: React.FC = () => {
                     {item.name}
                   </Text>
 
-                  <Tag label={item.ecosystem} className='text-[12px] leading-4 text-center rounded-[8px] px-[18px] py-[6px] bg-black border-none' />
+                  <Tag label={item.ecosystem} variant="muted" size="lg" className="border-none bg-black text-center" />
                 </div>
               ))}
             </div>
@@ -95,3 +95,4 @@ export const ScreenCommission: React.FC = () => {
     </section>
   )
 }
+

@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import { Heading } from '../ui/heading'
 import { Text } from '../ui/text'
-import { Tag } from '../Tag'
+import { Tag } from '../ui/tag'
 import { Button } from '../ui/button'
 
 interface Tag {

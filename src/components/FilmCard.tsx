@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
 import { Text } from "./ui/text";
 import Card from "./ui/card";
-import { Tag } from "./Tag";
+import { Tag } from "./ui/tag";
 import { getFilmTagLabel } from "./network/data";
 import Link from "next/link";
 
@@ -32,9 +32,13 @@ export const FilmCard: React.FC<{ filmData: FilmCardType, v?: "v1" | "v2" | unde
   };
 
   return (
-    <Card image={<img
-      src={filmData.cover}
-      className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
+    <Card image={
+      <Link href={filmData?.link || ""} target="_blank">
+        <img
+          src={filmData.cover}
+          className="w-full h-full object-cover" alt="Diretora no set de filmagem" />
+      </Link>
+    }
       footer={
         <div className="w-full flex items-end justify-between gap-4 mt-2">
           <div className="w-auto h-auto flex flex-col gap-2.5">

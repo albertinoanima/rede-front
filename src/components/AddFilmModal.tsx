@@ -16,7 +16,7 @@ import {
   getFilmTagLabel,
 } from "./network/data";
 import { AccountType } from "@/types/User";
-import { Tag } from "./Tag";
+import { Tag } from "./ui/tag";
 import { X } from "lucide-react";
 
 export type FilmFormData = {

@@ -3,7 +3,8 @@
 import Card from "./ui/card";
 import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
-import { ArrowRight, Plus } from "lucide-react";
+import { Tag } from "./ui/tag";
+import { ArrowRight } from "lucide-react";
 
 
 
@@ -21,14 +22,14 @@ type NewsletterCardType = {
 
 export const NewsletterCard: React.FC<NewsletterCardType> = ({ newsletterData }) => {
     return (
-        <Card image={<img
+        <Card image={
+        <img
             src={newsletterData?.imageUrl || "/assets/newsletter.png"}
-            className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
+            className="w-full h-full object-cover" alt="Diretora no set de filmagem" />
+        }
             footer={
                 <div className="w-full flex items-end justify-between gap-4 mt-2">
-                    <span className="border-[1.3px] border-transparent px-4.5 py-1.5 rounded-4xl text-[12px] leading-4 font-medium">
-                        {newsletterData?.date}
-                    </span>
+                    <Tag label={newsletterData?.date} variant="outline" />
 
                     <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} onClick={() => console.log("htddhdt")} />
                 </div>
@@ -42,3 +43,5 @@ export const NewsletterCard: React.FC<NewsletterCardType> = ({ newsletterData })
         </Card>
     );
 };
+
+

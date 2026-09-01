@@ -12,7 +12,7 @@ import {
   getFilmYearOptions,
 } from './actions'
 import { filmGenres, films } from './data'
-import { Tag } from '../Tag'
+import { Tag } from '../ui/tag'
 import { Text } from '../ui/text'
 import { countriesList } from '../network/filters'
 

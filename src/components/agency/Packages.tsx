@@ -4,6 +4,7 @@ import { customBlur } from '@/app/fonts'
 import { Text } from '../ui/text'
 import { Button } from '../ui/button'
 import { Heading } from '../ui/heading'
+import { Tag } from '../ui/tag'
 import { packages } from './data'
 
 const packageFeatures = [
@@ -44,9 +45,7 @@ export const Packages: React.FC = () => {
                   {item.title}
                 </h3>
 
-                <span className="shrink-0 rounded-full bg-white px-4 py-1 text-xs text-black">
-                  {item.type}
-                </span>
+                <Tag label={item.type} variant="light" size="sm" />
               </div>
 
               <Text className="mt-3 max-w-xs text-xs leading-5 text-rede-white/60">

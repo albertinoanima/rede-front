@@ -2,6 +2,7 @@ import { Check } from 'lucide-react';
 import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui/button';
 import { Heading } from '@/components/ui/heading';
+import { Tag } from '@/components/ui/tag';
 
 interface CurationCardProps {
   number: number
@@ -28,9 +29,7 @@ export const CurationCard = ({
         <Heading level="h3" className="text-foreground">
           Curadoria {number}
         </Heading>
-        <span className="text-btn2 text-foreground/60 border border-foreground/20 rounded-full px-3 py-1 shrink-0">
-          {isCommercial ? 'Comercial' : 'Não comercial'}
-        </span>
+        <Tag label={isCommercial ? 'Comercial' : 'Não comercial'} variant="outline" size="sm" className="text-foreground/60 border-foreground/20" />
       </div>
 
       {/* Description */}

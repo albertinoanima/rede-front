@@ -1,5 +1,5 @@
 import { customBlur } from "@/app/fonts";
-import { Tag } from "@/components/Tag";
+import { Tag } from "@/components/ui/tag";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Select, SelectOption } from "@/components/ui/select";

@@ -5,9 +5,10 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
 import Card from "./ui/card";
-import { Tag } from "./Tag";
+import { Tag } from "./ui/tag";
 import { getNetworkTagHref } from "./network/FilterSidebar";
 import { Text } from "./ui/text";
+import Link from "next/link";
 
 export type ProfileType = {
   id: string;
@@ -29,9 +30,11 @@ export const ProfileCard: React.FC<{ profileData: ProfileType }> = ({ profileDat
 
   return (
     <Card
-      image={<img
-        src={profileData.cover}
-        className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
+      image={
+        <Link href={`/${profileData?.username}`} className="cursor-pointer">
+          <img src={profileData.cover} className="w-full h-full object-cover" alt="Diretora no set de filmagem" />
+        </Link>
+      }
       footer={
         <div className="w-full h-12 flex items-center justify-end gap-4 mt-2">
           {/* 
@@ -40,13 +43,19 @@ export const ProfileCard: React.FC<{ profileData: ProfileType }> = ({ profileDat
           </Text> 
           */}
 
-          <Button
-            showMainButton={false}
-            iconPosition="right"
-            icon={<ArrowRight width={12} height={12} />}
-            disabled={!profileData.username}
-            onClick={() => profileData.username && router.push(`/${encodeURIComponent(profileData.username)}`)}
-          />
+
+          {
+            profileData.username &&
+            <Link href={`/${profileData?.username}`} className="cursor-pointer">
+              <Button
+                showMainButton={false}
+                iconPosition="right"
+                icon={<ArrowRight width={12} height={12} />}
+                disabled={!profileData.username}
+              />
+            </Link>
+          }
+
         </div>
       }>
 

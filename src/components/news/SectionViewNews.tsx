@@ -8,7 +8,7 @@ import { linkify } from "@/actions";
 import { Link, Mail } from "lucide-react";
 import Facebook from "@/icons/Facebook";
 import { Text } from "../ui/text";
-import { Tag } from "../Tag";
+import { Tag } from "../ui/tag";
 import { useState } from "react";
 
 
@@ -139,3 +139,4 @@ export const SectionViewNews: React.FC<{ selectedNews: NewsType }> = ({ selected
         </div>
     )
 }
+

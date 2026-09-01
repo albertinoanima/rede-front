@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
 import { Text } from "./ui/text";
 import Card from "./ui/card";
-import { Tag } from "./Tag";
+import { Tag } from "./ui/tag";
 
 export type OpportunityType = {
   id: string;
@@ -26,9 +26,11 @@ export type OpportunityType = {
 export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = ({ opportunityData }) => {
   return (
     <Card
-      image={<img
-        src={opportunityData.cover}
-        className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
+      image={
+        <Link href={"/opportunity-details?id=" + opportunityData.id} className="cursor-pointer">
+          <img src={opportunityData.cover} className="w-full h-full object-cover" alt="Diretora no set de filmagem" />
+        </Link>
+      }
       footer={
         <div className="w-full h-12 flex items-center justify-between gap-4 mt-2">
           <Text className="text-[14px] leading-relaxed font-medium line-clamp-2">
@@ -43,22 +45,22 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
 
       <div className="flex flex-wrap gap-2.5">
         {opportunityData.status === "open" && (
-          <Tag label="Aberta" className="border-transparent bg-rede-white text-rede-surface" />
+          <Tag label="Aberta" variant="statusOpen" />
         )}
 
         {opportunityData.status === "starting" && (
-          <Tag label="A iniciar" className="border-transparent bg-rede-gray text-rede-surface" />
+          <Tag label="A iniciar" variant="statusStarting" />
         )}
 
         {opportunityData.status === "expired" && (
-          <Tag label="Encerrada" className="border-transparent bg-rede-red text-rede-surface" />
+          <Tag label="Encerrada" variant="statusExpired" />
         )}
 
-        <Tag label={`${opportunityData?.startDate} - ${opportunityData.endDate}`} href={``} />
+        <Tag label={`${opportunityData?.startDate} - ${opportunityData.endDate}`} />
         <Tag label={`${opportunityData?.type}`} href={`/opportunities?tag=${encodeURIComponent(opportunityData.type)}`} />
 
         {opportunityData.eligibility.map((eligibility: string, index: number) => (
-          <Tag href={`/opportunities?tag=${encodeURIComponent(eligibility)}`} label={eligibility} key={eligibility + "xD" + index}/>
+          <Tag href={`/opportunities?tag=${encodeURIComponent(eligibility)}`} label={eligibility} key={eligibility + "xD" + index} />
         ))}
       </div>
 
@@ -69,3 +71,4 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
     </Card>
   );
 };
+

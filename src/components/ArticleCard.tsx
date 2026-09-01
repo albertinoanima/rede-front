@@ -6,7 +6,7 @@ import { Heading } from "./ui/heading";
 import { ArrowRight } from "lucide-react";
 import Card from "./ui/card";
 import Link from "next/link";
-import { Tag } from "./Tag";
+import { Tag } from "./ui/tag";
 import { toLocationLabels } from "./news/actions";
 
 
@@ -24,7 +24,10 @@ type ArticleCardType = {
 export const ArticleCard: React.FC<ArticleCardType> = ({ newsData }) => {
     return (
         <Card image={
-            <img src={newsData?.imageUrl || "/assets/home/news/news-1.png"} className="w-full h-full object-cover" alt="Diretora no set de filmagem" />}
+            <Link href={"/news-details?id=" + newsData?.id} className="cursor-pointer">
+                <img src={newsData?.imageUrl || "/assets/home/news/news-1.png"} className="w-full h-full object-cover" alt="Diretora no set de filmagem" />
+            </Link>
+        }
             footer={
                 <div className="w-full h-12 flex items-center justify-between gap-4 mt-2">
                     <span className="text-[12px] leading-4 font-medium">
@@ -58,3 +61,4 @@ export const ArticleCard: React.FC<ArticleCardType> = ({ newsData }) => {
         </Card>
     );
 };
+

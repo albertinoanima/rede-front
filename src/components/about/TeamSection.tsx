@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Modal } from "../ui/modal";
-import { Tag } from "../Tag";
+import { Tag } from "../ui/tag";
 import { Text } from "../ui/text";
 
 interface TeamMember {

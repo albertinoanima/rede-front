@@ -8,15 +8,15 @@ import { linkify } from "@/actions";
 import { Link, Mail } from "lucide-react";
 import Facebook from "@/icons/Facebook";
 import { Text } from "../ui/text";
-import { Tag } from "../Tag";
+import { Tag } from "../ui/tag";
 import { useState } from "react";
 
 // Os mesmos rotulos e cores do cartao da listagem, para o estado da
 // oportunidade ser lido da mesma maneira nos dois sitios.
-const statusTags: Record<OpportunityType["status"], { label: string; className: string }> = {
-    open: { label: "Aberta", className: "border-transparent bg-rede-white text-rede-surface" },
-    starting: { label: "A iniciar", className: "border-transparent bg-rede-gray text-rede-surface" },
-    expired: { label: "Encerrada", className: "border-transparent bg-rede-red text-rede-surface" },
+const statusTags: Record<OpportunityType["status"], { label: string; variant: "statusOpen" | "statusStarting" | "statusExpired" }> = {
+    open: { label: "Aberta", variant: "statusOpen" },
+    starting: { label: "A iniciar", variant: "statusStarting" },
+    expired: { label: "Encerrada", variant: "statusExpired" },
 };
 
 export const SectionViewOpportunity: React.FC<{ selectedOpportunity: OpportunityType }> = ({ selectedOpportunity }) => {
@@ -76,7 +76,7 @@ export const SectionViewOpportunity: React.FC<{ selectedOpportunity: Opportunity
         <div className="w-full max-w-350 h-auto mr-auto ml-auto pt-16 pb-16 bg-rede-bg">
             <div className="w-full flex flex-col gap-2 border-b-[1.3px] border-rede-white pb-6">
                 <div className="flex flex-wrap items-center gap-2">
-                    {status && <Tag label={status.label} className={status.className} />}
+                    {status && <Tag label={status.label} variant={status.variant} />}
 
                     {selectedOpportunity?.eligibility?.map((eligibility: string, index) => (
                         <Tag
@@ -153,3 +153,5 @@ export const SectionViewOpportunity: React.FC<{ selectedOpportunity: Opportunity
         </div>
     )
 }
+
+
