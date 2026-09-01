@@ -1,4 +1,4 @@
-import { Hero } from "@/components/opportunities/Hero";
+import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
 import { SectionViewOpportunity } from "@/components/opportunities/SectionViewOpportunity";
@@ -35,7 +35,9 @@ export default async function OpportunityDetailsPage({
   return (
     <main className="bg-rede-bg">
       <TopBar />
-      <Hero imageUrl={theOpportunity.cover} />
+      <Hero
+        imageUrl={theOpportunity.cover} 
+        />
       <SectionViewOpportunity selectedOpportunity={theOpportunity} />
       <SimilarOpportunities similarOpportunities={similarOpportunities} />
       <Footer />

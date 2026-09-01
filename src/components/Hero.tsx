@@ -15,10 +15,10 @@ export const Hero: React.FC<HeroProps> = ({ title, description, imageUrl }) => {
 
   return (
     <section className="h-auto w-full pt-17">
-      <div className="relative mx-auto h-[420px] w-full max-w-[1920px] overflow-hidden sm:h-[450px] lg:h-124.25">
+      <div className="relative mx-auto h-[calc(100vh-65px)] w-full max-w-[1920px] overflow-hidden">
         <img
-          src={imageUrl || "/assets/news/hero.jpg"}
-          alt="Imagem de destaque das notícias"
+          src={imageUrl || "/assets/opportunities/hero.jpg"}
+          alt="Imagem de destaque das oportunidades"
           className="h-full w-full object-cover"
         />
 
@@ -26,7 +26,7 @@ export const Hero: React.FC<HeroProps> = ({ title, description, imageUrl }) => {
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/20 px-4 text-center sm:gap-4 sm:px-6 lg:bg-transparent">
             {title && (
               <Heading
-                className={`${customBlur.className} max-w-full break-words text-[56px] font-medium leading-none text-rede-yellow sm:text-[84px] lg:text-[128px]`}
+                className={`${customBlur.className} max-w-full break-words text-[52px] font-medium leading-none text-rede-yellow sm:text-[82px] lg:text-[128px]`}
               >
                 {title}
               </Heading>

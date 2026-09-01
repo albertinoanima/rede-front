@@ -8,6 +8,7 @@ import { CustomYouTube } from "@/icons/CustomYouTube";
 
 import { Button } from "./ui/button";
 import { Heading } from "./ui/heading";
+import { customBlur } from "@/app/fonts";
 
 type FooterProps = {
   variant?: "yellow" | "red";
@@ -93,7 +94,7 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="w-fit">
               <Heading
                 level="h3"
-                className="mb-4 text-left text-4xl leading-tight font-medium text-rede-white sm:text-[48px] sm:leading-14"
+                className={`${customBlur.className} mb-4 text-left text-[48px] leading-14 font-medium text-rede-white sm:text-[48px] sm:leading-14`}
               >
                 Menu
               </Heading>
@@ -118,7 +119,7 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="flex h-full w-full flex-col gap-4">
             <Heading
               level="h3"
-              className="text-4xl leading-tight font-medium text-rede-white sm:text-[48px] sm:leading-14"
+              className={`${customBlur.className} mb-4 text-left text-[48px] leading-14 font-medium text-rede-white sm:text-[48px] sm:leading-14`}
             >
               Contactos
             </Heading>

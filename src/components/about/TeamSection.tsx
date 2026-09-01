@@ -43,20 +43,11 @@ She is associated with the creation and production of: the audiovisual productio
     role: "Assessoria de coordenação-geral",
     location: "Moçambique",
     imageUrl: "/assets/team/antonio.jpeg",
-    bio: `António Simão Maxlhaieie é um cineasta moçambicano, que tem atuado nas areas de realização, produtção, editor de imagem, caracterizador e gestor cultural. Com uma trajetória profissional iniciada em 2008, no âmbito do Teatro do Oprimido, Maxlhaieie construiu um percurso multidisciplinar que  estabelece pontes rigorosas entre a vertente técnica da produção e a investigação académica em  Artes Cénicas e Estudos Culturais. 
-A sua filosofia de trabalho fundamenta-se na concepção do cinema e das artes performativas  enquanto ferramentas fundamentais de salvaguarda da memória coletiva, transformação social e facilitação do diálogo intercultural. Atualmente, concilia a sua prática criativa e empresarial na Maxfilm Creative com a liderança de departamentos de produção de prestigiado forúm de cinema e produção de residencias criaticas e FilmLab.
-A sua preparação academica reflete um compromisso constante com a formação contínua e a investigação pedagógica e cultural:
-Mestrado em Artes Cénicas e Estudos Culturais: Universidade Pedagógica (em curso). 
-Licenciatura em Artes Cénicas (Especialização em Educação Musical): Universidade Pedagógica (concluída em 2025). 
-Licenciatura em Design: Instituto Superior de Artes e Cultura - ISArC (frequência até ao 2.º ano em 
-2015). 
-Curso Técnico em Audiovisual e Cinema: Instituto Superior de Artes e Cultura - ISArC (2013).  Formações Complementares: Formação em Género (2018), Formação em Direitos da Criança e Boa Governação pelo Centro de Teatro do Oprimido (2009), além de participação no programa internacional Traçando o Futuro Sustentável (Dinamarca, 2011).
-Iniciou a carreira televisiva em 2013 na Televisão Independente de Moçambique (TIM), onde desempenhou as funções de editor de imagem e coordenador de pós-produção. A sua capacidade técnica projetou-o para produções de grande escala internacional, tendo atuado como editor de vídeo no programa Big Brother Angola (2.ª Temporada), sob chancela do Endemol Shine Group. No âmbito da gestão e curadoria cultural, Maxlhaieie assumiu posições de relevo estruturante no sector moçambicano: 
-Fórum de Curtas-Metragens KUGOMA: Diretor de Produção 2020 e 2026. 
-Curadoria de Cinema: Curador oficial da secção de cinema no Mercado das Indústrias Culturais e 
-Criativas de Moçambique (MICMZ). 
-Projectos Patrimoniais e Associativos: Director de produção nos projectos da Associação dos Amigos do Museu do  Cinema de Moçambique (2020–2026);
-Comunicação e Formação: Assessor de Comunicação do projeto PROCERIS PALOP+TL e dinamizador de oficinas práticas de formação audiovisual, nomeadamente em animação stopmotion e técnica de câmara para jovens, Caracterização para cinema e televisão.`,
+    bio: `António Simião Maxlhaieie é licenciado em Artes Cénicas - Especialização em Educação Musical (2025), e Mestrando em Artes Cénicas e Estudos Culturais, ambos pela Universidade Pedagógica de Maputo. Estudou Design (2015) e Audiovisual e Cinema (2013) no ISArC - Instituto Superior de Artes e Cultura. Tem formação complementar em temas transversais.
+Iniciou a sua trajetória profissional em 2008, no Teatro do Oprimido. Em televisão, começou a sua experiência na TIM, onde chegou a coordenador de pós-produção e foi editor de vídeo no Big Brother Angola (Endemol Shine Group). 
+Cineasta moçambicano, atua nas áreas de realização, produção, edição de imagem, caracterização e gestão cultural. Atualmente, concilia a prática criativa e empresarial na Maxfilm Creative e na direção de produção das actividades da AAMCM - Associação dos Amigos do Museu do  Cinema de Moçambique.
+Na AAMCM, desde 2020, dirige a produção do KUGOMA - Fórum de Cinema Moçambique, da UPCycles e do FilmLab Moçambique - REDE de Cinema e Audiovisual PALOP+TL. Foi curador da secção de cinema do Mercado das Indústrias Culturais e Criativas de Moçambique (2026).
+Dinamiza oficinas práticas de audiovisual, animação stop motion, técnicas de câmara para jovens e caracterização para cinema e televisão.`,
   },
 
   {
@@ -142,7 +133,7 @@ const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ member, onClose }) =>
             Bio
           </p>
 
-          <div className="flex flex-col sm:pt-[455px]">
+          <div className="flex flex-col sm:pt-[380px]">
             <h3 className="text-[16px] font-semibold leading-5 text-rede-white">
               {member.name}
             </h3>

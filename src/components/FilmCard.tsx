@@ -7,6 +7,7 @@ import { Text } from "./ui/text";
 import Card from "./ui/card";
 import { Tag } from "./Tag";
 import { getFilmTagLabel } from "./network/data";
+import Link from "next/link";
 
 export type FilmCardType = {
   id: string;
@@ -50,11 +51,19 @@ export const FilmCard: React.FC<{ filmData: FilmCardType, v?: "v1" | "v2" | unde
             */}
           </div>
 
-              {
-                (hasLink) &&
-                <Button showMainButton={false} iconPosition="right" icon={<ArrowRight width={12} height={12} />} onClick={openFilmLink} disabled={!hasLink} />
-              }
-          
+          {
+            (hasLink) &&
+            <Link href={filmData?.link || ""} target="_blank">
+              <Button
+                showMainButton={false}
+                iconPosition="right"
+                icon={<ArrowRight width={12} height={12} />}
+              //onClick={openFilmLink} 
+              //disabled={!hasLink} 
+              />
+            </Link>
+          }
+
         </div>
       } v={v}>
 

@@ -1,4 +1,4 @@
-import { Hero } from "@/components/news/Hero";
+import { Hero } from "@/components/Hero";
 
 import { Footer } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
@@ -9,9 +9,13 @@ export default function NewsPage() {
   return (
     <main className="bg-rede-bg">
       <TopBar />
-      <Hero title="Notícias" description="Encontra aqui as últimas notícias sobre as atividades da REDE de Cinema e Audiovisual PALOP+TL e sobre os profissionais, empresas e organizações do setor audiovisual nestes seis países."/>
-      <NewsFilter/>
-      <Footer/>
+      <Hero
+        imageUrl="/assets/news/hero.jpg"
+        title="Notícias"
+        description={`Encontra aqui as últimas notícias sobre as atividades da REDE de Cinema e Audiovisual 
+        PALOP+TL e sobre os profissionais, empresas e organizações do setor audiovisual nestes seis países.`} />
+      <NewsFilter />
+      <Footer />
     </main>
   )
 }

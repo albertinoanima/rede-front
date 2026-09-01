@@ -146,9 +146,9 @@ const isPalopCountry = (
     (country) =>
       country.id === geographyId ||
       country.nameInTopojson.toLocaleLowerCase("pt-PT") ===
-        geographyName.toLocaleLowerCase("pt-PT") ||
+      geographyName.toLocaleLowerCase("pt-PT") ||
       country.name.toLocaleLowerCase("pt-PT") ===
-        geographyName.toLocaleLowerCase("pt-PT"),
+      geographyName.toLocaleLowerCase("pt-PT"),
   );
 };
 
@@ -280,7 +280,7 @@ const PalopMapSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-[#0f0f0f] pt-17 lg:min-h-[600px]">
+    <section className="relative w-full h-screen overflow-hidden bg-[#0f0f0f] pt-17">
       <style>
         {`
           @keyframes fadeIn {
@@ -441,27 +441,27 @@ const PalopMapSection: React.FC = () => {
 
                     {(country.isIsland ||
                       country.id === "624") && (
-                      <circle
-                        r="4"
-                        fill={
-                          selected
-                            ? COLORS.selectedStroke
-                            : hovered
-                              ? COLORS.hover
-                              : "#444444"
-                        }
-                        stroke={
-                          selected
-                            ? COLORS.selectedStroke
-                            : "#666666"
-                        }
-                        strokeWidth={1}
-                        style={{
-                          transition: "all 0.25s ease",
-                          pointerEvents: "none",
-                        }}
-                      />
-                    )}
+                        <circle
+                          r="4"
+                          fill={
+                            selected
+                              ? COLORS.selectedStroke
+                              : hovered
+                                ? COLORS.hover
+                                : "#444444"
+                          }
+                          stroke={
+                            selected
+                              ? COLORS.selectedStroke
+                              : "#666666"
+                          }
+                          strokeWidth={1}
+                          style={{
+                            transition: "all 0.25s ease",
+                            pointerEvents: "none",
+                          }}
+                        />
+                      )}
 
                     <text
                       x={country.labelFlip ? 24 : -24}
@@ -503,14 +503,17 @@ const PalopMapSection: React.FC = () => {
       </div>
 
       <div className="mx-auto flex w-full max-w-lg flex-col gap-6 px-4 py-8 lg:contents">
-        <Text className="text-sm text-center font-semibold leading-6">
-          Conecta-te a realizadores, produtores, técnicos e criativos dos PALOP + Timor-Leste,<br/> fortalece a
-          tua rede profissional e descobre novas oportunidades de colaboração,<br/> circulação e desenvolvimento 
-          no setor audiovisual.
-        </Text>
-
         <InfoCard country={selectedCountry} />
       </div>
+
+      <div className="w-full flex justify-center">
+        <Text className="max-w-[560px] text-sm text-center font-semibold leading-relaxed text-rede-white sm:text-base lg:max-w-2xl">
+          Conecta-te a realizadores, produtores, técnicos e criativos dos PALOP + Timor-Leste, fortalece a
+          tua rede profissional e descobre novas oportunidades de colaboração, circulação e desenvolvimento
+          no setor audiovisual.
+        </Text>
+      </div>
+
     </section>
   );
 };

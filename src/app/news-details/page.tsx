@@ -1,4 +1,4 @@
-import { Hero } from "@/components/news/Hero";
+import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
 import { SectionViewNews } from "@/components/news/SectionViewNews";
