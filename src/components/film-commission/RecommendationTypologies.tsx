@@ -77,7 +77,7 @@ export const RecommendationTypologies: React.FC = () => {
                     {item.description}
                   </Text>
 
-                  {'tags' in item && (
+                  {/* {'tags' in item && (
                     <div className="flex flex-wrap gap-x-4 gap-y-2 sm:gap-2">
                       {item.tags.map((tag) => (
                         <Text
@@ -88,7 +88,7 @@ export const RecommendationTypologies: React.FC = () => {
                         </Text>
                       ))}
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             </article>
