@@ -54,21 +54,15 @@ export const WhatItComprises: React.FC = () => {
             Cinco frentes que sustentam o estudo e o documento de recomendações.
           </Text>
         </div>
+        
 
-        <Heading
-            level="h2"
-            className={`${customBlur.className} text-center shrink-0 text-[38px] font-medium leading-[44px] text-rede-white sm:text-[42px] sm:leading-[50px] lg:text-[48px] lg:leading-[56px] -mb-20`}
-          >
-            Três estágios identificados
-          </Heading>
-
-        <div className="mx-auto grid h-auto w-full max-w-[1147px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5 lg:gap-y-6">
+        <div className="mx-auto grid h-auto w-full max-w-[1147px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6 lg:gap-5 lg:gap-y-6 -mt-[80px]">
           {workAreas.map((area, index) => (
             <article
               key={area.number + "x" + index}
-              className="flex min-h-36 min-w-0 flex-col border border-rede-white sm:min-h-32 lg:h-32"
+              className={`flex min-h-36 min-w-0 flex-col border border-rede-white sm:min-h-32 lg:col-span-2 lg:h-32 ${index === 3 ? 'lg:col-start-2' : ''}` }
             >
-              <div className="flex min-h-[75px] w-full items-start justify-between gap-3 p-4">
+              <div className="flex min-h-[75px] w-full items-start justify-center gap-3 p-4">
                 <Text
                   aria-hidden="true"
                   className={`${customBlur.className} shrink-0 text-[48px] leading-14`}
@@ -87,6 +81,7 @@ export const WhatItComprises: React.FC = () => {
             </article>
           ))}
         </div>
+
       </div>
     </section>
   )

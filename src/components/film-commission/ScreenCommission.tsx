@@ -29,34 +29,40 @@ export const ScreenCommission: React.FC = () => {
             level="h2"
             className={`${customBlur.className} mb-2 break-words text-center text-[44px] font-medium leading-none text-rede-yellow sm:text-[66px] lg:mb-4 lg:text-[96px] lg:leading-24`}
           >
-            PALOP+Timor-Leste
+           Rede lusófona,
             <br />
-            Screen Commission
-            <br />
-            Network
+            pontes estratégicas
           </Heading>
 
+          <Text className="text-lg text-center font-semibold leading-7 sm:text-[20px] sm:leading-[28px]">
+            Posicionamento em estudo
+          </Text>
+
           <Text className="mx-auto max-w-4xl text-center text-base font-semibold leading-6 sm:text-lg sm:leading-7 lg:text-[20px]">
-            O estudo adopta como hipótese de trabalho o conceito alargado de uma PALOP+Timor-Leste Screen Commission Network: um âmbito que abrange cinema, televisão, publicidade, documentário e conteúdos digitais, integrando promoção de investimento, turismo, diplomacia cultural e desenvolvimento de competências. <br/><br/>
+            O posicionamento proposto é o de uma{' '}
+                <span className="text-rede-yellow">
+                  rede lusófona com pontes estratégicas para os ecossistemas
+                  francófono e anglófono
+                </span>
+                , refletindo as esferas reais de influência cultural e económica
+                dos sete países da rede. <br/><br/>
 
           </Text>
         </div>
 
         <div className="flex h-auto w-full flex-col gap-1">
-          <Text className="text-lg font-semibold leading-7 sm:text-[20px] sm:leading-[28px]">
-            Posicionamento em estudo
-          </Text>
+          
 
-          <Text
+          {/* <Text
             className={`${customBlur.className} text-[40px] font-medium leading-[46px] sm:text-[48px] sm:leading-[56px]`}
           >
             Rede lusófona,
             <br />
             pontes estratégicas
-          </Text>
+          </Text> */}
 
-          <div className="mt-6 flex w-full flex-col gap-10 lg:flex-row lg:justify-between lg:gap-0">
-            <div className="h-auto w-full lg:w-1/2 lg:pr-8">
+          <div className="mt-6 flex w-full flex-col gap-10 lg:flex-row lg:justify-center lg:gap-0">
+            {/* <div className="h-auto w-full lg:w-1/2 lg:pr-8">
               <Text className="max-w-xl leading-relaxed">
                 O posicionamento proposto é o de uma{' '}
                 <span className="text-rede-yellow">
@@ -66,7 +72,7 @@ export const ScreenCommission: React.FC = () => {
                 , refletindo as esferas reais de influência cultural e económica
                 dos sete países da rede.
               </Text>
-            </div>
+            </div> */}
 
             <div className="flex h-auto w-full flex-col lg:w-1/2">
               {strategicEcosystems.map((item) => (
