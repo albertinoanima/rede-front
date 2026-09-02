@@ -10,6 +10,7 @@ import Facebook from "@/icons/Facebook";
 import { Text } from "../ui/text";
 import { Tag } from "../ui/tag";
 import { useState } from "react";
+import { getOpportunityTagHref } from "./useOpportunityFilters";
 
 // Os mesmos rotulos e cores do cartao da listagem, para o estado da
 // oportunidade ser lido da mesma maneira nos dois sitios.
@@ -80,7 +81,7 @@ export const SectionViewOpportunity: React.FC<{ selectedOpportunity: Opportunity
 
                     {selectedOpportunity?.eligibility?.map((eligibility: string, index) => (
                         <Tag
-                            href={`/opportunities?tag=${encodeURIComponent(eligibility)}`}
+                            href={getOpportunityTagHref(eligibility)}
                             label={eligibility}
                             key={eligibility + index}
                         />
@@ -94,13 +95,13 @@ export const SectionViewOpportunity: React.FC<{ selectedOpportunity: Opportunity
                 <div className="flex flex-wrap gap-2">
                     {selectedOpportunity?.type && (
                         <Tag
-                            href={`/opportunities?tag=${encodeURIComponent(selectedOpportunity.type)}`}
+                            href={getOpportunityTagHref(selectedOpportunity.type)}
                             label={selectedOpportunity.type}
                         />
                     )}
 
                     {selectedOpportunity.themes?.map((theme: string, index) => (
-                        <Tag href={"/opportunities?subcategory=" + theme} label={theme} key={theme + index} />
+                        <Tag href={getOpportunityTagHref(theme)} label={theme} key={theme + index} />
                     ))}
                 </div>
             </div>

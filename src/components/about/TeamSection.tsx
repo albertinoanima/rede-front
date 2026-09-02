@@ -55,7 +55,7 @@ Dinamiza oficinas práticas de audiovisual, animação stop motion, técnicas de
     role: "Gestão de projetos e subvenções",
     location: "Moçambique",
     imageUrl: "/assets/team/telma.png",
-    bio: `Socióloga moçambicana com 20 anos de experiência em elaboração, gestão e avaliação de projetos. Experiência com projectos de Cooperação para o Desenvolvimento, Acção Humanitária e Investigação em países como Moçambique, São Tomé e Príncipe, Guiné-Bissau, Brasil, Haiti e Portugal. Responsável pela gestão de projectos e fundos de financiadores como UE, USAID, ONU, Camões I.P., AECID, EDCTP e BMGF. Consultora para o desenvolvimento e implementação de procedimentos e ferramentas de gestão de ONG e recrutamento e seleção de Recursos Humanos.`,
+    bio: `Socióloga moçambicana com 20 anos de experiência em elaboração, gestão e avaliação de projetos. Experiência com projetos de Cooperação para o Desenvolvimento, Ação Humanitária e Investigação em países como Moçambique, São Tomé e Príncipe, Guiné-Bissau, Brasil, Haiti e Portugal. Responsável pela gestão de projectos e fundos de financiadores como UE, USAID, ONU, Camões I.P., AECID, EDCTP e BMGF. Consultora para o desenvolvimento e implementação de procedimentos e ferramentas de gestão de ONG e recrutamento e seleção de Recursos Humanos.`,
   },
   {
     name: "Katya Aragão",
@@ -87,7 +87,7 @@ Fund New Voices Award e o Sheffield DocFest Award, tendo posteriormente sido dis
     role: "Assessoria do estudo sobre Film Commissions",
     location: "Moçambique",
     imageUrl: "/assets/team/fabio.png",
-    bio: `Fábio Ribeiro é realizador, director de fotografia e produtor, com particular foco em documentário e animação, tendo nos seus filmes autorais um interesse particular pela identidade, memória e pelos arquivos pessoais da (des)colonização, e num plano mais abrangente, o desenvolvimento de pensamento crítico através do processo de criação, exibição e diálogo com o cinema. É coordenador do departamento de audiovisual do coletivo moçambicano ANIMA Estúdio Criativo e membro da REDE de Cinema e Audiovisual dos PALOP-TL, tendo tido ao longo da sua carreira profissional, a oportunidade de filmar um pouco por todo mundo, com particular foco no continente africano e nos países de língua portuguesa. É licenciado em Cinematografia pela Escola Superior de Teatro e Cinema de Lisboa e mestre em Antropologia Visual e dos Media pela Freie Universität de Berlim.`,
+    bio: `Fábio Ribeiro é realizador, diretor de fotografia e produtor, com particular foco em documentário e animação, tendo nos seus filmes autorais um interesse particular pela identidade, memória e pelos arquivos pessoais da (des)colonização, e num plano mais abrangente, o desenvolvimento de pensamento crítico através do processo de criação, exibição e diálogo com o cinema. É coordenador do departamento de audiovisual do coletivo moçambicano ANIMA Estúdio Criativo e membro da REDE de Cinema e Audiovisual dos PALOP+TL, tendo tido ao longo da sua carreira profissional, a oportunidade de filmar um pouco por todo mundo, com particular foco no continente africano e nos países de língua portuguesa. É licenciado em Cinematografia pela Escola Superior de Teatro e Cinema de Lisboa e mestre em Antropologia Visual e dos Media pela Freie Universität de Berlim.`,
   },
   {
     name: "Kay Seran Limak",
@@ -141,7 +141,7 @@ const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ member, onClose }) =>
               {member.role}
             </p>
             <div className="mt-4 flex">
-              <Tag className="inline-flex w-auto shrink-0 whitespace-nowrap border-rede-white/35 text-rede-white">
+              <Tag className="inline-flex w-auto shrink-0 whitespace-nowrap border-rede-white/35 text-rede-white" variant="card" interactive={false}>
                 {member.location}
               </Tag>
             </div>
@@ -178,6 +178,7 @@ const TeamMemberModal: React.FC<TeamMemberModalProps> = ({ member, onClose }) =>
   );
 };
 
+
 export const TeamSection: React.FC = () => {
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
@@ -212,7 +213,7 @@ export const TeamSection: React.FC = () => {
                 </span>
 
                 <span className="mt-auto flex">
-                  <Tag className="inline-flex w-auto shrink-0 whitespace-nowrap">
+                  <Tag className="inline-flex w-auto shrink-0 whitespace-nowrap" variant="card" interactive={false}>
                     {member.location}
                   </Tag>
                 </span>

@@ -7,6 +7,7 @@ import { Heading } from "./ui/heading";
 import { Text } from "./ui/text";
 import Card from "./ui/card";
 import { Tag } from "./ui/tag";
+import { getOpportunityTagHref } from "./opportunities/useOpportunityFilters";
 
 export type OpportunityType = {
   id: string;
@@ -33,8 +34,8 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
       }
       footer={
         <div className="w-full h-12 flex items-center justify-between gap-4 mt-2">
-          <Text className="text-[14px] leading-relaxed font-medium line-clamp-2">
-            {/* {opportunityData.description} */}
+          <Text className="text-[12px] leading-relaxed font-medium line-clamp-2">
+            {`${opportunityData?.startDate} - ${opportunityData.endDate}`}
           </Text>
 
           <Link href={"/opportunity-details?id=" + opportunityData.id} className="cursor-pointer">
@@ -56,11 +57,11 @@ export const OpportunityCard: React.FC<{ opportunityData: OpportunityType }> = (
           <Tag label="Encerrada" variant="statusExpired" />
         )}
 
-        <Tag label={`${opportunityData?.startDate} - ${opportunityData.endDate}`} />
-        <Tag label={`${opportunityData?.type}`} href={`/opportunities?tag=${encodeURIComponent(opportunityData.type)}`} />
+        {/* <Tag label={`${opportunityData?.startDate} - ${opportunityData.endDate}`} /> */}
+        <Tag label={`${opportunityData?.type}`} href={getOpportunityTagHref(opportunityData.type)} />
 
         {opportunityData.eligibility.map((eligibility: string, index: number) => (
-          <Tag href={`/opportunities?tag=${encodeURIComponent(eligibility)}`} label={eligibility} key={eligibility + "xD" + index} />
+          <Tag href={getOpportunityTagHref(eligibility)} label={eligibility} key={eligibility + "xD" + index} />
         ))}
       </div>
 

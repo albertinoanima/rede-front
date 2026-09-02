@@ -1,12 +1,14 @@
 'use client'
 
 
+import { useEffect, useState } from 'react'
+
 import { SearchIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '../ui/heading'
 import { Input } from '../ui/Input'
 import { Select, withClearOption } from '../ui/select'
-import { countriesList, SelectItemType } from './filters'
+import { countriesList, normalizeLabelKey, SelectItemType } from './filters'
 import {
   categoriesByType,
   citiesByCountryAndProvince,
@@ -45,14 +47,9 @@ type FilterSidebarProps = {
   onClear: () => void
 }
 
-export const normalizeNetworkValue = (value: string) =>
-  value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
+// Uma so implementacao para toda a rede: o value de uma opcao, o texto que
+// vem da API e o que vem do URL tem de dar sempre a mesma chave.
+export const normalizeNetworkValue = normalizeLabelKey
 
 // Cada lista de origem já vem ordenada, mas juntar várias (todas as categorias,
 // todas as cidades) devolveria um bloco alfabético por lista em vez de uma
@@ -207,6 +204,8 @@ const getSubCategoryOptions = (
 
 // Vai do mais específico para o mais genérico: primeiro dentro do par
 // tipo/categoria já escolhido, depois dentro do tipo, e só então em tudo.
+// Escolher uma sub-categoria preenche sozinho a categoria e o tipo a que
+// pertence.
 const findSubCategoryParent = (
   subCategoryValue: string,
   preferredType?: string,
@@ -317,6 +316,10 @@ export const getNetworkFiltersFromParams = (
       filters.category = subCategoryParent.category
       filters.subCategory = subCategoryParent.subCategory
     }
+  }
+
+  if (params.search) {
+    filters.search = params.search.trim()
   }
 
   if (params.tag) {
@@ -454,12 +457,29 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
       ? 'Esta categoria não tem sub-categorias'
       : 'Este tipo não tem sub-categorias'
 
-  const handleSearchChange = (value: string) => {
-    onFiltersChange({
-      ...filters,
-      search: value,
-    })
+  // O input responde a cada tecla, mas o filtro (e com ele o URL, o mapa e
+  // a lista) so muda quando o utilizador faz uma pausa.
+  const [searchDraft, setSearchDraft] = useState(search)
+  const [appliedSearch, setAppliedSearch] = useState(search)
+
+  // O input tem de acompanhar o filtro quando este muda por fora (limpar
+  // filtros, clicar numa tag de um cartao). Ajustar durante o render, e nao
+  // num efeito, evita o render extra com o valor antigo.
+  if (search !== appliedSearch) {
+    setAppliedSearch(search)
+    setSearchDraft(search)
   }
+
+  useEffect(() => {
+    if (searchDraft === search) return
+
+    const timer = setTimeout(() => {
+      onFiltersChange({ ...filters, search: searchDraft })
+    }, 300)
+
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchDraft, search])
 
   const handleCountryChange = (value: string) => {
     onFiltersChange({
@@ -508,10 +528,13 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
       ...filters,
       type: categoryParent?.type ?? selectedType,
       category: categoryParent?.category ?? value,
+      // As sub-categorias sao as daquela categoria: mudar de categoria
+      // invalida a que estivesse escolhida.
       subCategory: '',
     })
   }
 
+  // Escolher a sub-categoria preenche a categoria e o tipo a que pertence.
   const handleSubCategoryChange = (value: string) => {
     const subCategoryParent = findSubCategoryParent(
       value,
@@ -539,8 +562,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <div className="flex w-full min-w-0 items-center lg:-mt-5">
           <Input
             placeholder="Pesquisar..."
-            value={search}
-            onChange={({ target }) => handleSearchChange(target.value)}
+            value={searchDraft}
+            onChange={({ target }) => setSearchDraft(target.value)}
             className="h-10 w-full min-w-0 border-[1.3px] border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white"
             icon={<SearchIcon size={18} className="text-rede-white" />}
             iconPosition="right"

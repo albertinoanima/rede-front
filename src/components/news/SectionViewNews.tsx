@@ -10,6 +10,7 @@ import Facebook from "@/icons/Facebook";
 import { Text } from "../ui/text";
 import { Tag } from "../ui/tag";
 import { useState } from "react";
+import { getNewsTagHref } from "./useNewsFilters";
 
 
 
@@ -74,9 +75,9 @@ export const SectionViewNews: React.FC<{ selectedNews: NewsType }> = ({ selected
                     {
                         Array.isArray(selectedNews?.location) ?
                         selectedNews?.location?.map((location: string, index) => (
-                            <Tag href={"/news?tag=" + location} label={location} key={location + index} />
+                            <Tag href={getNewsTagHref(location)} label={location} key={location + index} />
                         )) :
-                        <Tag href={"/news?tag=" + selectedNews?.location} label={selectedNews?.location} />
+                        <Tag href={getNewsTagHref(String(selectedNews?.location ?? ""))} label={selectedNews?.location} />
                     }
 
                     <Text className="text-[12px] leading-[16px]">{selectedNews?.date}</Text>
@@ -85,7 +86,7 @@ export const SectionViewNews: React.FC<{ selectedNews: NewsType }> = ({ selected
                 <div className="flex gap-2">
                     {
                         selectedNews.themes?.map((theme: string, index) => (
-                            <Tag href={"/news?subcategory=" + theme} label={theme} key={theme + index} />
+                            <Tag href={getNewsTagHref(theme)} label={theme} key={theme + index} />
                         ))
                     }
                 </div>

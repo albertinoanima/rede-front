@@ -13,7 +13,15 @@ import {
   Geography,
   Marker,
 } from "react-simple-maps";
+import { ProfileType } from "../ProfileCard";
 import { Text } from "../ui/text";
+import { filterProfiles } from "./actions";
+import { normalizeCountryValue } from "./filters";
+import { useNetworkFilters } from "./useNetworkFilters";
+import {
+  NetworkProfilesStatus,
+  useNetworkProfiles,
+} from "./useNetworkProfiles";
 
 const GEO_URL =
   "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json";
@@ -25,10 +33,6 @@ interface CountryData {
   nameInTopojson: string;
   isIsland: boolean;
   markerCoordinates: [number, number];
-  professionals: number;
-  companies: number;
-  festivals: number;
-  institutions: number;
   labelFlip?: boolean;
 }
 
@@ -48,10 +52,6 @@ const countries: CountryData[] = [
     nameInTopojson: "Angola",
     isIsland: false,
     markerCoordinates: [10.9739, -11.2027],
-    professionals: 0,
-    companies: 0,
-    festivals: 0,
-    institutions: 0,
   },
   {
     id: "132",
@@ -60,10 +60,6 @@ const countries: CountryData[] = [
     nameInTopojson: "Cape Verde",
     isIsland: true,
     markerCoordinates: [-19.6, 16],
-    professionals: 0,
-    companies: 0,
-    festivals: 0,
-    institutions: 0,
     labelFlip: true,
   },
   {
@@ -73,10 +69,6 @@ const countries: CountryData[] = [
     nameInTopojson: "Guinea-Bissau",
     isIsland: false,
     markerCoordinates: [-10.1804, 11.8037],
-    professionals: 0,
-    companies: 0,
-    festivals: 0,
-    institutions: 0,
     labelFlip: true,
   },
   {
@@ -86,10 +78,6 @@ const countries: CountryData[] = [
     nameInTopojson: "Mozambique",
     isIsland: false,
     markerCoordinates: [29.9, -19.6657],
-    professionals: 0,
-    companies: 0,
-    festivals: 0,
-    institutions: 0,
   },
   {
     id: "678",
@@ -98,10 +86,6 @@ const countries: CountryData[] = [
     nameInTopojson: "Sao Tome and Principe",
     isIsland: true,
     markerCoordinates: [3.6111, 1.1864],
-    professionals: 0,
-    companies: 0,
-    festivals: 0,
-    institutions: 0,
   },
   {
     id: "626",
@@ -110,12 +94,20 @@ const countries: CountryData[] = [
     nameInTopojson: "Timor-Leste",
     isIsland: true,
     markerCoordinates: [120.7275, -8.8742],
-    professionals: 0,
-    companies: 0,
-    festivals: 0,
-    institutions: 0,
   },
 ];
+
+// Mocambique e o pais que o cartao mostra quando nao ha filtro de pais.
+const DEFAULT_COUNTRY_ID = "508";
+
+// O value canonico do pais ("mocambique") e a chave que liga o mapa aos
+// filtros e aos perfis.
+const countryValueOf = (country: CountryData) =>
+  normalizeCountryValue(country.name);
+
+const COUNTRY_ID_BY_VALUE: Record<string, string> = Object.fromEntries(
+  countries.map((country) => [countryValueOf(country), country.id]),
+);
 
 const COLORS = {
   bg: "#0f0f0f",
@@ -152,8 +144,41 @@ const isPalopCountry = (
   );
 };
 
+// A API so distingue contas individuais e de empresa: os festivais e as
+// instituicoes do cartao ficam a zero ate passarem a existir no perfil.
+interface CountryStats {
+  individual: number;
+  company: number;
+}
+
+const EMPTY_STATS: CountryStats = {
+  individual: 0,
+  company: 0,
+};
+
+// Agrupa por pais os perfis que passam nos filtros aplicados. O pais de cada
+// perfil ja vem normalizado do mapeamento partilhado com a pesquisa.
+const buildStatsByCountry = (
+  profiles: ProfileType[],
+): Record<string, CountryStats> => {
+  const stats: Record<string, CountryStats> = {};
+
+  for (const profile of profiles) {
+    if (!profile.country) continue;
+
+    const current = stats[profile.country] ?? { ...EMPTY_STATS };
+
+    if (profile.type === "empresa") current.company += 1;
+    else current.individual += 1;
+
+    stats[profile.country] = current;
+  }
+
+  return stats;
+};
+
 const StatRow: React.FC<{
-  value: number;
+  value: string;
   label: string;
 }> = ({ value, label }) => (
   <div className="flex items-center gap-3">
@@ -165,33 +190,53 @@ const StatRow: React.FC<{
   </div>
 );
 
-const InfoCard: React.FC<{ country: CountryData }> = ({ country }) => (
-  <div className="absolute top-[450px] right-4 z-20 w-[190px] animate-[fadeIn_0.3s_ease] rounded-xl bg-[#f5c518] px-4 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)] sm:top-[450px] sm:right-6 sm:w-[220px] sm:rounded-2xl sm:px-6 sm:py-5 
-  lg:top-[420px] lg:right-auto 
-  lg:left-[calc(50%+450px)] lg:w-auto lg:min-w-[220px] lg:-translate-x-1/2 lg:px-8 lg:py-6">
-    <h2 className="mb-3 pr-4 text-base leading-tight font-medium text-[#1a1a1a] sm:mb-4 sm:text-xl lg:text-[22px]">
-      {country.name}
-    </h2>
+const InfoCard: React.FC<{
+  country: CountryData;
+  stats: CountryStats;
+  status: NetworkProfilesStatus;
+}> = ({ country, stats, status }) => {
+  // Enquanto os perfis nao chegam nao mostramos zeros: seriam lidos como
+  // "este pais nao tem ninguem".
+  const format = (value: number) =>
+    status === "ready" ? String(value) : "–";
 
-    <div
-      aria-hidden="true"
-      className="absolute top-4 right-3 h-[calc(100%-2rem)] w-0.5 rounded-full bg-[#1a1a1a] sm:top-5 sm:right-4 sm:h-[calc(100%-2.5rem)] sm:w-[3px] lg:top-6 lg:h-[calc(100%-3rem)]"
-    />
+  return (
+    <div className="absolute top-[450px] right-4 z-20 w-[190px] animate-[fadeIn_0.3s_ease] rounded-xl bg-[#f5c518] px-4 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.4)] sm:top-[450px] sm:right-6 sm:w-[220px] sm:rounded-2xl sm:px-6 sm:py-5
+    lg:top-[420px] lg:right-auto
+    lg:left-[calc(50%+450px)] lg:w-auto lg:min-w-[220px] lg:-translate-x-1/2 lg:px-8 lg:py-6">
+      <h2 className="mb-3 pr-4 text-base leading-tight font-medium text-[#1a1a1a] sm:mb-4 sm:text-xl lg:text-[22px]">
+        {country.name}
+      </h2>
 
-    <div className="flex flex-col gap-1.5 pr-3 sm:gap-2.5 sm:pr-4">
-      <StatRow
-        value={country.professionals}
-        label="Profissionais"
+      <div
+        aria-hidden="true"
+        className="absolute top-4 right-3 h-[calc(100%-2rem)] w-0.5 rounded-full bg-[#1a1a1a] sm:top-5 sm:right-4 sm:h-[calc(100%-2.5rem)] sm:w-[3px] lg:top-6 lg:h-[calc(100%-3rem)]"
       />
-      <StatRow value={country.companies} label="Empresas" />
-      <StatRow value={country.festivals} label="Festivais" />
-      <StatRow
-        value={country.institutions}
-        label="Instituições"
-      />
+
+      <div
+        aria-live="polite"
+        className="flex flex-col gap-1.5 pr-3 sm:gap-2.5 sm:pr-4"
+      >
+        <StatRow
+          value={format(stats.individual)}
+          label="Profissionais"
+        />
+
+        <StatRow value={format(stats.company)} label="Empresas" />
+
+        <StatRow value="0" label="Festivais" />
+
+        <StatRow value="0" label="Instituições" />
+
+        {status === "error" && (
+          <p className="text-[11px] leading-tight text-[#333333]">
+            Não foi possível carregar os perfis.
+          </p>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 interface ArrowButtonProps {
   onClick: () => void;
@@ -241,12 +286,22 @@ const ArrowButton: React.FC<ArrowButtonProps> = ({
 );
 
 const PalopMapSection: React.FC = () => {
-  const [selectedId, setSelectedId] = useState("508");
+  // O pais em foco vem do filtro; enquanto nao houver filtro de pais fica o
+  // ultimo escolhido no mapa (o cartao tem de mostrar sempre algum pais).
+  const [lastSelectedId, setLastSelectedId] = useState(DEFAULT_COUNTRY_ID);
+
   const [hoveredId, setHoveredId] = useState<string | null>(
     null,
   );
 
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const { filters, setFilters } = useNetworkFilters();
+  const { profiles, status } = useNetworkProfiles();
+
+  const selectedId =
+    (filters.country && COUNTRY_ID_BY_VALUE[filters.country]) ||
+    lastSelectedId;
 
   const selectedCountry = useMemo(
     () =>
@@ -254,6 +309,19 @@ const PalopMapSection: React.FC = () => {
       countries[3],
     [selectedId],
   );
+
+  // O cartao reflecte os filtros aplicados, menos o de pais: esse e dado
+  // pelo mapa, e cada pais precisa do seu proprio numero.
+  const statsByCountry = useMemo(
+    () =>
+      buildStatsByCountry(
+        filterProfiles(profiles, { ...filters, country: "" }),
+      ),
+    [filters, profiles],
+  );
+
+  const selectedStats =
+    statsByCountry[countryValueOf(selectedCountry)] ?? EMPTY_STATS;
 
   const isSelected = useCallback(
     (id: string) => selectedId === id,
@@ -265,9 +333,24 @@ const PalopMapSection: React.FC = () => {
     [hoveredId],
   );
 
-  const selectCountry = useCallback((id: string) => {
-    setSelectedId(id);
-  }, []);
+  // Clicar no mapa e escolher o pais no filtro: e a mesma coisa, e a
+  // provincia e a localidade que estivessem escolhidas deixam de fazer
+  // sentido noutro pais.
+  const selectCountry = useCallback(
+    (id: string) => {
+      const country = countries.find((item) => item.id === id);
+
+      setLastSelectedId(id);
+
+      setFilters({
+        ...filters,
+        country: country ? countryValueOf(country) : "",
+        province: "",
+        city: "",
+      });
+    },
+    [filters, setFilters],
+  );
 
   const handleMarkerKeyDown = (
     event: KeyboardEvent<SVGGElement>,
@@ -503,7 +586,11 @@ const PalopMapSection: React.FC = () => {
       </div>
 
       <div className="mx-auto flex w-full max-w-lg flex-col gap-6 px-4 py-8 lg:contents">
-        <InfoCard country={selectedCountry} />
+        <InfoCard
+          country={selectedCountry}
+          stats={selectedStats}
+          status={status}
+        />
       </div>
 
       <div className="w-full flex justify-center">

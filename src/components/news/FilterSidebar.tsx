@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { SearchIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Heading } from '../ui/heading'
@@ -36,12 +37,24 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
   const subCategoryOptions = getNewsSubCategoryOptions(selectedCategory)
 
-  const handleSearchChange = (value: string) => {
-    onFiltersChange({
-      ...filters,
-      search: value,
-    })
+  const [searchDraft, setSearchDraft] = useState(search)
+  const [appliedSearch, setAppliedSearch] = useState(search)
+
+  if (search !== appliedSearch) {
+    setAppliedSearch(search)
+    setSearchDraft(search)
   }
+
+  useEffect(() => {
+    if (searchDraft === search) return
+
+    const timer = setTimeout(() => {
+      onFiltersChange({ ...filters, search: searchDraft })
+    }, 300)
+
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchDraft, search])
 
   const handleCountryChange = (value: string) => {
     onFiltersChange({
@@ -92,8 +105,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <div className="flex w-full min-w-0 items-center">
           <Input
             placeholder="Pesquisar..."
-            value={search}
-            onChange={({ target }) => handleSearchChange(target.value)}
+            value={searchDraft}
+            onChange={({ target }) => setSearchDraft(target.value)}
             className="h-10 w-full min-w-0 border-[1.3px] border-white bg-transparent px-3 text-rede-white outline-none placeholder:text-rede-white"
             icon={<SearchIcon size={18} className="text-rede-white" />}
             iconPosition="right"

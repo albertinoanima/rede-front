@@ -20,8 +20,11 @@ export type ProfileType = {
   bio?: string;
   city?: string;
   type?: string;
-  category?: string;
-  subCategory?: string;
+  // Categoria = coreSkills do perfil; Sub-categoria = skills.
+  categories?: string[];
+  subCategories?: string[];
+  // Tudo o que o perfil diz sobre o que faz, para a pesquisa livre.
+  terms?: string[];
   username?: string;
 }
 

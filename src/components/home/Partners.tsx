@@ -246,7 +246,7 @@ export function Partners() {
         <Text className="text-[12px] text-rede-surface text-center">
 
           
-          Esta plataforma foi produzida pela AAMCM - Associação dos Amigos do Museu do Cinema em Moçambique e seus parceiros de implementação, para a iniciativa REDE de Cinema e Audiovisual PALOP + TL, com apoio financeiro do Camões - Instituto da Cooperação e da Língua, I.P., através do programa PROCERIS. Todas as informações e opiniões aqui expressas são da inteira responsabilidade dos/as autores/as, e não representam a posição do Camões, I.P.
+          Esta plataforma foi produzida pela AAMCM - Associação dos Amigos do Museu do Cinema em Moçambique e seus parceiros de implementação, para a iniciativa REDE de Cinema e Audiovisual PALOP+TL, com apoio financeiro do Camões - Instituto da Cooperação e da Língua, I.P., através do programa PROCERIS. Todas as informações e opiniões aqui expressas são da inteira responsabilidade dos/as autores/as, e não representam a posição do Camões, I.P.
         </Text>
 
         <Text className="text-[12px] text-rede-surface text-center">

@@ -40,17 +40,20 @@ export const PartiallyOverlappingPhases: React.FC = () => {
             level="h2"
             className={`${customBlur.className} mb-2 text-center text-[48px] font-medium leading-none text-rede-yellow sm:text-[68px] lg:mb-4 lg:text-[96px] lg:leading-24`}
           >
-            Cinco fases parcialmente
-            <br />
-            sobrepostas
+            Manual de <br/> Procedimentos<br/>  de Moçambique
           </Heading>
 
           <Text className="mx-auto max-w-3xl text-center text-base font-semibold leading-6 sm:text-lg sm:leading-7 lg:text-[20px]">
             A metodologia é qualitativa, comparativa e orientada para a decisão,
             estando organizada em cinco fases parcialmente sobrepostas.
+
+            Em paralelo com o estudo, estamos a preparar um <span className='font-bold text-rede-yellow'>Manual de Procedimentos de Produção Audiovisual para Moçambique</span>: um guia prático sobre como se filma legalmente no país, dirigido a quem produz cá dentro e a quem chega de fora. <br/><br/>
+O trabalho assenta em duas fontes. Por um lado, a legislação em vigor — o Decreto n.o 57/2024, que regula a actividade audiovisual e cinematográfica, e o regime dos levantamentos e cinematografia aéreos. Por outro, entrevistas a produtores e fixers com experiência de produção nacional e internacional em Moçambique.<br/><br/>
+O Manual está organizado em três camadas: um roadmap com o circuito essencial, fichas de procedimento por matéria, e anexos com tabelas, contactos e modelos.
+<span className='font-bold text-rede-yellow'> Os procedimentos descritos estão em processo de validação junto das instituições competentes</span>. O Manual será publicado quando essa validação estiver concluída.
           </Text>
         </div>
-
+{/* 
         <div className="mx-auto flex h-auto w-full max-w-[920px] flex-col gap-2">
           {ITEMS.map((item) => (
             <article
@@ -78,7 +81,7 @@ export const PartiallyOverlappingPhases: React.FC = () => {
               </div>
             </article>
           ))}
-        </div>
+        </div> */}
       </div>
     </section>
   )

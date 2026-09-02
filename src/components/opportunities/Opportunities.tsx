@@ -1,111 +1,23 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useMemo } from 'react'
 import { FilterSidebar } from './FilterSidebar'
 import { OpportunityCard } from '../OpportunityCard'
 import { customBlur } from '@/app/fonts'
 import { Heading } from '../ui/heading'
-import {
-  defaultOpportunityFilters,
-  filterOpportunities,
-  OpportunityFilters,
-} from './actions'
-import { opportunities, opportunityCategories } from './data'
+import { filterOpportunities } from './actions'
+import { opportunities } from './data'
 import { Text } from '../ui/text'
-import { countriesList } from '../network/filters'
-import { newsSubCategories } from '../news/data'
-import { normalizeNewsValue } from '../news/actions'
+import { useOpportunityFilters } from './useOpportunityFilters'
 
-type OpportunitiesContentProps = {
-  initialTag: string
-}
-
-const normalizeTag = normalizeNewsValue
-
-const findSubCategoryParent = (value: string) => {
-  const normalizedValue = normalizeNewsValue(value)
-
-  for (const [category, subCategories] of Object.entries(newsSubCategories)) {
-    const subCategory = subCategories.find(
-      (item) => normalizeNewsValue(item) === normalizedValue,
-    )
-
-    if (subCategory) {
-      return {
-        category,
-        subCategory: normalizeNewsValue(subCategory),
-      }
-    }
-  }
-
-  return null
-}
-
-const getInitialFilters = (tag: string): OpportunityFilters => {
-  const normalizedTag = normalizeTag(tag)
-
-  if (!normalizedTag) {
-    return defaultOpportunityFilters
-  }
-
-  const country = countriesList.find(
-    (option) =>
-      normalizeTag(option.value) === normalizedTag ||
-      normalizeTag(option.label) === normalizedTag,
-  )
-
-  if (country) {
-    return {
-      ...defaultOpportunityFilters,
-      country: country.value,
-    }
-  }
-
-  const category = opportunityCategories.find(
-    (option) =>
-      normalizeTag(option.value) === normalizedTag ||
-      normalizeTag(option.label) === normalizedTag,
-  )
-
-  if (category) {
-    return {
-      ...defaultOpportunityFilters,
-      category: category.value,
-    }
-  }
-
-  const subCategoryParent = findSubCategoryParent(tag)
-
-  if (subCategoryParent) {
-    return {
-      ...defaultOpportunityFilters,
-      category: subCategoryParent.category,
-      subCategory: subCategoryParent.subCategory,
-    }
-  }
-
-  return {
-    ...defaultOpportunityFilters,
-    search: tag,
-  }
-}
-
-const OpportunitiesContent: React.FC<OpportunitiesContentProps> = ({
-  initialTag,
-}) => {
-  const [filters, setFilters] = useState<OpportunityFilters>(() =>
-    getInitialFilters(initialTag),
-  )
+const OpportunitiesContent: React.FC = () => {
+  const { filters, setFilters, clearFilters } = useOpportunityFilters()
 
   const filteredOpportunities = useMemo(
     () => filterOpportunities(opportunities, filters),
     [filters],
   )
 
-  const handleClear = () => {
-    setFilters(defaultOpportunityFilters)
-  }
 
   return (
     <section className="mt-12 h-auto w-full sm:mt-16 lg:mt-20">
@@ -135,7 +47,7 @@ const OpportunitiesContent: React.FC<OpportunitiesContentProps> = ({
             <FilterSidebar
               filters={filters}
               onFiltersChange={setFilters}
-              onClear={handleClear}
+              onClear={clearFilters}
             />
           </div>
 
@@ -162,12 +74,5 @@ const OpportunitiesContent: React.FC<OpportunitiesContentProps> = ({
 }
 
 export const Opportunities: React.FC = () => {
-  const searchParams = useSearchParams()
-  const tag =
-    searchParams.get('subcategory') ??
-    searchParams.get('subCategory') ??
-    searchParams.get('tag') ??
-    ''
-
-  return <OpportunitiesContent key={tag} initialTag={tag} />
+  return <OpportunitiesContent />
 }

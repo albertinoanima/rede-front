@@ -29,7 +29,7 @@ export const ScreenCommission: React.FC = () => {
             level="h2"
             className={`${customBlur.className} mb-2 break-words text-center text-[44px] font-medium leading-none text-rede-yellow sm:text-[66px] lg:mb-4 lg:text-[96px] lg:leading-24`}
           >
-            PALOP–Timor-Leste
+            PALOP+Timor-Leste
             <br />
             Screen Commission
             <br />
@@ -37,20 +37,14 @@ export const ScreenCommission: React.FC = () => {
           </Heading>
 
           <Text className="mx-auto max-w-4xl text-center text-base font-semibold leading-6 sm:text-lg sm:leading-7 lg:text-[20px]">
-            O estudo adoptará como hipótese de trabalho o conceito alargado de
-            uma{' '}
-            <span className="text-rede-yellow">
-              PALOP–Timor-Leste Screen Commission Network:
-            </span>{' '}
-            um âmbito que abrange cinema, televisão, publicidade, documentário e
-            conteúdos digitais, integrando a promoção do investimento, o
-            turismo, a diplomacia cultural e o desenvolvimento de competências.
+            O estudo adopta como hipótese de trabalho o conceito alargado de uma PALOP+Timor-Leste Screen Commission Network: um âmbito que abrange cinema, televisão, publicidade, documentário e conteúdos digitais, integrando promoção de investimento, turismo, diplomacia cultural e desenvolvimento de competências. <br/><br/>
+
           </Text>
         </div>
 
         <div className="flex h-auto w-full flex-col gap-1">
           <Text className="text-lg font-semibold leading-7 sm:text-[20px] sm:leading-[28px]">
-            Posicionamento
+            Posicionamento em estudo
           </Text>
 
           <Text
@@ -70,8 +64,7 @@ export const ScreenCommission: React.FC = () => {
                   francófono e anglófono
                 </span>
                 , refletindo as esferas reais de influência cultural e económica
-                dos sete países e reforçando a atratividade da proposta junto de
-                parceiros internacionais de cooperação.
+                dos sete países da rede.
               </Text>
             </div>
 

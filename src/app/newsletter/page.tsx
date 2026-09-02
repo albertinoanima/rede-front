@@ -9,7 +9,7 @@ export default function NewsletterPage() {
         <main className="bg-rede-bg">
             <TopBar />
             <Hero
-                imageUrl="/assets/news/hero.jpg"
+                imageUrl="/assets/newsletter/hero.png"
                 title="Newsletters"
                 description="Acesse as edições anteriores da nossa newsletter mensal." />
             <SectionNewsletters />

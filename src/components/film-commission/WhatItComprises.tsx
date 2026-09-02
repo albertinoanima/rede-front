@@ -7,46 +7,35 @@ import { Tag } from '../ui/tag'
 
 const workAreas = [
   {
-    number: 'I',
+    number: '',
     category: 'Literatura',
     description:
-      'Revisão de literatura académica e técnica sobre tipologias e melhores práticas de Film Commissions;',
+      'Revisão de literatura académica e técnica sobre tipologias e boas práticas de Film Commissions.',
   },
   {
-    number: 'II',
-    category: 'Benchmarks',
+    number: '',
+    category: 'Casos internacionais',
     description:
-      'Identificação e análise de exemplos internacionais a consultar;',
+      'Identificação e análise de exemplos internacionais a consultar.',
   },
   {
-    number: 'III',
+    number: ' ',
     category: 'Legislação',
     description:
-      'Análise técnica da legislação e das políticas públicas de Cultura e Turismo nos PALOP e em Timor-Leste;',
+      'Análise técnica da legislação e das políticas públicas de Cultura e Turismo nos países da rede.',
   },
   {
-    number: 'IV',
-    category: 'Manual',
+    number: ' ',
+    category: 'Manual de Procedimentos',
     description:
-      'Produção dos conteúdos de um Manual de Procedimentos de Produção para Moçambique;',
+      'Produção dos conteúdos de um Manual de Procedimentos de Produção para Moçambique.',
   },
   {
-    number: 'V',
+    number: ' ',
     category: 'Estudo de caso',
     description:
-      'Elaboração de uma proposta preliminar de Estudo de Caso em Inhambane;',
-  },
-  {
-    number: 'VI',
-    category: 'Arquivo',
-    description: 'Organização do arquivo da assessoria;',
-  },
-  {
-    number: 'VII',
-    category: 'Relatório',
-    description:
-      'Redação do relatório narrativo e do documento de recomendações.',
-  },
+      'Elaboração de uma proposta preliminar de estudo de caso em Inhambane.',
+  }
 ]
 
 export const WhatItComprises: React.FC = () => {
@@ -58,21 +47,25 @@ export const WhatItComprises: React.FC = () => {
             level="h2"
             className={`${customBlur.className} mb-2 text-center text-[48px] font-medium leading-none text-rede-yellow sm:text-[68px] lg:mb-4 lg:text-[96px] lg:leading-24`}
           >
-            O que compreende
-            <br />
-            o trabalho
+            As frentes<br/>  de trabalho
           </Heading>
 
           <Text className="mx-auto max-w-3xl text-center text-base font-semibold leading-6 sm:text-lg sm:leading-7 lg:text-[20px]">
-            Sete frentes de trabalho, de I a VII, que sustentam o estudo e o
-            documento de recomendações.
+            Cinco frentes que sustentam o estudo e o documento de recomendações.
           </Text>
         </div>
 
+        <Heading
+            level="h2"
+            className={`${customBlur.className} text-center shrink-0 text-[38px] font-medium leading-[44px] text-rede-white sm:text-[42px] sm:leading-[50px] lg:text-[48px] lg:leading-[56px] -mb-20`}
+          >
+            Três estágios identificados
+          </Heading>
+
         <div className="mx-auto grid h-auto w-full max-w-[1147px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5 lg:gap-y-6">
-          {workAreas.map((area) => (
+          {workAreas.map((area, index) => (
             <article
-              key={area.number}
+              key={area.number + "x" + index}
               className="flex min-h-36 min-w-0 flex-col border border-rede-white sm:min-h-32 lg:h-32"
             >
               <div className="flex min-h-[75px] w-full items-start justify-between gap-3 p-4">

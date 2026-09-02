@@ -13,7 +13,7 @@ export const profiles: ProfileType[] = [
         tags: ["Guiné-Bissau", "Bissau", "Fotográfo"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "guine-bissau", province: "sector-autonomo-de-bissau", city: "bissau",
-        type: "profissionais", category: "fotografxs",
+        type: "profissionais", categories: ["fotografxs"],
     },
     {
         id: "qmpwlszkvbterygaxc",
@@ -21,7 +21,7 @@ export const profiles: ProfileType[] = [
         tags: ["Moçambique", "Nampula", "Produtor"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "mocambique", province: "nampula", city: "nampula",
-        type: "profissionais", category: "produtorxs",
+        type: "profissionais", categories: ["produtorxs"],
     },
     {
         id: "znxbdotgmreiaqycvh",
@@ -29,7 +29,7 @@ export const profiles: ProfileType[] = [
         tags: ["Moçambique", "Nampula", "Produtor"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "mocambique", province: "nampula", city: "nampula",
-        type: "profissionais", category: "produtorxs",
+        type: "profissionais", categories: ["produtorxs"],
     },
     {
         id: "jrkeulcmxzsqbgtvfw",
@@ -37,7 +37,7 @@ export const profiles: ProfileType[] = [
         tags: ["Guiné-Bissau", "Bissau", "Fotográfo"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "guine-bissau", province: "sector-autonomo-de-bissau", city: "bissau",
-        type: "profissionais", category: "fotografxs",
+        type: "profissionais", categories: ["fotografxs"],
     },
     {
         id: "wmvqcslzjnrytexbao",
@@ -45,7 +45,7 @@ export const profiles: ProfileType[] = [
         tags: ["Angola", "Luanda", "Animador"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "angola", province: "luanda", city: "luanda",
-        type: "profissionais", category: "animadorxs",
+        type: "profissionais", categories: ["animadorxs"],
     },
     {
         id: "gpxfuadyvnmzeklcqi",
@@ -53,7 +53,7 @@ export const profiles: ProfileType[] = [
         tags: ["Guiné-Bissau", "Bissau", "Fotográfo"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "guine-bissau", province: "sector-autonomo-de-bissau", city: "bissau",
-        type: "profissionais", category: "fotografxs",
+        type: "profissionais", categories: ["fotografxs"],
     },
     {
         id: "btnhysjcmqvewxoduz",
@@ -61,7 +61,7 @@ export const profiles: ProfileType[] = [
         tags: ["Angola", "Luanda", "Animador"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "angola", province: "luanda", city: "luanda",
-        type: "profissionais", category: "animadorxs",
+        type: "profissionais", categories: ["animadorxs"],
     },
     {
         id: "lcvmyszqpajodwiukr",
@@ -69,7 +69,7 @@ export const profiles: ProfileType[] = [
         tags: ["Angola", "Luanda", "Animador"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "angola", province: "luanda", city: "luanda",
-        type: "profissionais", category: "animadorxs",
+        type: "profissionais", categories: ["animadorxs"],
     },
     {
         id: "vhqzmdotuenraxysbc",
@@ -77,7 +77,7 @@ export const profiles: ProfileType[] = [
         tags: ["Angola", "Luanda", "Animador"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "angola", province: "luanda", city: "luanda",
-        type: "profissionais", category: "animadorxs",
+        type: "profissionais", categories: ["animadorxs"],
     },
     {
         id: "eyoltqbxvdznucpmiw",
@@ -85,7 +85,7 @@ export const profiles: ProfileType[] = [
         tags: ["Guiné-Bissau", "Bissau", "Fotográfo"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "guine-bissau", province: "sector-autonomo-de-bissau", city: "bissau",
-        type: "profissionais", category: "fotografxs",
+        type: "profissionais", categories: ["fotografxs"],
     },
     {
         id: "rzupwmavjcxnbeqhkt",
@@ -93,7 +93,7 @@ export const profiles: ProfileType[] = [
         tags: ["Moçambique", "Nampula", "Produtor"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "mocambique", province: "nampula", city: "nampula",
-        type: "profissionais", category: "produtorxs",
+        type: "profissionais", categories: ["produtorxs"],
     },
     {
         id: "ndqxytlvamockjzguf",
@@ -101,7 +101,7 @@ export const profiles: ProfileType[] = [
         tags: ["Moçambique", "Nampula", "Produtor"],
         title: "Lorem ipsum dolor sit consectetur",
         country: "mocambique", province: "nampula", city: "nampula",
-        type: "profissionais", category: "produtorxs",
+        type: "profissionais", categories: ["produtorxs"],
     }
 ];
 
@@ -540,3 +540,46 @@ export const subCategoriesByType: Record<
   instituicao: groupByCategory(institucionalSubCategoriesList),
   profissionais: {},
 }
+
+// O tipo de perfil que corresponde ao tipo de conta. Festival e instituição
+// existem na taxonomia mas ainda não como tipo de conta.
+export const getProfileTypeByAccountType = (
+  accountType?: AccountType,
+): ProfileTypeCode => (accountType === 'company' ? 'empresa' : 'profissionais')
+
+// As sub-categorias que uma conta pode declarar, sem repetidos e por ordem
+// alfabética. Profissionais não têm nível abaixo da profissão, por isso a
+// lista vem vazia.
+export const getSubCategoriesByAccountType = (
+  accountType?: AccountType,
+): SelectItemType[] => {
+  const byCategory =
+    subCategoriesByType[getProfileTypeByAccountType(accountType)] ?? {}
+
+  const seen = new Set<string>()
+
+  return Object.values(byCategory)
+    .flat()
+    .filter((item) => {
+      if (seen.has(item.value)) return false
+
+      seen.add(item.value)
+      return true
+    })
+    .sort(sortByLabel)
+}
+
+// Índice inverso: de uma sub-categoria para a categoria a que pertence. É o
+// que permite dizer que um perfil que declara "ADR" pertence também a
+// "Pós-Produção de Som". A primeira ocorrência ganha.
+export const categoryBySubCategory: Record<string, string> = Object.values(
+  subCategoriesByType,
+).reduce<Record<string, string>>((index, byCategory) => {
+  for (const [category, subCategories] of Object.entries(byCategory)) {
+    for (const { value } of subCategories) {
+      index[value] ??= category
+    }
+  }
+
+  return index
+}, {})

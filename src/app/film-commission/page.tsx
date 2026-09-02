@@ -6,24 +6,29 @@ import { RecommendationTypologies } from "@/components/film-commission/Recommend
 import { PartiallyOverlappingPhases } from "@/components/film-commission/PartiallyOverlappingPhases";
 import Footer from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
+import { WhatWeAreDoing } from "@/components/film-commission/WhatWeAreDoing";
+import { WhereWeAre } from "@/components/film-commission/WhereWeAre";
+import { GoForWork } from "@/components/film-commission/GoForWork";
 
 export default function FilmCommissionPage() {
     return (
         <main className="bg-rede-bg">
             <TopBar />
             <Hero
-                imageUrl="/assets/agency/hero.png"
+                imageUrl="/assets/film-commission/hero.jpg"
                 title="Film Commission"
                 description={`
-                        A Rede está a desenvolver um trabalho para a elaboração de recomendações 
-                        para a implementação do modelo de Film Commissions nos PALOP e Timor-Leste.
+                        Estamos a estudar como pode funcionar um modelo de Film Commission nos PALOP e em Timor-Leste — e a preparar, 
+                        entretanto, as ferramentas práticas de que o setor precisa.
                     `}
             />
-            <LegislativeInternship />
+            <WhatWeAreDoing />
+            <WhereWeAre />
             <WhatItComprises />
             <RecommendationTypologies />
             <ScreenCommission />
             <PartiallyOverlappingPhases />
+            <GoForWork/>
             <Footer variant="yellow" />
         </main>
     )

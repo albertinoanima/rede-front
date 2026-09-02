@@ -13,7 +13,7 @@ export default function AgencyPage() {
       <Hero
         imageUrl="/assets/agency/hero.png"
         title="Agência"
-        description={`A Agência de Curta-metragem PALOP + TL apoia a nova geração do audiovisual, promovendo filmes, criadores e 
+        description={`A Agência de Curta-metragem PALOP+TL apoia a nova geração do audiovisual, promovendo filmes, criadores e 
           oportunidades que reforçam a colaboração, a mobilidade cultural e a presença internacional das nossas cinematografias.`}
       />
       <FilmsSection />

@@ -3,7 +3,10 @@ import { Tag } from "@/components/ui/tag";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Select, SelectOption } from "@/components/ui/select";
-import { getCategoriesByAccountType } from "@/components/network/data";
+import {
+    getCategoriesByAccountType,
+    getSubCategoriesByAccountType,
+} from "@/components/network/data";
 import { User } from "@/types/User";
 import { Edit2, X } from "lucide-react";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
@@ -11,11 +14,22 @@ import { Text } from "@/components/ui/text";
 
 type ProfileData = User["profileData"];
 
-// As competencias disponiveis dependem apenas do tipo de conta: contas de
-// empresa escolhem entre as categorias de empresa, as restantes (individual)
-// entre as categorias de profissionais.
-export const getSkillOptions = (profileData?: ProfileData): SelectOption[] =>
+// As competencias principais (coreSkills) sao a Categoria do perfil, e saem
+// da lista de categorias do tipo de conta.
+export const getCoreSkillOptions = (profileData?: ProfileData): SelectOption[] =>
     getCategoriesByAccountType(profileData?.accountType);
+
+// Esta seccao guarda profileData.skills, que e a Sub-categoria com que a
+// pesquisa da rede compara. Um perfil de empresa escolhe entre as
+// sub-categorias do seu tipo; profissionais nao tem nivel abaixo da
+// profissao, por isso continuam a escolher entre as proprias categorias.
+export const getSkillOptions = (profileData?: ProfileData): SelectOption[] => {
+    const subCategories = getSubCategoriesByAccountType(profileData?.accountType);
+
+    return subCategories.length > 0
+        ? subCategories
+        : getCategoriesByAccountType(profileData?.accountType);
+};
 
 type SectionEditSkillsProps = {
     isAuthenticated?: boolean;

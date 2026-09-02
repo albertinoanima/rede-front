@@ -76,6 +76,29 @@ const countryLabels = buildLabelIndex(countriesList)
 export const getCountryLabel = (value?: string): string =>
   getLabelFromIndex(countryLabels, value)
 
+// O pais chega da API em varias formas conforme a origem do registo
+// ('Mocambique', 'Mozambique', 'Guinea-Bissau'). Estas equivalencias trazem
+// todas para o value canonico da countriesList.
+const countryValueAliases: Record<string, string> = {
+  'cape-verde': 'cabo-verde',
+  'guinea-bissau': 'guine-bissau',
+  mozambique: 'mocambique',
+  'sao-tome-principe': 'sao-tome-e-principe',
+  'sao-tome-and-principe': 'sao-tome-e-principe',
+  'east-timor': 'timor-leste',
+}
+
+// Devolve o value canonico do pais ('mocambique') a partir de qualquer uma
+// dessas formas. Um pais desconhecido devolve a propria chave normalizada,
+// para que os dados antigos nao desapareçam dos filtros.
+export const normalizeCountryValue = (value?: string): string => {
+  if (!value) return ''
+
+  const key = normalizeLabelKey(value)
+
+  return countryValueAliases[key] ?? key
+}
+
 
 export const angolaProvincesList: SelectItemType[] = [
   { label: "Bengo", value: "bengo" },

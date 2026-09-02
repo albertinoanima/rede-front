@@ -1,107 +1,21 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useMemo } from 'react'
 import { customBlur } from '@/app/fonts'
 import { FilterSidebar } from './FilterSidebar'
 import { Heading } from '../ui/heading'
 import { ArticleCard } from '../ArticleCard'
-import { NEWS, newsCategories, newsSubCategories } from './data'
-import {
-  defaultNewsFilters,
-  filterNews,
-  getNewsYearOptions,
-  NewsFilters,
-  normalizeNewsValue,
-} from './actions'
+import { NEWS } from './data'
+import { filterNews, getNewsYearOptions } from './actions'
 import { Text } from '../ui/text'
-import { countriesList } from '../network/filters'
+import { useNewsFilters } from './useNewsFilters'
 
-type NewsFilterContentProps = {
-  initialTag: string
-}
-
-const normalizeTag = normalizeNewsValue
-
-const findSubCategoryParent = (value: string) => {
-  const normalizedValue = normalizeNewsValue(value)
-
-  for (const [category, subCategories] of Object.entries(newsSubCategories)) {
-    const subCategory = subCategories.find(
-      (item) => normalizeNewsValue(item) === normalizedValue,
-    )
-
-    if (subCategory) {
-      return {
-        category,
-        subCategory: normalizeNewsValue(subCategory),
-      }
-    }
-  }
-
-  return null
-}
-
-const getInitialFilters = (tag: string): NewsFilters => {
-  const normalizedTag = normalizeTag(tag)
-
-  if (!normalizedTag) {
-    return defaultNewsFilters
-  }
-
-  const country = countriesList.find(
-    (option) =>
-      normalizeTag(option.value) === normalizedTag ||
-      normalizeTag(option.label) === normalizedTag,
-  )
-
-  if (country) {
-    return {
-      ...defaultNewsFilters,
-      country: country.value,
-    }
-  }
-
-  const category = newsCategories.find(
-    (option) =>
-      normalizeTag(option.value) === normalizedTag ||
-      normalizeTag(option.label) === normalizedTag,
-  )
-
-  if (category) {
-    return {
-      ...defaultNewsFilters,
-      category: category.value,
-    }
-  }
-
-  const subCategoryParent = findSubCategoryParent(tag)
-
-  if (subCategoryParent) {
-    return {
-      ...defaultNewsFilters,
-      category: subCategoryParent.category,
-      subCategory: subCategoryParent.subCategory,
-    }
-  }
-
-  return {
-    ...defaultNewsFilters,
-    search: tag,
-  }
-}
-
-const NewsFilterContent: React.FC<NewsFilterContentProps> = ({ initialTag }) => {
-  const [filters, setFilters] = useState<NewsFilters>(() =>
-    getInitialFilters(initialTag),
-  )
+const NewsFilterContent: React.FC = () => {
+  const { filters, setFilters, clearFilters } = useNewsFilters()
 
   const yearOptions = useMemo(() => getNewsYearOptions(NEWS), [])
   const results = useMemo(() => filterNews(NEWS, filters), [filters])
 
-  const handleClear = () => {
-    setFilters(defaultNewsFilters)
-  }
 
   return (
     <section className="mt-12 h-auto w-full sm:mt-16 lg:mt-20">
@@ -129,7 +43,7 @@ const NewsFilterContent: React.FC<NewsFilterContentProps> = ({ initialTag }) => 
             <FilterSidebar
               filters={filters}
               onFiltersChange={setFilters}
-              onClear={handleClear}
+              onClear={clearFilters}
               yearOptions={yearOptions}
             />
           </div>
@@ -152,12 +66,5 @@ const NewsFilterContent: React.FC<NewsFilterContentProps> = ({ initialTag }) => 
 }
 
 export const NewsFilter: React.FC = () => {
-  const searchParams = useSearchParams()
-  const tag =
-    searchParams.get('subcategory') ??
-    searchParams.get('subCategory') ??
-    searchParams.get('tag') ??
-    ''
-
-  return <NewsFilterContent key={tag} initialTag={tag} />
+  return <NewsFilterContent />
 }

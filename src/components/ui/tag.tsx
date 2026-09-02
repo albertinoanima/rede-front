@@ -42,6 +42,13 @@ const legacyVariantMap = {
 
 type LegacyTagVariant = keyof typeof legacyVariantMap
 
+// Remove as classes de estado (hover/active/focus) para as tags meramente informativas.
+const stripStateClasses = (classes: string) =>
+  classes
+    .split(" ")
+    .filter((token) => !/^(hover|active|focus|focus-visible|group-hover|group-focus):/.test(token))
+    .join(" ")
+
 export interface TagProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "children">,
     VariantProps<typeof tagVariants> {
@@ -49,6 +56,8 @@ export interface TagProps
   label?: string
   children?: ReactNode
   v?: LegacyTagVariant
+  /** `false` deixa a tag apenas informativa: sem hover, sem link e com o cursor padrão. */
+  interactive?: boolean
 }
 
 const getTagHref = (href?: string) => {
@@ -66,14 +75,18 @@ export const Tag: React.FC<TagProps> = ({
   variant,
   size,
   v,
+  interactive = true,
   ...props
 }) => {
   const content = label && label.length > 0 ? label : children
   const resolvedHref = getTagHref(href)
   const resolvedVariant = variant ?? (v ? legacyVariantMap[v] : undefined)
-  const classes = cn(tagVariants({ variant: resolvedVariant, size }), className)
+  const baseClasses = cn(tagVariants({ variant: resolvedVariant, size }), className)
+  const classes = interactive
+    ? baseClasses
+    : cn(stripStateClasses(baseClasses), "cursor-default")
 
-  if (resolvedHref) {
+  if (interactive && resolvedHref) {
     return (
       <Link href={resolvedHref} className={classes} {...props}>
         {content}

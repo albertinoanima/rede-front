@@ -13,7 +13,7 @@ import { Heading } from "@/components/ui/heading"
 import { Tag } from "@/components/ui/tag"
 import { customBlur } from "@/app/fonts"
 import { socialFields } from "@/components/Auth/data"
-import { getSkillOptions } from "../Bio/SectionEditSkills"
+import { getCoreSkillOptions } from "../Bio/SectionEditSkills"
 import { Film, GlobeIcon, Mail, MonitorPlay, Music2, PhoneIcon, X } from "lucide-react"
 import Facebook from "@/icons/Facebook"
 import Instagram from "@/icons/Instagram"
@@ -192,7 +192,7 @@ export const EditProfile: React.FC<EditProfileType> = ({
     setDraft((lastState) => ({ ...lastState, [key]: value }));
   };
 
-  const skillOptions = getSkillOptions(profileData).filter((option) => {
+  const skillOptions = getCoreSkillOptions(profileData).filter((option) => {
     const normalizedCoreSkills = draft.coreSkills.map((skill) => skill.toLowerCase());
 
     return (

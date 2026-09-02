@@ -1,20 +1,14 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useMemo } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { FilterSidebar } from '@/components/agency/FilterSidebar'
 import { Button } from '../ui/button'
-import {
-  defaultFilmFilters,
-  FilmFilters,
-  filterFilms,
-  getFilmYearOptions,
-} from './actions'
-import { filmGenres, films } from './data'
+import { filterFilms, getFilmYearOptions } from './actions'
+import { films } from './data'
 import { Tag } from '../ui/tag'
 import { Text } from '../ui/text'
-import { countriesList } from '../network/filters'
+import { getFilmTagHref, useFilmFilters } from './useFilmFilters'
 
 export type FilmType = {
   id: string
@@ -28,120 +22,12 @@ export type FilmType = {
   genre: string
 }
 
-type FilmsContentProps = {
-  initialTag: string
-  initialCountry: string
-  initialGenre: string
-  initialYear: string
-}
-
-const normalizeParam = (value: string) =>
-  value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .trim()
-    .toLowerCase()
-
-const palopCountryAliases: Record<string, string> = {
-  angola: 'angola',
-  'cabo verde': 'cabo-verde',
-  'cabo-verde': 'cabo-verde',
-  'guine bissau': 'guine-bissau',
-  'guine-bissau': 'guine-bissau',
-  'guinea bissau': 'guine-bissau',
-  'guinea-bissau': 'guine-bissau',
-  mocambique: 'mocambique',
-  mozambique: 'mocambique',
-  'sao tome': 'sao-tome-e-principe',
-  'sao tome e principe': 'sao-tome-e-principe',
-  'sao-tome-e-principe': 'sao-tome-e-principe',
-  'timor leste': 'timor-leste',
-  'timor-leste': 'timor-leste',
-}
-
-const getCountryValue = (tag: string) => {
-  const normalizedTag = normalizeParam(tag)
-  const alias = palopCountryAliases[normalizedTag]
-
-  if (alias) return alias
-
-  return countriesList.find(
-    (country) =>
-      normalizeParam(country.value) === normalizedTag ||
-      normalizeParam(country.label) === normalizedTag,
-  )?.value
-}
-
-const getGenreValue = (tag: string) => {
-  const normalizedTag = normalizeParam(tag)
-
-  return filmGenres.find(
-    (genre) =>
-      normalizeParam(genre.value) === normalizedTag ||
-      normalizeParam(genre.label) === normalizedTag,
-  )?.value
-}
-
-const getFilmTagHref = (tag: string) => {
-  const country = getCountryValue(tag)
-
-  if (country) {
-    return `/agency?country=${encodeURIComponent(country)}`
-  }
-
-  const genre = getGenreValue(tag)
-
-  if (genre) {
-    return `/agency?genre=${encodeURIComponent(genre)}`
-  }
-
-  return `/agency?tag=${encodeURIComponent(tag)}`
-}
-
-const getInitialFilters = ({
-  tag,
-  country,
-  genre,
-  year,
-}: {
-  tag: string
-  country: string
-  genre: string
-  year: string
-}): FilmFilters => {
-  const tagCountry = getCountryValue(tag)
-  const tagGenre = getGenreValue(tag)
-
-  return {
-    ...defaultFilmFilters,
-    country: country || tagCountry || '',
-    genre: genre || tagGenre || '',
-    year,
-    search: country || tagCountry || genre || tagGenre ? '' : tag,
-  }
-}
-
-const FilmsContent: React.FC<FilmsContentProps> = ({
-  initialTag,
-  initialCountry,
-  initialGenre,
-  initialYear,
-}) => {
-  const [filters, setFilters] = useState<FilmFilters>(() =>
-    getInitialFilters({
-      tag: initialTag,
-      country: initialCountry,
-      genre: initialGenre,
-      year: initialYear,
-    }),
-  )
+const FilmsContent: React.FC = () => {
+  const { filters, setFilters, clearFilters } = useFilmFilters()
 
   const yearOptions = useMemo(() => getFilmYearOptions(films), [])
   const results = useMemo(() => filterFilms(films, filters), [filters])
 
-  const handleClear = () => {
-    setFilters(defaultFilmFilters)
-  }
 
   return (
     <section className="h-auto w-full">
@@ -159,7 +45,7 @@ const FilmsContent: React.FC<FilmsContentProps> = ({
           <FilterSidebar
             filters={filters}
             onFiltersChange={setFilters}
-            onClear={handleClear}
+            onClear={clearFilters}
             yearOptions={yearOptions}
           />
 
@@ -231,21 +117,5 @@ const FilmsContent: React.FC<FilmsContentProps> = ({
 }
 
 export const FilmsSection: React.FC = () => {
-  const searchParams = useSearchParams()
-
-  const tag = searchParams.get('tag') ?? ''
-  const country = searchParams.get('country') ?? ''
-  const genre = searchParams.get('genre') ?? ''
-  const year = searchParams.get('year') ?? ''
-  const paramsKey = [tag, country, genre, year].join(':')
-
-  return (
-    <FilmsContent
-      key={paramsKey}
-      initialTag={tag}
-      initialCountry={country}
-      initialGenre={genre}
-      initialYear={year}
-    />
-  )
+  return <FilmsContent />
 }

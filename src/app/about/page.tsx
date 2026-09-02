@@ -17,12 +17,8 @@ export default function AboutPage() {
       <Hero
         imageUrl="/assets/agency/hero.png"
         title="Sobre nós"
-        description={`A REDE de Cinema e Audiovisual PALOP+TL é uma iniciativa criada em
-            2018 por jovens realizadores, produtores e diretores de festivais
-            dos Países Africanos de Língua Oficial Portuguesa. Procuramos
-            formas de contribuir para a melhoria do ecossistema do sector
-            audiovisual destes países, através de ações complementares, com
-            vários focos de atuação.`}
+        description={`A REDE de Cinema e Audiovisual PALOP+TL é uma iniciativa criada em 2018 por 
+          jovens realizadores, produtores e diretores de festivais dos Países Africanos de Língua Oficial Portuguesa. Procuramos formas de contribuir para a melhoria do ecossistema do setor audiovisual destes países, através de ações complementares, com vários focos de atuação.`}
       />
       <About />
       <TeamSection />

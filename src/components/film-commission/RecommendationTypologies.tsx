@@ -9,20 +9,20 @@ const ITEMS = [
     number: '01',
     title: ['Comissão', 'nacional'],
     description:
-      'Uma das três tipologias identificadas nas notas de trabalho da equipa sobre Film Commissions.',
+      'Estrutura de âmbito nacional, em cada país.',
   },
   {
     number: '02',
     title: ['Rede regional', 'PALOP+TL'],
     description:
-      'Estrutura supranacional de cooperação, “seis países, uma região de produção”, assente em pontos focais e film desks nacionais, apoiados por um secretariado regional.',
+      'Estrutura supranacional de cooperação — «vários países, uma região de produção» — assente em pontos focais e film desks nacionais apoiados por um secretariado regional.',
   },
   {
     number: '03',
     title: ['Comissão', 'regional interna'],
     description:
-      'Comissão regional interna, de âmbito subnacional, nas seguintes variantes:',
-    tags: ['Pública', 'Privada', 'Mista'],
+      'Estrutura subnacional, nas variantes pública, privada ou mista.',
+    //tags: ['Pública', 'Privada', 'Mista'],
   },
 ] as const
 
@@ -35,14 +35,11 @@ export const RecommendationTypologies: React.FC = () => {
             level="h2"
             className={`${customBlur.className} mb-2 text-center text-[48px] font-medium leading-none text-rede-yellow sm:text-[68px] lg:mb-4 lg:text-[96px] lg:leading-24`}
           >
-            Tipologias de
-            <br />
-            recomendação
+            Hipóteses em <br/> estudo
           </Heading>
 
           <Text className="mx-auto max-w-3xl text-center text-base font-semibold leading-6 sm:text-lg sm:leading-7 lg:text-[20px]">
-            Notas de trabalho da equipa sobre Film Commissions, que definem as
-            três tipologias a desenvolver, aprofundar, validar e completar.
+            Três tipologias de recomendação, identificadas nas notas de trabalho da equipa. Nenhuma está escolhida — serão desenvolvidas, aprofundadas e testadas ao longo do estudo.
           </Text>
         </div>
 
