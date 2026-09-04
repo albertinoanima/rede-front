@@ -16,7 +16,7 @@ const workAreas = [
     number: '',
     category: 'Casos internacionais',
     description:
-      'Identificação e análise de exemplos internacionais a consultar.',
+      'Identificação e análise de exemplos<br/> internacionais a consultar.',
   },
   {
     number: ' ',
@@ -34,7 +34,7 @@ const workAreas = [
     number: ' ',
     category: 'Estudo de caso',
     description:
-      'Elaboração de uma proposta preliminar de estudo de caso em Inhambane.',
+      'Elaboração de uma proposta preliminar <br/>de estudo de caso em Inhambane.',
   }
 ]
 
@@ -73,10 +73,8 @@ export const WhatItComprises: React.FC = () => {
                 <Tag label={area.category} variant="muted" size="lg" className="border-none bg-black text-center" />
               </div>
 
-              <div className="flex h-auto w-full flex-1 items-start px-[18px] pb-3">
-                <Text className="text-[12px] font-medium leading-4">
-                  {area.description}
-                </Text>
+              <div className="flex h-auto w-full flex-1 items-start justify-center px-[18px] pb-3">
+                <Text className="text-[12px] text-center font-medium leading-4" dangerouslySetInnerHTML={{ __html: area.description}}/>
               </div>
             </article>
           ))}

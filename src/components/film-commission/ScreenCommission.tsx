@@ -29,7 +29,7 @@ export const ScreenCommission: React.FC = () => {
             level="h2"
             className={`${customBlur.className} mb-2 break-words text-center text-[44px] font-medium leading-none text-rede-yellow sm:text-[66px] lg:mb-4 lg:text-[96px] lg:leading-24`}
           >
-           Rede lusófona,
+           Rede regional,
             <br />
             pontes estratégicas
           </Heading>
@@ -41,7 +41,7 @@ export const ScreenCommission: React.FC = () => {
           <Text className="mx-auto max-w-4xl text-center text-base font-semibold leading-6 sm:text-lg sm:leading-7 lg:text-[20px]">
             O posicionamento proposto é o de uma{' '}
                 <span className="text-rede-yellow">
-                  rede lusófona com pontes estratégicas para os ecossistemas
+                  rede regional com pontes estratégicas para os ecossistemas
                   francófono e anglófono
                 </span>
                 , refletindo as esferas reais de influência cultural e económica

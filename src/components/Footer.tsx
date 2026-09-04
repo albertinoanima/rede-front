@@ -27,8 +27,8 @@ const menuItems = [
 
 const contactItems = [
   {
-    label: "info@redecinemapaloptl.org",
-    href: "mailto:info@redecinemapaloptl.org",
+    label: "redecinemapaloptl@gmail.com",
+    href: "mailto:redecinemapaloptl@gmail.com",
   },
   {
     label: "+258 849517611",

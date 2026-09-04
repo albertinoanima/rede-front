@@ -8,7 +8,7 @@ const legislativeStages = [
   {
     id: 1,
     title: 'Lei setorial em vigor',
-    countries: 'Lei setorial em vigor',
+    countries: 'Existe uma lei setorial em vigor',
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const legislativeStages = [
   },
   {
     id: 3,
-    title: 'Sem lei nem instituto do setor',
+    title: 'Sem lei nem<br/> instituto do setor',
     countries: 'A actividade decorre sem enquadramento próprio.',
   },
 ]
@@ -48,29 +48,22 @@ export const WhereWeAre: React.FC = () => {
 
         <div className="flex h-auto w-full flex-col items-stretch justify-center gap-4 sm:items-center lg:flex-row lg:gap-5">
           {legislativeStages.map((stage) => (
-            <article
-              key={stage.id}
-              className="flex min-h-32 w-full items-center gap-5 border border-rede-white px-5 py-6 sm:max-w-92.25 sm:px-6 lg:h-32 lg:w-92.25 lg:py-0"
-            >
-              <Text
-                aria-hidden="true"
-                className={`${customBlur.className} shrink-0 text-[48px] leading-14`}
-              >
+            <article key={stage.id} className="flex min-h-36 w-full items-center gap-5 border border-rede-white px-5 py-6 sm:max-w-92.25 sm:px-6 lg:h-32 lg:w-92.25 lg:py-0">
+              <Text aria-hidden="true" className={`${customBlur.className} shrink-0 text-[48px] leading-14`}>
                 {stage.id}
               </Text>
 
-              <div className="flex min-w-0 flex-col gap-3 lg:gap-4">
-                <Text className="text-lg font-semibold leading-5 sm:text-[20px]">
-                  {stage.title}
-                </Text>
+              <div className="w-full flex flex-col justify-center items-center gap-3 lg:gap-4">
+                <Text className="text-[22px] text-center font-semibold leading-5 sm:text-[20px]" dangerouslySetInnerHTML={{ __html: stage.title }}/>
 
-                <Text className="text-[12px] font-medium leading-4">
+                <Text className="text-[14px] text-center font-medium leading-5">
                   {stage.countries}
                 </Text>
               </div>
             </article>
           ))}
         </div>
+
       </div>
     </section>
   )
