@@ -22,7 +22,7 @@ export const GoForWork: React.FC = () => {
 
 
 
-            Escreva-nos: <a href='mailto:info@redepaloptl.org' className='text-rede-yellow underline'>info@redepaloptl.org</a>
+            Escreva-nos: <a href='mailto:redecinemapaloptl@gmail.com' className='text-rede-yellow underline'>redecinemapaloptl@gmail.com</a>
           </Text>
         </div>
       </div>
