@@ -72,7 +72,7 @@ export const RecommendationTypologies: React.FC = () => {
 
                 <div className="flex h-auto w-full flex-col justify-between gap-5 sm:w-1/2">
                   <Text
-                    className={`${customBlur.className} text-[12px] font-medium leading-[16px] text-rede-white`}
+                    className={`text-[14px] font-medium leading-5 text-rede-white`}
                   >
                     {item.description}
                   </Text>

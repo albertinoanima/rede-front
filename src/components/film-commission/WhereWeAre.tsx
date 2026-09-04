@@ -56,7 +56,7 @@ export const WhereWeAre: React.FC = () => {
               <div className="w-full flex flex-col justify-center items-center gap-3 lg:gap-4">
                 <Text className="text-[22px] text-center font-semibold leading-5 sm:text-[20px]" dangerouslySetInnerHTML={{ __html: stage.title }}/>
 
-                <Text className="text-[14px] text-center font-medium leading-5">
+                <Text className="text-[14px] font-medium leading-5 text-center">
                   {stage.countries}
                 </Text>
               </div>

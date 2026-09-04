@@ -59,7 +59,7 @@ export const LegislativeInternship: React.FC = () => {
                   {stage.title}
                 </Text>
 
-                <Text className="text-[12px] font-medium leading-4">
+                <Text className="text-[14px] font-medium leading-5">
                   {stage.countries}
                 </Text>
               </div>
